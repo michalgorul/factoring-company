@@ -17,7 +17,7 @@ public class PaymentTypeController {
 
     @GetMapping
     public List<PaymentTypeEntity> getPaymentTypes(){
-        return paymentTypeService.getSPaymentTypes();
+        return paymentTypeService.getPaymentTypes();
     }
 
 

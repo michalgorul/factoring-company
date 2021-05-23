@@ -14,7 +14,7 @@ public class PaymentTypeService {
 
     private final PaymentTypeRepository paymentTypeRepository;
 
-    public List<PaymentTypeEntity> getSPaymentTypes() {
+    public List<PaymentTypeEntity> getPaymentTypes() {
         return paymentTypeRepository.findAll();
     }
 

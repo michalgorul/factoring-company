@@ -10,7 +10,7 @@ import java.util.List;
 public class CurrencyConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(CurrencyRepository currencyRepository){
+    CommandLineRunner commandLineRunnerCurrency(CurrencyRepository currencyRepository){
         return args -> {
             CurrencyEntity ruble = new CurrencyEntity("Ruble", "RUB");
             CurrencyEntity euro = new CurrencyEntity("Euro", "EUR");

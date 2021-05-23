@@ -20,6 +20,7 @@ public class CurrencyController {
         return currencyService.getCurrencies();
     }
 
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<CurrencyEntity> getCurrency(@PathVariable Long id){
         Optional<CurrencyEntity> response = currencyService.getCurrency(id);
@@ -29,10 +30,12 @@ public class CurrencyController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+
     @PostMapping
     public CurrencyEntity addCurrency(@RequestParam() String name, @RequestParam() String code) {
         return currencyService.addCurrency(name, code);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<CurrencyEntity> updateCurrency(@PathVariable Long id,
@@ -45,8 +48,9 @@ public class CurrencyController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<CurrencyEntity> deleteOperationCost(@PathVariable Long id) {
+    public ResponseEntity<CurrencyEntity> deleteCurrency(@PathVariable Long id) {
         Optional<CurrencyEntity> response = currencyService.deleteCurrency(id);
 
         return response

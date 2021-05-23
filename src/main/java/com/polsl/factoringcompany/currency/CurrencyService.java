@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.currency;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,9 +17,11 @@ public class CurrencyService {
 
     private final CurrencyRepository currencyRepository;
 
+
     public List<CurrencyEntity> getCurrencies() {
         return currencyRepository.findAll();
     }
+
 
     public Optional<CurrencyEntity> getCurrency(Long id) {
 
@@ -30,11 +33,13 @@ public class CurrencyService {
         return currencyEntity;
     }
 
+
     public CurrencyEntity addCurrency(String name, String code) {
 
         ifFits(name, code);
-        return currencyRepository.save(new CurrencyEntity(name, code.toUpperCase()));
+        return currencyRepository.save(new CurrencyEntity(StringUtils.capitalize(name), code.toUpperCase()));
     }
+
 
     public Optional<CurrencyEntity> deleteCurrency(Long id) {
         Optional<CurrencyEntity> currencyEntity = currencyRepository.findById(id);
@@ -47,6 +52,7 @@ public class CurrencyService {
         }
     }
 
+
     @Transactional
     public Optional<CurrencyEntity> updateCurrency(Long id, String name, String code) {
 
@@ -54,11 +60,12 @@ public class CurrencyService {
                 .orElseThrow(() -> new IllegalStateException("Currency with id " + id + " does not exist"));
 
         ifFits(name, code);
-        currencyEntity.setName(name);
+        currencyEntity.setName(StringUtils.capitalize(name));
         currencyEntity.setCode(code.toUpperCase());
 
         return Optional.of(currencyEntity);
     }
+
 
     public void ifCodeOrNameTaken(String name, String code){
         Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByName(name);
@@ -70,17 +77,20 @@ public class CurrencyService {
         }
     }
 
+
     public void checkName(String name){
         if (name == null || name.length() <= 0 || name.length() > 15 || !name.chars().allMatch(Character::isLetter)) {
             throw new IllegalStateException("The name '" + name + "' is not appropriate");
         }
     }
 
+
     public void checkCode(String code){
         if (code == null || code.length() <= 0 || code.length() > 5 || !code.chars().allMatch(Character::isLetter)) {
             throw new IllegalStateException("The code '" + code + "' is not appropriate");
         }
     }
+
 
     public void ifFits(String name, String code){
         checkName(name);

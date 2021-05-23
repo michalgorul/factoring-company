@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.status;
+package com.polsl.factoringcompany.paymenttype;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,21 +10,20 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/status")
-public class StatusController {
+@RequestMapping(path = "/paymenttype")
+public class PaymentTypeController {
 
-    private final StatusService statusService;
-
+    private final PaymentTypeService paymentTypeService;
 
     @GetMapping
-    public List<StatusEntity> getStatuses(){
-        return statusService.getStatuses();
+    public List<PaymentTypeEntity> getPaymentTypes(){
+        return paymentTypeService.getSPaymentTypes();
     }
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<StatusEntity> getStatus(@PathVariable Long id){
-        Optional<StatusEntity> response = statusService.getStatus(id);
+    public ResponseEntity<PaymentTypeEntity> getPaymentType(@PathVariable Long id){
+        Optional<PaymentTypeEntity> response = paymentTypeService.getPaymentType(id);
 
         return response
                 .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))
@@ -33,14 +32,14 @@ public class StatusController {
 
 
     @PostMapping
-    public StatusEntity addStatus(@RequestParam() String name) {
-        return statusService.addStatus(name);
+    public PaymentTypeEntity addPaymentType(@RequestParam() String name) {
+        return paymentTypeService.addPaymentType(name);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<StatusEntity> updateStatus(@PathVariable Long id, @RequestParam String name) {
-        Optional<StatusEntity> response = statusService.updateStatus(id, name);
+    public ResponseEntity<PaymentTypeEntity> updatePaymentType(@PathVariable Long id, @RequestParam String name) {
+        Optional<PaymentTypeEntity> response = paymentTypeService.updatePaymentType(id, name);
 
         return response
                 .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))
@@ -49,8 +48,8 @@ public class StatusController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<StatusEntity> deleteStatus(@PathVariable Long id) {
-        Optional<StatusEntity> response = statusService.deleteStatus(id);
+    public ResponseEntity<PaymentTypeEntity> deletePaymentType(@PathVariable Long id) {
+        Optional<PaymentTypeEntity> response = paymentTypeService.deletePaymentType(id);
 
         return response
                 .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))

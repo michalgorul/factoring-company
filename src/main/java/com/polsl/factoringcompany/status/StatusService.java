@@ -69,7 +69,7 @@ public class StatusService {
         }
     }
 
-
+    // TODO: 23.05.2021 SPACES SHOULD BE ACCEPTABLE
     public void checkName(String name){
         if (name == null || name.length() <= 0 || name.length() > 25 || !name.chars().allMatch(Character::isLetter)) {
             throw new IllegalStateException("The name '" + name + "' is not appropriate");

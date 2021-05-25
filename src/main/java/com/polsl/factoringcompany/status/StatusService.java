@@ -36,7 +36,6 @@ public class StatusService {
 
         if (ifNameTaken(StringUtils.capitalize(name)))
             throw new IllegalArgumentException("Status with '" + name + "' name already exists");
-// TODO: 25.05.2021 TUTAJ MOŻE BYĆ MODEL MAPPER (?)
         try {
             return statusRepository.save(new StatusEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
@@ -108,6 +107,6 @@ public class StatusService {
             }
             return false;
         }
-        return true;
+        return s.charAt(s.length() - 1) != ' ';
     }
 }

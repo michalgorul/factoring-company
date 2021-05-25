@@ -32,16 +32,16 @@ public class PaymentTypeService {
         if (validateName(name))
             throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
 
-        if(ifNameTaken(StringUtils.capitalize(name)))
+        if (ifNameTaken(StringUtils.capitalize(name)))
             throw new IllegalArgumentException("Payment type with '" + name + "' name already exists");
-// TODO: 25.05.2021 TUTAJ MOŻE BYĆ MODEL MAPPER (?)
+
         try {
             return paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
             Throwable rootCause = Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Subcontractor ( " + name + ") exists in DB");
+                    throw new ItemExistsInDatabaseException("Payment type ( " + name + ") exists in DB");
                 }
             }
             throw new RuntimeException(e);
@@ -67,7 +67,7 @@ public class PaymentTypeService {
         if (validateName(name))
             throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
 
-        if(ifNameTaken(name))
+        if (ifNameTaken(name))
             throw new IllegalArgumentException("Payment type with '" + name + "' name already exists");
 
 
@@ -105,6 +105,6 @@ public class PaymentTypeService {
             }
             return false;
         }
-        return true;
+        return s.charAt(s.length() - 1) != ' ';
     }
 }

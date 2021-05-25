@@ -36,19 +36,7 @@ public class CurrencyService {
 
     public CurrencyEntity addCurrency(String name, String code) {
 
-        if (!validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
-
-        if (!validateCode(code))
-            throw new IllegalArgumentException("The code '" + name + "' is not appropriate");
-
-
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Currency with '" + StringUtils.capitalize(name) +
-                    "' name already exists");
-
-        if (ifCodeTaken(code.toUpperCase()))
-            throw new IllegalArgumentException("Currency with '" + code.toUpperCase() + "' code already exists");
+        validating(name, code);
 
         try {
             return currencyRepository.save(new CurrencyEntity(StringUtils.capitalize(name), code.toUpperCase()));
@@ -68,7 +56,7 @@ public class CurrencyService {
         try {
             this.currencyRepository.deleteById(id);
         } catch (RuntimeException ignored) {
-            throw new IdNotFoundInDatabaseException("Payment type " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Currency " + id + " not found");
         }
     }
 
@@ -79,21 +67,9 @@ public class CurrencyService {
         Optional<CurrencyEntity> currencyEntity = currencyRepository.findById(id);
 
         if (currencyEntity.isEmpty())
-            throw new IdNotFoundInDatabaseException("Payment type " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Currency " + id + " not found");
 
-        if (!validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
-
-        if (!validateCode(code))
-            throw new IllegalArgumentException("The code '" + name + "' is not appropriate");
-
-
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Currency with '" + StringUtils.capitalize(name) +
-                    "' name already exists");
-
-        if (ifCodeTaken(code.toUpperCase()))
-            throw new IllegalArgumentException("Currency with '" + code.toUpperCase() + "' code already exists");
+        validating(name, code);
 
 
         try {
@@ -103,11 +79,27 @@ public class CurrencyService {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Payment type ( " + StringUtils.capitalize(name) + ") exists in DB");
+                    throw new ItemExistsInDatabaseException("Currency ( " + StringUtils.capitalize(name) + ") exists in DB");
                 }
             }
             throw new RuntimeException(e);
         }
+    }
+
+    private void validating(String name, String code) {
+        if (validateName(name))
+            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+
+        if (validateCode(code))
+            throw new IllegalArgumentException("The code '" + name + "' is not appropriate");
+
+
+        if (ifNameTaken(StringUtils.capitalize(name)))
+            throw new IllegalArgumentException("Currency with '" + StringUtils.capitalize(name) +
+                    "' name already exists");
+
+        if (ifCodeTaken(code.toUpperCase()))
+            throw new IllegalArgumentException("Currency with '" + code.toUpperCase() + "' code already exists");
     }
 
     public boolean ifNameTaken(String name) {
@@ -123,11 +115,11 @@ public class CurrencyService {
 
     // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
     private boolean validateCode(String code) {
-        return code != null && code.length() > 0 && code.length() <= 5 && code.chars().allMatch(Character::isLetter);
+        return code == null || code.length() <= 0 || code.length() > 5 || !code.chars().allMatch(Character::isLetter);
     }
 
     public boolean validateName(String name) {
-        return name != null && name.length() > 0 && name.length() <= 25 && onlyLettersSpaces(name);
+        return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
     }
 
 

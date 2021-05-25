@@ -1,12 +1,13 @@
 package com.polsl.factoringcompany.product;
 
+import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -22,39 +23,62 @@ public class ProductController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ProductEntity> getProduct(@PathVariable Long id){
-        Optional<ProductEntity> response = productService.getProduct(id);
-
-        return response
-                .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    public ProductEntity getProduct(@PathVariable Long id){
+        try {
+            return this.productService.getProduct(id);
+        } catch (IdNotFoundInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
 
     @PostMapping
     public ProductEntity addProduct(@RequestParam String name, @RequestParam String pkwiu,
                                     @RequestParam String measureUnit) {
-        return productService.addProduct(name, pkwiu, measureUnit);
+        try {
+            return this.productService.addProduct(name, pkwiu, measureUnit);
+        } catch (ItemExistsInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductEntity> updateProduct(@PathVariable Long id, @RequestParam String name,
-                                                       @RequestParam String pkwiu, @RequestParam String measureUnit) {
-        Optional<ProductEntity> response = productService.updateProduct(id, name, pkwiu, measureUnit);
-
-        return response
-                .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    public ProductEntity updateProduct(@PathVariable Long id, @RequestParam String name,
+                                       @RequestParam String pkwiu, @RequestParam String measureUnit) {
+        try {
+            return this.productService.updateProduct(id, name, pkwiu, measureUnit);
+        } catch (IdNotFoundInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (ItemExistsInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProductEntity> deleteProduct(@PathVariable Long id) {
-        Optional<ProductEntity> response = productService.deleteProduct(id);
-
-        return response
-                .map(currencyEntity -> ResponseEntity.status(HttpStatus.OK).body(response.get()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    public void deleteProduct(@PathVariable Long id) {
+        try {
+            this.productService.deleteProduct(id);
+        } catch (IdNotFoundInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }

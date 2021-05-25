@@ -6,7 +6,6 @@ import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class PaymentTypeService {
 
     private final PaymentTypeRepository paymentTypeRepository;
-    private final ModelMapper modelMapper;
 
     public List<PaymentTypeEntity> getPaymentTypes() {
         return paymentTypeRepository.findAll();
@@ -31,12 +29,12 @@ public class PaymentTypeService {
 
     public PaymentTypeEntity addPaymentType(String name) {
 
-        if (!validateName(name))
+        if (validateName(name))
             throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
 
         if(ifNameTaken(StringUtils.capitalize(name)))
             throw new IllegalArgumentException("Payment type with '" + name + "' name already exists");
-
+// TODO: 25.05.2021 TUTAJ MOŻE BYĆ MODEL MAPPER (?)
         try {
             return paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
@@ -66,7 +64,7 @@ public class PaymentTypeService {
         if (paymentTypeEntity.isEmpty())
             throw new IdNotFoundInDatabaseException("Payment type " + id + " not found");
 
-        if (!validateName(name))
+        if (validateName(name))
             throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
 
         if(ifNameTaken(name))
@@ -94,11 +92,17 @@ public class PaymentTypeService {
         return foundByName.isPresent();
     }
 
-
-    // TODO: 23.05.2021 SPACES SHOULD BE ACCEPTABLE :)
+    // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
     public boolean validateName(String name) {
-        if (name == null || name.length() <= 0 || name.length() > 25 || !name.chars().allMatch(Character::isLetter)) {
-//            throw new IllegalStateException("The name '" + name + "' is not appropriate");
+        return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
+    }
+
+    public static boolean onlyLettersSpaces(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (Character.isLetter(ch) || ch == ' ') {
+                continue;
+            }
             return false;
         }
         return true;

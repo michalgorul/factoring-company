@@ -24,7 +24,7 @@ public class PaymentTypeEntity {
     )
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 25)
+    @Column(name = "name", nullable = false, length = 25, unique = true)
     private String name;
 
     public PaymentTypeEntity() {

@@ -1,7 +1,6 @@
 package com.polsl.factoringcompany.status;
 
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +37,9 @@ public class StatusController {
     public StatusEntity addStatus(@RequestParam() String name) {
         try {
             return this.statusService.addStatus(name);
-        } catch (ItemExistsInDatabaseException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+//        } catch (ItemExistsInDatabaseException e) {
+//            System.out.println(e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
@@ -61,9 +60,9 @@ public class StatusController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        } catch (ItemExistsInDatabaseException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+//        } catch (ItemExistsInDatabaseException e) {
+//            System.out.println(e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);

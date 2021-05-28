@@ -2,7 +2,7 @@ package com.polsl.factoringcompany.product;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,7 +40,7 @@ public class ProductService {
             Throwable rootCause = Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Product ( " + name + ") exists in DB");
+                    throw new NotUniqueException("Product", "name", name);
                 }
             }
             throw new RuntimeException(e);
@@ -74,7 +74,7 @@ public class ProductService {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Currency ( " + StringUtils.capitalize(name) + ") exists in DB");
+                    throw new NotUniqueException("Product", "name", name);
                 }
             }
             throw new RuntimeException(e);
@@ -110,7 +110,7 @@ public class ProductService {
         return name != null && name.length() > 0 && name.length() <= 50 && onlyLettersSpaces(name);
     }
 
-    private boolean validatePkwiu(String pkwiu) {
+    public boolean validatePkwiu(String pkwiu) {
         String patterns = "\\d\\d[.]\\d\\d[.]\\d\\d[.]\\d";
 
         Pattern pattern = Pattern.compile(patterns);

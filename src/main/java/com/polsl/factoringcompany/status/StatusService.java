@@ -2,7 +2,7 @@ package com.polsl.factoringcompany.status;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -42,7 +42,7 @@ public class StatusService {
             Throwable rootCause = Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Subcontractor ( " + name + ") exists in DB");
+                    throw new NotUniqueException("Status", "name", name);
                 }
             }
             throw new RuntimeException(e);
@@ -81,7 +81,7 @@ public class StatusService {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Status ( " + StringUtils.capitalize(name) + ") exists in DB");
+                    throw new NotUniqueException("Status", "name", name);
                 }
             }
             throw new RuntimeException(e);

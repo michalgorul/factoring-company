@@ -1,9 +1,10 @@
 package com.polsl.factoringcompany.paymenttype;
 
-import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.ItemExistsInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NameImproperException;
+import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,24 +25,20 @@ public class PaymentTypeService {
 
     public PaymentTypeEntity getPaymentType(Long id) throws IdNotFoundInDatabaseException {
         return this.paymentTypeRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type " + id + " not found"));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type:", id ));
     }
 
     public PaymentTypeEntity addPaymentType(String name) {
 
-        if (validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
-
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Payment type with '" + name + "' name already exists");
-
+        if (nameImproper(name))
+            throw new NameImproperException(name);
         try {
-            return paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
+            return this.paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
-            Throwable rootCause = Throwables.getRootCause(e);
+            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Payment type ( " + name + ") exists in DB");
+                    throw new NotUniqueException("Payment type", "name", name);
                 }
             }
             throw new RuntimeException(e);
@@ -51,8 +48,8 @@ public class PaymentTypeService {
     public void deletePaymentType(Long id) throws IdNotFoundInDatabaseException {
         try {
             this.paymentTypeRepository.deleteById(id);
-        } catch (RuntimeException ignored) {
-            throw new IdNotFoundInDatabaseException("Payment type " + id + " not found");
+        } catch (RuntimeException ex) {
+            throw new IdNotFoundInDatabaseException("Payment type", id);
         }
     }
 
@@ -62,23 +59,23 @@ public class PaymentTypeService {
         Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findById(id);
 
         if (paymentTypeEntity.isEmpty())
-            throw new IdNotFoundInDatabaseException("Payment type " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Payment type", id);
 
-        if (validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+        if (nameImproper(name))
+            throw new NameImproperException(name);
 
-        if (ifNameTaken(name))
-            throw new IllegalArgumentException("Payment type with '" + name + "' name already exists");
-
+        if(ifNameTaken(name)){
+            throw new NotUniqueException("Payment type", "name", name);
+        }
 
         try {
             paymentTypeEntity.get().setName(StringUtils.capitalize(name));
             return this.paymentTypeRepository.save(paymentTypeEntity.get());
-        } catch (RuntimeException e) {
+        } catch (DataIntegrityViolationException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new ItemExistsInDatabaseException("Payment type ( " + StringUtils.capitalize(name) + ") exists in DB");
+                    throw new NotUniqueException("Payment type", "name", name);
                 }
             }
             throw new RuntimeException(e);
@@ -87,15 +84,16 @@ public class PaymentTypeService {
     }
 
     public boolean ifNameTaken(String name) {
-        Optional<PaymentTypeEntity> foundByName = paymentTypeRepository.findPaymentTypeEntityByName(
+        Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findPaymentTypeEntityByName(
                 StringUtils.capitalize(name));
-        return foundByName.isPresent();
+        return paymentTypeEntity.isPresent();
     }
 
     // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
-    public boolean validateName(String name) {
+    public boolean nameImproper(String name) {
         return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
     }
+
 
     public static boolean onlyLettersSpaces(String s) {
         for (int i = 0; i < s.length(); i++) {

@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.product;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,16 +25,13 @@ public class ProductService {
     }
 
     public ProductEntity getProduct(Long id) {
-
         return this.productRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Product " + id + " not found"));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Product", id));
     }
 
 
     public ProductEntity addProduct(String name, String pkwiu, String measureUnit) {
-
         validating(name, pkwiu, measureUnit);
-
         try {
             return productRepository.save(new ProductEntity(StringUtils.capitalize(name), pkwiu, measureUnit));
         } catch (RuntimeException e) {
@@ -51,7 +49,7 @@ public class ProductService {
         try {
             this.productRepository.deleteById(id);
         } catch (RuntimeException ignored) {
-            throw new IdNotFoundInDatabaseException("Product " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Product", id);
         }
     }
 
@@ -61,7 +59,7 @@ public class ProductService {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
 
         if (productEntity.isEmpty())
-            throw new IdNotFoundInDatabaseException("Product " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Product", id);
 
         validating(name, pkwiu, measureUnit);
 
@@ -82,18 +80,17 @@ public class ProductService {
     }
 
     private void validating(String name, String pkwiu, String measureUnit) {
-        if (!validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+        if (!nameImproper(name))
+            throw new NameImproperException(name);
 
-        if (!validatePkwiu(pkwiu))
-            throw new IllegalArgumentException("The PKWIU '" + pkwiu + "' is not appropriate");
+        if (!pkwiuImproper(pkwiu))
+            throw new NameImproperException(pkwiu, "PKWIU");
 
-        if (!validateMeasureUnit(measureUnit))
-            throw new IllegalArgumentException("The measure unit '" + measureUnit + "' is not appropriate");
+        if (!measureUnitImproper(measureUnit))
+            throw new NameImproperException(measureUnit, "measure unit");
 
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Product with '" + StringUtils.capitalize(name) +
-                    "' name already exists");
+        if (ifNameTaken(name))
+            throw new NotUniqueException("Product", "name", name);
     }
 
     // TODO: 23.05.2021 CONSIDER MEASURE UNIT - ANOTHER TABLE? CHECKING? IF YES - HOW?
@@ -106,18 +103,18 @@ public class ProductService {
 
     // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
 
-    public boolean validateName(String name) {
+    public boolean nameImproper(String name) {
         return name != null && name.length() > 0 && name.length() <= 50 && onlyLettersSpaces(name);
     }
 
-    public boolean validatePkwiu(String pkwiu) {
+    public boolean pkwiuImproper(String pkwiu) {
         String patterns = "\\d\\d[.]\\d\\d[.]\\d\\d[.]\\d";
 
         Pattern pattern = Pattern.compile(patterns);
         return pattern.matcher(pkwiu).matches();
     }
 
-    private boolean validateMeasureUnit(String measureUnit) {
+    private boolean measureUnitImproper(String measureUnit) {
         return measureUnit != null && measureUnit.length() > 0 && measureUnit.length() <= 9 &&
                 onlyLettersSpaces(measureUnit);
 

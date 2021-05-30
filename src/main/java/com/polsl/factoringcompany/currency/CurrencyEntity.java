@@ -24,10 +24,10 @@ public class CurrencyEntity {
     )
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 15)
+    @Column(name = "name", nullable = false, length = 15, unique = true)
     private String name;
 
-    @Column(name = "code", nullable = false, length = 5)
+    @Column(name = "code", nullable = false, length = 5, unique = true)
     private String code;
 
     public CurrencyEntity() {

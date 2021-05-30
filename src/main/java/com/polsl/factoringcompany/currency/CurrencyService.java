@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.currency;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,23 +29,20 @@ public class CurrencyService {
 
 
     public CurrencyEntity getCurrency(Long id) throws IdNotFoundInDatabaseException {
-
         return this.currencyRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Currency " + id + " not found"));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Currency", id));
     }
 
 
     public CurrencyEntity addCurrency(String name, String code) {
-
         validating(name, code);
-
         try {
             return currencyRepository.save(new CurrencyEntity(StringUtils.capitalize(name), code.toUpperCase()));
         } catch (RuntimeException e) {
             Throwable rootCause = Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Currency", "name", name);
+                    throw new NotUniqueException("Currency", "code", code.toUpperCase());
                 }
             }
             throw new RuntimeException(e);
@@ -56,7 +54,7 @@ public class CurrencyService {
         try {
             this.currencyRepository.deleteById(id);
         } catch (RuntimeException ignored) {
-            throw new IdNotFoundInDatabaseException("Currency " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Currency", id);
         }
     }
 
@@ -67,19 +65,19 @@ public class CurrencyService {
         Optional<CurrencyEntity> currencyEntity = currencyRepository.findById(id);
 
         if (currencyEntity.isEmpty())
-            throw new IdNotFoundInDatabaseException("Currency " + id + " not found");
-
-        validating(name, code);
+            throw new IdNotFoundInDatabaseException("Currency", id);
 
 
         try {
+            validating(name, code);
             currencyEntity.get().setName(StringUtils.capitalize(name));
+            currencyEntity.get().setCode(code.toUpperCase());
             return this.currencyRepository.save(currencyEntity.get());
         } catch (RuntimeException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Currency", "name", name);
+                    throw new NotUniqueException("Currency", "code", code);
                 }
             }
             throw new RuntimeException(e);
@@ -87,19 +85,18 @@ public class CurrencyService {
     }
 
     private void validating(String name, String code) {
-        if (validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+        if (nameImproper(name))
+            throw new NameImproperException(name);
 
-        if (validateCode(code))
-            throw new IllegalArgumentException("The code '" + name + "' is not appropriate");
+        if (codeImproper(code))
+            throw new NameImproperException(code, "code");
 
 
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Currency with '" + StringUtils.capitalize(name) +
-                    "' name already exists");
+        if (ifNameTaken(name))
+            throw new NotUniqueException("Currency", "name", name);
 
-        if (ifCodeTaken(code.toUpperCase()))
-            throw new IllegalArgumentException("Currency with '" + code.toUpperCase() + "' code already exists");
+        if (ifCodeTaken(code))
+            throw new NotUniqueException("Currency", "code", code);
     }
 
     public boolean ifNameTaken(String name) {
@@ -109,19 +106,18 @@ public class CurrencyService {
     }
 
     public boolean ifCodeTaken(String code) {
-        Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByName(code.toUpperCase());
+        Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByCode(code.toUpperCase());
         return foundByName.isPresent();
     }
 
     // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
-    private boolean validateCode(String code) {
+    private boolean codeImproper(String code) {
         return code == null || code.length() <= 0 || code.length() > 5 || !code.chars().allMatch(Character::isLetter);
     }
 
-    public boolean validateName(String name) {
+    public boolean nameImproper(String name) {
         return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
     }
-
 
     public static boolean onlyLettersSpaces(String s) {
         for (int i = 0; i < s.length(); i++) {

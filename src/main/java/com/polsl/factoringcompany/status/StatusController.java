@@ -1,10 +1,7 @@
 package com.polsl.factoringcompany.status;
 
-import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,66 +14,31 @@ public class StatusController {
 
 
     @GetMapping
-    public List<StatusEntity> getStatuses(){
+    public List<StatusEntity> getStatuses() {
         return statusService.getStatuses();
     }
 
 
     @GetMapping(path = "/{id}")
-    public StatusEntity getStatus(@PathVariable Long id){
-        try {
-            return this.statusService.getStatus(id);
-        } catch (IdNotFoundInDatabaseException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
+    public StatusEntity getStatus(@PathVariable Long id) {
+        return this.statusService.getStatus(id);
     }
 
 
     @PostMapping
     public StatusEntity addStatus(@RequestParam() String name) {
-        try {
-            return this.statusService.addStatus(name);
-//        } catch (ItemExistsInDatabaseException e) {
-//            System.out.println(e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        } catch (RuntimeException  e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
-        }
+        return this.statusService.addStatus(name);
     }
 
 
     @PutMapping("/{id}")
     public StatusEntity updateStatus(@PathVariable Long id, @RequestParam String name) {
-        try {
-            return this.statusService.updateStatus(id, name);
-        } catch (IdNotFoundInDatabaseException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-//        } catch (ItemExistsInDatabaseException e) {
-//            System.out.println(e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
-        }
+        return this.statusService.updateStatus(id, name);
     }
 
 
     @DeleteMapping("/{id}")
     public void deleteStatus(@PathVariable Long id) {
-        try {
-            this.statusService.deleteStatus(id);
-        } catch (IdNotFoundInDatabaseException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
+        this.statusService.deleteStatus(id);
     }
 }

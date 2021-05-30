@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.status;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,16 @@ public class StatusService {
     }
 
     public StatusEntity getStatus(Long id) {
-
         return this.statusRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Status " + id + " not found"));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Status", id));
     }
 
 
     public StatusEntity addStatus(String name) {
 
-        if (validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+        if (nameImproper(name))
+            throw new NameImproperException(name);
 
-        if (ifNameTaken(StringUtils.capitalize(name)))
-            throw new IllegalArgumentException("Status with '" + name + "' name already exists");
         try {
             return statusRepository.save(new StatusEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
@@ -54,7 +52,7 @@ public class StatusService {
         try {
             this.statusRepository.deleteById(id);
         } catch (RuntimeException ignored) {
-            throw new IdNotFoundInDatabaseException("Status " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Status", id);
         }
     }
 
@@ -65,14 +63,14 @@ public class StatusService {
         Optional<StatusEntity> statusEntity = statusRepository.findById(id);
 
         if (statusEntity.isEmpty())
-            throw new IdNotFoundInDatabaseException("Status " + id + " not found");
+            throw new IdNotFoundInDatabaseException("Status", id);
 
-        if (validateName(name))
-            throw new IllegalArgumentException("The name '" + name + "' is not appropriate");
+        if (nameImproper(name))
+            throw new NameImproperException(name);
 
-        if (ifNameTaken(name))
-            throw new IllegalArgumentException("Status with '" + name + "' name already exists");
-
+        if(ifNameTaken(name)){
+            throw new NotUniqueException("Status", "name", name);
+        }
 
         try {
             statusEntity.get().setName(StringUtils.capitalize(name));
@@ -95,7 +93,7 @@ public class StatusService {
     }
 
     // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
-    public boolean validateName(String name) {
+    public boolean nameImproper(String name) {
         return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
     }
 

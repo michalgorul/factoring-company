@@ -2,8 +2,8 @@ package com.polsl.factoringcompany.status;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
+import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -32,7 +32,7 @@ public class StatusService {
     public StatusEntity addStatus(String name) {
 
         if (nameImproper(name))
-            throw new NameImproperException(name);
+            throw new ValueImproperException(name);
 
         try {
             return statusRepository.save(new StatusEntity(StringUtils.capitalize(name)));
@@ -66,7 +66,7 @@ public class StatusService {
             throw new IdNotFoundInDatabaseException("Status", id);
 
         if (nameImproper(name))
-            throw new NameImproperException(name);
+            throw new ValueImproperException(name);
 
         if(ifNameTaken(name)){
             throw new NotUniqueException("Status", "name", name);

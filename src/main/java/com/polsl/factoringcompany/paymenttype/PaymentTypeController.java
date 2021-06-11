@@ -26,7 +26,7 @@ public class PaymentTypeController {
 
 
     @PostMapping
-    public PaymentTypeEntity addPaymentType(@RequestParam() String name) {
+    public PaymentTypeEntity addPaymentType(@RequestParam String name) {
         return this.paymentTypeService.addPaymentType(name);
     }
 

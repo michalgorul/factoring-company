@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NameImproperAdvice {
 
     @ResponseBody
-    @ExceptionHandler(NameImproperException.class)
+    @ExceptionHandler(ValueImproperException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public String idNotFoundHandler(NameImproperException ex){
+    public String idNotFoundHandler(ValueImproperException ex){
         return ex.getMessage();
     }
 }

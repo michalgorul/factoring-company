@@ -2,8 +2,8 @@ package com.polsl.factoringcompany.product;
 
 import com.google.common.base.Throwables;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
+import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -81,13 +81,13 @@ public class ProductService {
 
     private void validating(String name, String pkwiu, String measureUnit) {
         if (!nameImproper(name))
-            throw new NameImproperException(name);
+            throw new ValueImproperException(name);
 
         if (!pkwiuImproper(pkwiu))
-            throw new NameImproperException(pkwiu, "PKWIU");
+            throw new ValueImproperException(pkwiu, "PKWIU");
 
         if (!measureUnitImproper(measureUnit))
-            throw new NameImproperException(measureUnit, "measure unit");
+            throw new ValueImproperException(measureUnit, "measure unit");
 
         if (ifNameTaken(name))
             throw new NotUniqueException("Product", "name", name);
@@ -96,7 +96,7 @@ public class ProductService {
     // TODO: 23.05.2021 CONSIDER MEASURE UNIT - ANOTHER TABLE? CHECKING? IF YES - HOW?
 
     public boolean ifNameTaken(String name) {
-        Optional<ProductEntity> foundByName = productRepository.findPProductEntityByName(
+        Optional<ProductEntity> foundByName = productRepository.findProductEntityByName(
                 StringUtils.capitalize(name));
         return foundByName.isPresent();
     }

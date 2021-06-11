@@ -1,8 +1,8 @@
 package com.polsl.factoringcompany.paymenttype;
 
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.NameImproperException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
+import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -25,13 +25,13 @@ public class PaymentTypeService {
 
     public PaymentTypeEntity getPaymentType(Long id) throws IdNotFoundInDatabaseException {
         return this.paymentTypeRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type:", id ));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type: ", id ));
     }
 
     public PaymentTypeEntity addPaymentType(String name) {
 
         if (nameImproper(name))
-            throw new NameImproperException(name);
+            throw new ValueImproperException(name);
         try {
             return this.paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
@@ -62,7 +62,7 @@ public class PaymentTypeService {
             throw new IdNotFoundInDatabaseException("Payment type", id);
 
         if (nameImproper(name))
-            throw new NameImproperException(name);
+            throw new ValueImproperException(name);
 
         if(ifNameTaken(name)){
             throw new NotUniqueException("Payment type", "name", name);

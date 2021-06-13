@@ -13,7 +13,7 @@ public class StatusConfig {
     CommandLineRunner commandLineRunnerStatus(StatusRepository statusRepository) {
         return args -> {
             StatusEntity invalid = new StatusEntity("Invalid or incomplete");
-            StatusEntity cancelled = new StatusEntity("Cancelled by customer");
+            StatusEntity cancelled = new StatusEntity("Cancelled");
             StatusEntity declined = new StatusEntity("Authorisation declined");
             StatusEntity authorized = new StatusEntity("Authorised");
             StatusEntity authorizedAndCancelled = new StatusEntity("Authorised and cancelled");

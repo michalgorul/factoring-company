@@ -14,44 +14,31 @@ public class CompanyController {
 
 
     @GetMapping
-    public List<CompanyEntity> getPaymentTypes() {
+    public List<CompanyEntity> getCompanies() {
         return companyService.getCompanies();
     }
 
 
     @GetMapping(path = "/{id}")
-    public CompanyEntity getPaymentType(@PathVariable Long id) {
+    public CompanyEntity getCompany(@PathVariable Long id) {
         return this.companyService.getCompany(id);
     }
 
 
     @PostMapping
-    public CompanyEntity addPaymentType(@RequestParam String companyName,
-                                        @RequestParam String country,
-                                        @RequestParam String city,
-                                        @RequestParam String street,
-                                        @RequestParam String postalCode,
-                                        @RequestParam String nip,
-                                        @RequestParam String regon) {
-        return this.companyService.addCompany(companyName, country, city, street, postalCode, nip, regon);
+    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
+        return this.companyService.addCompany(companyEntity);
     }
 
 
     @PutMapping("/{id}")
-    public CompanyEntity updatePaymentType(@PathVariable Long id,
-                                           @RequestParam String companyName,
-                                           @RequestParam String country,
-                                           @RequestParam String city,
-                                           @RequestParam String street,
-                                           @RequestParam String postalCode,
-                                           @RequestParam String nip,
-                                           @RequestParam String regon) {
-        return this.companyService.updateCompany(id, companyName, country, city, street, postalCode, nip, regon);
+    public CompanyEntity updateCompany(@PathVariable Long id, @RequestBody CompanyEntity companyEntity) {
+        return this.companyService.updateCompany(id, companyEntity);
     }
 
 
     @DeleteMapping("/{id}")
-    public void deletePaymentType(@PathVariable Long id) {
+    public void deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
     }
 }

@@ -281,7 +281,7 @@ insert into currency (name, code) values ('Real', 'BRL');
 
 
 insert into status (name) values ('Invalid or incomplete');
-insert into status (name) values ('Cancelled by customer');
+insert into status (name) values ('Cancelled by com.polsl.factoringcompany.customer');
 insert into status (name) values ('Authorisation declined');
 insert into status (name) values ('Authorised');
 insert into status (name) values ('Authorised and cancelled');

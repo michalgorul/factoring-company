@@ -20,7 +20,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     public List<CompanyEntity> getCompanies() {
-        return companyRepository.findAll();
+        return this.companyRepository.findAll();
     }
 
     public CompanyEntity getCompany(Long id) {
@@ -28,35 +28,24 @@ public class CompanyService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", id));
     }
 
-    public CompanyEntity addCompany(String companyName, String country, String city, String street,
-                                    String postalCode, String nip, String regon) {
+    public CompanyEntity addCompany(CompanyEntity companyEntity) {
 
-        if(ifNipTakenAdding(nip)){
-            throw new NotUniqueException("Company", "NIP", nip);
-        }
-
-        if(ifRegonTakenAdding(regon)){
-            throw new NotUniqueException("Company", "REGON", regon);
-        }
-
-        if (ifNotDigitsOnly(nip))
-            throw new ValueImproperException(nip, "NIP");
-
-        if (ifNotDigitsOnly(regon))
-            throw new ValueImproperException(regon, "REGON");
+        addValidate(companyEntity);
 
         try {
             return this.companyRepository.save(new CompanyEntity(
-                    StringUtils.capitalize(companyName),
-                    StringUtils.capitalize(country),
-                    StringUtils.capitalize(city),
-                    StringUtils.capitalize(street),
-                    postalCode, nip, regon));
+                    StringUtils.capitalize(companyEntity.getCompanyName()),
+                    StringUtils.capitalize(companyEntity.getCountry()),
+                    StringUtils.capitalize(companyEntity.getCity()),
+                    StringUtils.capitalize(companyEntity.getStreet()),
+                    companyEntity.getPostalCode(),
+                    companyEntity.getNip(),
+                    companyEntity.getRegon()));
         } catch (RuntimeException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Company", "companyName", companyName);
+                    throw new NotUniqueException("Company", "companyName", companyEntity.getCompanyName());
                 }
             }
             throw new RuntimeException(e);
@@ -64,42 +53,29 @@ public class CompanyService {
     }
 
 
-    public CompanyEntity updateCompany(Long id, String companyName, String country, String city, String street,
-                                       String postalCode, String nip, String regon) {
+    public CompanyEntity updateCompany(Long id, CompanyEntity companyEntity) {
 
-        Optional<CompanyEntity> companyEntity = companyRepository.findById(id);
+        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
 
-        if (companyEntity.isEmpty())
+        if (companyEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("Company", id);
 
-        if(ifNipTakenUpdating(id, nip)){
-            throw new NotUniqueException("Company", "NIP", nip);
-        }
-
-        if(ifRegonTakenUpdating(id, regon)){
-            throw new NotUniqueException("Company", "REGON", regon);
-        }
-
-        if (ifNotDigitsOnly(nip))
-            throw new ValueImproperException(nip, "NIP");
-
-        if (ifNotDigitsOnly(regon))
-            throw new ValueImproperException(regon, "REGON");
+        updateValidate(id, companyEntity);
 
         try {
-            companyEntity.get().setCompanyName(StringUtils.capitalize(companyName));
-            companyEntity.get().setCountry(StringUtils.capitalize(country));
-            companyEntity.get().setCity(StringUtils.capitalize(city));
-            companyEntity.get().setStreet(StringUtils.capitalize(street));
-            companyEntity.get().setPostalCode(postalCode);
-            companyEntity.get().setNip(nip);
-            companyEntity.get().setRegon(regon);
-            return this.companyRepository.save(companyEntity.get());
+            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyEntity.getCompanyName()));
+            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyEntity.getCountry()));
+            companyEntityOptional.get().setCity(StringUtils.capitalize(companyEntity.getCity()));
+            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyEntity.getStreet()));
+            companyEntityOptional.get().setPostalCode(companyEntity.getPostalCode());
+            companyEntityOptional.get().setNip(companyEntity.getNip());
+            companyEntityOptional.get().setRegon(companyEntity.getRegon());
+            return this.companyRepository.save(companyEntityOptional.get());
         } catch (DataIntegrityViolationException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Company", "companyName", companyName);
+                    throw new NotUniqueException("Company", "companyName", companyEntity.getCompanyName());
                 }
             }
             throw new RuntimeException(e);
@@ -150,5 +126,33 @@ public class CompanyService {
 
     public boolean ifNotDigitsOnly(String checkingString){
         return !checkingString.chars().allMatch(Character::isDigit);
+    }
+
+    private void updateValidate(Long id, CompanyEntity companyEntity){
+        if(ifNipTakenUpdating(id, companyEntity.getNip()))
+            throw new NotUniqueException("Company", "NIP", companyEntity.getNip());
+
+        else if(ifRegonTakenUpdating(id, companyEntity.getRegon()))
+            throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
+
+        if (ifNotDigitsOnly(companyEntity.getNip()))
+            throw new ValueImproperException(companyEntity.getNip(), "NIP");
+
+        else if (ifNotDigitsOnly(companyEntity.getRegon()))
+            throw new ValueImproperException(companyEntity.getRegon(), "REGON");
+    }
+
+    private void addValidate(CompanyEntity companyEntity) {
+        if (ifNipTakenAdding(companyEntity.getNip()))
+            throw new NotUniqueException("Company", "NIP", companyEntity.getNip());
+
+        else if (ifRegonTakenAdding(companyEntity.getRegon()))
+            throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
+
+        if (ifNotDigitsOnly(companyEntity.getNip()))
+            throw new ValueImproperException(companyEntity.getNip(), "NIP");
+
+        else if (ifNotDigitsOnly(companyEntity.getRegon()))
+            throw new ValueImproperException(companyEntity.getRegon(), "REGON");
     }
 }

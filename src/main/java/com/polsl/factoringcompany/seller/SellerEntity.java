@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.customer;
+package com.polsl.factoringcompany.seller;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,19 +9,19 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "customer")
-public class CustomerEntity {
+@Table(name = "seller")
+public class SellerEntity {
 
     @Id
     @Column(name = "id", nullable = false)
     @SequenceGenerator(
-            name = "customer_sequence",
-            sequenceName = "customer_sequence",
+            name = "seller_sequence",
+            sequenceName = "seller_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "customer_sequence"
+            generator = "seller_sequence"
     )
     private long id;
 
@@ -46,18 +46,19 @@ public class CustomerEntity {
     @Column(name = "postal_code", length = 15)
     private String postalCode;
 
-    @Column(name = "phone", nullable = false, length = 15)
-    private String phone;
+    @Column(name = "nip", nullable = false, length = 10)
+    private String nip;
 
-    @Column(name = "blacklisted", nullable = false)
-    private boolean blacklisted;
+    @Column(name = "regon", nullable = false, length = 14)
+    private String regon;
 
-    public CustomerEntity() {
+
+    public SellerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName, String companyName,
-                          String country, String city, String street,
-                          String postalCode, String phone, boolean blacklisted) {
+    public SellerEntity(String firstName, String lastName, String companyName,
+                        String country, String city, String street,
+                        String postalCode, String nip, String regon) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.companyName = companyName;
@@ -65,17 +66,16 @@ public class CustomerEntity {
         this.city = city;
         this.street = street;
         this.postalCode = postalCode;
-        this.phone = phone;
-        this.blacklisted = blacklisted;
+        this.nip = nip;
+        this.regon = regon;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomerEntity that = (CustomerEntity) o;
+        SellerEntity that = (SellerEntity) o;
         return id == that.id &&
-                blacklisted == that.blacklisted &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(companyName, that.companyName) &&
@@ -83,13 +83,13 @@ public class CustomerEntity {
                 Objects.equals(city, that.city) &&
                 Objects.equals(street, that.street) &&
                 Objects.equals(postalCode, that.postalCode) &&
-                Objects.equals(phone, that.phone);
+                Objects.equals(nip, that.nip) &&
+                Objects.equals(regon, that.regon);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, companyName,
-                country, city, street, postalCode, phone, blacklisted);
+                country, city, street, postalCode, nip, regon);
     }
-
 }

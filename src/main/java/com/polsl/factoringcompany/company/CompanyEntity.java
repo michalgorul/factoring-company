@@ -39,10 +39,10 @@ public class CompanyEntity {
     @Column(name = "postal_code", length = 15)
     private String postalCode;
 
-    @Column(name = "nip", nullable = false, length = 10)
+    @Column(name = "nip", nullable = false, length = 10, unique = true)
     private String nip;
 
-    @Column(name = "regon", nullable = false, length = 14)
+    @Column(name = "regon", nullable = false, length = 14, unique = true)
     private String regon;
 
     public CompanyEntity() {

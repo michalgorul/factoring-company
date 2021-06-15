@@ -134,7 +134,7 @@ public class CompanyService {
         else if (ifRegonTakenAdding(companyEntity.getRegon()))
             throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
 
-        if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
+        else if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
             throw new ValueImproperException(companyEntity.getNip(), "NIP");
 
         else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
@@ -148,19 +148,19 @@ public class CompanyService {
             throw new ValueImproperException(companyEntity.getCompanyName());
         }
 
-        if (StringValidator.stringWithSpacesImproper(companyEntity.getCountry(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(companyEntity.getCountry(), 50)) {
             throw new ValueImproperException(companyEntity.getCountry());
         }
 
-        if (StringValidator.stringWithSpacesImproper(companyEntity.getCity(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(companyEntity.getCity(), 50)) {
             throw new ValueImproperException(companyEntity.getCity());
         }
 
-        if (StringValidator.stringWithSpacesImproper(companyEntity.getStreet(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(companyEntity.getStreet(), 50)) {
             throw new ValueImproperException(companyEntity.getStreet());
         }
 
-        if (StringValidator.stringWithSpacesImproper(companyEntity.getPostalCode(), 15)) {
+        else if (StringValidator.stringWithSpacesImproper(companyEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(companyEntity.getPostalCode());
         }
     }

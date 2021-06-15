@@ -47,7 +47,7 @@ create table seller (
 	country VARCHAR(50) NOT NULL,
 	city VARCHAR(50) NOT NULL,
 	street VARCHAR(50) NOT NULL,
-	postal_code VARCHAR(50),
+	postal_code VARCHAR(15),
 	nip VARCHAR(10) NOT NULL,
 	regon VARCHAR(14) NOT NULL
 );

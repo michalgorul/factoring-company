@@ -1,4 +1,6 @@
 package com.polsl.factoringcompany.seller;
 
-public interface SellerRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SellerRepository extends JpaRepository<SellerEntity, Long> {
 }

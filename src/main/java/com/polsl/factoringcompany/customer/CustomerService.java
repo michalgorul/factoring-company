@@ -86,23 +86,27 @@ public class CustomerService {
             throw new ValueImproperException(customerEntity.getFirstName());
         }
 
-        if (StringValidator.stringWithSpacesImproper(customerEntity.getLastName(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getLastName(), 50)) {
             throw new ValueImproperException(customerEntity.getLastName());
         }
 
-        if (StringValidator.stringWithSpacesImproper(customerEntity.getCompanyName(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCompanyName(), 50)) {
             throw new ValueImproperException(customerEntity.getCompanyName());
         }
 
-        if (StringValidator.stringWithSpacesImproper(customerEntity.getCountry(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCountry(), 50)) {
             throw new ValueImproperException(customerEntity.getCountry());
         }
 
-        if (StringValidator.stringWithSpacesImproper(customerEntity.getCity(), 50)) {
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCity(), 50)) {
             throw new ValueImproperException(customerEntity.getCity());
         }
 
-        if (StringValidator.stringWithSpacesImproper(customerEntity.getPostalCode(), 15)) {
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getStreet(), 50)) {
+            throw new ValueImproperException(customerEntity.getStreet());
+        }
+
+        else if (StringValidator.stringWithSpacesImproper(customerEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(customerEntity.getPostalCode());
         }
     }

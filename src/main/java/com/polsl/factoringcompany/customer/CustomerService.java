@@ -1,14 +1,12 @@
 package com.polsl.factoringcompany.customer;
 
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
-import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
+import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +27,8 @@ public class CustomerService {
 
     public CustomerEntity addCustomer(CustomerEntity customerEntity) {
 
-        validator(customerEntity);
+        nameValidator(customerEntity);
+        // TODO: 15.06.2021 NEED TO IMPLEMENT PHONE NUMBER VALIDATION
 
         try {
             return this.customerRepository.save(new CustomerEntity(
@@ -43,12 +42,6 @@ public class CustomerService {
                     customerEntity.getPhone(),
                     customerEntity.isBlacklisted()));
         } catch (RuntimeException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Customer", "companyName", customerEntity.getCompanyName());
-                }
-            }
             throw new RuntimeException(e);
         }
     }
@@ -68,7 +61,8 @@ public class CustomerService {
         if (customerEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("Customer", id);
 
-        validator(customerEntity);
+        nameValidator(customerEntity);
+        // TODO: 15.06.2021 NEED TO IMPLEMENT PHONE NUMBER VALIDATION
 
         try {
             customerEntityOptional.get().setFirstName(StringUtils.capitalize(customerEntity.getFirstName()));
@@ -82,51 +76,36 @@ public class CustomerService {
             customerEntityOptional.get().setBlacklisted(customerEntity.isBlacklisted());
 
             return this.customerRepository.save(customerEntityOptional.get());
-        } catch (DataIntegrityViolationException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Customer", "companyName", customerEntity.getCompanyName());
-                }
-            }
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void validator(CustomerEntity customerEntity) {
-        if (nameImproper(customerEntity.getFirstName(), 50)) {
+    private void nameValidator(CustomerEntity customerEntity) {
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getFirstName(), 50)) {
             throw new ValueImproperException(customerEntity.getFirstName());
         }
 
-        if (nameImproper(customerEntity.getLastName(), 50)) {
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getLastName(), 50)) {
             throw new ValueImproperException(customerEntity.getLastName());
         }
 
-        if (nameImproper(customerEntity.getCompanyName(), 50)) {
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getCompanyName(), 50)) {
             throw new ValueImproperException(customerEntity.getCompanyName());
         }
 
-        if (nameImproper(customerEntity.getCountry(), 50)) {
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getCountry(), 50)) {
             throw new ValueImproperException(customerEntity.getCountry());
         }
 
-        if (nameImproper(customerEntity.getCity(), 50)) {
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getCity(), 50)) {
             throw new ValueImproperException(customerEntity.getCity());
         }
-    }
 
-    public boolean nameImproper(String name, int length) {
-        return name == null || name.length() <= 0 || name.length() > length || !onlyLettersSpaces(name);
-    }
-
-    public static boolean onlyLettersSpaces(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (Character.isLetter(ch) || ch == ' ') {
-                continue;
-            }
-            return false;
+        if (StringValidator.stringWithSpacesImproper(customerEntity.getPostalCode(), 15)) {
+            throw new ValueImproperException(customerEntity.getPostalCode());
         }
-        return s.charAt(s.length() - 1) != ' ';
     }
+
+
 }

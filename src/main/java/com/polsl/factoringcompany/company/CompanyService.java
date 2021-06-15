@@ -4,12 +4,11 @@ package com.polsl.factoringcompany.company;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
+import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,12 +41,6 @@ public class CompanyService {
                     companyEntity.getNip(),
                     companyEntity.getRegon()));
         } catch (RuntimeException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Company", "companyName", companyEntity.getCompanyName());
-                }
-            }
             throw new RuntimeException(e);
         }
     }
@@ -71,13 +64,7 @@ public class CompanyService {
             companyEntityOptional.get().setNip(companyEntity.getNip());
             companyEntityOptional.get().setRegon(companyEntity.getRegon());
             return this.companyRepository.save(companyEntityOptional.get());
-        } catch (DataIntegrityViolationException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Company", "companyName", companyEntity.getCompanyName());
-                }
-            }
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
@@ -106,7 +93,7 @@ public class CompanyService {
 
         if (companyEntityById.isEmpty())
             throw new IdNotFoundInDatabaseException("Company", id);
-        if(companyEntityByNip.isEmpty())
+        if (companyEntityByNip.isEmpty())
             return false;
 
         return !companyEntityByNip.get().getId().equals(companyEntityById.get().getId());
@@ -118,28 +105,26 @@ public class CompanyService {
 
         if (companyEntityById.isEmpty())
             throw new IdNotFoundInDatabaseException("Company", id);
-        if(companyEntityByRegon.isEmpty())
+        if (companyEntityByRegon.isEmpty())
             return false;
 
         return !companyEntityByRegon.get().getId().equals(companyEntityById.get().getId());
     }
 
-    public boolean ifNotDigitsOnly(String checkingString){
-        return !checkingString.chars().allMatch(Character::isDigit);
-    }
-
-    private void updateValidate(Long id, CompanyEntity companyEntity){
-        if(ifNipTakenUpdating(id, companyEntity.getNip()))
+    private void updateValidate(Long id, CompanyEntity companyEntity) {
+        if (ifNipTakenUpdating(id, companyEntity.getNip()))
             throw new NotUniqueException("Company", "NIP", companyEntity.getNip());
 
-        else if(ifRegonTakenUpdating(id, companyEntity.getRegon()))
+        else if (ifRegonTakenUpdating(id, companyEntity.getRegon()))
             throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
 
-        if (ifNotDigitsOnly(companyEntity.getNip()))
+        if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
             throw new ValueImproperException(companyEntity.getNip(), "NIP");
 
-        else if (ifNotDigitsOnly(companyEntity.getRegon()))
+        else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
             throw new ValueImproperException(companyEntity.getRegon(), "REGON");
+
+        nameValidator(companyEntity);
     }
 
     private void addValidate(CompanyEntity companyEntity) {
@@ -149,10 +134,34 @@ public class CompanyService {
         else if (ifRegonTakenAdding(companyEntity.getRegon()))
             throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
 
-        if (ifNotDigitsOnly(companyEntity.getNip()))
+        if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
             throw new ValueImproperException(companyEntity.getNip(), "NIP");
 
-        else if (ifNotDigitsOnly(companyEntity.getRegon()))
+        else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
             throw new ValueImproperException(companyEntity.getRegon(), "REGON");
+
+        nameValidator(companyEntity);
+    }
+
+    private void nameValidator(CompanyEntity companyEntity) {
+        if (StringValidator.stringWithSpacesImproper(companyEntity.getCompanyName(), 50)) {
+            throw new ValueImproperException(companyEntity.getCompanyName());
+        }
+
+        if (StringValidator.stringWithSpacesImproper(companyEntity.getCountry(), 50)) {
+            throw new ValueImproperException(companyEntity.getCountry());
+        }
+
+        if (StringValidator.stringWithSpacesImproper(companyEntity.getCity(), 50)) {
+            throw new ValueImproperException(companyEntity.getCity());
+        }
+
+        if (StringValidator.stringWithSpacesImproper(companyEntity.getStreet(), 50)) {
+            throw new ValueImproperException(companyEntity.getStreet());
+        }
+
+        if (StringValidator.stringWithSpacesImproper(companyEntity.getPostalCode(), 15)) {
+            throw new ValueImproperException(companyEntity.getPostalCode());
+        }
     }
 }

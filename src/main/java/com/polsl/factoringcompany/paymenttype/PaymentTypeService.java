@@ -3,13 +3,12 @@ package com.polsl.factoringcompany.paymenttype;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
+import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,31 +18,29 @@ public class PaymentTypeService {
 
     private final PaymentTypeRepository paymentTypeRepository;
 
+
     public List<PaymentTypeEntity> getPaymentTypes() {
         return paymentTypeRepository.findAll();
     }
+
 
     public PaymentTypeEntity getPaymentType(Long id) throws IdNotFoundInDatabaseException {
         return this.paymentTypeRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type: ", id ));
     }
 
+
     public PaymentTypeEntity addPaymentType(String name) {
 
-        if (nameImproper(name))
-            throw new ValueImproperException(name);
+        nameValidation(name);
+
         try {
             return this.paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
         } catch (RuntimeException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Payment type", "name", name);
-                }
-            }
             throw new RuntimeException(e);
         }
     }
+
 
     public void deletePaymentType(Long id) throws IdNotFoundInDatabaseException {
         try {
@@ -53,6 +50,7 @@ public class PaymentTypeService {
         }
     }
 
+
     @Transactional
     public PaymentTypeEntity updatePaymentType(Long id, String name) {
 
@@ -61,48 +59,31 @@ public class PaymentTypeService {
         if (paymentTypeEntity.isEmpty())
             throw new IdNotFoundInDatabaseException("Payment type", id);
 
-        if (nameImproper(name))
-            throw new ValueImproperException(name);
-
-        if(ifNameTaken(name)){
-            throw new NotUniqueException("Payment type", "name", name);
-        }
+        nameValidation(name);
 
         try {
             paymentTypeEntity.get().setName(StringUtils.capitalize(name));
             return this.paymentTypeRepository.save(paymentTypeEntity.get());
-        } catch (DataIntegrityViolationException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if ("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new NotUniqueException("Payment type", "name", name);
-                }
-            }
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+
+    private void nameValidation(String name) {
+        if (StringValidator.stringWithSpacesImproper(name, 25))
+            throw new ValueImproperException(name);
+
+        if (ifNameTaken(name)) {
+            throw new NotUniqueException("Payment type", "name", name);
+        }
+    }
+
+
     public boolean ifNameTaken(String name) {
         Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findPaymentTypeEntityByName(
                 StringUtils.capitalize(name));
         return paymentTypeEntity.isPresent();
-    }
-
-    // TODO: 25.05.2021 I CAN ADD A NAME VALIDATOR CLASS OR STH
-    public boolean nameImproper(String name) {
-        return name == null || name.length() <= 0 || name.length() > 25 || !onlyLettersSpaces(name);
-    }
-
-
-    public static boolean onlyLettersSpaces(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (Character.isLetter(ch) || ch == ' ') {
-                continue;
-            }
-            return false;
-        }
-        return s.charAt(s.length() - 1) != ' ';
     }
 }

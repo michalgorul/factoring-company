@@ -77,17 +77,17 @@ public class CompanyService {
         }
     }
 
-    public boolean ifNipTakenAdding(String nip) {
+    private boolean ifNipTakenAdding(String nip) {
         Optional<CompanyEntity> companyEntity = companyRepository.findCompanyEntityByNip(nip);
         return companyEntity.isPresent();
     }
 
-    public boolean ifRegonTakenAdding(String regon) {
+    private boolean ifRegonTakenAdding(String regon) {
         Optional<CompanyEntity> companyEntity = companyRepository.findCompanyEntityByRegon(regon);
         return companyEntity.isPresent();
     }
 
-    public boolean ifNipTakenUpdating(Long id, String nip) {
+    private boolean ifNipTakenUpdating(Long id, String nip) {
         Optional<CompanyEntity> companyEntityByNip = companyRepository.findCompanyEntityByNip(nip);
         Optional<CompanyEntity> companyEntityById = companyRepository.findById(id);
 
@@ -99,7 +99,7 @@ public class CompanyService {
         return !companyEntityByNip.get().getId().equals(companyEntityById.get().getId());
     }
 
-    public boolean ifRegonTakenUpdating(Long id, String regon) {
+    private boolean ifRegonTakenUpdating(Long id, String regon) {
         Optional<CompanyEntity> companyEntityByRegon = companyRepository.findCompanyEntityByRegon(regon);
         Optional<CompanyEntity> companyEntityById = companyRepository.findById(id);
 
@@ -118,12 +118,6 @@ public class CompanyService {
         else if (ifRegonTakenUpdating(id, companyEntity.getRegon()))
             throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
 
-        if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
-            throw new ValueImproperException(companyEntity.getNip(), "NIP");
-
-        else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
-            throw new ValueImproperException(companyEntity.getRegon(), "REGON");
-
         nameValidator(companyEntity);
     }
 
@@ -133,12 +127,6 @@ public class CompanyService {
 
         else if (ifRegonTakenAdding(companyEntity.getRegon()))
             throw new NotUniqueException("Company", "REGON", companyEntity.getRegon());
-
-        else if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
-            throw new ValueImproperException(companyEntity.getNip(), "NIP");
-
-        else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
-            throw new ValueImproperException(companyEntity.getRegon(), "REGON");
 
         nameValidator(companyEntity);
     }
@@ -163,5 +151,11 @@ public class CompanyService {
         else if (StringValidator.stringWithSpacesImproper(companyEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(companyEntity.getPostalCode());
         }
+
+        else if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
+            throw new ValueImproperException(companyEntity.getNip(), "NIP");
+
+        else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
+            throw new ValueImproperException(companyEntity.getRegon(), "REGON");
     }
 }

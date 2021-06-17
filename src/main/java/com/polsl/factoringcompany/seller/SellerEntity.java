@@ -1,15 +1,17 @@
 package com.polsl.factoringcompany.seller;
 
+import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "seller")
+@Table(name = "seller", schema = "public")
 public class SellerEntity {
 
     @Id
@@ -23,7 +25,7 @@ public class SellerEntity {
             strategy = GenerationType.SEQUENCE,
             generator = "seller_sequence"
     )
-    private long id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
@@ -51,6 +53,10 @@ public class SellerEntity {
 
     @Column(name = "regon", nullable = false, length = 14)
     private String regon;
+
+    @OneToMany(mappedBy = "sellerBySellerId")
+    private Collection<BankAccountEntity> bankAccountsById;
+
 
 
     public SellerEntity() {
@@ -92,4 +98,5 @@ public class SellerEntity {
         return Objects.hash(id, firstName, lastName, companyName,
                 country, city, street, postalCode, nip, regon);
     }
+
 }

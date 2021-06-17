@@ -23,7 +23,7 @@ public class CustomerEntity {
             strategy = GenerationType.SEQUENCE,
             generator = "customer_sequence"
     )
-    private long id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;

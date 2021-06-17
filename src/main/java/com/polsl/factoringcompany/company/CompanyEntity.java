@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.company;
 
+import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -45,6 +47,10 @@ public class CompanyEntity {
     @Column(name = "regon", nullable = false, length = 14, unique = true)
     private String regon;
 
+    @OneToMany(mappedBy = "companyByCompanyId")
+    private Collection<BankAccountEntity> bankAccountsById;
+
+
     public CompanyEntity() {
 
     }
@@ -65,14 +71,20 @@ public class CompanyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompanyEntity that = (CompanyEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(companyName, that.companyName) &&
-                Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) &&
-                Objects.equals(nip, that.nip) && Objects.equals(regon, that.regon);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(companyName, that.companyName) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(street, that.street) &&
+                Objects.equals(postalCode, that.postalCode) &&
+                Objects.equals(nip, that.nip) &&
+                Objects.equals(regon, that.regon);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, companyName, country, city, street, postalCode, nip, regon);
+        return Objects.hash(id, companyName,
+                country, city, street, postalCode, nip, regon);
     }
+
 }

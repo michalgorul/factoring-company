@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.company;
 
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
+import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,6 +50,9 @@ public class CompanyEntity {
 
     @OneToMany(mappedBy = "companyByCompanyId")
     private Collection<BankAccountEntity> bankAccountsById;
+
+    @OneToMany(mappedBy = "companyByCompanyId")
+    private Collection<UserEntity> usersById;
 
 
     public CompanyEntity() {

@@ -84,7 +84,7 @@ create table "user" (
 	postal_code VARCHAR(50),
 	phone VARCHAR(50) NOT NULL,
 	company_id INT NOT NULL,
-	CONSTRAINT seller_company_FK FOREIGN KEY ( company_id ) REFERENCES company ( id )
+	CONSTRAINT user_company_FK FOREIGN KEY ( company_id ) REFERENCES company ( id )
 );
 
 create table invoice (

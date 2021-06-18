@@ -102,7 +102,7 @@ public class BankAccountService {
         Optional<BankAccountEntity> bankAccountEntitybyId = bankAccountRepository.findById(id);
 
         if (bankAccountEntitybyId.isEmpty())
-            throw new IdNotFoundInDatabaseException("Company", id);
+            throw new IdNotFoundInDatabaseException("Bank Account", id);
         if (bankAccountEntitybyBankAccountNumber.isEmpty())
             return false;
 
@@ -122,7 +122,7 @@ public class BankAccountService {
             throw new ValueImproperException(bankAccountEntity.getBankAccountNumber());
         }
 
-        else if (!StringValidator.ifBankAccountNumberValid(bankAccountEntity.getBankAccountNumber())){
+        else if (!StringValidator.isBankAccountNumberValid(bankAccountEntity.getBankAccountNumber())){
             throw new ValueImproperException((bankAccountEntity.getBankAccountNumber()));
         }
 

@@ -83,8 +83,6 @@ public class SellerService {
     }
 
 
-
-
     private void nameValidator(SellerEntity sellerEntity) {
         if (StringValidator.stringWithSpacesImproper(sellerEntity.getFirstName(), 50)) {
             throw new ValueImproperException(sellerEntity.getFirstName());

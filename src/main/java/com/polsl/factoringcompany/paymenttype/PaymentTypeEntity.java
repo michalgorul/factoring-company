@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.paymenttype;
 
+import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +28,10 @@ public class PaymentTypeEntity {
 
     @Column(name = "name", nullable = false, length = 25, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "paymentTypeByPaymentTypeId")
+    private Collection<InvoiceEntity> invoicesById;
+
 
     public PaymentTypeEntity() {
     }

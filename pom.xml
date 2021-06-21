@@ -83,6 +83,14 @@
             <version>1.7</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/pl.allegro.finance/tradukisto -->
+        <dependency>
+            <groupId>pl.allegro.finance</groupId>
+            <artifactId>tradukisto</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+
 
 
     </dependencies>

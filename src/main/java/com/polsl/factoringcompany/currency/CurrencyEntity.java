@@ -1,9 +1,12 @@
 package com.polsl.factoringcompany.currency;
 
+
+import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -29,6 +32,10 @@ public class CurrencyEntity {
 
     @Column(name = "code", nullable = false, length = 5, unique = true)
     private String code;
+
+    @OneToMany(mappedBy = "currencyByCurrencyId")
+    private Collection<InvoiceEntity> invoicesById;
+
 
     public CurrencyEntity() {
     }

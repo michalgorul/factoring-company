@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.customer;
 
+import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -51,6 +53,10 @@ public class CustomerEntity {
 
     @Column(name = "blacklisted", nullable = false)
     private boolean blacklisted;
+
+    @OneToMany(mappedBy = "customerByCustomerId")
+    private Collection<InvoiceEntity> invoicesById;
+
 
     public CustomerEntity() {
     }

@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.seller;
 
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
+import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,6 +57,10 @@ public class SellerEntity {
 
     @OneToMany(mappedBy = "sellerBySellerId")
     private Collection<BankAccountEntity> bankAccountsById;
+
+    @OneToMany(mappedBy = "sellerBySellerId")
+    private Collection<InvoiceEntity> invoicesById;
+
 
 
 

@@ -28,7 +28,6 @@ public class CustomerService {
     public CustomerEntity addCustomer(CustomerEntity customerEntity) {
 
         nameValidator(customerEntity);
-        // TODO: 15.06.2021 NEED TO IMPLEMENT PHONE NUMBER VALIDATION
 
         try {
             return this.customerRepository.save(new CustomerEntity(
@@ -62,7 +61,6 @@ public class CustomerService {
             throw new IdNotFoundInDatabaseException("Customer", id);
 
         nameValidator(customerEntity);
-        // TODO: 15.06.2021 NEED TO IMPLEMENT PHONE NUMBER VALIDATION
 
         try {
             customerEntityOptional.get().setFirstName(StringUtils.capitalize(customerEntity.getFirstName()));
@@ -109,6 +107,11 @@ public class CustomerService {
         else if (StringValidator.stringWithSpacesImproper(customerEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(customerEntity.getPostalCode());
         }
+
+        else if (!StringValidator.isPhoneNumberValid(customerEntity.getPhone())) {
+            throw new ValueImproperException(customerEntity.getPhone());
+        }
+
     }
 
 

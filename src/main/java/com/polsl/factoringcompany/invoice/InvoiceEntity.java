@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.currency.CurrencyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
+import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.seller.SellerEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
@@ -97,6 +98,9 @@ public class InvoiceEntity {
 
     @OneToMany(mappedBy = "invoiceByInvoiceId")
     private Collection<TransactionEntity> transactionsById;
+
+    @OneToMany(mappedBy = "invoiceByInvoiceId")
+    private Collection<OrderEntity> ordersById;
 
 
     public InvoiceEntity() {

@@ -2,10 +2,12 @@ package com.polsl.factoringcompany.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
+import com.polsl.factoringcompany.order.OrderEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -58,6 +60,10 @@ public class UserEntity {
 
     @Column(name = "company_id", nullable = false)
     private int companyId;
+
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<OrderEntity> ordersById;
+
 
     @ManyToOne
     @JsonIgnore

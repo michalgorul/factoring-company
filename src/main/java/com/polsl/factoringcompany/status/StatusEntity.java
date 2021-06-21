@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.status;
 
+import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,9 @@ public class StatusEntity {
 
     @OneToMany(mappedBy = "statusByStatusId")
     private Collection<TransactionEntity> transactionsById;
+
+    @OneToMany(mappedBy = "statusByStatusId")
+    private Collection<OrderEntity> ordersById;
 
 
     public StatusEntity() {

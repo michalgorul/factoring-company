@@ -62,6 +62,9 @@ public class InvoiceItemEntity {
     @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private InvoiceEntity invoiceByInvoiceId;
 
+    public InvoiceItemEntity() {
+    }
+
     public InvoiceItemEntity(InvoiceItemDto invoiceItemDto) {
         BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuentity() * invoiceItemDto.getNetPrice().doubleValue());
         BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue());

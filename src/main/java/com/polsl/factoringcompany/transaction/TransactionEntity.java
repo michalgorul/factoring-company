@@ -50,23 +50,35 @@ public class TransactionEntity {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private StatusEntity statusByStatusId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CustomerEntity customerByCustomerId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private InvoiceEntity invoiceByInvoiceId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CurrencyEntity currencyByCurrencyId;
+
+    public TransactionEntity() {
+    }
+
+    public TransactionEntity(TransactionEntity transactionEntity) {
+        this.transactionDate = transactionEntity.transactionDate;
+        this.value = transactionEntity.getValue();
+        this.statusId = transactionEntity.getStatusId();
+        this.customerId = transactionEntity.getCustomerId();
+        this.invoiceId = transactionEntity.getInvoiceId();
+        this.currencyId = transactionEntity.getCurrencyId();
+    }
 
 
     @Override

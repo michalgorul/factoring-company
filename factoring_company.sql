@@ -117,7 +117,9 @@ create table invoice_item (
 	vat_value DECIMAL(8,2) NOT NULL,
 	gross_value DECIMAL(8,2) NOT NULL,
 	product_id INT NOT NULL,
-	invoice_id INT NOT NULL
+	invoice_id INT NOT NULL,
+    CONSTRAINT invoice_item_product_FK FOREIGN KEY ( product_id ) REFERENCES product ( id ),
+    CONSTRAINT invoice_item_invoice_FK FOREIGN KEY ( invoice_id ) REFERENCES invoice ( id )
 );
 
 create table transaction (

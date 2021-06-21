@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.status;
 
+import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +28,10 @@ public class StatusEntity {
 
     @Column(name = "name", nullable = false, length = 25, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "statusByStatusId")
+    private Collection<TransactionEntity> transactionsById;
+
 
     public StatusEntity() {
     }

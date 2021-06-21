@@ -3,8 +3,10 @@ package com.polsl.factoringcompany.invoice;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.currency.CurrencyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
+import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.seller.SellerEntity;
+import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
 import lombok.Setter;
 import pl.allegro.finance.tradukisto.MoneyConverters;
@@ -12,6 +14,7 @@ import pl.allegro.finance.tradukisto.MoneyConverters;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -88,6 +91,12 @@ public class InvoiceEntity {
     @ManyToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CurrencyEntity currencyByCurrencyId;
+
+    @OneToMany(mappedBy = "invoiceByInvoiceId")
+    private Collection<InvoiceItemEntity> invoiceItemsById;
+
+    @OneToMany(mappedBy = "invoiceByInvoiceId")
+    private Collection<TransactionEntity> transactionsById;
 
 
     public InvoiceEntity() {

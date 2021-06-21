@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.customer;
 
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
+import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,6 +57,9 @@ public class CustomerEntity {
 
     @OneToMany(mappedBy = "customerByCustomerId")
     private Collection<InvoiceEntity> invoicesById;
+
+    @OneToMany(mappedBy = "customerByCustomerId")
+    private Collection<TransactionEntity> transactionsById;
 
 
     public CustomerEntity() {

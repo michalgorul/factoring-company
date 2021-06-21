@@ -26,16 +26,6 @@ public class InvoiceService {
     }
 
 
-
-
-    public void deleteInvoice(Long id) {
-        try {
-            this.invoiceRepository.deleteById(id);
-        } catch (RuntimeException ex) {
-            throw new IdNotFoundInDatabaseException("Invoice", id);
-        }
-    }
-
     public InvoiceEntity addInvoice(InvoiceDto invoiceDto) {
 
         try {
@@ -96,4 +86,14 @@ public class InvoiceService {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteInvoice(Long id) {
+        try {
+            this.invoiceRepository.deleteById(id);
+        } catch (RuntimeException ex) {
+            throw new IdNotFoundInDatabaseException("Invoice", id);
+        }
+    }
+
+
 }

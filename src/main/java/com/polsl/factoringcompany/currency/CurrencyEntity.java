@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.currency;
 
 
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
+import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +36,9 @@ public class CurrencyEntity {
 
     @OneToMany(mappedBy = "currencyByCurrencyId")
     private Collection<InvoiceEntity> invoicesById;
+
+    @OneToMany(mappedBy = "currencyByCurrencyId")
+    private Collection<TransactionEntity> transactionsById;
 
 
     public CurrencyEntity() {

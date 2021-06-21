@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.product;
 
+import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Getter
@@ -32,6 +34,10 @@ public class ProductEntity {
 
     @Column(name = "measure_unit", nullable = false, length = 8)
     private String measureUnit;
+
+    @OneToMany(mappedBy = "productByProductId")
+    private Collection<InvoiceItemEntity> invoiceItemsById;
+
 
     public ProductEntity() {
     }

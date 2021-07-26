@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/currency")

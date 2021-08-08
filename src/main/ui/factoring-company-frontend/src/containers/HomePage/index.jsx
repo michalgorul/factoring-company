@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navbar } from '../../components/navbar';
 import { PageContainer } from '../../components/pageContainer';
+import { FundingSolution } from './fundingSolutions';
+import { QuickInfo } from './quickInfo';
 import { TopSection } from './topSection';
 
 export function HomePage(props) {
@@ -8,5 +10,7 @@ export function HomePage(props) {
         <TopSection>
             <Navbar />
         </TopSection>
+        <FundingSolution />
+        <QuickInfo />
     </PageContainer>
 }

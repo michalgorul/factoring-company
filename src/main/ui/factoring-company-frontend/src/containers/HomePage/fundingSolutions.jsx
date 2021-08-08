@@ -13,7 +13,7 @@ export function FundingSolution(props) {
             </div>
 
             <div class="row my-5 align-items-center justify-content-center container-fluid">
-                <div class="col-8 col-lg-6">
+                <div class="col-10 col-lg-6">
                     <div class="card border-1 h-10">
                         <div class="card-body text-center py-4">
                             <h4 class="card-title">Line of Credit</h4>
@@ -28,12 +28,12 @@ export function FundingSolution(props) {
                             <p class="card-text mx-5 text-muted d-none d-lg-block">
                                 <Check /> No prepayment penalties
                             </p>
-                            <a href="/" class="btn btn-outline-primary btn-lg mt-3">Learn more</a>
+                            <a href="/" class="btn btn-outline-success btn-lg mt-3">Learn more</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-8 col-lg-6">
+                <div class="col-10 col-lg-6">
                     <div class="card border-1">
                         <div class="card-body text-center py-4 flex-fill">
                             <h4 class="card-title">Invoice Factoring</h4>
@@ -48,7 +48,7 @@ export function FundingSolution(props) {
                             <p class="card-text mx-5 text-muted d-none d-lg-block">
                                 <Check /> You choose the period
                             </p>
-                            <a href="/" class="btn btn-outline-primary btn-lg mt-3">Learn more</a>
+                            <a href="/" class="btn btn-outline-success btn-lg mt-3">Learn more</a>
                         </div>
                     </div>
                 </div> 

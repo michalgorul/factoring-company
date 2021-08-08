@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BrandLogo } from "../../components/brandLogo";
+import { Marginer } from "../../components/marginer";
+import { Button } from "../../components/button";
 
 import TopSectionBGImage from '../../images/TopSectionBG.jpg';
 
 //Copy this link and paste it wherever it's visible, close to where you’re using the resource. If that's not possible, place it at the footer of your website, blog or newsletter, or in the credits section.
 //<a href="https://www.freepik.com/vectors/business">Business vector created by vectorjuice - www.freepik.com</a>
-import TopSectionIllustration from '../../images/illustration.jpg';
+import TopSectionIllustration from '../../images/illustration.png';
 
 const TopSectionContainer = styled.div`
         width: 100%;
@@ -56,14 +58,19 @@ const SloganText = styled.h3`
 `;
 
 export function TopSection(props) {
+
+    const {children} = props;
     return (
         <TopSectionContainer>
             <BackgroundFilter>
+                {children}
                 <TopSectionInnerContainer>        
                     <LogoContainer>
                         <BrandLogo logoSize={160} />
                         <SloganText>Best funding</SloganText>
                         <SloganText>for your business</SloganText>
+                        <Marginer direction="vertical" margin={15} />
+                        <Button>Apply Now</Button>
                     </LogoContainer>
                     <StandoutImage>
                         <img src={TopSectionIllustration} alt="best in the field" />

@@ -9,8 +9,8 @@ const BrandLogoContainer = styled.div`
 `;
 
 const LogoImage = styled.div`
-  width: ${({ size }) => (size ? size + "px" : "4em")};
-  height: ${({ size }) => (size ? size + "px" : "4em")};
+  width: ${({ size }) => (size ? size + "px" : "3em")};
+  height: ${({ size }) => (size ? size + "px" : "3em")};
   img {
     width: 100%;
     height: 100%;

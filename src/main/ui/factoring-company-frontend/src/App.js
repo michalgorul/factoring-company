@@ -1,10 +1,9 @@
-import './App.css';
-import ListCurrenciesComponent from './components/ListCurrenciesComponent';
-
+import {HomePage} from './containers/HomePage'
 function App() {
   return (
-    <div className="container">
-      <ListCurrenciesComponent></ListCurrenciesComponent>
+    <div className="App">
+      <HomePage />
+
     </div>
   );
 }

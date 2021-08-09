@@ -1,16 +1,24 @@
 import React from 'react'
 import { Check } from 'react-bootstrap-icons';
+import { Marginer } from '../../components/marginer';
+import styled from "styled-components";
+
+const FullWidth = styled.div`
+  width: 100%;
+`;
 
 export function FundingSolution(props) {
 
     return (
-
-        <section id="funding" class="bg-light mt-5">
-        <div class="container-lg">
-            <div class="text-center">
-                <h2>Funding Plans</h2>
-                <p class="lead text-muted">Funding solutions tailored to your business needs</p>
+        <FullWidth className="bg-light">
+            <div class="container-lg">
+                <div class="text-center">
+                    <Marginer direction="vertical" margin={25} />
+                    <h2>Funding Plans</h2>
+                    <p class="lead text-muted">Funding solutions tailored to your business needs</p>
+                </div>
             </div>
+            
 
             <div class="row my-5 align-items-center justify-content-center container-fluid">
                 <div class="col-10 col-lg-6">
@@ -53,9 +61,8 @@ export function FundingSolution(props) {
                     </div>
                 </div> 
             </div>
-        </div>
-    </section>
-
+        </FullWidth>
+        
     )
 
 }

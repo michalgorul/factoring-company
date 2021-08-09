@@ -9,12 +9,12 @@ const ButtonWrapper = styled.button`
   font-size: ${({ size }) => (size ? size + "px" : "18px")};
   font-weight: 600;
   border-radius: 20px;
-  background-color: #2a9d8f;
+  background-color: #0d6efd;
   cursor: pointer;
   transition: all 200ms ease-in-out;
   margin-left: ${({ marginLeft }) => (marginLeft ? marginLeft + "px" : "175px")};;
   &:hover {
-    background-color: #21867a;
+    background-color: #0c5ace;
   }
   &:focus {
     outline: none;

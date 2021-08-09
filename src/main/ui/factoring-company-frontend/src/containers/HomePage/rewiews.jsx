@@ -1,15 +1,26 @@
 import React from 'react';
 import { Stars, StarFill, StarHalf } from 'react-bootstrap-icons';
-import styled from "styled-components";
 import Google from '../../images/google-symbol.png'
 //<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
+import styled from "styled-components";
+import { Marginer } from '../../components/marginer';
+
+
+const FullWidth = styled.div`
+  width: 100%;
+`;
+
+
 const Reviews = () => {
     return ( 
-        <section id="reviews" class="bg-light">
+
+        <FullWidth className="bg-light">
             <div class="container-lg">
                 <div class="text-center">
+                    <Marginer direction="vertical" margin={25} />
                     <h2><Stars /> Application Reviews</h2>
+                    <p class="lead text-muted">Funding solutions tailored to your business needs</p>
                 </div>
 
                 <div class="row justify-content-center my-5">
@@ -94,7 +105,8 @@ const Reviews = () => {
                 </figure>
                     
             </div>
-        </section>
+        </FullWidth>
+            
      );
 }
  

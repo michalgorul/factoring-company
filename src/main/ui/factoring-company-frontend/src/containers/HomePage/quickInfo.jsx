@@ -22,7 +22,7 @@ const LogoImage = styled.div`
 
 export class QuickInfo extends Component {
     render() {
-        return (
+        return ( 
             <section id="funding" class="bg-light mt-5">
         <div class="container-lg">
             <div class="text-center">

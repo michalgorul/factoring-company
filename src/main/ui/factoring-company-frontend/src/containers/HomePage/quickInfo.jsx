@@ -26,7 +26,7 @@ export class QuickInfo extends Component {
             <div class="container-lg">
                 <div class="text-center">
                     <h2>In short</h2>
-                    <p class="lead text-muted">Get peace of mind when you partner with BlueVine</p>
+                    <p class="lead text-muted">Get peace of mind when you partner with Factoring Company</p>
                 </div>
 
                 <div class="row my-5 align-items-center justify-content-center container-fluid">
@@ -37,7 +37,7 @@ export class QuickInfo extends Component {
                         </LogoImage>
                             <div class="card-body text-center py-4 mt-2">
                                 <h4 class="card-title">Easy to get started</h4>
-                                <p class="lead card-subtitle mb-4">BlueVine makes business funding quick and painless. Apply online and get approved in as fast as 5 minutes.</p>
+                                <p class="lead card-subtitle mb-4">Factoring Company makes business funding quick and painless. Apply online and get approved in as fast as 5 minutes.</p>
                             </div>
                         </div>
                     </div>

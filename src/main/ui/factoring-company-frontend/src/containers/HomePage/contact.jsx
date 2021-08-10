@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChatRightDotsFill, EnvelopeFill, PersonFill, QuestionCircle } from "react-bootstrap-icons"
-import {Tooltip, OverlayTrigger, Button} from 'react-bootstrap';
+import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { Marginer } from '../../components/marginer';
 
 const Contact = () => {
@@ -63,7 +63,7 @@ const Contact = () => {
                     <label for="query">Your query...</label>
                 </div>
                 <div class="mb-4 text-center">
-                    <button type="submit" class="btn btn-secondary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
           </div>

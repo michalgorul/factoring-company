@@ -21,7 +21,7 @@ const TopSectionContainer = styled.div`
 const BackgroundFilter = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(111, 142, 153, 0.9);
+  background-color: rgba(73, 126, 240, 0.781);
   display: flex;
   flex-direction: column;
 `;

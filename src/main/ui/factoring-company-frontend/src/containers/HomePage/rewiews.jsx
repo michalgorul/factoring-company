@@ -98,7 +98,7 @@ const Reviews = () => {
 
                     <div class="media">                  
                         <span class="media-left">
-                            <img src={Google} alt="..." width="50" height="50"/>
+                            <img src={Google} alt="Google" width="50" height="50"/>
                         </span>
                     </div>
                     </blockquote>

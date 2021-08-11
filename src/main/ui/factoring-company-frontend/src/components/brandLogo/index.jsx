@@ -27,7 +27,7 @@ const LogoTitle = styled.h2`
 
 
 export function BrandLogo(props) {
-  const { logoSize, textSize, color, hideLogo } = props;
+  const { logoSize, textSize, color } = props;
 
   return ( 
     <BrandLogoContainer>

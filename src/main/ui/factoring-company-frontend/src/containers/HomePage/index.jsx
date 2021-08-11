@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from '../../components/navbar';
+import { NavbarSection } from '../../components/navbar';
 import { PageContainer } from '../../components/pageContainer';
 import Contact from './contact';
 import Footer from './footer';
@@ -11,7 +11,7 @@ import { TopSection } from './topSection';
 export function HomePage(props) {
     return <PageContainer>
         <TopSection>
-            <Navbar />
+            <NavbarSection />
         </TopSection>
         <FundingSolution />
         <QuickInfo />

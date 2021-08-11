@@ -12,73 +12,44 @@ import TopSectionIllustration from '../../images/illustration.png';
 
 const TopSectionContainer = styled.div`
         width: 100%;
-        height: 730px;
-        background: url(${TopSectionBGImage});
-        background-position: 0px -170px;
-        background-size: cover;
+        height: 70%;
 `;
 
 const BackgroundFilter = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(73, 126, 240, 0.781);
+  background-color: rgba(57, 138, 231, 0.89);
   display: flex;
   flex-direction: column;
 `;
 
-const TopSectionInnerContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-`;
-
-const StandoutImage = styled.div`
-  width: 30em;
-  height: 30em;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-`;
-
-const SloganText = styled.h3`
-  margin-left: 175px;
-  line-height: 1.4;
-  color: #fff;
-  font-weight: 500;
-  font-size: 36px;
-`;
 
 export function TopSection(props) {
 
     const {children} = props;
     return (
-        <TopSectionContainer>
+
+          <TopSectionContainer>
             <BackgroundFilter>
-                {children}
-                <TopSectionInnerContainer>        
-                    <LogoContainer>
-                        <BrandLogo logoSize={160} />
-                        <SloganText>Best funding</SloganText>
-                        <SloganText>for your business</SloganText>
+              {children}
+              <div class="container-lg">
+                <div class="row d-flex justify-content-start justify-content-lg-start align-items-center">
+                    <div class="col-lg-6 text-center">
+                          <BrandLogo logoSize={160} className="d-none d-md-block"/>
+                          <h1>
+                            <div class="display-2 text-white">Best funding</div>
+                            <div class="display-5 text-white">for your business</div>
+                        </h1>
                         <Marginer direction="vertical" margin={15} />
                         <Button>Apply Now</Button>
-                    </LogoContainer>
-                    <StandoutImage>
-                        <img src={TopSectionIllustration} alt="best in the field" />
-                    </StandoutImage>
-                </TopSectionInnerContainer>
+                        <Marginer direction="vertical" margin={30} />
+                    </div>
+                    <div class="col-lg-6 text-center d-none d-lg-block">
+                        <img src={TopSectionIllustration} class="img-fluid" alt="ebook"/>
+                    </div>
+                </div>
+              </div>
             </BackgroundFilter>
         </TopSectionContainer>
-
     )
-
 }

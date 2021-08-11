@@ -30,7 +30,7 @@ const Contact = () => {
                       </span>
                       <input type="text" id="email" class="form-control" placeholder="e.g. john@xyz.com" />
                       <span class="input-group-text">
-                      <OverlayTrigger placement="bottom" overlay={renderTooltipEmail}>
+                      <OverlayTrigger placement="bottom" overlay={renderTooltipEmail} key="bottom">
                         <QuestionCircle className="text-muted" />
                       </OverlayTrigger>
                       </span>
@@ -42,7 +42,7 @@ const Contact = () => {
                       </span>
                       <input type="text" id="name" class="form-control" placeholder="e.g. Mario" />
                       <span class="input-group-text">
-                        <OverlayTrigger placement="bottom" overlay={renderTooltipName}>
+                        <OverlayTrigger placement="bottom" overlay={renderTooltipName} key="bottom">
                           <QuestionCircle className="text-muted" />
                         </OverlayTrigger>
                       </span>

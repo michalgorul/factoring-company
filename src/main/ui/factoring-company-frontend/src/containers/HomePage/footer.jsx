@@ -1,4 +1,4 @@
-import { EnvelopeFill, Facebook, Github, Google, House, HouseFill, Instagram, Linkedin, PhoneFill, Printer, PrinterFill, TelephoneFill, Twitter } from "react-bootstrap-icons"
+import { EnvelopeFill, Facebook, Github, Google, HouseFill, Instagram, Linkedin, PrinterFill, TelephoneFill, Twitter } from "react-bootstrap-icons"
 import styled from 'styled-components'
 import { Marginer } from "../../components/marginer";
 

@@ -1,91 +1,40 @@
 import React from "react";
-import styled from "styled-components";
 import { BrandLogo } from "../brandLogo";
-import { Button } from "../button";
-import { Marginer } from "../marginer";
 import { Divider } from 'rsuite';
+import { Navbar, Nav, Container, Popover, OverlayTrigger } from "react-bootstrap";
 
 
-const NavbarContainer = styled.div`
-  width: 100%;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.5em;
-`;
+export function NavbarSection(props) {
 
-const AccessibilityContainer = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-`;
-
-const AnchorLink = styled.a`
-  font-size: 14px;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-  outline: none;
-  transition: all 200ms ease-in-out;
-  &:hover {
-    color: #a0a0a0;
-  }
-`;
-
-const Seperator = styled.div`
-  max-height: 10%;
-  min-height: 10%;
-  width: 1px;
-  background-color: #fff;
-`;
-
-
-export function Navbar(props) {
-  const { useTransparent } = props;
-
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Title as="h3" className="text-primary"><span class="ms-3 me-2">Support available</span></Popover.Title>
+      <Popover.Content>
+      <span class="ms-2 h6">Office hours:</span>
+      <p class="ms-2" style={{fontSize:"16px"}}>Mon-Fri: 6AM-8PM <br/> Sat-Sun: 9AM-5PM</p>
+      </Popover.Content>
+    </Popover>
+  );
 
   return (
-    // <NavbarContainer>
-    //   <BrandLogo textSize={20}/>
-    //   <AccessibilityContainer>
-    //     <AnchorLink>Contact</AnchorLink>
-    //     <Marginer direction="horizontal" margin={10} />
-    //     <Seperator />
-    //     <Button size={14} marginLeft={10}>Register</Button>
-    //     <Marginer direction="horizontal" margin={10} />
-    //     <AnchorLink>Login</AnchorLink>
-    //   </AccessibilityContainer>
-    // </NavbarContainer>
-
-      <nav class="navbar navbar-expand-md navbar-light pt-2 pb-2">
-              <div class="container-xxl">
-                  <a class="navbar-brand" href="#intro">
-                      <span class="text-secondary fw-bold"><BrandLogo textSize={22}/></span>
-                  </a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-                  <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
-                      <ul class="navbar-nav">
-                        <li class="nav-item">
-                          <a class="nav-link text-white" href="#topics" >Contact</a>
-                        </li>    
-                                           
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#reviews">Login</a>
-                        </li>
-                        <li class="nav-item d-md-none">
-                            <a class="nav-link" href="#pricing">Pricing</a>
-                        </li>
-                        <li class="nav-item ms-2 d-none d-md-inline">
-                            <a class="btn btn-primary rounded-pill" href="#pricing">Register</a>
-                        </li>
-                      </ul>
-                  </div>
-              </div>
-          </nav>
+      <Navbar expand="lg">
+      <Container>
+        <Navbar.Brand href="#home"><BrandLogo textSize={22}/></Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-sm-center justify-content-md-end align-center">
+          <div class="">               
+            <Nav className="">
+            <OverlayTrigger trigger="focus" placement="bottom" overlay={popover}>
+                <Nav.Link className="text-white h5 me-4">Contact <Divider vertical/></Nav.Link>
+                </OverlayTrigger>
+              <Nav.Link href="#link1" className="text-white h5 me-2">Login</Nav.Link>
+              <Nav.Link href="#link2" className="text-white h5 d-lg-none">Register</Nav.Link>
+              <Nav.Link href="#link3" className="btn btn-primary rounded-pill text-white h4 d-none d-lg-block"><span class="" style={{fontSize:"17px"}}>Register</span></Nav.Link>
+            </Nav>
+          </div>
+        </Navbar.Collapse>
+      </Container>
+      </Navbar>
     
   );
 }

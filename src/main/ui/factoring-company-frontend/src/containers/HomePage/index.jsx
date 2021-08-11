@@ -6,6 +6,7 @@ import Footer from './footer';
 import { FundingSolution } from './fundingSolutions';
 import { QuickInfo } from './quickInfo';
 import  Reviews  from './rewiews';
+import ToTopButton from './scrollToTop';
 import { TopSection } from './topSection';
 
 export function HomePage(props) {
@@ -18,5 +19,6 @@ export function HomePage(props) {
         <Reviews />
         <Contact />
         <Footer />
+        <ToTopButton />
     </PageContainer>
 }

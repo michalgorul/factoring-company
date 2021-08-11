@@ -62,16 +62,16 @@ const Footer = () => {
                         Products
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Factoring</a>
+                        <a href="/factoring" class="text-reset text-decoration-none">Factoring</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Payments</a>
+                        <a href="/payments" class="text-reset text-decoration-none">Payments</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Banking</a>
+                        <a href="/banking" class="text-reset text-decoration-none">Banking</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Credit</a>
+                        <a href="/credit" class="text-reset text-decoration-none">Credit</a>
                     </p>
                     </div>
 
@@ -80,16 +80,16 @@ const Footer = () => {
                         Useful links
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Pricing</a>
+                        <a href="/pricing" class="text-reset text-decoration-none">Pricing</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Blog</a>
+                        <a href="/blog" class="text-reset text-decoration-none">Blog</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Orders</a>
+                        <a href="/orders" class="text-reset text-decoration-none">Orders</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Help</a>
+                        <a href="/help" class="text-reset text-decoration-none">Help</a>
                     </p>
                     </div>
 

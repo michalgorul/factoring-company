@@ -27,9 +27,9 @@ export function NavbarSection(props) {
             <OverlayTrigger trigger="focus" placement="bottom" overlay={popover}>
                 <Nav.Link className="text-white h5 me-4">Contact <Divider vertical/></Nav.Link>
                 </OverlayTrigger>
-              <Nav.Link href="#link1" className="text-white h5 me-2">Login</Nav.Link>
-              <Nav.Link href="#link2" className="text-white h5 d-lg-none">Register</Nav.Link>
-              <Nav.Link href="#link3" className="btn btn-primary rounded-pill text-white h4 d-none d-lg-block"><span class="" style={{fontSize:"17px"}}>Register</span></Nav.Link>
+              <Nav.Link href="/login" className="text-white h5 me-2">Login</Nav.Link>
+              <Nav.Link href="/register" className="text-white h5 d-lg-none">Register</Nav.Link>
+              <Nav.Link href="/register" className="btn btn-primary rounded-pill text-white h4 d-none d-lg-block"><span class="" style={{fontSize:"17px"}}>Register</span></Nav.Link>
             </Nav>
           </div>
         </Navbar.Collapse>

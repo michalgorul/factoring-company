@@ -1,6 +1,7 @@
 import { EnvelopeFill, Facebook, Github, Google, HouseFill, Instagram, Linkedin, PrinterFill, TelephoneFill, Twitter } from "react-bootstrap-icons"
 import styled from 'styled-components'
-import { Marginer } from "../../components/marginer";
+import { Marginer } from "../../../components/marginer";
+import Copyright from "./copyright";
 
 const Footer = () => {
 
@@ -83,7 +84,7 @@ const Footer = () => {
                         <a href="/pricing" class="text-reset text-decoration-none">Pricing</a>
                     </p>
                     <p>
-                        <a href="/blog" class="text-reset text-decoration-none">Blog</a>
+                        <a href="/terms-of-use" class="text-reset text-decoration-none">Terms of use</a>
                     </p>
                     <p>
                         <a href="/orders" class="text-reset text-decoration-none">Orders</a>
@@ -106,10 +107,7 @@ const Footer = () => {
                 </div>
             </section>
 
-            <div class="text-center p-4" style={{backgroundColor: "rgba(0, 17, 255, 0.9)"}}>
-                © 2021 Copyright:    
-                <span class="text-reset fw-bold ms-1">Factoring Company Inc.</span>
-            </div>
+            <Copyright />
             </footer>
         </FullWidth>
             

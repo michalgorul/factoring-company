@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChatRightDotsFill, EnvelopeFill, PersonFill, QuestionCircle } from "react-bootstrap-icons"
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
-import { Marginer } from '../../components/marginer';
+import { Marginer } from '../../../components/marginer';
 
 const Contact = () => {
 

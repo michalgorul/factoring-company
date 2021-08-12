@@ -1,10 +1,10 @@
 import React from 'react';
 import { Stars, StarFill, StarHalf } from 'react-bootstrap-icons';
-import Google from '../../images/google-symbol1.png'
+import Google from '../../../images/google-symbol1.png'
 //<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 import styled from "styled-components";
-import { Marginer } from '../../components/marginer';
+import { Marginer } from '../../../components/marginer';
 
 
 const FullWidth = styled.div`

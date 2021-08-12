@@ -1,6 +1,6 @@
 import React from 'react'
 import { Check } from 'react-bootstrap-icons';
-import { Marginer } from '../../components/marginer';
+import { Marginer } from '../../../components/marginer';
 import styled from "styled-components";
 
 const FullWidth = styled.div`

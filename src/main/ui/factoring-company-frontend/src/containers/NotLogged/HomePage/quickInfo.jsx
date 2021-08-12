@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Support from '../../images/check.png'
-import Bulb from '../../images/bulb.png'
-import Basket from '../../images/basket.png'
+import Support from '../../../images/check.png'
+import Bulb from '../../../images/bulb.png'
+import Basket from '../../../images/basket.png'
 import styled from "styled-components";
 
 const LogoImage = styled.div`

@@ -1,20 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BrandLogo } from "../../components/brandLogo";
-import { Marginer } from "../../components/marginer";
-import { Button } from "../../components/button";
+import { BrandLogo } from "../../../components/brandLogo";
+import { Marginer } from "../../../components/marginer";
+import { Button } from "../../../components/button";
 
-import TopSectionIllustration from '../../images/illustration.png';
+import TopSectionIllustration from '../../../images/illustration.png';
+import TopSectionBg from '../../../images/TopSectionBG.jpg';
 
 const TopSectionContainer = styled.div`
         width: 100%;
         height: 70%;
+        background: url(${TopSectionBg}) no-repeat;
+        background-position: 0px -150px;
+        background-attachment: fixed;
+        background-size: cover;
 `;
 
 const BackgroundFilter = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(57, 138, 231, 0.89);
+  background-color: rgba(57, 138, 231, 0.79);
   display: flex;
   flex-direction: column;
 `;

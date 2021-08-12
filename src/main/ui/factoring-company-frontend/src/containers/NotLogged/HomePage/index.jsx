@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavbarSection } from '../../components/navbar';
-import { PageContainer } from '../../components/pageContainer';
+import { NavbarSection } from '../../../components/navbar';
+import { PageContainer } from '../../../components/pageContainer';
 import Contact from './contact';
 import Footer from './footer';
 import { FundingSolution } from './fundingSolutions';

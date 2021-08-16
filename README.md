@@ -11,7 +11,7 @@ The main part of the work will be designing and developing a web application. Th
 ![Use case diagram](https://user-images.githubusercontent.com/43811151/119234776-da953280-bb2f-11eb-8961-ab117555f179.png)
 
 ## Home page look
+https://user-images.githubusercontent.com/43811151/129640485-f321d0e5-ff48-4281-91c6-e933ce075620.mp4
 
-![Sample look 1](https://user-images.githubusercontent.com/43811151/129251599-81247c3c-488a-44ea-9117-ca3f94f9e88b.png)
 
 

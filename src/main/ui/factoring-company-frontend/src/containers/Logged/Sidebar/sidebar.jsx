@@ -17,10 +17,10 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
+            <NavLink exact to="/invoices" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="file-invoice-dollar">Invoices</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
+            <NavLink exact to="/credit" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="credit-card">Credit</CDBSidebarMenuItem>
             </NavLink>
             <Marginer direction="vertical" margin={35} />
@@ -33,10 +33,10 @@ const Sidebar = () => {
             <NavLink exact to="/documents" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="file-alt">Documents</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/documents" activeClassName="activeClicked">
+            <NavLink exact to="/profile" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user">Your Profile</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/documents" activeClassName="activeClicked">
+            <NavLink exact to="/help" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="exclamation-circle">Help & Contact</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>

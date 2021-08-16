@@ -1,10 +1,10 @@
-import Sidebar from "./sidebar"
+import Sidebar from "../Sidebar/sidebar"
 
 const MainPageLoged = () => {
     return ( 
         <div>
-            <Sidebar />
-        </div>
+        <div className="display-5 text-centered align-middle">main page</div>
+    </div>    
      );
 }
  

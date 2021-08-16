@@ -90,20 +90,20 @@ const Reviews = () => {
 
                     </div>
                 </div>
-                <figure class="text-center">
-                    <blockquote class="blockquote">
+                <div class="d-flex justify-content-center">
+                <blockquote class="blockquote text-centered">
                     <p class="lead "><strong>Excelent</strong>, <strong>4.8</strong> out of <strong>5</strong> based on 125,522 reviews.</p>
                     </blockquote>
+                </div>
+                <div class="d-flex justify-content-center">
                     <blockquote class="blockquote">
-
-                    <div class="media">                  
-                        <span class="media-left">
-                            <img src={Google} alt="Google" width="50" height="50" class="rounded center-block"/>
-                        </span>
-                    </div>
+                        <div class="media">                  
+                            <span class="media-left">
+                                <img src={Google} alt="Google" width="50" height="50" class="center-block"/>
+                            </span>
+                        </div>
                     </blockquote>
-                </figure>
-                    
+                </div>
             </div>
         </FullWidth>
             

@@ -11,8 +11,8 @@ import Credit from './containers/Logged/Credit';
 import Reports from './containers/Logged/Reports';
 import Documents from './containers/Logged/Documents';
 import Profile from './containers/Logged/Profile';
-import Sidebar from './containers/Logged/Sidebar/sidebar';
 import Layout from './containers/Logged/Layout';
+import CustomerDetails from './containers/Logged/Customers/customerDetails';
 
 
 
@@ -22,6 +22,7 @@ const UserComponents = ({match}) => {
         <Switch>
           <Route path={`${match.url}/admin`} exact component={MainPageLoged} />
           <Route path={`${match.url}/customers`} exact component={Customers} />
+          <Route path={`${match.url}/customers/:id`} component={CustomerDetails}/>
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
           <Route path={`${match.url}/credit`} exact component={Credit} />
           <Route path={`${match.url}/reports`} exact component={Reports} />
@@ -32,7 +33,6 @@ const UserComponents = ({match}) => {
       </Layout>
   );
 };
-
 
 
 function App() {

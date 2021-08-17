@@ -3,13 +3,11 @@ import {
   CDBSidebar, CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader, CDBSidebarMenu, CDBSidebarMenuItem} from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import { Marginer } from '../../../components/marginer';
-import { BoxArrowRight } from 'react-bootstrap-icons';
 
 const Sidebar = () => {
+
   return (
-    <div
-      style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}
-    >
+    <div class="vh-100" style={{position:"sticky", top:"0"}}>
       <CDBSidebar textColor="#fff" backgroundColor="#060053">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/"className="text-decoration-none"style={{ color: 'inherit', fontSize:"20px" }}>Factoring</a>

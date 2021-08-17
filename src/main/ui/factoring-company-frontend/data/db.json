@@ -1,53 +1,6 @@
 {
   "customers": [
     {
-        "id": 1,
-        "firstName": "Joscelin",
-        "lastName": "Riteley",
-        "companyName": "Gabtune",
-        "country": "Poland",
-        "city": "Czernikowo",
-        "street": "09417 Burrows Point",
-        "postalCode": "87-640",
-        "phone": "468-757-5057",
-        "blacklisted": false
-      },
-    {
-      "id": 2,
-      "firstName": "Joscelin",
-      "lastName": "Riteley",
-      "companyName": "Gabtune",
-      "country": "Poland",
-      "city": "Czernikowo",
-      "street": "09417 Burrows Point",
-      "postalCode": "87-640",
-      "phone": "468-757-5057",
-      "blacklisted": false
-    },
-    {
-      "id": 3,
-      "firstName": "Vivianna",
-      "lastName": "Luty",
-      "companyName": "Jetwire",
-      "country": "Guatemala",
-      "city": "San Juan Ixcoy",
-      "street": "73384 Sycamore Terrace",
-      "postalCode": "13023",
-      "phone": "738-356-1072",
-      "blacklisted": false
-    },
-    {
-      "id": 4,
-      "firstName": "Moina",
-      "lastName": "Floyde",
-      "companyName": "Topiczoom",
-      "country": "Albania",
-      "city": "Gjegjan",
-      "street": "98 Sage Center",
-      "phone": "110-846-2099",
-      "blacklisted": true
-    },
-    {
       "id": 5,
       "firstName": "Tore",
       "lastName": "Dagnan",

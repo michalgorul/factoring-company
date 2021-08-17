@@ -47,7 +47,7 @@ const CustomerDetails = () => {
                             <p class="mb-2 fs-2">Phone number: <span class="fw-bold">{customer.phone}</span></p>
                             <p class="mb-2 fs-2 mb-3">Blacklisted: <span class="fw-bold">{customer.blacklisted.toString()}</span></p>
                         </div>
-                        <div class="col-2 my-auto">
+                        <div class="col-2 my-auto d-none d-lg-block">
                             <BackButton>
                                 <FontAwesomeIcon icon={faChevronCircleLeft} onClick={history.goBack} />
                             </BackButton>
@@ -57,8 +57,8 @@ const CustomerDetails = () => {
                 
 
                 <div class="alert clearfix mt-2">
-                    <button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                    <button type="button" class="btn btn-lg ms-4 btn-primary rounded-pill float-center">Edit customer</button>
+                    <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
+                    <button type="button" class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit customer</button>
                 </div>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>

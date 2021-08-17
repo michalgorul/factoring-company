@@ -74,10 +74,8 @@ const CustomerDetails = () => {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-            </article>
-            
+            </article> 
         )}
-        
     </div>
      );
      

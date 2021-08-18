@@ -1,124 +1,19 @@
 {
   "customers": [
     {
-      "id": 8,
-      "firstName": "Rosalia",
-      "lastName": "Phettis",
-      "companyName": "Talane",
-      "country": "Canada",
-      "city": "Willowdale",
-      "street": "9 Spaight Trail",
-      "postalCode": "M3H",
-      "phone": "131-323-4376",
-      "blacklisted": true
-    },
-    {
-      "id": 9,
-      "firstName": "Candra",
-      "lastName": "Kembery",
-      "companyName": "Trilith",
-      "country": "Philippines",
-      "city": "Mangero",
-      "street": "6805 Aberg Junction",
-      "postalCode": "5033",
-      "phone": "199-494-4096",
-      "blacklisted": true
-    },
-    {
-      "id": 10,
-      "firstName": "Louis",
-      "lastName": "Lynn",
-      "companyName": "Twiyo",
-      "country": "Vietnam",
-      "city": "Thạnh Hóa",
-      "street": "172 Hovde Trail",
-      "phone": "798-119-6506",
-      "blacklisted": true
-    },
-    {
-      "id": 11,
-      "firstName": "Myrlene",
-      "lastName": "Wilsey",
-      "companyName": "Abata",
-      "country": "Indonesia",
-      "city": "Haunubenak",
-      "street": "92585 Dennis Center",
-      "phone": "318-714-8487",
-      "blacklisted": true
-    },
-    {
-      "id": 12,
-      "firstName": "Cthrine",
-      "lastName": "Josefsen",
-      "companyName": "Topicware",
-      "country": "Russia",
-      "city": "Kokoshkino",
-      "street": "49 Hansons Pass",
-      "postalCode": "601136",
-      "phone": "492-844-9280",
-      "blacklisted": false
-    },
-    {
-      "id": 13,
-      "firstName": "Farlie",
-      "lastName": "Stibbs",
-      "companyName": "Zooveo",
-      "country": "Philippines",
-      "city": "Libon",
-      "street": "63596 Twin Pines Parkway",
-      "postalCode": "4507",
-      "phone": "925-147-4941",
-      "blacklisted": true
-    },
-    {
-      "id": 14,
-      "firstName": "Christie",
-      "lastName": "Alfonsetto",
-      "companyName": "Pixope",
-      "country": "Russia",
-      "city": "Sterlitamak",
-      "street": "06029 Starling Circle",
-      "postalCode": "142672",
-      "phone": "616-684-9013",
-      "blacklisted": true
-    },
-    {
-      "id": 15,
-      "firstName": "Drusi",
-      "lastName": "Lipson",
-      "companyName": "Kaymbo",
-      "country": "Canada",
-      "city": "Sainte-Adèle",
-      "street": "4690 Hauk Road",
-      "postalCode": "J8B",
-      "phone": "995-793-6091",
-      "blacklisted": false
-    },
-    {
-      "id": 17,
-      "firstName": "Erl",
-      "lastName": "Wildbore",
-      "companyName": "Realfire",
-      "country": "Indonesia",
-      "city": "Karangori",
-      "street": "2 Muir Pass",
-      "phone": "447-308-4948",
-      "blacklisted": true
-    },
-    {
-      "id": 18,
-      "firstName": "Fredrika",
+      "firstName": "michalgorul@gmail.com",
       "lastName": "Puddle",
       "companyName": "Thoughtworks",
       "country": "China",
       "city": "Qiongshan",
       "street": "453 Green Alley",
-      "phone": "645-614-9353",
-      "blacklisted": true
+      "postalCode": "sss",
+      "phone": "+48692195554",
+      "blacklisted": false,
+      "id": 18
     },
     {
-      "id": 19,
-      "firstName": "Rafael",
+      "firstName": "Rafaelllll",
       "lastName": "Berthouloume",
       "companyName": "Wikibox",
       "country": "Japan",
@@ -126,7 +21,8 @@
       "street": "12398 Coolidge Lane",
       "postalCode": "369-1201",
       "phone": "193-622-4879",
-      "blacklisted": true
+      "blacklisted": false,
+      "id": 19
     },
     {
       "id": 20,
@@ -173,15 +69,15 @@
       "blacklisted": false
     },
     {
-      "id": 24,
       "firstName": "Ferdinand",
       "lastName": "Siddell",
       "companyName": "Bluejam",
       "country": "Indonesia",
       "city": "Mangga Dua",
       "street": "6 American Ash Park",
-      "phone": "345-913-1484",
-      "blacklisted": false
+      "phone": "+35544444444",
+      "blacklisted": false,
+      "id": 24
     },
     {
       "id": 25,

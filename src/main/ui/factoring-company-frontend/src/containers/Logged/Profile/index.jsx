@@ -6,6 +6,7 @@ const Profile = () => {
             <div class="media align-items-center py-3">
               <div class="media-body ml-4">
                 <h4 class="font-weight-bold display-2">John Doe</h4>
+                <h4 class="lead display-5">test@test.com</h4>
               </div>
             </div>
 
@@ -38,62 +39,53 @@ const Profile = () => {
                 </div> 
             </div>
 
-              <h5 class="mt-4 mb-3">General</h5>
-              <div class="table-responsive">
-              <table class="table table-hover">
-                  <tbody>
-                    <tr>
-                      <th>Username:</th>
-                      <td>nmaxwell</td>
-                    </tr>
-                    <tr>
-                      <th>Name:</th>
-                      <td>Nelle Maxwell</td>
-                    </tr>
-                    <tr>
-                      <th>E-mail:</th>
-                      <td>nmaxwell@mail.com</td>
-                    </tr>
-                    <tr>
-                      <th>Company:</th>
-                      <td>Company Ltd.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+
+								<h5 class="mt-4 mb-3">Address</h5>
+                <div class="container">
+									<div class="row align-items-start ms-3">
+										<div class="col-3">
+											<ul class="list-group list-group-flush">
+												<li class="list-group-item list-group-item-action fw-bold">Country:</li>
+												<li class="list-group-item list-group-item-action fw-bold">City:</li>
+												<li class="list-group-item list-group-item-action fw-bold">Street:</li>
+												<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
+											</ul>
+										</div>
+											<div class="col-3">
+												<ul class="list-group list-group-flush">
+													<li class="list-group-item list-group-item-action">An item</li>
+													<li class="list-group-item list-group-item-action">A second item</li>
+													<li class="list-group-item list-group-item-action">A third item</li>
+													<li class="list-group-item list-group-item-action">A fourth item</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+              
                 
+							<h5 class="mt-4 mb-3">Company</h5>
+							<div class="container">
+								<div class="row align-items-start ms-3">
+									<div class="col-3">
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item list-group-item-action fw-bold">Username:</li>
+											<li class="list-group-item list-group-item-action fw-bold">E-mail:</li>
+											<li class="list-group-item list-group-item-action fw-bold">Street:</li>
+											<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
+										</ul>
+									</div>
+										<div class="col-3">
+											<ul class="list-group list-group-flush">
+												<li class="list-group-item list-group-item-action">An item</li>
+												<li class="list-group-item list-group-item-action">A second item</li>
+												<li class="list-group-item list-group-item-action">A third item</li>
+												<li class="list-group-item list-group-item-action">A fourth item</li>
+											</ul>
+										</div>
+									</div>
+								</div>
 
-                <h5 class="mt-4 mb-3">Address</h5>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action">An item</li>
-                    <li class="list-group-item list-group-item-action">A second item</li>
-                    <li class="list-group-item list-group-item-action">A third item</li>
-                    <li class="list-group-item list-group-item-action">A fourth item</li>
-                    <li class="list-group-item list-group-item-action">And a fifth one</li>
-                </ul>
-                <table class="table table-hover me-2">
-                  <tbody>
-                    <tr>
-                      <th>Country:</th>
-                      <td>nmaxwell</td>
-                    </tr>
-                    <tr>
-                      <th>City:</th>
-                      <td>Nelle Maxwell</td>
-                    </tr>
-                    <tr>
-                      <th>Street:</th>
-                      <td>nmaxwell@mail.com</td>
-                    </tr>
-                    <tr>
-                      <th>Postal code:</th>
-                      <td>Company Ltd.</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-
+                
               </div>
 
      );

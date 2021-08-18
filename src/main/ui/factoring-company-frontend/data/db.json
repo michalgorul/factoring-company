@@ -388,5 +388,20 @@
       "blacklisted": "false",
       "id": 51
     }
-  ]
+  ],
+
+  "user":{
+    "id": 1,
+    "username": "kgasgarth0",
+    "password": "sOObCB1dWy",
+    "email": "kgasgarth0@123-reg.co.uk",
+    "firstName": "Kristi",
+    "lastName": "Gasgarth",
+    "country": "Russia",
+    "city": "Troitskiy",
+    "street": "9977 Texas Point",
+    "postalCode": "623641",
+    "phone": "575-745-2386",
+    "company": "Google"
+  }
 }

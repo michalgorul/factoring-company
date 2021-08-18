@@ -1,39 +1,6 @@
 {
   "customers": [
     {
-      "id": 5,
-      "firstName": "Tore",
-      "lastName": "Dagnan",
-      "companyName": "Babbleset",
-      "country": "Indonesia",
-      "city": "Sangumata",
-      "street": "11 Marquette Place",
-      "phone": "230-929-8809",
-      "blacklisted": true
-    },
-    {
-      "id": 6,
-      "firstName": "Keeley",
-      "lastName": "Bolton",
-      "companyName": "Yakidoo",
-      "country": "China",
-      "city": "Bazha",
-      "street": "9371 Portage Alley",
-      "phone": "180-826-1109",
-      "blacklisted": true
-    },
-    {
-      "id": 7,
-      "firstName": "Yovonnda",
-      "lastName": "De Minico",
-      "companyName": "Photojam",
-      "country": "China",
-      "city": "Zhangfang",
-      "street": "48 1st Center",
-      "phone": "344-471-6145",
-      "blacklisted": false
-    },
-    {
       "id": 8,
       "firstName": "Rosalia",
       "lastName": "Phettis",
@@ -126,18 +93,6 @@
       "postalCode": "J8B",
       "phone": "995-793-6091",
       "blacklisted": false
-    },
-    {
-      "id": 16,
-      "firstName": "Lory",
-      "lastName": "Urien",
-      "companyName": "Mynte",
-      "country": "Philippines",
-      "city": "Santo Niño",
-      "street": "24256 Reinke Pass",
-      "postalCode": "6711",
-      "phone": "191-903-0827",
-      "blacklisted": true
     },
     {
       "id": 17,
@@ -524,6 +479,18 @@
       "postalCode": "62214",
       "phone": "510-681-0543",
       "blacklisted": true
+    },
+    {
+      "firstName": "michalgorul@gmail.com",
+      "lastName": "ads",
+      "companyName": "asdasd",
+      "country": "asdasd",
+      "city": "asdasd",
+      "street": "asdasd",
+      "postalCode": "asdasd",
+      "phone": "+48692195554",
+      "blacklisted": "false",
+      "id": 51
     }
   ]
 }

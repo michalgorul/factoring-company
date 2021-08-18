@@ -10,9 +10,9 @@ const { error, isPending, data: customers } = useFetch('http://localhost:8000/cu
         <div class="text-centered display-3 d-flex justify-content-center">Customer List</div>
 
         <div class="alert  clearfix">
-            <button type="button" class="btn btn-primary btn-lg float-end rounded-pill">
+            <a href="/user/customers/create" class="btn btn-primary btn-lg float-end rounded-pill">
             Add New
-            </button>
+            </a>
         </div>
         <ol class="list-group list-group-numbered list-group-flush">
                 { error &&<> <div class="alert alert-warning fs-3" role="alert">{error} </div> 

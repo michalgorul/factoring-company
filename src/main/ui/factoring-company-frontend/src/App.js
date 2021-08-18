@@ -13,7 +13,8 @@ import Documents from './containers/Logged/Documents';
 import Profile from './containers/Logged/Profile';
 import Layout from './containers/Logged/Layout';
 import CustomerDetails from './containers/Logged/Customers/customerDetails';
-
+import CustomerCreate from './containers/Logged/Customers/customerCreate';
+import CustomerEdit from './containers/Logged/Customers/customerEdit';
 
 
 const UserComponents = ({match}) => {
@@ -22,6 +23,8 @@ const UserComponents = ({match}) => {
         <Switch>
           <Route path={`${match.url}/admin`} exact component={MainPageLoged} />
           <Route path={`${match.url}/customers`} exact component={Customers} />
+          <Route path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
+          <Route path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
           <Route path={`${match.url}/customers/:id`} component={CustomerDetails}/>
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
           <Route path={`${match.url}/credit`} exact component={Credit} />

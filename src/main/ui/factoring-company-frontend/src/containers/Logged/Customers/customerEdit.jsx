@@ -44,72 +44,72 @@ const CustomerEdit = () => {
     return ( 
         <div>
             {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
-        {error && <div>{error}</div>}
-        {editCustomer && (
-        <div class="container-fluid h-custom">
-            <div class="row d-flex justify-content-start align-items-center">
-                <div class="col-md-8 col-lg-8 col-xl-6">
-                    <form onSubmit={handleSubmit}>
-                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                        <p class="lead fw-normal mt-2 mb-3 display-4">Edit Customer</p>
+            {error && <div>{error}</div>}
+            {editCustomer && (
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-start align-items-center">
+                    <div class="col-md-8 col-lg-8 col-xl-6">
+                        <form onSubmit={handleSubmit}>
+                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <p class="lead fw-normal mt-2 mb-3 display-4">Edit Customer</p>
 
-                    </div>
-                    <div class="form-outline form-floating mb-3">
-                        <input type="text" class="form-control form-control-lg"
-                        
-                        placeholder="Enter a valid email address" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                        <label class="form-label">First name</label>
-                    </div>
+                        </div>
+                        <div class="form-outline form-floating mb-3">
+                            <input type="text" class="form-control form-control-lg"
+                            
+                            placeholder="Enter a valid email address" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            <label class="form-label">First name</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                        <label class="form-label">Last name</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            <label class="form-label">Last name</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                        <label class="form-label">Company name</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+                            <label class="form-label">Company name</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={country} onChange={(e) => setCountry(e.target.value)} />
-                        <label class="form-label">Country</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={country} onChange={(e) => setCountry(e.target.value)} />
+                            <label class="form-label">Country</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={city} onChange={(e) => setCity(e.target.value)} />
-                        <label class="form-label">City</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={city} onChange={(e) => setCity(e.target.value)} />
+                            <label class="form-label">City</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={street} onChange={(e) => setStreet(e.target.value)} />
-                        <label class="form-label">Street</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={street} onChange={(e) => setStreet(e.target.value)} />
+                            <label class="form-label">Street</label>
+                        </div>
 
-                    <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
-                        <label class="form-label">Postal code</label>
-                    </div>
+                        <div class="form-floating form-outline mb-3">
+                            <input type="text" class="form-control form-control-lg" 
+                            placeholder="Enter password" required value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
+                            <label class="form-label">Postal code</label>
+                        </div>
 
-                    <div class="form-floating form-outline form-control form-control-lg mb-3">
-                        <PhoneInput class="form-control form-control-lg"
-                        placeholder="Phone number" value={phone} onChange={setPhone}/>
+                        <div class="form-floating form-outline form-control form-control-lg mb-3">
+                            <PhoneInput class="form-control form-control-lg"
+                            placeholder="Phone number" value={phone} onChange={setPhone}/>
+                        </div>
+                        <div class="mb-3">
+                            {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Edit Customer</button>}
+                            {isPending && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing customer...</button>}
+                        </div>
+                            
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Edit Customer</button>}
-                        {isPending && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing customer...</button>}
-                    </div>
-                        
-                    </form>
                 </div>
-            </div>
-        </div>)}
+            </div>)}
         </div>
         
      );

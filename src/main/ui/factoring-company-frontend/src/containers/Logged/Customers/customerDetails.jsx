@@ -58,7 +58,7 @@ const CustomerDetails = () => {
 
                 <div class="alert clearfix mt-2">
                     <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                    <button type="button" class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit customer</button>
+                    <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit customer</a>
                 </div>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>

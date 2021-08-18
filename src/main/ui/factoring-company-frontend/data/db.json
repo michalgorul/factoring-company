@@ -243,5 +243,15 @@
     "postalCode": "623641",
     "phone": "575-745-2386",
     "company": "Google"
+  },
+  "company": {
+    "id": 1,
+    "companyName": "Meevee",
+    "country": "Argentina",
+    "city": "Arias",
+    "street": "09080 Clove Point",
+    "postalCode": "2624",
+    "nip": "96-437-3842",
+    "regon": "52.101.121.243"
   }
 }

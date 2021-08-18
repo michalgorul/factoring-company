@@ -5,6 +5,10 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Zoom } from 'react-toastify';
+toast.configure();
 
 const CustomerDetails = () => {
     const { id } = useParams();
@@ -22,6 +26,19 @@ const CustomerDetails = () => {
         })
         .then(() => {
           history.push('/user/customers');
+        })
+        .then( () => {
+            toast.info('Customer was deleted', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                transition: Zoom,
+                className:"text-white bg-primary",
+                });
         })
     }
 

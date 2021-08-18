@@ -3,7 +3,10 @@ import useFetch from "../../../components/useFetch/useFetch";
 import { useState, useEffect } from "react";
 import { Spinner } from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Zoom } from 'react-toastify';
+toast.configure();
 
 const CustomerEdit = () => {
 
@@ -26,9 +29,10 @@ const CustomerEdit = () => {
         getCustomer();
       }, [])
       function getCustomer() {
-        fetch('http://localhost:8000/customers/' + id).then((result) => {
-          result.json().then((response) => {
-            console.log(response)
+        fetch('http://localhost:8000/customers/' + id)
+        .then((result) => {
+          result.json()
+          .then((response) => {
             setFirstName(response.firstName)
             setLastName(response.lastName)
             setCompanyName(response.companyName)
@@ -57,6 +61,19 @@ const CustomerEdit = () => {
         .then(() => {
             setIsPendingN(false);
             history.push('/user/customers');
+        })
+        .then( () => {
+            toast.info('Customer was updated', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                transition: Zoom,
+                className:"text-white bg-primary",
+                });
         });    
     }
     

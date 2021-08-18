@@ -11,6 +11,7 @@ const CustomerList = ({customers}) => {
             </div>
         </li>
         ))}
+     
         </div>
 
 

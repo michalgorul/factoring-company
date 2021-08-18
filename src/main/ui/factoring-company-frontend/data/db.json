@@ -1,163 +1,15 @@
 {
   "customers": [
     {
-      "firstName": "michalgorul@gmail.com",
-      "lastName": "Puddle",
-      "companyName": "Thoughtworks",
-      "country": "China",
-      "city": "Qiongshan",
-      "street": "453 Green Alley",
-      "postalCode": "sss",
-      "phone": "+48692195554",
-      "blacklisted": false,
-      "id": 18
-    },
-    {
-      "firstName": "Rafaelllll",
-      "lastName": "Berthouloume",
-      "companyName": "Wikibox",
-      "country": "Japan",
-      "city": "Honjō",
-      "street": "12398 Coolidge Lane",
-      "postalCode": "369-1201",
-      "phone": "193-622-4879",
-      "blacklisted": false,
-      "id": 19
-    },
-    {
-      "id": 20,
-      "firstName": "Rosana",
-      "lastName": "Look",
-      "companyName": "Yombu",
-      "country": "China",
-      "city": "Xiangzhou",
-      "street": "69 Florence Avenue",
-      "phone": "784-161-1384",
-      "blacklisted": true
-    },
-    {
-      "id": 21,
-      "firstName": "Davidson",
-      "lastName": "Bellanger",
-      "companyName": "Zoomcast",
-      "country": "Peru",
-      "city": "Rosaspata",
-      "street": "1 Brentwood Avenue",
-      "phone": "956-268-6354",
-      "blacklisted": false
-    },
-    {
-      "id": 22,
-      "firstName": "Yancy",
-      "lastName": "Englishby",
-      "companyName": "Omba",
-      "country": "Indonesia",
-      "city": "Kertasari",
-      "street": "040 Mallory Drive",
-      "phone": "351-671-5374",
-      "blacklisted": false
-    },
-    {
-      "id": 23,
-      "firstName": "Woodrow",
-      "lastName": "Abbate",
-      "companyName": "Kazio",
-      "country": "China",
-      "city": "Pengchang",
-      "street": "892 Judy Lane",
-      "phone": "967-550-2314",
-      "blacklisted": false
-    },
-    {
-      "firstName": "Ferdinand",
-      "lastName": "Siddell",
-      "companyName": "Bluejam",
-      "country": "Indonesia",
-      "city": "Mangga Dua",
-      "street": "6 American Ash Park",
-      "phone": "+35544444444",
-      "blacklisted": false,
-      "id": 24
-    },
-    {
-      "id": 25,
-      "firstName": "Arnold",
-      "lastName": "Jakes",
-      "companyName": "Jaxspan",
-      "country": "Sweden",
-      "city": "Kristianstad",
-      "street": "81 Clarendon Crossing",
-      "postalCode": "291 81",
-      "phone": "706-916-2618",
-      "blacklisted": false
-    },
-    {
-      "id": 26,
-      "firstName": "Sallie",
-      "lastName": "Hendrikse",
-      "companyName": "Yacero",
-      "country": "Indonesia",
-      "city": "Rantauambacang",
-      "street": "6189 Mccormick Drive",
-      "phone": "623-528-3512",
-      "blacklisted": true
-    },
-    {
-      "id": 27,
-      "firstName": "Letti",
-      "lastName": "Cicci",
-      "companyName": "Yoveo",
-      "country": "China",
-      "city": "Qingfa",
-      "street": "9119 Meadow Vale Junction",
-      "phone": "575-253-3623",
-      "blacklisted": true
-    },
-    {
-      "id": 28,
-      "firstName": "Cathie",
-      "lastName": "Mennithorp",
-      "companyName": "Chatterbridge",
-      "country": "Russia",
-      "city": "Plyussa",
-      "street": "98 Kedzie Crossing",
-      "postalCode": "181000",
-      "phone": "410-186-6871",
-      "blacklisted": true
-    },
-    {
-      "id": 29,
-      "firstName": "Leopold",
-      "lastName": "Emblen",
-      "companyName": "Tagpad",
-      "country": "Albania",
-      "city": "Fushëkuqe",
-      "street": "6275 Tony Drive",
-      "phone": "859-729-8736",
-      "blacklisted": false
-    },
-    {
-      "id": 30,
-      "firstName": "Stearn",
-      "lastName": "Scini",
-      "companyName": "Browseblab",
-      "country": "Poland",
-      "city": "Krzczonów",
-      "street": "439 Bunker Hill Pass",
-      "postalCode": "32-435",
-      "phone": "453-250-3417",
-      "blacklisted": false
-    },
-    {
-      "id": 31,
       "firstName": "Ennis",
-      "lastName": "Tejero",
+      "lastName": "Tejeroo",
       "companyName": "Plajo",
       "country": "Indonesia",
       "city": "Tangerang",
       "street": "3 Paget Park",
       "phone": "711-739-2241",
-      "blacklisted": true
+      "blacklisted": false,
+      "id": 31
     },
     {
       "id": 32,
@@ -168,17 +20,6 @@
       "city": "Taha Man Zu",
       "street": "01849 Butternut Crossing",
       "phone": "930-419-9767",
-      "blacklisted": true
-    },
-    {
-      "id": 33,
-      "firstName": "Johnathan",
-      "lastName": "Valadez",
-      "companyName": "Tagpad",
-      "country": "Nigeria",
-      "city": "Sankera",
-      "street": "9797 Sycamore Drive",
-      "phone": "203-545-0303",
       "blacklisted": true
     },
     {
@@ -389,8 +230,7 @@
       "id": 51
     }
   ],
-
-  "user":{
+  "user": {
     "id": 1,
     "username": "kgasgarth0",
     "password": "sOObCB1dWy",

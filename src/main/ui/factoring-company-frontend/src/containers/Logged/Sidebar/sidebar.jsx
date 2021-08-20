@@ -10,7 +10,7 @@ const Sidebar = () => {
     <div class="vh-100" style={{position:"sticky", top:"0"}}>
       <CDBSidebar textColor="#fff" backgroundColor="#060053">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/"className="text-decoration-none"style={{ color: 'inherit', fontSize:"20px" }}>Factoring</a>
+          <a href="/user/main"className="text-decoration-none"style={{ color: 'inherit', fontSize:"20px" }}>Factoring</a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">

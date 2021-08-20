@@ -51,7 +51,7 @@ const Profile = () => {
             </div>
 
 
-								<h5 class="mt-4 mb-3">Address</h5>
+								<h5 class="mt-4 mb-3">Address & Phone</h5>
                 <div class="container">
 									<div class="row align-items-start ms-3">
 										<div class="col-3">
@@ -60,6 +60,7 @@ const Profile = () => {
 												<li class="list-group-item list-group-item-action fw-bold">City:</li>
 												<li class="list-group-item list-group-item-action fw-bold">Street:</li>
 												<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
+												<li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
 											</ul>
 										</div>
 											<div class="col-3">
@@ -68,6 +69,7 @@ const Profile = () => {
 													<li class="list-group-item list-group-item-action">{user.city}</li>
 													<li class="list-group-item list-group-item-action">{user.street}</li>
 													<li class="list-group-item list-group-item-action">{user.postalCode}</li>
+													<li class="list-group-item list-group-item-action">{user.phone}</li>
 												</ul>
 											</div>
 										</div>
@@ -101,7 +103,10 @@ const Profile = () => {
 										</div>
 									</div>
 								</div>
-
+								<div class="align-items-center mt-3 ms-5">
+                    <a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
+                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your company</a>
+                </div>
                 
               </div>)}
 </>

@@ -1,33 +1,60 @@
-import { Row, Col, Toast, Button } from 'react-bootstrap';
-import { useState } from "react";
-
-import React from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import React, { useState } from 'react';
+import { Nav } from 'react-bootstrap';
+import { Marginer } from '../../../components/marginer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
-  const Example = () => {
-    const notify = () => {
-        toast.info('Customer was deleted', {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            transition: Zoom,
-            className:"text-white bg-primary",
-            });
-    };
-
-    return <button onClick={notify}>Notify</button>;
-  }
 toast.configure();
+
 const Invoices = () => {
+
+	const [ availableCredit, setAvailableCredit ] = useState(5000000); 
+	const [ usedCredit, setUsedCredit ] = useState(500000); 
+	const [ percentage, setPercentage ] = useState(usedCredit / availableCredit * 100); 
+
     return ( 
-        <>
-        <Example />
-        </>
+			<>
+			<div className="bg-light me-3">
+				<div className="container">
+					<div className="col-12 col-lg-6">
+						<div className="mb-1 mt-3" >
+							<span className="display-4 fw-bold mb-2">${usedCredit}</span> of <span className="display-5">${availableCredit}</span>
+							<p class="fs-5 ms-2">Your available credit</p>
+						</div>
+          	<ProgressBar now={percentage} animated style={{height:"5px"}} />
+						<Marginer direction="vertical" margin={20} />
+					</div>
+				</div>
+			</div>
+
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-12 col-lg-6 mb-3">
+          <Nav variant="tabs" defaultActiveKey="1">
+          <Nav.Item>
+              <Nav.Link eventKey="1">In process</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="2">Unfunded</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="3">Funded</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          </div>
+          <div className="col-12 col-lg-6 align-items-end justify-content-between">
+            <button className="btn btn-lg btn-primary rounded-pill float-end">Add new invoice</button>
+          </div>
+        </div>
+				
+			</div>
+
+
+        
+
+
+</>
      );
 }
  

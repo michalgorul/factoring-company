@@ -15,13 +15,15 @@ import Layout from './containers/Logged/Layout';
 import CustomerDetails from './containers/Logged/Customers/customerDetails';
 import CustomerCreate from './containers/Logged/Customers/customerCreate';
 import CustomerEdit from './containers/Logged/Customers/customerEdit';
+import CompanyEdit from './containers/Logged/Profile/companyEdit';
+import ProfileEdit from './containers/Logged/Profile/profileEdit';
 
 
 const UserComponents = ({match}) => {
   return(
       <Layout>
         <Switch>
-          <Route path={`${match.url}/admin`} exact component={MainPageLoged} />
+          <Route path={`${match.url}/main`} exact component={MainPageLoged} />
           <Route path={`${match.url}/customers`} exact component={Customers} />
           <Route path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
           <Route path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
@@ -31,6 +33,8 @@ const UserComponents = ({match}) => {
           <Route path={`${match.url}/reports`} exact component={Reports} />
           <Route path={`${match.url}/documents`} exact component={Documents} />
           <Route path={`${match.url}/profile`} exact component={Profile} />
+          <Route path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
+          <Route path={`${match.url}/profile/company/edit`} exact component={CompanyEdit} />
           <Route path="*" render={() => (<Redirect to="/404" />)} />
         </Switch>
       </Layout>

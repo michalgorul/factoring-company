@@ -1,38 +1,16 @@
 {
   "customers": [
     {
-      "firstName": "Ennis",
-      "lastName": "Tejeroo",
-      "companyName": "Plajo",
-      "country": "Indonesia",
-      "city": "Tangerang",
-      "street": "3 Paget Park",
-      "phone": "711-739-2241",
-      "blacklisted": false,
-      "id": 31
-    },
-    {
-      "id": 32,
-      "firstName": "Christan",
-      "lastName": "Terrell",
-      "companyName": "Tagcat",
-      "country": "China",
-      "city": "Taha Man Zu",
-      "street": "01849 Butternut Crossing",
-      "phone": "930-419-9767",
-      "blacklisted": true
-    },
-    {
-      "id": 34,
       "firstName": "Gerrilee",
       "lastName": "Magog",
       "companyName": "Centidel",
-      "country": "Portugal",
+      "country": "American Samoa",
       "city": "Baião",
       "street": "9 Buena Vista Court",
       "postalCode": "4640-107",
-      "phone": "712-818-8867",
-      "blacklisted": false
+      "phone": "+8807128188867",
+      "blacklisted": false,
+      "id": 34
     },
     {
       "id": 35,
@@ -228,26 +206,45 @@
       "phone": "+48692195554",
       "blacklisted": "false",
       "id": 51
+    },
+    {
+      "firstName": "michalgorul@gmail.com",
+      "lastName": "aaa",
+      "companyName": "aaa",
+      "country": "aaa",
+      "city": "aaa",
+      "street": "aaa",
+      "postalCode": "aaa",
+      "phone": "+48692195554",
+      "blacklisted": "false",
+      "id": 52
+    },
+    {
+      "firstName": "konstancjapradelska@gmail.com",
+      "lastName": "szdxf",
+      "companyName": "swzxdcfv",
+      "country": "zsxdcf",
+      "city": "zsxdc",
+      "street": "gfds",
+      "postalCode": "sdf",
+      "phone": "+48784074446",
+      "blacklisted": "false",
+      "id": 53
     }
   ],
   "user": {
-    "id": 1,
-    "username": "kgasgarth0",
-    "password": "sOObCB1dWy",
-    "email": "kgasgarth0@123-reg.co.uk",
-    "firstName": "Kristi",
-    "lastName": "Gasgarth",
-    "country": "Russia",
+    "firstName": "Micz",
+    "lastName": "Gorl",
+    "email": "test@google.com",
+    "country": "Angola",
     "city": "Troitskiy",
     "street": "9977 Texas Point",
     "postalCode": "623641",
-    "phone": "575-745-2386",
-    "company": "Google"
+    "phone": "575-745-2386"
   },
   "company": {
-    "id": 1,
-    "companyName": "Meevee",
-    "country": "Argentina",
+    "companyName": "Meeve",
+    "country": "Åland Islands",
     "city": "Arias",
     "street": "09080 Clove Point",
     "postalCode": "2624",

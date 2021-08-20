@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Zoom } from 'react-toastify';
+toast.configure();
 
 const CustomerCreate = () => {
 
@@ -9,6 +15,7 @@ const CustomerCreate = () => {
     const [lastName, setLastName] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [country, setCountry] = useState('');
+    const [countryInList, setCountryInList] = useState('');
     const [city, setCity] = useState('');
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
@@ -16,6 +23,7 @@ const CustomerCreate = () => {
     const [blacklisted, setBlacklisted] = useState('false');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
+    const options = useMemo(() => countryList().getData(), [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,8 +40,25 @@ const CustomerCreate = () => {
         .then(() => {
             setIsPending(false);
             history.push('/user/customers');
-        });
+        })
+        .then( () => {
+            toast.info('Customer was created', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                transition: Zoom,
+                className:"text-white bg-primary",
+                });
+        }); 
     }
+    const changeHandler = country => {
+        setCountryInList(country)
+        setCountry(country.label)
+      }
 
     return ( 
         <>
@@ -66,9 +91,7 @@ const CustomerCreate = () => {
                     </div>
 
                     <div class="form-floating form-outline mb-3">
-                        <input type="text" class="form-control form-control-lg" 
-                        placeholder="Enter password" required value={country} onChange={(e) => setCountry(e.target.value)} />
-                        <label class="form-label">Country</label>
+                        <Select className="" options={options} value={countryInList} onChange={changeHandler} />
                     </div>
 
                     <div class="form-floating form-outline mb-3">

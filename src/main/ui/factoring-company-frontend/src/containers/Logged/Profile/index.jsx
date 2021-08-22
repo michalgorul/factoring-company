@@ -9,7 +9,7 @@ const Profile = () => {
     return ( 
 			<>
 
-			{isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+		{isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
         {error && <div>{error}</div>}
         {user && company && (
         <div class="container flex-grow-1 container-p-y">
@@ -21,37 +21,8 @@ const Profile = () => {
               </div>
             </div>
 
-            <div class="row my-5 align-items-center justify-content-center container-fluid shadow p-3 mb-5 rounded">
-            <div class="col-9 col-lg-4">
-                    <div class="card border-1">
-                        <div class="card-body text-center py-4 flex-fill">
-                            <h4 class="card-title">Invoices</h4>
-                            <p class="card-text mx-5 text-muted fs-4">100</p>
-                        </div>
-                    </div>
-                </div> 
 
-                <div class="col-9 col-lg-4">
-                    <div class="card border-1">
-                        <div class="card-body text-center py-4 flex-fill">
-                            <h4 class="card-title">Customers</h4>
-                            <p class="card-text mx-5 text-muted fs-4">100</p>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="col-9 col-lg-4">
-                    <div class="card border-1">
-                        <div class="card-body text-center py-4 flex-fill">
-                            <h4 class="card-title">Comission</h4>
-                            <p class="card-text mx-5 text-muted fs-4">10000$</p>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-
-
-								<h5 class="mt-4 mb-3">Address & Phone</h5>
+				<h5 class="mt-4 mb-3">Address & Phone</h5>
                 <div class="container">
 									<div class="row align-items-start ms-3">
 										<div class="col-3">

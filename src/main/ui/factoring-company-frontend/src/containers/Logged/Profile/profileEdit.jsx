@@ -35,10 +35,11 @@ const ProfileEdit = () => {
         .then((result) => {
           result.json()
           .then((response) => {
+            const countryObject = {value: countryList().getValue(response.country), label: response.country };
             setFirstName(response.firstName)
             setLastName(response.lastName)
             setEmail(response.email)
-            setCountryInList(response.country)
+            setCountryInList(countryObject)
             setCity(response.city)
             setStreet(response.street)
             setPostalCode(response.postalCode)

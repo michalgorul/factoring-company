@@ -5,6 +5,7 @@ import { Marginer } from '../../../components/marginer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import InvoiceList from './invoiceList';
 toast.configure();
 
 const Invoices = () => {
@@ -47,8 +48,10 @@ const Invoices = () => {
             <button className="btn btn-lg btn-primary rounded-pill float-end">Add new invoice</button>
           </div>
         </div>
-				
 			</div>
+      <Marginer direction="vertical" margin={35} />
+				<InvoiceList className="pe-4 me-5 mt-5" />
+
 
 
         

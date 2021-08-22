@@ -17,6 +17,7 @@ import CustomerCreate from './containers/Logged/Customers/customerCreate';
 import CustomerEdit from './containers/Logged/Customers/customerEdit';
 import CompanyEdit from './containers/Logged/Profile/companyEdit';
 import ProfileEdit from './containers/Logged/Profile/profileEdit';
+import Support from './containers/Logged/Support';
 
 
 const UserComponents = ({match}) => {
@@ -24,6 +25,7 @@ const UserComponents = ({match}) => {
       <Layout>
         <Switch>
           <Route path={`${match.url}/main`} exact component={MainPageLoged} />
+          <Route path={`${match.url}/help`} exact component={Support} />
           <Route path={`${match.url}/customers`} exact component={Customers} />
           <Route path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
           <Route path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>

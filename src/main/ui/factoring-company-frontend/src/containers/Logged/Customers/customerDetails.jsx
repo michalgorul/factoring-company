@@ -62,7 +62,6 @@ const CustomerDetails = () => {
                             <p class="mb-2 fs-2">Street: <span class="fw-bold">{customer.street}</span></p>
                             <p class="mb-2 fs-2">Postal code: <span class="fw-bold">{customer.postalCode}</span></p>
                             <p class="mb-2 fs-2">Phone number: <span class="fw-bold">{customer.phone}</span></p>
-                            <p class="mb-2 fs-2 mb-3">Blacklisted: <span class="fw-bold">{customer.blacklisted.toString()}</span></p>
                         </div>
                         <div class="col-2 my-auto d-none d-lg-block">
                             <BackButton>

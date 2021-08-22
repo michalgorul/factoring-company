@@ -4,7 +4,7 @@
       "firstName": "Gerrilee",
       "lastName": "Magog",
       "companyName": "Centidel",
-      "country": "Afghanistan",
+      "country": "Albania",
       "city": "Baião",
       "street": "9 Buena Vista Court",
       "postalCode": "4640-107",
@@ -236,7 +236,7 @@
     "firstName": "Micz",
     "lastName": "Gorl",
     "email": "test@google.com",
-    "country": "",
+    "country": "American Samoa",
     "city": "Troitskiy",
     "street": "9977 Texas Point",
     "postalCode": "623641",
@@ -244,11 +244,11 @@
   },
   "company": {
     "companyName": "Meeve",
-    "country": "Åland Islands",
+    "country": "American Samoa",
     "city": "Arias",
     "street": "09080 Clove Point",
     "postalCode": "2624",
     "nip": "96-437-3842",
-    "regon": "52.101.121.243"
+    "regon": "1211212121212"
   }
 }

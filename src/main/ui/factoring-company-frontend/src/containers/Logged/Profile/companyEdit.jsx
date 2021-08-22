@@ -126,13 +126,13 @@ const CompanyEdit = () => {
 
                         <div class="form-floating form-outline mb-3">
                             <input type="text" class="form-control form-control-lg" 
-                            placeholder="Enter password"  value={nip} onChange={(e) => setNip(e.target.value)} />
+                            placeholder="Enter password" required value={nip} onChange={(e) => setNip(e.target.value)} />
                             <label class="form-label">Nip</label>
                         </div>
 
                         <div class="form-floating form-outline mb-3">
                             <input type="text" class="form-control form-control-lg" 
-                            placeholder="Enter password"  value={regon} onChange={(e) => setRegon(e.target.value)} />
+                            placeholder="Enter password" required value={regon} onChange={(e) => setRegon(e.target.value)} />
                             <label class="form-label">Regon</label>
                         </div>
 

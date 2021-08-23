@@ -13,6 +13,7 @@ toast.configure();
 const CustomerDetails = () => {
     const { id } = useParams();
     const {data: customer, error, isPending} = useFetch('http://localhost:8000/customers/' + id);
+    const {data: company} = useFetch('http://localhost:8000/company/');
     const history = useHistory();
 
     const [show, setShow] = useState(false);
@@ -50,26 +51,66 @@ const CustomerDetails = () => {
         <div className="">
         {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
         {error && <div>{error}</div>}
-        {customer && (
+        {customer && company &&(
             <article class="mt-5 ms-5">
+                <div class="media align-items-center py-3">
+              <div class="media-body ml-4">
+                <h4 class="display-3">{customer.firstName + ' ' + customer.lastName}</h4>
+                <h4 class="lead display-6">{customer.email}</h4>
+              </div>
+            </div>
+                <h5 class="mt-4 mb-3">Address & Phone</h5>
                 <div class="container">
-                    <div class="row justify-content-start">
-                        <div class="col-8">
-                        <h1 class="display-2 mb-5">{customer.firstName + ' ' + customer.lastName}</h1>
-                            <p class="mb-2 fs-2">Company: <span class="fw-bold">{customer.companyName}</span></p>
-                            <p class="mb-2 fs-2">Country: <span class="fw-bold">{customer.country}</span></p>
-                            <p class="mb-2 fs-2">City: <span class="fw-bold">{customer.city}</span></p>
-                            <p class="mb-2 fs-2">Street: <span class="fw-bold">{customer.street}</span></p>
-                            <p class="mb-2 fs-2">Postal code: <span class="fw-bold">{customer.postalCode}</span></p>
-                            <p class="mb-2 fs-2">Phone number: <span class="fw-bold">{customer.phone}</span></p>
-                        </div>
-                        <div class="col-2 my-auto d-none d-lg-block">
-                            <BackButton>
-                                <FontAwesomeIcon icon={faChevronCircleLeft} onClick={history.goBack} />
-                            </BackButton>
-                        </div>
-                    </div>
-                </div>
+					<div class="row align-items-start ms-3">
+						<div class="col-3">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item list-group-item-action fw-bold">Country:</li>
+								<li class="list-group-item list-group-item-action fw-bold">City:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Street:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
+							</ul>
+						</div>
+							<div class="col-3">
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item list-group-item-action">{customer.country}</li>
+									<li class="list-group-item list-group-item-action">{customer.city}</li>
+									<li class="list-group-item list-group-item-action">{customer.street}</li>
+									<li class="list-group-item list-group-item-action">{customer.postalCode}</li>
+									<li class="list-group-item list-group-item-action">{customer.phone}</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+              
+                
+				<h5 class="mt-4 mb-3">Company</h5>
+				<div class="container">
+					<div class="row align-items-start ms-3">
+						<div class="col-3">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Country:</li>
+								<li class="list-group-item list-group-item-action fw-bold">City:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Street:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
+								<li class="list-group-item list-group-item-action fw-bold">NIP:</li>
+								<li class="list-group-item list-group-item-action fw-bold">REGON:</li>
+							</ul>
+						</div>
+							<div class="col-3">
+								<ul class="list-group list-group-flush mb-3">
+									<li class="list-group-item list-group-item-action">{company.companyName}</li>
+									<li class="list-group-item list-group-item-action">{company.country}</li>
+									<li class="list-group-item list-group-item-action">{company.city}</li>
+									<li class="list-group-item list-group-item-action">{company.street}</li>
+									<li class="list-group-item list-group-item-action">{company.postalCode || 'siema'}</li>
+									<li class="list-group-item list-group-item-action">{company.nip}</li>
+									<li class="list-group-item list-group-item-action">{company.regon}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
                 
 
                 <div class="alert clearfix mt-2">

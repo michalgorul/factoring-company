@@ -28,7 +28,8 @@ const CustomerCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const customer = {firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted};
+        if(country.length > 0){
+            const customer = {firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted};
 
         setIsPending(true);
 
@@ -53,7 +54,23 @@ const CustomerCreate = () => {
                 transition: Zoom,
                 className:"text-white bg-primary",
                 });
-        }); 
+        });
+        }
+        else{
+            toast.warn('Please enter country', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                transition: Zoom,
+                className:"bg-warning text-dark"
+                });
+        }
+
+         
     }
     const changeHandler = country => {
         setCountryInList(country)

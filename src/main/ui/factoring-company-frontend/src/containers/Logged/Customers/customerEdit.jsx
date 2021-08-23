@@ -136,7 +136,7 @@ const CustomerEdit = () => {
 
                         <div class="form-floating form-outline mb-3">
                             <input type="text" class="form-control form-control-lg" 
-                            placeholder="Enter password"  value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
+                            placeholder="Enter password" required value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
                             <label class="form-label">Postal code</label>
                         </div>
 

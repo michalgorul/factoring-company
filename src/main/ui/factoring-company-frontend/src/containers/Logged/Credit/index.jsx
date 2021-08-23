@@ -6,6 +6,7 @@ import { Marginer } from '../../../components/marginer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import CreditList from './creditList';
 toast.configure();
 
 const Credit = () => {
@@ -73,24 +74,25 @@ const Credit = () => {
 			<div className="container mt-5">
 				<div className="row">
 					<div className="col-12 col-lg-6 mb-3">
-						<Nav variant="tabs" defaultActiveKey="funded" onSelect={handleSelect} className="fs-5">
+						<Nav variant="tabs" defaultActiveKey="active" onSelect={handleSelect} className="fs-5">
 							<Nav.Item>
-								<Nav.Link eventKey="funded">Funded</Nav.Link>
+								<Nav.Link eventKey="active">Active</Nav.Link>
 							</Nav.Item>
 							<Nav.Item>
 								<Nav.Link eventKey="processing">Processing</Nav.Link>
 							</Nav.Item>
 							<Nav.Item>
-								<Nav.Link eventKey="rewiev">In review</Nav.Link>
+								<Nav.Link eventKey="review">In review</Nav.Link>
 							</Nav.Item>
 							<Nav.Item>
-								<Nav.Link eventKey="active">Active</Nav.Link>
+								<Nav.Link eventKey="funded">Funded</Nav.Link>
 							</Nav.Item>
 						</Nav>
 					</div>
 				</div>
 			</div>
       <Marginer direction="vertical" margin={35} />
+	  <CreditList className="pe-4 me-5 mt-5" whatCredits={whatCredits}/>
 
         
 

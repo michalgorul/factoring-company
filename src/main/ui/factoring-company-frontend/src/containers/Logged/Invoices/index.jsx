@@ -51,7 +51,7 @@ const Invoices = () => {
         </div>
 			</div>
       <Marginer direction="vertical" margin={35} />
-				<InvoiceList className="pe-4 me-5 mt-5" whatInvoices={whatInvoices}/>
+			<InvoiceList className="pe-4 me-5 mt-5" whatInvoices={whatInvoices}/>
 
 
 

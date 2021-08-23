@@ -2,18 +2,20 @@ import Table from 'react-bootstrap/Table'
 import useFetch from "../../../components/useFetch/useFetch";
 
 
-const InvoiceList = () => {
-    const { error, isPending, data: invoices } = useFetch('http://localhost:8000/invoices')
+const InvoiceList = ({whatInvoices}) => {
+    const { error, isPending, data: invoices } = useFetch('http://localhost:8000/invoices-'+ whatInvoices)
 
     return ( 
         <Table striped borderless hover>
+            <caption>List of {whatInvoices} invoices</caption>
             <thead>
                 <tr>
-                <th>Invoice</th>
-                <th>Invoice Date</th>
-                <th>Due Date</th>
-                <th>Invoice Amount</th>
-                <th>Paid</th>
+                    <th>#</th>
+                    <th>Invoice</th>
+                    <th>Invoice Date</th>
+                    <th>Due Date</th>
+                    <th>Invoice Amount</th>
+                    <th>Paid</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +23,7 @@ const InvoiceList = () => {
             { isPending && <div>Loading...</div> }
             { invoices && invoices.map(invoice => (
                     <tr key={invoice.id} className="clickable" onclick="#">
+                        <th>{invoice.id}</th>
                         <td><a href="#" className="text-decoration-none">{invoice.invoiceNumber}</a></td>
                         <td>{invoice.creationDate}</td>
                         <td>{invoice.paymentDeadline}</td>

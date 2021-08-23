@@ -13,7 +13,8 @@ const Invoices = () => {
 	const [ availableCredit, setAvailableCredit ] = useState(5000000); 
 	const [ usedCredit, setUsedCredit ] = useState(500000); 
 	const [ percentage, setPercentage ] = useState(usedCredit / availableCredit * 100); 
-
+  const [ whatInvoices, setWhatInvoices ] = useState('active');
+  const handleSelect = (eventKey) => setWhatInvoices(eventKey);
     return ( 
 			<>
 			<div className="bg-light me-3">
@@ -32,15 +33,15 @@ const Invoices = () => {
       <div className="container mt-5">
         <div className="row">
           <div className="col-12 col-lg-6 mb-3">
-          <Nav variant="tabs" defaultActiveKey="1">
+          <Nav variant="tabs" defaultActiveKey="1" onSelect={handleSelect}>
           <Nav.Item>
-              <Nav.Link eventKey="1">In process</Nav.Link>
+              <Nav.Link eventKey="active">In process</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="2">Unfunded</Nav.Link>
+              <Nav.Link eventKey="unfunded">Unfunded</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="3">Funded</Nav.Link>
+              <Nav.Link eventKey="funded">Funded</Nav.Link>
             </Nav.Item>
           </Nav>
           </div>
@@ -50,7 +51,7 @@ const Invoices = () => {
         </div>
 			</div>
       <Marginer direction="vertical" margin={35} />
-				<InvoiceList className="pe-4 me-5 mt-5" />
+				<InvoiceList className="pe-4 me-5 mt-5" whatInvoices={whatInvoices}/>
 
 
 

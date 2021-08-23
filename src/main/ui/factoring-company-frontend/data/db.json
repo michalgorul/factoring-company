@@ -142,19 +142,6 @@
       "blacklisted": true,
       "id": 11,
       "email": "egrabehama@businesswire.com"
-    },
-    {
-      "firstName": "Yule",
-      "lastName": "Wisdom",
-      "companyName": "Quinu",
-      "country": "China",
-      "city": "Jialu",
-      "street": "8160 Clyde Gallagher Drive",
-      "postalCode": "545-123",
-      "phone": "189-748-2075",
-      "blacklisted": false,
-      "id": 12,
-      "email": "ywisdomb@tiny.cc"
     }
   ],
   "invoices-active": [
@@ -531,26 +518,6 @@
     }
   ],
   "invoices-funded": [
-    {
-      "id": 1,
-      "invoiceNumber": "#d0b707",
-      "creationDate": "2021-05-04 22:47:11",
-      "saleDate": "2021-06-28 19:09:35",
-      "paymentDeadline": "2021-01-31 11:24:51",
-      "toPay": 10737.87,
-      "paid": 87036.37,
-      "remarks": "viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere"
-    },
-    {
-      "id": 2,
-      "invoiceNumber": "#15ffc7",
-      "creationDate": "2020-09-24 19:13:02",
-      "saleDate": "2021-06-21 18:35:45",
-      "paymentDeadline": "2020-10-04 16:57:00",
-      "toPay": 22525.12,
-      "paid": 65909.55,
-      "remarks": "morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante"
-    },
     {
       "id": 3,
       "invoiceNumber": "#21332a",
@@ -1013,6 +980,28 @@
       "bankName": "ING Bank Śląski",
       "number": "AD90 2806 7048 KMMX 3OS6 DEE0",
       "swift": "INGBPLPW",
+      "id": 1
+    }
+  ],
+  "payment": [
+    {
+      "name": "Euro",
+      "code": "EUR",
+      "paymentType": "Debit card",
+      "id": 1
+    }
+  ],
+  "seller": [
+    {
+      "firstName": "Jo-ann",
+      "lastName": "Wheeler",
+      "companyName": "Meeve",
+      "country": "American Samoa",
+      "city": "Arias",
+      "street": "09080 Clove Point",
+      "postalCode": "2624",
+      "nip": "96-437-3842",
+      "regon": "1346578945",
       "id": 1
     }
   ]

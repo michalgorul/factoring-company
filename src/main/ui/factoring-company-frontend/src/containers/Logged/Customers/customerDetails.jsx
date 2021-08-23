@@ -104,7 +104,7 @@ const CustomerDetails = () => {
 									<li class="list-group-item list-group-item-action">{company.country}</li>
 									<li class="list-group-item list-group-item-action">{company.city}</li>
 									<li class="list-group-item list-group-item-action">{company.street}</li>
-									<li class="list-group-item list-group-item-action">{company.postalCode || 'siema'}</li>
+									<li class="list-group-item list-group-item-action">{company.postalCode}</li>
 									<li class="list-group-item list-group-item-action">{company.nip}</li>
 									<li class="list-group-item list-group-item-action">{company.regon}</li>
 								</ul>

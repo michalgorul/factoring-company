@@ -33,8 +33,8 @@ const Invoices = () => {
       <div className="container mt-5">
         <div className="row">
           <div className="col-12 col-lg-6 mb-3">
-          <Nav variant="tabs" defaultActiveKey="1" onSelect={handleSelect}>
-          <Nav.Item>
+          <Nav variant="tabs" defaultActiveKey="active" onSelect={handleSelect} className="fs-5">
+            <Nav.Item>
               <Nav.Link eventKey="active">In process</Nav.Link>
             </Nav.Item>
             <Nav.Item>

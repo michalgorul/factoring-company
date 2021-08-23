@@ -1,6 +1,7 @@
-import ProgressBar from 'react-bootstrap/ProgressBar'
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import React, { useState } from 'react';
 import RangeSlider from 'react-bootstrap-range-slider';
+import { Nav } from 'react-bootstrap';
 import { Marginer } from '../../../components/marginer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +14,8 @@ const Credit = () => {
 	const [ availableCredit, setAvailableCredit ] = useState(250000); 
 	const [ usedCredit, setUsedCredit ] = useState(50000); 
 	const [ percentage, setPercentage ] = useState(usedCredit / availableCredit * 100); 
+	const [ whatCredits, setWhatCredits ] = useState('active');
+	const handleSelect = (eventKey) => setWhatCredits(eventKey);
 
 	const drawFunds = () => {
 		let x = usedCredit + parseInt(value);
@@ -32,8 +35,7 @@ const Credit = () => {
 				progress: undefined,
 				transition: Zoom,
 				});
-		}
-		
+		}		
 	}
 
     return ( 
@@ -68,9 +70,27 @@ const Credit = () => {
 			</div>
 			<hr class="me-3 mt-4 mb-4"/>
 
-			<div class>
-
+			<div className="container mt-5">
+				<div className="row">
+					<div className="col-12 col-lg-6 mb-3">
+						<Nav variant="tabs" defaultActiveKey="funded" onSelect={handleSelect} className="fs-5">
+							<Nav.Item>
+								<Nav.Link eventKey="funded">Funded</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="processing">Processing</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="rewiev">In review</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="active">Active</Nav.Link>
+							</Nav.Item>
+						</Nav>
+					</div>
+				</div>
 			</div>
+      <Marginer direction="vertical" margin={35} />
 
         
 

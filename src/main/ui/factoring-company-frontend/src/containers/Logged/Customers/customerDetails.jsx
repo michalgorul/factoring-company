@@ -52,7 +52,7 @@ const CustomerDetails = () => {
         {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
         {error && <div>{error}</div>}
         {customer && company &&(
-            <article class="mt-5 ms-5">
+            <article class="mt-5 ms-3">
                 <div class="media align-items-center py-3">
               <div class="media-body ml-4">
                 <h4 class="display-3">{customer.firstName + ' ' + customer.lastName}</h4>
@@ -61,7 +61,7 @@ const CustomerDetails = () => {
             </div>
                 <h5 class="mt-4 mb-3">Address & Phone</h5>
                 <div class="container">
-					<div class="row align-items-start ms-3">
+					<div class="row align-items-start ms-2">
 						<div class="col-3">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item list-group-item-action fw-bold">Country:</li>
@@ -86,7 +86,7 @@ const CustomerDetails = () => {
                 
 				<h5 class="mt-4 mb-3">Company</h5>
 				<div class="container">
-					<div class="row align-items-start ms-3">
+					<div class="row align-items-start ms-2">
 						<div class="col-3">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
@@ -115,7 +115,8 @@ const CustomerDetails = () => {
 
                 <div class="alert clearfix mt-2">
                     <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                    <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit customer</a>
+                    <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
+                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
                 </div>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>

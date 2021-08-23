@@ -18,6 +18,7 @@ import CustomerEdit from './containers/Logged/Customers/customerEdit';
 import CompanyEdit from './containers/Logged/Profile/companyEdit';
 import ProfileEdit from './containers/Logged/Profile/profileEdit';
 import Support from './containers/Logged/Support';
+import InvoiceDetails from './containers/Logged/Invoices/invoiceDetails';
 
 
 const UserComponents = ({match}) => {
@@ -31,6 +32,7 @@ const UserComponents = ({match}) => {
           <Route path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
           <Route path={`${match.url}/customers/:id`} component={CustomerDetails}/>
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
+          <Route path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
           <Route path={`${match.url}/credit`} exact component={Credit} />
           <Route path={`${match.url}/reports`} exact component={Reports} />
           <Route path={`${match.url}/documents`} exact component={Documents} />

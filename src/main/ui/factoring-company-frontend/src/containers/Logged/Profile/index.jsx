@@ -5,6 +5,7 @@ const Profile = () => {
 
 	const {data: user, error, isPending} = useFetch('http://localhost:8000/user/');
 	const {data: company} = useFetch('http://localhost:8000/company/');
+	const {data: bank} = useFetch('http://localhost:8000/bank-account/');
 
     return ( 
 			<>
@@ -35,13 +36,33 @@ const Profile = () => {
 								<li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
 							</ul>
 						</div>
-							<div class="col-3">
+							<div class="col-5">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action">{user.country}</li>
 									<li class="list-group-item list-group-item-action">{user.city}</li>
 									<li class="list-group-item list-group-item-action">{user.street}</li>
 									<li class="list-group-item list-group-item-action">{user.postalCode}</li>
 									<li class="list-group-item list-group-item-action">{user.phone}</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+
+				<h5 class="mt-4 mb-3">Bank account</h5>
+                <div class="container">
+					<div class="row align-items-start ms-3">
+						<div class="col-3">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item list-group-item-action fw-bold">Bank name:</li>
+								<li class="list-group-item list-group-item-action fw-bold">Bank account number:</li>
+								<li class="list-group-item list-group-item-action fw-bold">SWIFT:</li>
+							</ul>
+						</div>
+							<div class="col-5">
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item list-group-item-action">{bank.bankName}</li>
+									<li class="list-group-item list-group-item-action">{bank.number}</li>
+									<li class="list-group-item list-group-item-action">{bank.swift}</li>
 								</ul>
 							</div>
 					</div>
@@ -62,7 +83,7 @@ const Profile = () => {
 								<li class="list-group-item list-group-item-action fw-bold">REGON:</li>
 							</ul>
 						</div>
-							<div class="col-3">
+							<div class="col-5">
 								<ul class="list-group list-group-flush mb-3">
 									<li class="list-group-item list-group-item-action">{company.companyName}</li>
 									<li class="list-group-item list-group-item-action">{company.country}</li>
@@ -77,7 +98,8 @@ const Profile = () => {
 					</div>
 				<div class="align-items-center mt-3 ms-5">
                     <a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
-                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your company</a>
+                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
+                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
                 </div>
                 
               </div>)}

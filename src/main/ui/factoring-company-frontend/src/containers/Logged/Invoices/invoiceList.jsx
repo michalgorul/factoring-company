@@ -26,7 +26,7 @@ const InvoiceList = ({whatInvoices}) => {
             { invoices && invoices.map(invoice => (
                     <tr key={invoice.id} className="clickable" onclick="#">
                         <th>{invoice.id}</th>
-                        <td><a href="#" className="text-decoration-none">{invoice.invoiceNumber}</a></td>
+                        <td><a href={"/user/invoices/" + invoice.id} className="text-decoration-none">{invoice.invoiceNumber}</a></td>
                         <td>{invoice.creationDate}</td>
                         <td>{invoice.paymentDeadline}</td>
                         <td>{invoice.toPay}</td>

@@ -10,20 +10,21 @@
       "postalCode": "545-123",
       "phone": "261-663-8234",
       "blacklisted": false,
-      "id": 1
+      "id": 1,
+      "email": "nchessell2@studiopress.com"
     },
     {
       "firstName": "Bari",
       "lastName": "Kas",
       "companyName": "Yodo",
-      "country": "China",
+      "country": "Algeria",
       "city": "Zhoutian",
       "street": "09415 Sullivan Pass",
       "postalCode": "545-2323",
       "phone": "338-645-6152",
-      "blacklisted": true,
+      "blacklisted": false,
       "id": 2,
-      "email": "bkas1@constantcontact.com"
+      "email": "nchessell2@studiopress.com"
     },
     {
       "firstName": "Nikolaus",
@@ -1006,5 +1007,11 @@
       "nextPayment": 2183,
       "balance": 7900.41
     }
-  ]
+  ],
+  "bank-account":
+  {
+    "bankName": "ING Bank Śląski",
+    "number": "AD90 2806 7048 KMMX 3OS6 DEE0",
+    "swift": "INGBPLPW"
+  }
 }

@@ -1008,10 +1008,12 @@
       "balance": 7900.41
     }
   ],
-  "bank-account":
-  {
-    "bankName": "ING Bank Śląski",
-    "number": "AD90 2806 7048 KMMX 3OS6 DEE0",
-    "swift": "INGBPLPW"
-  }
+  "bank-account": [
+    {
+      "bankName": "ING Bank Śląski",
+      "number": "AD90 2806 7048 KMMX 3OS6 DEE0",
+      "swift": "INGBPLPW",
+      "id": 1
+    }
+  ]
 }

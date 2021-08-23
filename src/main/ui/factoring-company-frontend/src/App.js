@@ -19,6 +19,7 @@ import CompanyEdit from './containers/Logged/Profile/companyEdit';
 import ProfileEdit from './containers/Logged/Profile/profileEdit';
 import Support from './containers/Logged/Support';
 import InvoiceDetails from './containers/Logged/Invoices/invoiceDetails';
+import EditBankAccount from './containers/Logged/BankAccount';
 
 
 const UserComponents = ({match}) => {
@@ -30,6 +31,7 @@ const UserComponents = ({match}) => {
           <Route path={`${match.url}/customers`} exact component={Customers} />
           <Route path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
           <Route path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
+          <Route path={`${match.url}/bank-account/edit/:id`} exact component={EditBankAccount}/>
           <Route path={`${match.url}/customers/:id`} component={CustomerDetails}/>
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
           <Route path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
@@ -56,7 +58,6 @@ function App() {
               <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
               <Route path="/terms-of-use" exact component={TermsOfUse} />
-              <Route path="user/admin" exact component={MainPageLoged} />
               <Route path="/user" component={UserComponents} />
               <Route path="*" component={NotFound} />
             </Switch>

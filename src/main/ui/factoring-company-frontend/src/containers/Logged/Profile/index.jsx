@@ -5,14 +5,14 @@ const Profile = () => {
 
 	const {data: user, error, isPending} = useFetch('http://localhost:8000/user/');
 	const {data: company} = useFetch('http://localhost:8000/company/');
-	const {data: bank} = useFetch('http://localhost:8000/bank-account/');
+	const {data: bank} = useFetch('http://localhost:8000/bank-account/1');
 
     return ( 
 			<>
 
 		{isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
         {error && <div>{error}</div>}
-        {user && company && (
+        {user && company && bank && (
         <div class="container flex-grow-1 container-p-y">
 
             <div class="media align-items-center py-3">
@@ -99,7 +99,7 @@ const Profile = () => {
 				<div class="align-items-center mt-3 ms-5">
                     <a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
                     <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
-                    <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
+                    <a href={"/user/bank-account/edit/" + bank.id} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
                 </div>
                 
               </div>)}

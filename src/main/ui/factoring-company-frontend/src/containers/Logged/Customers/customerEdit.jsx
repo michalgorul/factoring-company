@@ -82,6 +82,7 @@ const CustomerEdit = () => {
                 });
         });    
     }
+    
     const changeHandler = country => {
         setCountryInList(country)
         setCountry(country.label)

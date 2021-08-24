@@ -25,7 +25,7 @@ const CreditList = ({whatCredits}) => {
             { credits && credits.map(credit => (
                     <tr key={credit.id} className="clickable" onclick="#">
                         <th>{credit.id}</th>
-                        <td><a href="#" className="text-decoration-none">{credit.creditNumber}</a></td>
+                        <td><a href={"/user/credit/" + credit.id} className="text-decoration-none">{credit.creditNumber}</a></td>
                         <td>{credit.creationDate}</td>
                         <td>{credit.amount}</td>
                         <td>{credit.nextPayment}</td>

@@ -20,6 +20,7 @@ import ProfileEdit from './containers/Logged/Profile/profileEdit';
 import Support from './containers/Logged/Support';
 import InvoiceDetails from './containers/Logged/Invoices/invoiceDetails';
 import EditBankAccount from './containers/Logged/BankAccount';
+import CreditDetails from './containers/Logged/Credit/creditDetails';
 
 
 const UserComponents = ({match}) => {
@@ -36,6 +37,7 @@ const UserComponents = ({match}) => {
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
           <Route path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
           <Route path={`${match.url}/credit`} exact component={Credit} />
+          <Route path={`${match.url}/credit/:id`} exact component={CreditDetails} />
           <Route path={`${match.url}/reports`} exact component={Reports} />
           <Route path={`${match.url}/documents`} exact component={Documents} />
           <Route path={`${match.url}/profile`} exact component={Profile} />

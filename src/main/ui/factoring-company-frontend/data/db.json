@@ -4,7 +4,7 @@
       "firstName": "Constantine",
       "lastName": "Vanyushin",
       "companyName": "Rhybox",
-      "country": "",
+      "country": "Algeria",
       "city": "Ochakiv",
       "street": "7 Mitchell Street",
       "postalCode": "545-123",
@@ -357,7 +357,7 @@
   },
   "company": {
     "companyName": "Meeve",
-    "country": "",
+    "country": "Algeria",
     "city": "Arias",
     "street": "09080 Clove Point",
     "postalCode": "2624",

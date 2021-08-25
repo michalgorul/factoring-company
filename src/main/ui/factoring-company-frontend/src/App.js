@@ -21,6 +21,7 @@ import Support from './containers/Logged/Support';
 import InvoiceDetails from './containers/Logged/Invoices/invoiceDetails';
 import EditBankAccount from './containers/Logged/BankAccount';
 import CreditDetails from './containers/Logged/Credit/creditDetails';
+import InvoiceCreate from './containers/Logged/Invoices/invoiceCreate';
 
 
 const UserComponents = ({match}) => {
@@ -35,6 +36,7 @@ const UserComponents = ({match}) => {
           <Route path={`${match.url}/bank-account/edit/:id`} exact component={EditBankAccount}/>
           <Route path={`${match.url}/customers/:id`} component={CustomerDetails}/>
           <Route path={`${match.url}/invoices`} exact component={Invoices} />
+          <Route path={`${match.url}/invoices/create`} exact component={InvoiceCreate} />
           <Route path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
           <Route path={`${match.url}/credit`} exact component={Credit} />
           <Route path={`${match.url}/credit/:id`} exact component={CreditDetails} />

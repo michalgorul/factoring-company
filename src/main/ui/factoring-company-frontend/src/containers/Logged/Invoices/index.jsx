@@ -46,7 +46,7 @@ const Invoices = () => {
           </Nav>
           </div>
           <div className="col-12 col-lg-6 align-items-end justify-content-between">
-            <button className="btn btn-lg btn-primary rounded-pill float-end">Add new invoice</button>
+            <a href="/user/invoices/create" className="btn btn-lg btn-primary rounded-pill float-end text-white">Add new invoice</a>
           </div>
         </div>
 			</div>

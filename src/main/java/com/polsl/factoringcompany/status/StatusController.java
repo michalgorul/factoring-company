@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/status")
+@RequestMapping(path = "/api/status")
 public class StatusController {
 
     private final StatusService statusService;

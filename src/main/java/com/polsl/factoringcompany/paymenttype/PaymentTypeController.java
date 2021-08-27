@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/paymenttype")
+@RequestMapping(path = "/api/payment-type")
 public class PaymentTypeController {
 
     private final PaymentTypeService paymentTypeService;

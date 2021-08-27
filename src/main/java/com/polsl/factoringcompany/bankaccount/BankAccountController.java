@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/bankaccount")
+@RequestMapping(path = "/api/bank-account")
 public class BankAccountController {
 
     private final BankAccountService bankAccountService;

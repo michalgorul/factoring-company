@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/company")
+@RequestMapping(path = "/api/company")
 public class CompanyController {
 
     private final CompanyService companyService;

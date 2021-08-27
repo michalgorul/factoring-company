@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.auth.jwt;
+package com.polsl.factoringcompany.security.jwt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

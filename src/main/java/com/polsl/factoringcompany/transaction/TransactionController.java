@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/transaction")
+@RequestMapping(path = "/api/transaction")
 public class TransactionController {
 
     private final TransactionService transactionService;

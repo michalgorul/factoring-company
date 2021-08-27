@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/invoiceitem")
+@RequestMapping(path = "/api/invoice-item")
 public class InvoiceItemController {
 
     private final InvoiceItemService invoiceItemService;

@@ -67,7 +67,7 @@ const Support = () => {
 										</LogoImage>
 										<div class="card-body text-center py-4 mt-2">
 											<h4 class="card-title">Phone</h4>
-											<a href="#" class="stretched-link"></a>
+											<a href="tel:123-456-7890" class="stretched-link"></a>
 										</div>
 									</div>
 								</div>
@@ -79,7 +79,7 @@ const Support = () => {
 										</LogoImage>
 										<div class="card-body text-center py-4 mt-2">
 											<h4 class="card-title">Email</h4>
-											<a href="#" class="stretched-link"></a>
+											<a href="mailto:support@f.company.com" class="stretched-link"></a>
 										</div>
 									</div>
 								</div> 
@@ -91,7 +91,7 @@ const Support = () => {
 										</LogoImage>
 										<div class="card-body text-center py-4 mt-2">
 											<h4 class="card-title">Twitter</h4>
-											<a href="#" class="stretched-link"></a>
+											<a href="https://twitter.com/" class="stretched-link"></a>
 										</div>
 									</div>
 								</div> 

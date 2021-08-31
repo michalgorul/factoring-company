@@ -18,13 +18,13 @@ public class CurrencyEntity {
 
     @Id
     @SequenceGenerator(
-            name = "currency_sequence",
-            sequenceName = "currency_sequence",
+            name = "currency_id_seq",
+            sequenceName = "currency_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "currency_sequence"
+            generator = "currency_id_seq"
     )
     private Long id;
 

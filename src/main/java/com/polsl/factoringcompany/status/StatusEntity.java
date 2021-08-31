@@ -17,13 +17,13 @@ public class StatusEntity {
 
     @Id
     @SequenceGenerator(
-            name = "status_sequence",
-            sequenceName = "status_sequence",
+            name = "status_id_seq",
+            sequenceName = "currency_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "status_sequence"
+            generator = "currency_id_seq"
     )
     private Long id;
 

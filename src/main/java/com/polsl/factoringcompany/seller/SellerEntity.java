@@ -18,13 +18,13 @@ public class SellerEntity {
     @Id
     @Column(name = "id", nullable = false)
     @SequenceGenerator(
-            name = "seller_sequence",
-            sequenceName = "seller_sequence",
+            name = "seller_id_seq",
+            sequenceName = "currency_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "seller_sequence"
+            generator = "currency_id_seq"
     )
     private Long id;
 

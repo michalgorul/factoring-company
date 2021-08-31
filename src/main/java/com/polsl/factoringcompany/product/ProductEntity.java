@@ -16,13 +16,13 @@ public class ProductEntity {
 
     @Id
     @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
+            name = "product_id_seq",
+            sequenceName = "currency_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "product_sequence"
+            generator = "currency_id_seq"
     )
     private Long id;
 

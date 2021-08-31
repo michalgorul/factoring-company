@@ -25,11 +25,12 @@ public class FakeApplicationUserService implements ApplicationUserDao{
     }
 
     private List<ApplicationUser> getApplicationUsers() {
+        String password = passwordEncoder.encode("password");
         List<ApplicationUser> applicationUsers = Lists.newArrayList(
                 new ApplicationUser(
                         ADMIN.getGrantedAuthorities(),
                         "admin",
-                        passwordEncoder.encode("password"),
+                        password,
                         true,
                         true,
                         true,

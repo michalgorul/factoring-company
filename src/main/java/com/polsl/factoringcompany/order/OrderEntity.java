@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "order", schema = "public", catalog = "factoring_company")
 public class OrderEntity {
 
-    private final double COMMISSION_RATE_CONST = 0.01d;
+//    private final double COMMISSION_RATE_CONST = 0.01d;
 
     @Id
     @SequenceGenerator(
@@ -89,8 +89,8 @@ public class OrderEntity {
         this.orderDate = orderDto.getOrderDate();
         this.firstPayAmmount = BigDecimal.valueOf(orderDto.getAmmount().doubleValue() * 0.80f);
         this.secondPayAmmount = BigDecimal.valueOf(orderDto.getAmmount().doubleValue() * 0.20f);
-        this.commissionRate = BigDecimal.valueOf(COMMISSION_RATE_CONST);
-        this.commissionValue = BigDecimal.valueOf(orderDto.getAmmount().doubleValue() * COMMISSION_RATE_CONST);
+        this.commissionRate = orderDto.getCommissionRate();
+        this.commissionValue = BigDecimal.valueOf(orderDto.getAmmount().doubleValue() * orderDto.getCommissionRate().doubleValue());
         this.invoiceId = orderDto.getInvoiceId();
         this.userId = orderDto.getUserId();
         this.statusId = orderDto.getStatusId();

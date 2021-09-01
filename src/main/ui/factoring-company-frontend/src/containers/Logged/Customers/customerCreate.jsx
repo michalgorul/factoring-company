@@ -20,13 +20,14 @@ const CustomerCreate = () => {
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [phone, setPhone] = useState('');
-    const [blacklisted, setBlacklisted] = useState('false');
+    const [blacklisted, setBlacklisted] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
     const options = useMemo(() => countryList().getData(), [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setBlacklisted(false);
 
         if(country.length > 0){
             const customer = {firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted};

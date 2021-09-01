@@ -2,9 +2,7 @@ import useFetch from "../../../components/useFetch/useFetch";
 import { useHistory, useParams } from "react-router-dom";
 import { Spinner, Modal, Button } from 'react-bootstrap';
 import { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
@@ -19,7 +17,6 @@ const CustomerDetails = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
   
     const handleDeleteRequest = () => {
         fetch('http://localhost:8000/customers/' + id, {
@@ -139,11 +136,11 @@ const CustomerDetails = () => {
      
 }
 
-const BackButton = styled.div`
-   font-size: 5rem;
-   z-index: 1;
-   cursor: pointer;
-   color: #0d6efd;
-`
+// const BackButton = styled.div`
+//    font-size: 5rem;
+//    z-index: 1;
+//    cursor: pointer;
+//    color: #0d6efd;
+// `
  
 export default CustomerDetails;

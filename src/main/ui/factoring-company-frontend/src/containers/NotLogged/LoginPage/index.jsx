@@ -2,6 +2,11 @@ import { Marginer } from '../../../components/marginer'
 import LoginImage from '../../../images/login.png'
 import Copyright from '../HomePage/copyright'
 
+const handleSubmit = () => {
+    console.log('siemano');
+
+}
+
 const Login = () => {
     return ( 
         <div class="container-fluid h-custom">
@@ -10,7 +15,7 @@ const Login = () => {
                 <img src={LoginImage} class="img-fluid mt-5" alt="Sample image"/>
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form>
+                <form onSubmit={handleSubmit}>
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                     <p class="lead fw-normal mt-5 mb-5 me-3 display-3">Sign in</p>
 

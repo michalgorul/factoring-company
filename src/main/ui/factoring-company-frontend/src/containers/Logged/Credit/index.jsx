@@ -19,6 +19,7 @@ const Credit = () => {
 	const handleSelect = (eventKey) => setWhatCredits(eventKey);
 
 	const drawFunds = () => {
+		setAvailableCredit(250000);
 		let x = usedCredit + parseInt(value);
 		if(x <= availableCredit){
 			setUsedCredit(x);

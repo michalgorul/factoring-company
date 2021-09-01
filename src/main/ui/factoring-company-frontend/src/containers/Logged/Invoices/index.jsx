@@ -2,17 +2,17 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import React, { useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Marginer } from '../../../components/marginer';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Zoom } from 'react-toastify';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import { Zoom } from 'react-toastify';
 import InvoiceList from './invoiceList';
-toast.configure();
+// toast.configure();
 
 const Invoices = () => {
 
-	const [ availableCredit, setAvailableCredit ] = useState(5000000); 
-	const [ usedCredit, setUsedCredit ] = useState(500000); 
-	const [ percentage, setPercentage ] = useState(usedCredit / availableCredit * 100); 
+	const [ availableCredit ] = useState(5000000); 
+	const [ usedCredit ] = useState(500000); 
+	const [ percentage ] = useState(usedCredit / availableCredit * 100); 
   const [ whatInvoices, setWhatInvoices ] = useState('active');
   const handleSelect = (eventKey) => setWhatInvoices(eventKey);
     return ( 

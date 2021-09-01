@@ -31,7 +31,7 @@ const CustomerEdit = () => {
 
     useEffect(() => {
         getCustomer();
-      }, [])
+      })
 
       function getCustomer() {
         fetch('http://localhost:8000/customers/' + id)
@@ -53,6 +53,7 @@ const CustomerEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setBlacklisted(false);
         const customer = { firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted};
         setIsPendingN(true);
         const requestOptions = {
@@ -90,7 +91,7 @@ const CustomerEdit = () => {
     
     return ( 
         <div>
-            {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+            {isPending && isPendingN && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
             {error && <div>{error}</div>}
             {editCustomer && (
             <div class="container-fluid h-custom">

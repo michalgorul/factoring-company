@@ -70,8 +70,8 @@ const CreditDetails = () => {
                 
 
                 <div class="alert clearfix mt-2">
-                    <a href={"#"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Overpay the loan</a>
-                    <a href={"#"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Requests</a>
+                    <button class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Overpay the loan</button>
+                    <button class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Requests</button>
                 </div>
             </article> 
         )}

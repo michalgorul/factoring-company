@@ -6,7 +6,8 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import CreatableSelect from 'react-select/creatable';
-import { Form, Row, Col, InputGroup, Button} from 'react-bootstrap';
+import { Form, Row, Col} from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import FloatingLabel from "react-bootstrap-floating-label";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +31,7 @@ const InvoiceCreate = () => {
     const [vat, setVat] = useState('');
     const [months, setMonths] = useState('');
 		const [isPendingN, setIsPending] = useState(false);
-    const history = useHistory();
+    // const history = useHistory();
 		const {data: products, error, isPending} = useFetch('http://localhost:8000/product');
 
 
@@ -126,6 +127,10 @@ const InvoiceCreate = () => {
     return ( 
 
 			<>
+			<div>
+            {isPending && isPendingN && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+            {error && <div>{error}</div>}
+            {products && (
 
         <div class="container-fluid">
             <div class="d-flex justify-content-start align-items-center">
@@ -203,7 +208,7 @@ const InvoiceCreate = () => {
 													<DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)} 
 														value={performanceDate} onChange={(newDate) => { setPerformanceDate(newDate); }}/>
 												</LocalizationProvider>
-                    	</div>
+                    						</div>
 
 											<div className="mb-3 col-12">
 											<p style={{marginLeft:"5px"}}>Date of issue</p>
@@ -227,7 +232,8 @@ const InvoiceCreate = () => {
 										</form>                
                 </div>
             </div>
-        </div>
+        </div>)}
+		</div>
 
 </>
             

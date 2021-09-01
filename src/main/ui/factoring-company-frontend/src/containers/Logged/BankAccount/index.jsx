@@ -1,6 +1,6 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetch from "../../../components/useFetch/useFetch";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,11 +15,10 @@ const EditBankAccount = () => {
 
     const { id } = useParams();
     const {data: editAccount, error, isPending} = useFetch('http://localhost:8000/customers/' + id);
-    const history = useHistory();
 
     useEffect(() => {
         getCustomer();
-      }, []);
+      });
 
       function getCustomer() {
         fetch('http://localhost:8000/bank-account/' + id)
@@ -68,7 +67,7 @@ const EditBankAccount = () => {
 
     return ( 
 <div>
-            {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+            {isPending && isPendingN && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
             {error && <div>{error}</div>}
             {editAccount && (
             <div class="container-fluid h-custom">

@@ -46,7 +46,7 @@ const Customers = () => {
 
         <ol class="list-group list-group-numbered list-group-flush">
                 { error &&<> <div class="alert alert-warning fs-3" role="alert">{error} </div> 
-                            <a class="text-decoration-none ms-3 fs-3" href="" onClick={() => {window.location.href="/something"}}> Click to refresh </a></>}
+                            <button class="text-decoration-none ms-3 fs-3" href="" onClick={() => {window.location.href="/something"}}> Click to refresh </button></>}
                 { isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div> }
                 { customers && <CustomerList customers={searchResults} /> }   
         </ol>

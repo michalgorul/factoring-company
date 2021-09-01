@@ -1,13 +1,32 @@
-import { Marginer } from '../../../components/marginer'
+import {Marginer} from '../../../components/marginer'
 import LoginImage from '../../../images/login.png'
-import Copyright from '../HomePage/copyright'
+import {useState} from "react";
+import axios from 'axios';
 
-const handleSubmit = () => {
-    console.log('siemano');
-
-}
 
 const Login = () => {
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const data = {
+            username: username,
+            password: password
+        }
+
+        axios.post('http://localhost:8080/login', data)
+            .then(res => {
+                console.log(res.headers);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    
+    }
+    
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
     return ( 
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -22,13 +41,14 @@ const Login = () => {
                 </div>
 
                 <div class="form-outline form-floating mb-4">
-                    <input type="email" class="form-control form-control-lg"
-                    placeholder="Enter a valid email address" />
-                    <label class="form-label">Email address</label>
+                    <input type="username" required class="form-control form-control-lg" placeholder="Enter a valid email address" 
+                    value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <label class="form-label">Username</label>
                 </div>
 
                 <div class="form-floating form-outline mb-3">
-                    <input type="password" class="form-control form-control-lg" placeholder="Enter password" />
+                    <input type="password" required class="form-control form-control-lg" placeholder="Enter password" 
+                    value={password} onChange={(e) => setPassword(e.target.value)} />
                     <label class="form-label" for="form3Example4">Password</label>
                 </div>
 
@@ -41,8 +61,8 @@ const Login = () => {
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
-                    <a href="/user/main" type="button" class="btn btn-primary btn-lg rounded-pill"
-                    style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Login</a>
+                    <button onClick={handleSubmit} type="button" class="btn btn-primary btn-lg rounded-pill"
+                    style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Login</button>
                     <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
                         class="link-primary">Register</a></p>
                 </div>

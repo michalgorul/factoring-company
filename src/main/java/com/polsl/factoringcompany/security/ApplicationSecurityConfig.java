@@ -14,10 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
-
-import static com.polsl.factoringcompany.security.ApplicationUserRole.ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -33,17 +34,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*", "/swagger-ui.html").permitAll()
-                .antMatchers("/api/**").hasAnyRole(ADMIN.name())
-                .anyRequest()
-                .authenticated();
+                .addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernameAndPasswordAuthenticationFilter.class);
+//                .authorizeRequests()
+////                .antMatchers("/", "index", "/css/*", "/js/*", "/login").permitAll()
+////                .antMatchers("/api/**").hasAnyRole(ADMIN.name())
+//                .anyRequest()
+//                .authenticated();
     }
 
     @Override
@@ -59,4 +62,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         return provider;
     }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
+
 }

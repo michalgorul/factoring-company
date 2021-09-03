@@ -21,6 +21,7 @@ const Login = () => {
                 console.log(token);
                 localStorage.setItem('token', token);
                 console.log(localStorage.getItem('token'));
+                console.log(response);
 
             })
             .catch(err => {

@@ -17,6 +17,11 @@ public class UserController {
         return this.userService.getUsers();
     }
 
+    @GetMapping(path = "/current")
+    public UserEntity getCurrentUser() {
+        return this.userService.getCurrentUser();
+    }
+
 
     @GetMapping(path = "/{id}")
     public UserEntity getUser(@PathVariable Long id) {

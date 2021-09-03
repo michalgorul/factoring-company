@@ -1,9 +1,9 @@
 import useFetch from "../../../components/useFetch/useFetch";
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 
 const Profile = () => {
 
-	const {data: user, error, isPending} = useFetch('http://localhost:8000/user/');
+	const {data: user, error, isPending} = useFetch('https://localhost:8443/api/user/');
 	const {data: company} = useFetch('http://localhost:8000/company/');
 	const {data: bank} = useFetch('http://localhost:8000/bank-account/1');
 

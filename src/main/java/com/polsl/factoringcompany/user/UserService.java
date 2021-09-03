@@ -4,8 +4,10 @@ package com.polsl.factoringcompany.user;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
+import com.polsl.factoringcompany.security.auth.ApplicationUser;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,6 +27,15 @@ public class UserService {
     public UserEntity getUser(Long id) {
         return this.userRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("User", id));
+    }
+
+    public UserEntity getCurrentUser(){
+        Long id = 0L;
+        ApplicationUser userPrincipal = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userRepository.findByUsername(userPrincipal.getUsername()).isPresent()){
+            id = userRepository.findByUsername(userPrincipal.getUsername()).get().getId();
+        }
+        return getUser(id);
     }
 
     public UserEntity addUser(UserEntity userEntity) {

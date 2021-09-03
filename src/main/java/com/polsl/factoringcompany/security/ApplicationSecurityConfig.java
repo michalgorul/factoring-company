@@ -1,7 +1,6 @@
 package com.polsl.factoringcompany.security;
 
 import com.polsl.factoringcompany.security.auth.ApplicationUserService;
-import com.polsl.factoringcompany.security.jwt.JwtConfig;
 import com.polsl.factoringcompany.security.jwt.JwtTokenVerifier;
 import com.polsl.factoringcompany.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.SecretKey;
+import java.util.Arrays;
+
+import static com.polsl.factoringcompany.security.ApplicationUserRole.ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -28,25 +30,25 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
     private final SecretKey secretKey;
-    private final JwtConfig jwtConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                //remove csrf and state in session because in jwt we do not need them
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                // enable cors globally
                 .cors()
                 .and()
-                .csrf().disable()
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernameAndPasswordAuthenticationFilter.class);
-//                .authorizeRequests()
-////                .antMatchers("/", "index", "/css/*", "/js/*", "/login").permitAll()
-////                .antMatchers("/api/**").hasAnyRole(ADMIN.name())
-//                .anyRequest()
-//                .authenticated();
+                // add jwt filters (1. authentication, 2. authorization)
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), secretKey))
+                .addFilterAfter(new JwtTokenVerifier(secretKey), JwtUsernameAndPasswordAuthenticationFilter.class)
+                // configure access rules
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/api/**").hasRole(ADMIN.name());
     }
 
     @Override
@@ -63,11 +65,32 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.addAllowedOrigin(ALL);
+//        config.addAllowedHeader(ALL);
+//        config.addAllowedMethod(ALL);
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
+@Bean
+public CorsFilter corsFilter() {
+    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    corsConfiguration.setAllowCredentials(true);
+    corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
+    corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
+            "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method",
+            "Access-Control-Request-Headers"));
+    corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
+            "Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+    UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+    urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+    return new CorsFilter(urlBasedCorsConfigurationSource);
+}
+
 
 }

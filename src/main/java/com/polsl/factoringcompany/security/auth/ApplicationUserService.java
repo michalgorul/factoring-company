@@ -26,6 +26,7 @@ public class ApplicationUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
+
         ApplicationUser applicationUser = new ApplicationUser(
                 ADMIN.getGrantedAuthorities(),
                 userEntity.getUsername(),

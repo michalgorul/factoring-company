@@ -48,7 +48,7 @@ public class SwaggerConfiguration {
                 "https://justrocket.de",
                 vext);
 
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo)
                 .pathMapping("/")
                 .apiInfo(ApiInfo.DEFAULT)
@@ -62,9 +62,6 @@ public class SwaggerConfiguration {
                 .securityContexts(Lists.newArrayList(securityContext()))
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .useDefaultResponseMessages(false);
-
-
-        return docket;
     }
 
 

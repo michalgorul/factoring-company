@@ -11,10 +11,8 @@ import javax.crypto.SecretKey;
 @RequiredArgsConstructor
 public class JwtSecretKey {
 
-    private final JwtConfig jwtConfig;
-
     @Bean
     public SecretKey secretKey() {
-        return Keys.hmacShaKeyFor(jwtConfig.getSecretKey().getBytes());
+        return Keys.hmacShaKeyFor(JwtProps.SECRET.getBytes());
     }
 }

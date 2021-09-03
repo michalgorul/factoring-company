@@ -27,30 +27,34 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
-    private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, @NotNull HttpServletResponse httpServletResponse,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
 
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        // Read the authorization header where the JWT token should be
+        String authorizationHeader = httpServletRequest.getHeader(JwtProps.AUTH_HEADER);
 
-        if(Strings.isNullOrEmpty(authorizationHeader) || authorizationHeader.startsWith("Bearer ")){
+        // If header does not contain BEARER or is null delegate to Spring impl and exit
+        if(Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(JwtProps.TOKEN_PREFIX)){
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
 
-        String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
+        // If present, gram the token
+        String token = authorizationHeader.replace(JwtProps.TOKEN_PREFIX, "");
 
 
         try {
+            // parsing the token
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token);
 
             Claims body = claimsJws.getBody();
             String username = body.getSubject();
+            // Get authorities from the token body
             var authorities = (List<Map<String, String>>) body.get("authorities");
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream().map(m -> new SimpleGrantedAuthority(m.get("authority")))

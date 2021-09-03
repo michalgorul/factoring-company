@@ -1,23 +1,14 @@
 package com.polsl.factoringcompany.security.jwt;
 
 import com.google.common.net.HttpHeaders;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "application.jwt")
-@Component
 @NoArgsConstructor
-@Getter
-@Setter
-public class JwtConfig {
-    private String secretKey;
-    private String tokenPrefix;
-    private Integer tokenExpirationAfterDays;
+public class JwtProps {
 
-    public String getAuthorizationHeader() {
-        return HttpHeaders.AUTHORIZATION;
-    }
+    public static final String SECRET = "~9L/fFl-z1)vLti(TcxDd'+aK)raQNnQ[W5+nr/Dz:%&VX0dzb$`0biETG_n!&c33's:AQ%aydQUK~f*kJqCZ5QR8Zv}?l,j'1MLinT%}Qy{Mwd#IM9Z7LycJe3qNUsHcQh3r11682z7EvhicZggVKyzQQ";
+    public static final Integer EXPIRATION_TIME_IN_DAYS = 14;
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String AUTH_HEADER = HttpHeaders.AUTHORIZATION;
+
 }

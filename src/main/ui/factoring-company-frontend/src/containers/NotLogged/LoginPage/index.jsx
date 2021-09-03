@@ -14,9 +14,14 @@ const Login = () => {
             password: password
         }
 
-        axios.post('http://localhost:8080/login', data)
-            .then(res => {
-                console.log(res.headers);
+        axios.post('https://localhost:8443/login', data)
+            .then(response => {
+                let myHeaders = new Headers(response.headers);
+                let token = myHeaders.get('Authorization').replace("Bearer ", "");
+                console.log(token);
+                localStorage.setItem('token', token);
+                console.log(localStorage.getItem('token'));
+
             })
             .catch(err => {
                 console.log(err);

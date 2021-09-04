@@ -1,10 +1,23 @@
 import useFetch from "../../../components/useFetch/useFetch";
 import {Spinner} from 'react-bootstrap';
+import { getUserDetails } from "../../../services/userService";
+import config from "../../../services/config";
+import { useState } from "react";
+import { useEffect } from "react";
+
 
 const Profile = () => {
 
-	const {data: user, error, isPending} = useFetch('https://localhost:8443/api/user/');
-	const {data: company} = useFetch('http://localhost:8000/company/');
+	const [user, setUser] = useState(null);
+	useEffect(() => {
+        getUserDetails()
+            .then((response) => {
+                setUser(response.data[0]);
+            })
+            .catch(() => {
+            })
+    }, [])
+	const {data: company, error, isPending} = useFetch('http://localhost:8000/company/');
 	const {data: bank} = useFetch('http://localhost:8000/bank-account/1');
 
     return ( 

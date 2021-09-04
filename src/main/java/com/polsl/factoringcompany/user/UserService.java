@@ -7,6 +7,7 @@ import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.security.auth.ApplicationUser;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -31,9 +32,9 @@ public class UserService {
 
     public UserEntity getCurrentUser(){
         Long id = 0L;
-        ApplicationUser userPrincipal = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(userRepository.findByUsername(userPrincipal.getUsername()).isPresent()){
-            id = userRepository.findByUsername(userPrincipal.getUsername()).get().getId();
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userRepository.findByUsername(currentUserName).isPresent()){
+            id = userRepository.findByUsername(currentUserName).get().getId();
         }
         return getUser(id);
     }

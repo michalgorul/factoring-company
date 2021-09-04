@@ -14,13 +14,7 @@ import static com.polsl.factoringcompany.security.ApplicationUserRole.ADMIN;
 @AllArgsConstructor
 public class ApplicationUserService implements UserDetailsService {
 
-//    private final ApplicationUserDao applicationUserDao;
-
     private final UserRepository userRepository;
-
-//    public ApplicationUserService(@Qualifier("fake") ApplicationUserDao applicationUserDao) {
-//        this.applicationUserDao = applicationUserDao;
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

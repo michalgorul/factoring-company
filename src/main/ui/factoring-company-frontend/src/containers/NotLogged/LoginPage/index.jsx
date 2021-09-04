@@ -1,33 +1,21 @@
 import {Marginer} from '../../../components/marginer'
 import LoginImage from '../../../images/login.png'
 import {useState} from "react";
-import axios from 'axios';
+import { login } from '../../../services/authenticationService'
+import { useHistory } from "react-router-dom"
 
 
 const Login = () => {
+    let history = useHistory();
     
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const data = {
-            username: username,
-            password: password
-        }
-
-        axios.post('https://localhost:8443/login', data)
-            .then(response => {
-                let myHeaders = new Headers(response.headers);
-                let token = myHeaders.get('Authorization').replace("Bearer ", "");
-                console.log(token);
-                localStorage.setItem('token', token);
-                console.log(localStorage.getItem('token'));
-                console.log(response);
-
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    
+        login(username, password)
+            .then(
+                () => {
+                history.push("/user/main");
+                window.location.reload();
+                });
     }
     
     const [username, setUsername] = useState('');

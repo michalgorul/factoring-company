@@ -4,10 +4,8 @@ package com.polsl.factoringcompany.user;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
-import com.polsl.factoringcompany.security.auth.ApplicationUser;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -187,5 +185,40 @@ public class UserService {
 
         }
 
+    }
+
+    public UserEntity updateCurrentUser(UserEntity userEntity) {
+
+        Long id = 0L;
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userRepository.findByUsername(currentUserName).isPresent()){
+            id = userRepository.findByUsername(currentUserName).get().getId();
+        }
+
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+
+        if (userEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("User", id);
+
+        updateValidate(id, userEntity);
+
+        try {
+            userEntityOptional.get().setUsername(userEntity.getUsername());
+            userEntityOptional.get().setPassword(userEntity.getPassword());
+            userEntityOptional.get().setEmail(userEntity.getEmail());
+            userEntityOptional.get().setFirstName(StringUtils.capitalize(userEntity.getFirstName()));
+            userEntityOptional.get().setLastName(StringUtils.capitalize(userEntity.getLastName()));
+            userEntityOptional.get().setCountry(StringUtils.capitalize(userEntity.getCountry()));
+            userEntityOptional.get().setCity(StringUtils.capitalize(userEntity.getCity()));
+            userEntityOptional.get().setStreet(StringUtils.capitalize(userEntity.getStreet()));
+            userEntityOptional.get().setPostalCode(userEntity.getPostalCode());
+            userEntityOptional.get().setPhone(userEntity.getPhone());
+            userEntityOptional.get().setCompanyId(userEntity.getCompanyId());
+
+
+            return this.userRepository.save(userEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

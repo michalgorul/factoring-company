@@ -346,14 +346,14 @@
     }
   ],
   "user": {
-    "firstName": "Micz",
-    "lastName": "Gorl",
-    "email": "test@google.com",
-    "country": "American Samoa",
-    "city": "Troitskiy",
-    "street": "9977 Texas Point",
-    "postalCode": "623641",
-    "phone": "575-745-2386"
+    "firstName": "John",
+    "lastName": "Wick",
+    "email": "test@test.com",
+    "country": "",
+    "city": "New York",
+    "street": "13 Waywood Circle",
+    "postalCode": "93144 CEDEX",
+    "phone": "855-414-6048"
   },
   "company": {
     "companyName": "Meeve",

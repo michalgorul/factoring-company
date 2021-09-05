@@ -1,13 +1,14 @@
-import { useHistory } from "react-router-dom";
-import useFetch from "../../../components/useFetch/useFetch";
+import {useHistory} from "react-router-dom";
+import useFetchWithToken from "../../../services/useFetchWithToken";
+import config from "../../../services/config";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import { useState, useEffect, useMemo } from "react";
-import { Spinner } from 'react-bootstrap';
+import {useEffect, useMemo, useState} from "react";
+import {Spinner} from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
-import { toast } from 'react-toastify';
+import {toast, Zoom} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Zoom } from 'react-toastify';
+
 toast.configure();
 
 const ProfileEdit = () => {
@@ -23,29 +24,26 @@ const ProfileEdit = () => {
     const [isPendingN, setIsPendingN] = useState(false);
     const options = useMemo(() => countryList().getData(), [])
 
-    const {data: company, error, isPending} = useFetch('http://localhost:8000/company');
+    const {data: user, error, isPending} = useFetchWithToken(`${config.API_URL}/api/user/current`);
     const history = useHistory();
 
     useEffect(() => {
-        getProfile();
-      }, [])
+        getProfileInfo();
+      }, [user])
 
-    function getProfile() {
-        fetch('http://localhost:8000/user')
-        .then((result) => {
-          result.json()
-          .then((response) => {
-            const countryObject = {value: countryList().getValue(response.country), label: response.country };
-            setFirstName(response.firstName)
-            setLastName(response.lastName)
-            setEmail(response.email)
+
+      const getProfileInfo = () =>{
+          if(user){
+            const countryObject = {value: countryList().getValue(user.country), label: user.country };
+            setFirstName(user.firstName)
+            setLastName(user.lastName)
+            setEmail(user.email)
             setCountryInList(countryObject)
-            setCity(response.city)
-            setStreet(response.street)
-            setPostalCode(response.postalCode)
-            setPhone(response.phone)
-          })
-        })
+            setCity(user.city)
+            setStreet(user.street)
+            setPostalCode(user.postalCode)
+            setPhone(user.phone)
+          }
       }
 
       const handleSubmit = (e) => {
@@ -55,9 +53,12 @@ const ProfileEdit = () => {
 
         setIsPendingN(true);
 
-        fetch('http://localhost:8000/user', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
+        fetch(`${config.API_URL}/api/user/current`, {
+            method: 'PUT',
+            headers: {  
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`  
+            },
             body: JSON.stringify(profile)
         })
         .then(() => {
@@ -65,7 +66,7 @@ const ProfileEdit = () => {
             history.push('/user/profile');
         })
         .then( () => {
-            toast.info('Company info was updated', {
+            toast.info('Your profile was updated', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -89,7 +90,7 @@ const ProfileEdit = () => {
         <div>
             {isPending && isPendingN && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
             {error && <div>{error}</div>}
-            {company && (
+            {user && (
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-start align-items-center">
                     <div class="col-md-8 col-lg-8 col-xl-6">

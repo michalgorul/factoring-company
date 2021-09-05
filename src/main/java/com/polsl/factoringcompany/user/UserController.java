@@ -40,6 +40,11 @@ public class UserController {
         return this.userService.updateUser(id, userEntity);
     }
 
+    @PutMapping("/current")
+    public UserEntity updateCurrentUser(@RequestBody UserEntity userEntity) {
+        return this.userService.updateCurrentUser(userEntity);
+    }
+
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {

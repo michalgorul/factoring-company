@@ -1,5 +1,4 @@
 import { useHistory } from "react-router-dom";
-import useFetch from "../../../components/useFetch/useFetch";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { useState, useEffect, useMemo } from "react";
@@ -7,6 +6,9 @@ import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import useFetchWithToken from "../../../services/useFetchWithToken";
+import config from "../../../services/config";
+import useUpdateWithToken from "../../../services/useUpdateWithToken";
 toast.configure();
 
 const CompanyEdit = () => {
@@ -21,29 +23,25 @@ const CompanyEdit = () => {
     const [isPendingN, setIsPendingN] = useState(false);
     const options = useMemo(() => countryList().getData(), [])
 
-    const {data: company, error, isPending} = useFetch('http://localhost:8000/company');
+    const {data: company, error, isPending} = useFetchWithToken(`${config.API_URL}/api/company/current`);
     const history = useHistory();
 
     useEffect(() => {
-        getCompany();
-      }, [])
+        getCompanyInfo();
+      }, [company])
 
-    function getCompany() {
-        fetch('http://localhost:8000/company/')
-        .then((result) => {
-          result.json()
-          .then((response) => {
-            const countryObject = {value: countryList().getValue(response.country), label: response.country };
-            setCompanyName(response.companyName)
-            setCountryInList(countryObject)
-            setCity(response.city)
-            setStreet(response.street)
-            setPostalCode(response.postalCode)
-            setNip(response.nip)
-            setRegon(response.regon)
-          })
-        })
-      }
+    const getCompanyInfo = () => {
+        if(company){
+        const countryObject = {value: countryList().getValue(company.country), label: company.country };
+        setCompanyName(company.companyName)
+        setCountryInList(countryObject)
+        setCity(company.city)
+        setStreet(company.street)
+        setPostalCode(company.postalCode)
+        setNip(company.nip)
+        setRegon(company.regon)
+        }
+    } 
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,29 +49,8 @@ const CompanyEdit = () => {
         const company = {companyName, country, city, street, postalCode, nip, regon};
 
         setIsPendingN(true);
+        useUpdateWithToken(`${config.API_URL}/api/company/current`, company, 'Your company was updated');
 
-        fetch('http://localhost:8000/company', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(company)
-        })
-        .then(() => {
-            setIsPendingN(false);
-            history.push('/user/profile');
-        })
-        .then( () => {
-            toast.info('Company info was updated', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                transition: Zoom,
-                className:"text-white bg-primary",
-                });
-        }); 
     }
 
     const changeHandler = country => {

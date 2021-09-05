@@ -24,6 +24,11 @@ public class CompanyController {
         return this.companyService.getCompany(id);
     }
 
+    @GetMapping(path = "/current")
+    public CompanyEntity getCompany() {
+        return this.companyService.getCurrentUserCompany();
+    }
+
 
     @PostMapping
     public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {

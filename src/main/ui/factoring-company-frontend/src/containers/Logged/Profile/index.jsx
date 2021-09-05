@@ -6,15 +6,16 @@ import useFetchWithToken from "../../../services/useFetchWithToken";
 
 const Profile = () => {
 
-	const {data: user, error, isPending} = useFetchWithToken(`${config.API_URL}/api/user/current`);
-	const {data: company} = useFetch('http://localhost:8000/company/');
+	const {data: user, error: errorU, isPending: isPendingU} = useFetchWithToken(`${config.API_URL}/api/user/current`);
+	const {data: company, error: errorC, isPending: isPendingC} = useFetchWithToken(`${config.API_URL}/api/company/current`);
 	const {data: bank} = useFetch('http://localhost:8000/bank-account/1');
 
     return ( 
 			<>
 
-		{isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
-        {error && <div>{error}</div>}
+		{isPendingU && isPendingC && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+        {errorU && <div>{errorU}</div>}
+        {errorC && <div>{errorC}</div>}
         {user && company && bank && (
         <div class="container flex-grow-1 container-p-y">
 

@@ -5,7 +5,10 @@ import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
+import com.polsl.factoringcompany.user.UserEntity;
+import com.polsl.factoringcompany.user.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
+    private UserRepository userRepository;
 
     public List<CompanyEntity> getCompanies() {
         return this.companyRepository.findAll();
@@ -44,7 +48,6 @@ public class CompanyService {
             throw new RuntimeException(e);
         }
     }
-
 
     public CompanyEntity updateCompany(Long id, CompanyEntity companyEntity) {
 
@@ -157,5 +160,22 @@ public class CompanyService {
 
         else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
             throw new ValueImproperException(companyEntity.getRegon(), "REGON");
+    }
+
+    public CompanyEntity getCurrentUserCompany() {
+
+        Long id = 0L;
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userRepository.findByUsername(currentUserName).isPresent()){
+            id = userRepository.findByUsername(currentUserName).get().getId();
+        }
+
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+
+        if (userEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("User", id);
+
+        return getCompany((long) userEntityOptional.get().getCompanyId());
+
     }
 }

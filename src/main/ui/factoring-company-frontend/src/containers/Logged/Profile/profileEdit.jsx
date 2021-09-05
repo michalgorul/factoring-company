@@ -35,14 +35,15 @@ const ProfileEdit = () => {
       const getProfileInfo = () =>{
           if(user){
             const countryObject = {value: countryList().getValue(user.country), label: user.country };
-            setFirstName(user.firstName)
-            setLastName(user.lastName)
-            setEmail(user.email)
-            setCountryInList(countryObject)
-            setCity(user.city)
-            setStreet(user.street)
-            setPostalCode(user.postalCode)
-            setPhone(user.phone)
+            setFirstName(user.firstName);
+            setLastName(user.lastName);
+            setEmail(user.email);
+            setCountryInList(countryObject);
+            setCountry(user.country);
+            setCity(user.city);
+            setStreet(user.street);
+            setPostalCode(user.postalCode);
+            setPhone(user.phone);
           }
       }
 

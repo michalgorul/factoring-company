@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @PutMapping("/current")
-    public UserEntity updateCurrentUser(@RequestBody UserEntity userEntity) {
-        return this.userService.updateCurrentUser(userEntity);
+    public UserEntity updateCurrentUser(@RequestBody UserRequestDto userRequestDto) {
+        return this.userService.updateCurrentUser(userRequestDto);
     }
 
 

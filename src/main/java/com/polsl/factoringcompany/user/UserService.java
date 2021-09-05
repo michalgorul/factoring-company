@@ -107,6 +107,13 @@ public class UserService {
 
         nameValidator(userEntity);
     }
+    private void updateValidate(Long id, UserRequestDto userRequestDto) {
+
+        if (ifEmailTakenUpdating(id, userRequestDto.getEmail()))
+            throw new NotUniqueException("User", "email", userRequestDto.getEmail());
+
+        nameValidator(userRequestDto);
+    }
 
     private void addValidate(UserEntity userEntity) {
 
@@ -176,7 +183,7 @@ public class UserService {
             throw new ValueImproperException(userEntity.getStreet());
         }
 
-        else if (StringValidator.stringWithSpacesImproper(userEntity.getPostalCode(), 15)) {
+        else if (StringValidator.stringWithDigitsImproper(userEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(userEntity.getPostalCode());
         }
 
@@ -187,7 +194,38 @@ public class UserService {
 
     }
 
-    public UserEntity updateCurrentUser(UserEntity userEntity) {
+    private void nameValidator(UserRequestDto userRequestDto) {
+
+        // TODO: 17.06.2021 PASSWORD VALIDATOR
+
+        if(!StringValidator.isEmailValid(userRequestDto.getEmail())){
+            throw new ValueImproperException(userRequestDto.getEmail());
+        }
+
+        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCountry(), 50)) {
+            throw new ValueImproperException(userRequestDto.getCountry());
+        }
+
+        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCity(), 50)) {
+            throw new ValueImproperException(userRequestDto.getCity());
+        }
+
+        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getStreet(), 50)) {
+            throw new ValueImproperException(userRequestDto.getStreet());
+        }
+
+        else if (StringValidator.stringWithDigitsImproper(userRequestDto.getPostalCode(), 15)) {
+            throw new ValueImproperException(userRequestDto.getPostalCode());
+        }
+
+        else if (!StringValidator.isPhoneNumberValid(userRequestDto.getPhone())) {
+            throw new ValueImproperException(userRequestDto.getPhone());
+
+        }
+
+    }
+
+    public UserEntity updateCurrentUser(UserRequestDto userRequestDto) {
 
         Long id = 0L;
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -200,20 +238,20 @@ public class UserService {
         if (userEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("User", id);
 
-        updateValidate(id, userEntity);
+        updateValidate(id, userRequestDto);
 
         try {
-            userEntityOptional.get().setUsername(userEntity.getUsername());
-            userEntityOptional.get().setPassword(userEntity.getPassword());
-            userEntityOptional.get().setEmail(userEntity.getEmail());
-            userEntityOptional.get().setFirstName(StringUtils.capitalize(userEntity.getFirstName()));
-            userEntityOptional.get().setLastName(StringUtils.capitalize(userEntity.getLastName()));
-            userEntityOptional.get().setCountry(StringUtils.capitalize(userEntity.getCountry()));
-            userEntityOptional.get().setCity(StringUtils.capitalize(userEntity.getCity()));
-            userEntityOptional.get().setStreet(StringUtils.capitalize(userEntity.getStreet()));
-            userEntityOptional.get().setPostalCode(userEntity.getPostalCode());
-            userEntityOptional.get().setPhone(userEntity.getPhone());
-            userEntityOptional.get().setCompanyId(userEntity.getCompanyId());
+            userEntityOptional.get().setUsername(userEntityOptional.get().getUsername());
+            userEntityOptional.get().setPassword(userEntityOptional.get().getPassword());
+            userEntityOptional.get().setEmail(userRequestDto.getEmail());
+            userEntityOptional.get().setFirstName(StringUtils.capitalize(userRequestDto.getFirstName()));
+            userEntityOptional.get().setLastName(StringUtils.capitalize(userRequestDto.getLastName()));
+            userEntityOptional.get().setCountry(StringUtils.capitalize(userRequestDto.getCountry()));
+            userEntityOptional.get().setCity(StringUtils.capitalize(userRequestDto.getCity()));
+            userEntityOptional.get().setStreet(StringUtils.capitalize(userRequestDto.getStreet()));
+            userEntityOptional.get().setPostalCode(userRequestDto.getPostalCode());
+            userEntityOptional.get().setPhone(userRequestDto.getPhone());
+            userEntityOptional.get().setCompanyId(userEntityOptional.get().getCompanyId());
 
 
             return this.userRepository.save(userEntityOptional.get());

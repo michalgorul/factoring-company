@@ -17,6 +17,11 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
+    @GetMapping(path = "/current")
+    public List<CustomerEntity> getCurrentUserCustomers() {
+        return customerService.getCurrentUserCustomers();
+    }
+
 
     @GetMapping(path = "/{id}")
     public CustomerEntity getCustomer(@PathVariable Long id) {

@@ -1,11 +1,10 @@
 import useFetch from "../../../components/useFetch/useFetch";
-import { useHistory, useParams } from "react-router-dom";
-import { Spinner, Modal, Button } from 'react-bootstrap';
-import { useState } from "react";
-// import styled from 'styled-components';
-import { toast } from 'react-toastify';
+import {useHistory, useParams} from "react-router-dom";
+import {Button, Modal, Spinner} from 'react-bootstrap';
+import {useState} from "react";
+import {toast, Zoom} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Zoom } from 'react-toastify';
+
 toast.configure();
 
 const CustomerDetails = () => {

@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
+import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,6 +64,9 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userByUserId")
     private Collection<OrderEntity> ordersById;
+
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<CustomerEntity> customersById;
 
 
     @ManyToOne

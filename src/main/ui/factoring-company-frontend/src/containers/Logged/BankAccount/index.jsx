@@ -21,7 +21,7 @@ const EditBankAccount = () => {
     }, [bank]);
 
     const getBankAccountInfo = () => {
-        if(bank){
+        if (bank) {
             setBankName(bank.bankName);
             setNumber(bank.bankAccountNumber);
             setSwift(bank.bankSwift);
@@ -35,17 +35,16 @@ const EditBankAccount = () => {
         setIsPendingN(true);
 
         updateWithToken(`${config.API_URL}/api/bank-account/current`, account)
-        .then(() => {
-            setIsPendingN(false);
-            history.push('/user/profile');
-        })
-        .then(() => {
-            infoToast('Your comapny was updated');
-        })
-        .catch(err => {
-            console.error(err);
-        })
-        console.log(account);
+            .then(() => {
+                setIsPendingN(false);
+                history.push('/user/profile');
+            })
+            .then(() => {
+                infoToast('Your comapny was updated');
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     return (
@@ -80,8 +79,8 @@ const EditBankAccount = () => {
                                 </div>
 
                                 <div class="mb-3">
-                                    {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Edit Bank Account</button>}
-                                    {isPending && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing account...</button>}
+                                    {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Edit Bank Account</button>}
+                                    {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing account...</button>}
                                 </div>
 
                             </form>

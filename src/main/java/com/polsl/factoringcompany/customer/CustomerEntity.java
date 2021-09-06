@@ -1,7 +1,9 @@
 package com.polsl.factoringcompany.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
+import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,12 +21,12 @@ public class CustomerEntity {
     @Column(name = "id", nullable = false)
     @SequenceGenerator(
             name = "customer_id_seq",
-            sequenceName = "currency_id_seq",
+            sequenceName = "customer_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "currency_id_seq"
+            generator = "customer_id_seq"
     )
     private Long id;
 
@@ -55,11 +57,20 @@ public class CustomerEntity {
     @Column(name = "blacklisted", nullable = false)
     private boolean blacklisted;
 
+    @Column(name = "user_id")
+    private Integer userId;
+
+
     @OneToMany(mappedBy = "customerByCustomerId")
     private Collection<InvoiceEntity> invoicesById;
 
     @OneToMany(mappedBy = "customerByCustomerId")
     private Collection<TransactionEntity> transactionsById;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private UserEntity userByUserId;
 
 
     public CustomerEntity() {

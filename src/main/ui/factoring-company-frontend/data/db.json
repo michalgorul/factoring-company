@@ -1,14 +1,14 @@
 {
   "customers": [
     {
-      "firstName": "Constantine",
-      "lastName": "Vanyushin",
-      "companyName": "Rhybox",
-      "country": "American Samoa",
-      "city": "Ochakiv",
-      "street": "7 Mitchell Street",
-      "postalCode": "545-123",
-      "phone": "261-663-8234",
+      "firstName": "Arlette",
+      "lastName": "Schinetti",
+      "companyName": "Buzzdog",
+      "country": "Åland Islands",
+      "city": "Yangping",
+      "street": "6 Elgar Point",
+      "postalCode": "88815",
+      "phone": "625-493-4073",
       "blacklisted": false,
       "id": 1
     },

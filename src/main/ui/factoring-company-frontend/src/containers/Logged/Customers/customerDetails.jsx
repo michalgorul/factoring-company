@@ -4,12 +4,14 @@ import {Button, Modal, Spinner} from 'react-bootstrap';
 import {useState} from "react";
 import {toast, Zoom} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useFetchWithToken from "../../../services/useFetchWithToken";
+import config from "../../../services/config";
 
 toast.configure();
 
 const CustomerDetails = () => {
     const { id } = useParams();
-    const {data: customer, error, isPending} = useFetch('http://localhost:8000/customers/' + id);
+    const {data: customer, error, isPending} = useFetchWithToken(`${config.API_URL}/api/customer/${id}`);
     const {data: company} = useFetch('http://localhost:8000/company/');
     const history = useHistory();
 
@@ -52,7 +54,6 @@ const CustomerDetails = () => {
                 <div class="media align-items-center py-3">
               <div class="media-body ml-4">
                 <h4 class="display-3">{customer.firstName + ' ' + customer.lastName}</h4>
-                <h4 class="lead display-6">{customer.email}</h4>
               </div>
             </div>
                 <h5 class="mt-4 mb-3">Address & Phone</h5>

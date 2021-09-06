@@ -1,5 +1,4 @@
 import { useHistory, useParams } from "react-router-dom";
-import useFetch from "../../../components/useFetch/useFetch";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { useState, useEffect, useMemo } from "react";
@@ -8,6 +7,8 @@ import PhoneInput from 'react-phone-number-input'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import useFetchWithToken from "../../../services/useFetchWithToken";
+import config from "../../../services/config";
 toast.configure();
 
 const CustomerEdit = () => {
@@ -26,29 +27,27 @@ const CustomerEdit = () => {
     const options = useMemo(() => countryList().getData(), [])
     
     const { id } = useParams();
-    const {data: editCustomer, error, isPending} = useFetch('http://localhost:8000/customers/' + id);
+    const {data: editCustomer, error, isPending} = useFetchWithToken(`${config.API_URL}/api/customer/${id}`);
     const history = useHistory();
 
     useEffect(() => {
         getCustomer();
-      })
+      }, [editCustomer])
 
       function getCustomer() {
-        fetch('http://localhost:8000/customers/' + id)
-        .then((result) => {
-          result.json()
-          .then((response) => {
-            const countryObject = {value: countryList().getValue(response.country), label: response.country };
-            setFirstName(response.firstName)
-            setLastName(response.lastName)
-            setCompanyName(response.companyName)
-            setCountryInList(countryObject)
-            setCity(response.city)
-            setStreet(response.street)
-            setPostalCode(response.postalCode)
-            setPhone(response.phone)
-          })
-        })
+        if(editCustomer){
+            const countryObject = {value: countryList().getValue(editCustomer.country), label: editCustomer.country };
+            setFirstName(editCustomer.firstName);
+            setLastName(editCustomer.lastName)
+            setCompanyName(editCustomer.companyName);
+            setCountryInList(countryObject);
+            setCountry(editCustomer.country);
+            setCity(editCustomer.city);
+            setStreet(editCustomer.street);
+            setPostalCode(editCustomer.postalCode);
+            setPhone(editCustomer.phone);
+        }
+            
       }
 
     const handleSubmit = (e) => {

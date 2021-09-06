@@ -28,13 +28,48 @@ public class UserService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("User", id));
     }
 
-    public UserEntity getCurrentUser(){
+    public Long getCurrentUserId(){
         Long id = 0L;
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         if(userRepository.findByUsername(currentUserName).isPresent()){
             id = userRepository.findByUsername(currentUserName).get().getId();
+            return id;
         }
-        return getUser(id);
+        return null;
+    }
+
+    public UserEntity getCurrentUser(){
+        return getUser(getCurrentUserId());
+    }
+
+    public UserEntity updateCurrentUser(UserRequestDto userRequestDto) {
+
+        Long currentUserId = getCurrentUserId();
+        Optional<UserEntity> userEntityOptional = userRepository.findById(currentUserId);
+
+        if (userEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("User", currentUserId);
+
+        updateValidate(currentUserId, userRequestDto);
+
+        try {
+            userEntityOptional.get().setUsername(userEntityOptional.get().getUsername());
+            userEntityOptional.get().setPassword(userEntityOptional.get().getPassword());
+            userEntityOptional.get().setEmail(userRequestDto.getEmail());
+            userEntityOptional.get().setFirstName(StringUtils.capitalize(userRequestDto.getFirstName()));
+            userEntityOptional.get().setLastName(StringUtils.capitalize(userRequestDto.getLastName()));
+            userEntityOptional.get().setCountry(StringUtils.capitalize(userRequestDto.getCountry()));
+            userEntityOptional.get().setCity(StringUtils.capitalize(userRequestDto.getCity()));
+            userEntityOptional.get().setStreet(StringUtils.capitalize(userRequestDto.getStreet()));
+            userEntityOptional.get().setPostalCode(userRequestDto.getPostalCode());
+            userEntityOptional.get().setPhone(userRequestDto.getPhone());
+            userEntityOptional.get().setCompanyId(userEntityOptional.get().getCompanyId());
+
+
+            return this.userRepository.save(userEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public UserEntity addUser(UserEntity userEntity) {
@@ -225,38 +260,5 @@ public class UserService {
 
     }
 
-    public UserEntity updateCurrentUser(UserRequestDto userRequestDto) {
 
-        Long id = 0L;
-        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(userRepository.findByUsername(currentUserName).isPresent()){
-            id = userRepository.findByUsername(currentUserName).get().getId();
-        }
-
-        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
-
-        if (userEntityOptional.isEmpty())
-            throw new IdNotFoundInDatabaseException("User", id);
-
-        updateValidate(id, userRequestDto);
-
-        try {
-            userEntityOptional.get().setUsername(userEntityOptional.get().getUsername());
-            userEntityOptional.get().setPassword(userEntityOptional.get().getPassword());
-            userEntityOptional.get().setEmail(userRequestDto.getEmail());
-            userEntityOptional.get().setFirstName(StringUtils.capitalize(userRequestDto.getFirstName()));
-            userEntityOptional.get().setLastName(StringUtils.capitalize(userRequestDto.getLastName()));
-            userEntityOptional.get().setCountry(StringUtils.capitalize(userRequestDto.getCountry()));
-            userEntityOptional.get().setCity(StringUtils.capitalize(userRequestDto.getCity()));
-            userEntityOptional.get().setStreet(StringUtils.capitalize(userRequestDto.getStreet()));
-            userEntityOptional.get().setPostalCode(userRequestDto.getPostalCode());
-            userEntityOptional.get().setPhone(userRequestDto.getPhone());
-            userEntityOptional.get().setCompanyId(userEntityOptional.get().getCompanyId());
-
-
-            return this.userRepository.save(userEntityOptional.get());
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

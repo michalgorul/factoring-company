@@ -20,26 +20,29 @@ public class CompanyController {
 
 
     @GetMapping(path = "/{id}")
-    public CompanyEntity getCompany(@PathVariable Long id) {
+    public CompanyEntity getCurrentUserCompany(@PathVariable Long id) {
         return this.companyService.getCompany(id);
     }
 
     @GetMapping(path = "/current")
-    public CompanyEntity getCompany() {
+    public CompanyEntity getCurrentUserCompany() {
         return this.companyService.getCurrentUserCompany();
     }
 
-
-    @PostMapping
-    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
-        return this.companyService.addCompany(companyEntity);
+    @PutMapping("/current")
+    public CompanyEntity updateCurrentCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+        return this.companyService.updateCurrentUserCompany(companyRequestDto);
     }
 
-
-    @PutMapping("/{id}")
-    public CompanyEntity updateCompany(@PathVariable Long id, @RequestBody CompanyEntity companyEntity) {
-        return this.companyService.updateCompany(id, companyEntity);
-    }
+//    @PostMapping
+//    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
+//        return this.companyService.addCompany(companyEntity);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public CompanyEntity updateCompany(@PathVariable Long id, @RequestBody CompanyEntity companyEntity) {
+//        return this.companyService.updateCompany(id, companyEntity);
+//    }
 
 
     @DeleteMapping("/{id}")

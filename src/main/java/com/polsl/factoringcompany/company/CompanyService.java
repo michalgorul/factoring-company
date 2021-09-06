@@ -7,6 +7,7 @@ import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import com.polsl.factoringcompany.user.UserEntity;
 import com.polsl.factoringcompany.user.UserRepository;
+import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private UserRepository userRepository;
+    private UserService userService;
 
     public List<CompanyEntity> getCompanies() {
         return this.companyRepository.findAll();
@@ -31,46 +33,46 @@ public class CompanyService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", id));
     }
 
-    public CompanyEntity addCompany(CompanyEntity companyEntity) {
+//    public CompanyEntity addCompany(CompanyEntity companyEntity) {
+//
+//        addValidate(companyEntity);
+//
+//        try {
+//            return this.companyRepository.save(new CompanyEntity(
+//                    StringUtils.capitalize(companyEntity.getCompanyName()),
+//                    StringUtils.capitalize(companyEntity.getCountry()),
+//                    StringUtils.capitalize(companyEntity.getCity()),
+//                    StringUtils.capitalize(companyEntity.getStreet()),
+//                    companyEntity.getPostalCode(),
+//                    companyEntity.getNip(),
+//                    companyEntity.getRegon()));
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        addValidate(companyEntity);
-
-        try {
-            return this.companyRepository.save(new CompanyEntity(
-                    StringUtils.capitalize(companyEntity.getCompanyName()),
-                    StringUtils.capitalize(companyEntity.getCountry()),
-                    StringUtils.capitalize(companyEntity.getCity()),
-                    StringUtils.capitalize(companyEntity.getStreet()),
-                    companyEntity.getPostalCode(),
-                    companyEntity.getNip(),
-                    companyEntity.getRegon()));
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public CompanyEntity updateCompany(Long id, CompanyEntity companyEntity) {
-
-        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
-
-        if (companyEntityOptional.isEmpty())
-            throw new IdNotFoundInDatabaseException("Company", id);
-
-        updateValidate(id, companyEntity);
-
-        try {
-            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyEntity.getCompanyName()));
-            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyEntity.getCountry()));
-            companyEntityOptional.get().setCity(StringUtils.capitalize(companyEntity.getCity()));
-            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyEntity.getStreet()));
-            companyEntityOptional.get().setPostalCode(companyEntity.getPostalCode());
-            companyEntityOptional.get().setNip(companyEntity.getNip());
-            companyEntityOptional.get().setRegon(companyEntity.getRegon());
-            return this.companyRepository.save(companyEntityOptional.get());
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public CompanyEntity updateCompany(Long id, CompanyEntity companyEntity) {
+//
+//        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
+//
+//        if (companyEntityOptional.isEmpty())
+//            throw new IdNotFoundInDatabaseException("Company", id);
+//
+//        updateValidate(id, companyEntity);
+//
+//        try {
+//            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyEntity.getCompanyName()));
+//            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyEntity.getCountry()));
+//            companyEntityOptional.get().setCity(StringUtils.capitalize(companyEntity.getCity()));
+//            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyEntity.getStreet()));
+//            companyEntityOptional.get().setPostalCode(companyEntity.getPostalCode());
+//            companyEntityOptional.get().setNip(companyEntity.getNip());
+//            companyEntityOptional.get().setRegon(companyEntity.getRegon());
+//            return this.companyRepository.save(companyEntityOptional.get());
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void deleteCompany(Long id) {
         try {
@@ -114,7 +116,7 @@ public class CompanyService {
         return !companyEntityByRegon.get().getId().equals(companyEntityById.get().getId());
     }
 
-    private void updateValidate(Long id, CompanyEntity companyEntity) {
+    private void updateValidate(Long id, CompanyRequestDto companyEntity) {
         if (ifNipTakenUpdating(id, companyEntity.getNip()))
             throw new NotUniqueException("Company", "NIP", companyEntity.getNip());
 
@@ -124,7 +126,7 @@ public class CompanyService {
         nameValidator(companyEntity);
     }
 
-    private void addValidate(CompanyEntity companyEntity) {
+    private void addValidate(CompanyRequestDto companyEntity) {
         if (ifNipTakenAdding(companyEntity.getNip()))
             throw new NotUniqueException("Company", "NIP", companyEntity.getNip());
 
@@ -134,7 +136,7 @@ public class CompanyService {
         nameValidator(companyEntity);
     }
 
-    private void nameValidator(CompanyEntity companyEntity) {
+    private void nameValidator(CompanyRequestDto companyEntity) {
         if (StringValidator.stringWithSpacesImproper(companyEntity.getCompanyName(), 50)) {
             throw new ValueImproperException(companyEntity.getCompanyName());
         }
@@ -151,7 +153,7 @@ public class CompanyService {
             throw new ValueImproperException(companyEntity.getStreet());
         }
 
-        else if (StringValidator.stringWithSpacesImproper(companyEntity.getPostalCode(), 15)) {
+        else if (StringValidator.stringWithDigitsImproper(companyEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(companyEntity.getPostalCode());
         }
 
@@ -177,5 +179,28 @@ public class CompanyService {
 
         return getCompany((long) userEntityOptional.get().getCompanyId());
 
+    }
+
+    public CompanyEntity updateCurrentUserCompany(CompanyRequestDto companyRequestDto){
+        UserEntity currentUser = userService.getCurrentUser();
+        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById((long) currentUser.getCompanyId());
+
+        if (companyEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("Company", 0L);
+
+        updateValidate(companyEntityOptional.get().getId(), companyRequestDto);
+
+        try {
+            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyRequestDto.getCompanyName()));
+            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyRequestDto.getCountry()));
+            companyEntityOptional.get().setCity(StringUtils.capitalize(companyRequestDto.getCity()));
+            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyRequestDto.getStreet()));
+            companyEntityOptional.get().setPostalCode(companyRequestDto.getPostalCode());
+            companyEntityOptional.get().setNip(companyRequestDto.getNip());
+            companyEntityOptional.get().setRegon(companyRequestDto.getRegon());
+            return this.companyRepository.save(companyEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

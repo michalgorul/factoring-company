@@ -6,10 +6,9 @@ import countryList from 'react-select-country-list'
 import {useEffect, useMemo, useState} from "react";
 import {Spinner} from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
-import {toast, Zoom} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {updateWithToken} from "../../../services/useUpdateWithToken";
+import {infoToast} from "../../../components/makeToast";
 
-toast.configure();
 
 const ProfileEdit = () => {
     const [firstName, setFirstName] = useState('');
@@ -54,31 +53,17 @@ const ProfileEdit = () => {
 
         setIsPendingN(true);
 
-        fetch(`${config.API_URL}/api/user/current`, {
-            method: 'PUT',
-            headers: {  
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('token')}`  
-            },
-            body: JSON.stringify(profile)
-        })
-        .then(() => {
-            setIsPendingN(false);
-            history.push('/user/profile');
-        })
-        .then( () => {
-            toast.info('Your profile was updated', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                transition: Zoom,
-                className:"text-white bg-primary",
-                });
-        }); 
+        updateWithToken(`${config.API_URL}/api/user/current`, profile)
+            .then(() => {
+                setIsPendingN(false);
+                history.push('/user/profile');
+            })
+            .then(() => {
+                infoToast('Your profile was updated');
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     const changeHandler = country => {
@@ -89,7 +74,7 @@ const ProfileEdit = () => {
       
     return ( 
         <div>
-            {isPending && isPendingN && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
+            {isPending && <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary" /></div>}
             {error && <div>{error}</div>}
             {user && (
             <div class="container-fluid h-custom">
@@ -147,8 +132,8 @@ const ProfileEdit = () => {
                         </div>
 
                         <div class="mb-3">
-                            {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Edit Profile</button>}
-                            {isPending && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing profile...</button>}
+                            {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Edit Profile</button>}
+                            {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing profile...</button>}
                         </div>
                             
                         </form>

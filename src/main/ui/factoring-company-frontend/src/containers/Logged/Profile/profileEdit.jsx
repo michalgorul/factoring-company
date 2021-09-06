@@ -7,7 +7,7 @@ import {useEffect, useMemo, useState} from "react";
 import {Spinner} from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
 import {updateWithToken} from "../../../services/useUpdateWithToken";
-import {infoToast} from "../../../components/makeToast";
+import {infoToast} from "../../../components/toast/makeToast";
 
 
 const ProfileEdit = () => {

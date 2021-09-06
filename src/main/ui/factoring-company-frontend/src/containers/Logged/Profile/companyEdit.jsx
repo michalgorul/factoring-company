@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import {updateWithToken} from "../../../services/useUpdateWithToken";
-import {infoToast} from "../../../components/makeToast";
+import {infoToast} from "../../../components/toast/makeToast";
 
 const CompanyEdit = () => {
     const [companyName, setCompanyName] = useState('');

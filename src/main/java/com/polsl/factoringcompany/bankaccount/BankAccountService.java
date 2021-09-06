@@ -4,6 +4,8 @@ import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
+import com.polsl.factoringcompany.user.UserEntity;
+import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
+    private final UserService userService;
 
     public List<BankAccountEntity> getBankAccounts() {
         return this.bankAccountRepository.findAll();
@@ -131,5 +134,10 @@ public class BankAccountService {
                     bankAccountEntity.getSellerId());
         }
 
+    }
+
+    public BankAccountEntity getCurrentUserBankAccount() {
+        UserEntity currentUser = userService.getCurrentUser();
+        return this.getBankAccount((long) currentUser.getCompanyId());
     }
 }

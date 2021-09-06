@@ -23,6 +23,11 @@ public class BankAccountController {
         return this.bankAccountService.getBankAccount(id);
     }
 
+    @GetMapping(path = "/current")
+    public BankAccountEntity getCurrentUserBankAccount() {
+        return this.bankAccountService.getCurrentUserBankAccount();
+    }
+
 
     @PostMapping
     public BankAccountEntity addBankAccount(@RequestBody BankAccountEntity bankAccountEntity) {

@@ -28,17 +28,22 @@ public class BankAccountController {
         return this.bankAccountService.getCurrentUserBankAccount();
     }
 
-
-    @PostMapping
-    public BankAccountEntity addBankAccount(@RequestBody BankAccountEntity bankAccountEntity) {
-        return this.bankAccountService.addBankAccount(bankAccountEntity);
+    @PutMapping(path = "/current")
+    public BankAccountEntity updateCurrentUserBankAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto) {
+        return this.bankAccountService.updateCurrentUserBankAccount(bankAccountRequestDto);
     }
 
 
-    @PutMapping("/{id}")
-    public BankAccountEntity updateBankAccount(@PathVariable Long id, @RequestBody BankAccountEntity bankAccountEntity) {
-        return this.bankAccountService.updateBankAccount(id, bankAccountEntity);
-    }
+//    @PostMapping
+//    public BankAccountEntity addBankAccount(@RequestBody BankAccountEntity bankAccountEntity) {
+//        return this.bankAccountService.addBankAccount(bankAccountEntity);
+//    }
+//
+//
+//    @PutMapping("/{id}")
+//    public BankAccountEntity updateBankAccount(@PathVariable Long id, @RequestBody BankAccountEntity bankAccountEntity) {
+//        return this.bankAccountService.updateBankAccount(id, bankAccountEntity);
+//    }
 
 
     @DeleteMapping("/{id}")

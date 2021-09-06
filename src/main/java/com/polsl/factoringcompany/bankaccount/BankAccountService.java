@@ -29,44 +29,44 @@ public class BankAccountService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Bank account", id));
     }
 
-    public BankAccountEntity addBankAccount(BankAccountEntity bankAccountEntity) {
+//    public BankAccountEntity addBankAccount(BankAccountEntity bankAccountEntity) {
+//
+//        addValidate(bankAccountEntity);
+//
+//        try {
+//            return this.bankAccountRepository.save(new BankAccountEntity(
+//                    bankAccountEntity.getBankSwift().toUpperCase(),
+//                    bankAccountEntity.getBankAccountNumber(),
+//                    StringUtils.capitalize(bankAccountEntity.getBankName()),
+//                    bankAccountEntity.getSellerId(),
+//                    bankAccountEntity.getCompanyId()));
+//
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        addValidate(bankAccountEntity);
-
-        try {
-            return this.bankAccountRepository.save(new BankAccountEntity(
-                    bankAccountEntity.getBankSwift().toUpperCase(),
-                    bankAccountEntity.getBankAccountNumber(),
-                    StringUtils.capitalize(bankAccountEntity.getBankName()),
-                    bankAccountEntity.getSellerId(),
-                    bankAccountEntity.getCompanyId()));
-
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public BankAccountEntity updateBankAccount(Long id, BankAccountEntity bankAccountEntity) {
-
-        Optional<BankAccountEntity> bankAccountEntityOptional = bankAccountRepository.findById(id);
-
-        if (bankAccountEntityOptional.isEmpty())
-            throw new IdNotFoundInDatabaseException("Bank Account", id);
-
-        updateValidate(id, bankAccountEntity);
-
-        try {
-            bankAccountEntityOptional.get().setBankSwift(bankAccountEntity.getBankSwift().toUpperCase());
-            bankAccountEntityOptional.get().setBankAccountNumber(bankAccountEntity.getBankAccountNumber());
-            bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountEntity.getBankName()));
-            bankAccountEntityOptional.get().setSellerId(bankAccountEntity.getSellerId());
-            bankAccountEntityOptional.get().setCompanyId(bankAccountEntity.getCompanyId());
-
-            return this.bankAccountRepository.save(bankAccountEntityOptional.get());
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public BankAccountEntity updateBankAccount(Long id, BankAccountEntity bankAccountEntity) {
+//
+//        Optional<BankAccountEntity> bankAccountEntityOptional = bankAccountRepository.findById(id);
+//
+//        if (bankAccountEntityOptional.isEmpty())
+//            throw new IdNotFoundInDatabaseException("Bank Account", id);
+//
+//        updateValidate(id, bankAccountEntity);
+//
+//        try {
+//            bankAccountEntityOptional.get().setBankSwift(bankAccountEntity.getBankSwift().toUpperCase());
+//            bankAccountEntityOptional.get().setBankAccountNumber(bankAccountEntity.getBankAccountNumber());
+//            bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountEntity.getBankName()));
+//            bankAccountEntityOptional.get().setSellerId(bankAccountEntity.getSellerId());
+//            bankAccountEntityOptional.get().setCompanyId(bankAccountEntity.getCompanyId());
+//
+//            return this.bankAccountRepository.save(bankAccountEntityOptional.get());
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void deleteBankAccount(Long id) {
         try {
@@ -76,7 +76,7 @@ public class BankAccountService {
         }
     }
 
-    private void updateValidate(Long id, BankAccountEntity bankAccountEntity) {
+    private void updateValidate(Long id, BankAccountRequestDto bankAccountEntity) {
 
         if (ifBankAccountNumberTakenUpdating(id, bankAccountEntity.getBankAccountNumber()))
             throw new NotUniqueException("Bank Account", "number", bankAccountEntity.getBankAccountNumber());
@@ -84,14 +84,12 @@ public class BankAccountService {
         nameValidator(bankAccountEntity);
     }
 
-
-    private void addValidate(BankAccountEntity bankAccountEntity) {
-        if (ifBankAccountNumberTakenAdding(bankAccountEntity.getBankAccountNumber()))
-            throw new NotUniqueException("Bank Account", "number", bankAccountEntity.getBankAccountNumber());
-
-        nameValidator(bankAccountEntity);
-    }
-
+//    private void addValidate(BankAccountEntity bankAccountEntity) {
+//        if (ifBankAccountNumberTakenAdding(bankAccountEntity.getBankAccountNumber()))
+//            throw new NotUniqueException("Bank Account", "number", bankAccountEntity.getBankAccountNumber());
+//
+//        nameValidator(bankAccountEntity);
+//    }
 
     private boolean ifBankAccountNumberTakenAdding(String bankAccountNumber) {
         Optional<BankAccountEntity> bankAccountEntityOptional = bankAccountRepository
@@ -112,8 +110,8 @@ public class BankAccountService {
         return !bankAccountEntitybyBankAccountNumber.get().getId().equals(bankAccountEntitybyId.get().getId());
     }
 
-    private void nameValidator(BankAccountEntity bankAccountEntity) {
-        if (StringValidator.stringWithSpacesImproper(bankAccountEntity.getBankName(), 16)) {
+    private void nameValidator(BankAccountRequestDto bankAccountEntity) {
+        if (StringValidator.stringWithSpacesImproper(bankAccountEntity.getBankName(), 50)) {
             throw new ValueImproperException(bankAccountEntity.getBankName());
         }
 
@@ -129,15 +127,36 @@ public class BankAccountService {
             throw new ValueImproperException((bankAccountEntity.getBankAccountNumber()));
         }
 
-        else if (bankAccountEntity.getCompanyId() != null && bankAccountEntity.getSellerId() != null){
-            throw new ValueImproperException(bankAccountEntity.getCompanyId() + " or " +
-                    bankAccountEntity.getSellerId());
-        }
-
     }
 
     public BankAccountEntity getCurrentUserBankAccount() {
         UserEntity currentUser = userService.getCurrentUser();
         return this.getBankAccount((long) currentUser.getCompanyId());
+    }
+
+    public BankAccountEntity updateCurrentUserBankAccount(BankAccountRequestDto bankAccountRequestDto) {
+
+        UserEntity currentUser = userService.getCurrentUser();
+
+        Optional<BankAccountEntity> bankAccountEntityOptional =
+                bankAccountRepository.findByCompanyId(currentUser.getCompanyId());
+
+        if (bankAccountEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("Bank Account", 0L);
+
+        updateValidate(bankAccountEntityOptional.get().getId(), bankAccountRequestDto);
+
+        try {
+            bankAccountEntityOptional.get().setBankSwift(bankAccountRequestDto.getBankSwift().toUpperCase());
+            bankAccountEntityOptional.get().setBankAccountNumber(bankAccountRequestDto.getBankAccountNumber());
+            bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountRequestDto.getBankName()));
+            bankAccountEntityOptional.get().setSellerId(bankAccountEntityOptional.get().getSellerId());
+            bankAccountEntityOptional.get().setCompanyId(bankAccountEntityOptional.get().getCompanyId());
+
+            return this.bankAccountRepository.save(bankAccountEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

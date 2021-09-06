@@ -32,7 +32,7 @@ public class BankAccountEntity {
     @Column(name = "bank_account_number", nullable = false, length = 28, unique = true)
     private String bankAccountNumber;
 
-    @Column(name = "bank_name", nullable = false, length = 16)
+    @Column(name = "bank_name", nullable = false, length = 50)
     private String bankName;
 
     @Column(name = "seller_id", nullable = true)

@@ -3,6 +3,7 @@ import {
   CDBSidebar, CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader, CDBSidebarMenu, CDBSidebarMenuItem} from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import { Marginer } from '../../../components/marginer';
+import { logout } from '../../../services/authenticationService';
 
 const Sidebar = () => {
 
@@ -42,7 +43,7 @@ const Sidebar = () => {
 
         <CDBSidebarFooter>
           <div class="mb-3">
-            <CDBSidebarMenuItem icon="sign-out-alt"><a href="/" class="text-decoration-none" style={{color:"white"}}>Log Out</a></CDBSidebarMenuItem>
+            <CDBSidebarMenuItem icon="sign-out-alt"><a href="/" class="text-decoration-none" onClick={logout} style={{color:"white"}}>Log Out</a></CDBSidebarMenuItem>
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>

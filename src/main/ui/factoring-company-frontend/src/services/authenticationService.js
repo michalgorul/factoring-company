@@ -25,13 +25,15 @@ const login = async (username, password) => {
 
       if(token && token.length > 0){
         localStorage.setItem('token', token);
+        localStorage.setItem('isAuthenticated', true);
       }
      
     }
 };
 
 const logout = () => {
-  localStorage.removeItem('token');
+ localStorage.clear();
+
 };
 
 const getCurrentUser = () => {

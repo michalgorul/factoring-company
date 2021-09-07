@@ -29,4 +29,19 @@ const errorToast = (message) => {
         });
 }
 
-export {infoToast, errorToast}
+const warningToast = (message) => {
+    toast.warn(message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Zoom,
+        className: "bg-warning text-dark"
+    });
+}
+
+
+export {infoToast, errorToast, warningToast}

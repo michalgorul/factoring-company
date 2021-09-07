@@ -41,7 +41,8 @@ public class CustomerService {
                     StringUtils.capitalize(customerRequestDto.getStreet()),
                     customerRequestDto.getPostalCode(),
                     customerRequestDto.getPhone(),
-                    customerRequestDto.isBlacklisted()));
+                    customerRequestDto.isBlacklisted(),
+                    Math.toIntExact(userService.getCurrentUserId())));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -110,9 +111,9 @@ public class CustomerService {
             throw new ValueImproperException(customerEntity.getPostalCode());
         }
 
-        else if (!StringValidator.isPhoneNumberValid(customerEntity.getPhone())) {
-            throw new ValueImproperException(customerEntity.getPhone());
-        }
+//        else if (!StringValidator.isPhoneNumberValid(customerEntity.getPhone())) {
+//            throw new ValueImproperException(customerEntity.getPhone());
+//        }
 
     }
 

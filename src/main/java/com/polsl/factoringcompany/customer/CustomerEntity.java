@@ -5,6 +5,7 @@ import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "customer")
 public class CustomerEntity {
 
@@ -71,13 +73,9 @@ public class CustomerEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity userByUserId;
 
-
-    public CustomerEntity() {
-    }
-
-    public CustomerEntity(String firstName, String lastName, String companyName,
-                          String country, String city, String street,
-                          String postalCode, String phone, boolean blacklisted) {
+    public CustomerEntity(String firstName, String lastName, String companyName, String country,
+                          String city, String street, String postalCode, String phone,
+                          boolean blacklisted, Integer userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.companyName = companyName;
@@ -87,6 +85,7 @@ public class CustomerEntity {
         this.postalCode = postalCode;
         this.phone = phone;
         this.blacklisted = blacklisted;
+        this.userId = userId;
     }
 
     @Override

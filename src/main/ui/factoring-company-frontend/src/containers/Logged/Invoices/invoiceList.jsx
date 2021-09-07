@@ -1,10 +1,11 @@
 import Table from 'react-bootstrap/Table'
-import useFetch from "../../../components/useFetch/useFetch";
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
+import useFetchWithToken from '../../../services/useFetchWithToken';
+import config from '../../../services/config';
 
 
 const InvoiceList = ({whatInvoices}) => {
-    const { error, isPending, data: invoices } = useFetch('http://localhost:8000/invoices-'+ whatInvoices)
+    const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice`)
 
     return ( 
         <Table striped borderless hover>

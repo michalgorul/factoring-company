@@ -39,15 +39,12 @@ public class InvoiceEntity {
     private String invoiceNumber;
 
     @Column(name = "creation_date", nullable = false)
-    @JsonIgnore
     private Timestamp creationDate;
 
     @Column(name = "sale_date", nullable = false)
-    @JsonIgnore
     private Timestamp saleDate;
 
     @Column(name = "payment_deadline", nullable = false)
-    @JsonIgnore
     private Timestamp paymentDeadline;
 
     @Column(name = "to_pay", nullable = false, precision = 2)
@@ -81,17 +78,21 @@ public class InvoiceEntity {
     private int currencyId;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private SellerEntity sellerBySellerId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CustomerEntity customerByCustomerId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "payment_type_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private PaymentTypeEntity paymentTypeByPaymentTypeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CurrencyEntity currencyByCurrencyId;

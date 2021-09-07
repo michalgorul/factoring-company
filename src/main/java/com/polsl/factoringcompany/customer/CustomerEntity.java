@@ -60,7 +60,6 @@ public class CustomerEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-
     @OneToMany(mappedBy = "customerByCustomerId")
     private Collection<InvoiceEntity> invoicesById;
 

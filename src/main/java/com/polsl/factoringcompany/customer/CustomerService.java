@@ -27,21 +27,21 @@ public class CustomerService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Customer", id));
     }
 
-    public CustomerEntity addCustomer(CustomerEntity customerEntity) {
+    public CustomerEntity addCustomer(CustomerRequestDto customerRequestDto) {
 
-        nameValidator(customerEntity);
+        nameValidator(customerRequestDto);
 
         try {
             return this.customerRepository.save(new CustomerEntity(
-                    StringUtils.capitalize(customerEntity.getFirstName()),
-                    StringUtils.capitalize(customerEntity.getLastName()),
-                    StringUtils.capitalize(customerEntity.getCompanyName()),
-                    StringUtils.capitalize(customerEntity.getCountry()),
-                    StringUtils.capitalize(customerEntity.getCity()),
-                    StringUtils.capitalize(customerEntity.getStreet()),
-                    customerEntity.getPostalCode(),
-                    customerEntity.getPhone(),
-                    customerEntity.isBlacklisted()));
+                    StringUtils.capitalize(customerRequestDto.getFirstName()),
+                    StringUtils.capitalize(customerRequestDto.getLastName()),
+                    StringUtils.capitalize(customerRequestDto.getCompanyName()),
+                    StringUtils.capitalize(customerRequestDto.getCountry()),
+                    StringUtils.capitalize(customerRequestDto.getCity()),
+                    StringUtils.capitalize(customerRequestDto.getStreet()),
+                    customerRequestDto.getPostalCode(),
+                    customerRequestDto.getPhone(),
+                    customerRequestDto.isBlacklisted()));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -55,25 +55,25 @@ public class CustomerService {
         }
     }
 
-    public CustomerEntity updateCustomer(Long id, CustomerEntity customerEntity) {
+    public CustomerEntity updateCustomer(Long id, CustomerRequestDto customerRequestDto) {
 
         Optional<CustomerEntity> customerEntityOptional = customerRepository.findById(id);
 
         if (customerEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("Customer", id);
 
-        nameValidator(customerEntity);
+        nameValidator(customerRequestDto);
 
         try {
-            customerEntityOptional.get().setFirstName(StringUtils.capitalize(customerEntity.getFirstName()));
-            customerEntityOptional.get().setLastName(StringUtils.capitalize(customerEntity.getLastName()));
-            customerEntityOptional.get().setCompanyName(StringUtils.capitalize(customerEntity.getCompanyName()));
-            customerEntityOptional.get().setCountry(StringUtils.capitalize(customerEntity.getCountry()));
-            customerEntityOptional.get().setCity(StringUtils.capitalize(customerEntity.getCity()));
-            customerEntityOptional.get().setStreet(StringUtils.capitalize(customerEntity.getStreet()));
-            customerEntityOptional.get().setPostalCode(customerEntity.getPostalCode());
-            customerEntityOptional.get().setPhone(customerEntity.getPhone());
-            customerEntityOptional.get().setBlacklisted(customerEntity.isBlacklisted());
+            customerEntityOptional.get().setFirstName(StringUtils.capitalize(customerRequestDto.getFirstName()));
+            customerEntityOptional.get().setLastName(StringUtils.capitalize(customerRequestDto.getLastName()));
+            customerEntityOptional.get().setCompanyName(StringUtils.capitalize(customerRequestDto.getCompanyName()));
+            customerEntityOptional.get().setCountry(StringUtils.capitalize(customerRequestDto.getCountry()));
+            customerEntityOptional.get().setCity(StringUtils.capitalize(customerRequestDto.getCity()));
+            customerEntityOptional.get().setStreet(StringUtils.capitalize(customerRequestDto.getStreet()));
+            customerEntityOptional.get().setPostalCode(customerRequestDto.getPostalCode());
+            customerEntityOptional.get().setPhone(customerRequestDto.getPhone());
+            customerEntityOptional.get().setBlacklisted(customerRequestDto.isBlacklisted());
 
             return this.customerRepository.save(customerEntityOptional.get());
         } catch (RuntimeException e) {
@@ -81,7 +81,7 @@ public class CustomerService {
         }
     }
 
-    private void nameValidator(CustomerEntity customerEntity) {
+    private void nameValidator(CustomerRequestDto customerEntity) {
         if (StringValidator.stringWithSpacesImproper(customerEntity.getFirstName(), 50)) {
             throw new ValueImproperException(customerEntity.getFirstName());
         }
@@ -106,7 +106,7 @@ public class CustomerService {
             throw new ValueImproperException(customerEntity.getStreet());
         }
 
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getPostalCode(), 15)) {
+        else if (StringValidator.stringWithDigitsImproper(customerEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(customerEntity.getPostalCode());
         }
 

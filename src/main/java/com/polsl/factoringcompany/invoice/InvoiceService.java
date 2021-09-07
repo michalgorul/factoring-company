@@ -75,6 +75,7 @@ public class InvoiceService {
             invoiceEntityOptional.get().setLeftToPay(BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() -
                     invoiceDto.getPaid().doubleValue()));
             invoiceEntityOptional.get().setRemarks(invoiceDto.getRemarks());
+            invoiceEntityOptional.get().setStatus(invoiceDto.getStatus());
             invoiceEntityOptional.get().setSellerId(invoiceDto.getSellerId());
             invoiceEntityOptional.get().setCurrencyId(invoiceDto.getCurrencyId());
             invoiceEntityOptional.get().setPaymentTypeId(invoiceDto.getPaymentTypeId());

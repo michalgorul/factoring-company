@@ -65,6 +65,9 @@ public class InvoiceEntity {
     @Column(name = "remarks", nullable = true, length = 100)
     private String remarks;
 
+    @Column(name = "status", nullable = false, length = 50)
+    private String status;
+
     @Column(name = "seller_id", nullable = false)
     private int sellerId;
 
@@ -120,6 +123,7 @@ public class InvoiceEntity {
         this.paid = invoiceDto.getPaid();
         this.leftToPay = BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() - invoiceDto.getPaid().doubleValue());
         this.remarks = invoiceDto.getRemarks();
+        this.status = invoiceDto.getStatus();
         this.sellerId = invoiceDto.getSellerId();
         this.customerId = invoiceDto.getCustomerId();
         this.paymentTypeId = invoiceDto.getPaymentTypeId();

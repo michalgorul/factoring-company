@@ -21,6 +21,7 @@ public class InvoiceDto {
     private BigDecimal toPay;
     private BigDecimal paid;
     private String remarks;
+    private String status;
     private int sellerId;
     private int customerId;
     private int paymentTypeId;

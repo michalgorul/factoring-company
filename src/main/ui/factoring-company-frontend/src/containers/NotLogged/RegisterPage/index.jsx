@@ -6,7 +6,7 @@ const Register = () => {
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src={RegisterImage} class="img-fluid mt-5" alt="Sample image"/>
+                <img src={RegisterImage} class="img-fluid mt-5" alt="Sample"/>
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form>

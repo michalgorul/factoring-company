@@ -1,4 +1,4 @@
-import { Folder, FolderPlus, StarFill } from "react-bootstrap-icons"
+import { Folder, StarFill } from "react-bootstrap-icons"
 import styled from "styled-components";
 
 

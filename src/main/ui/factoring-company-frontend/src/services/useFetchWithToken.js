@@ -7,7 +7,6 @@ const useFetchWithToken = (url) => {
 
     useEffect(() => {
 
-        const abortCont = new AbortController();
         setTimeout(() => {
             fetch(url, {
                 method: 'GET',

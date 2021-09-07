@@ -1,12 +1,12 @@
-import {useMemo, useState} from "react";
-import {useHistory} from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useHistory } from "react-router-dom";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {infoToast, warningToast} from "../../../components/toast/makeToast";
+import { infoToast, warningToast } from "../../../components/toast/makeToast";
 import config from "../../../services/config";
 
 toast.configure();
@@ -31,9 +31,7 @@ const CustomerCreate = () => {
         e.preventDefault();
         setBlacklisted(false);
 
-
         const customer = { firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted };
-console.log(customer)
         setIsPending(true);
 
         fetch(`${config.API_URL}/api/customer`, {

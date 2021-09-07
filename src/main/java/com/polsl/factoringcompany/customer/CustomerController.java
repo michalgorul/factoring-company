@@ -22,24 +22,20 @@ public class CustomerController {
         return customerService.getCurrentUserCustomers();
     }
 
-
     @GetMapping(path = "/{id}")
     public CustomerEntity getCustomer(@PathVariable Long id) {
         return this.customerService.getCustomer(id);
     }
-
 
     @PostMapping
     public CustomerEntity addCustomer(@RequestBody CustomerRequestDto customerRequestDto) {
         return this.customerService.addCustomer(customerRequestDto);
     }
 
-
     @PutMapping("/{id}")
     public CustomerEntity updateCustomer(@PathVariable Long id, @RequestBody CustomerRequestDto customerRequestDto) {
         return this.customerService.updateCustomer(id, customerRequestDto);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Long id) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.seller.SellerEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "bank_account", schema = "public", catalog = "factoring_company")
 public class BankAccountEntity {
     @Id
@@ -50,9 +52,6 @@ public class BankAccountEntity {
     @JsonIgnore
     @JoinColumn(name = "company_id", referencedColumnName = "id", insertable = false, updatable = false)
     private CompanyEntity companyByCompanyId;
-
-    public BankAccountEntity() {
-    }
 
     public BankAccountEntity(String bankSwift, String bankAccountNumber,
                              String bankName, Integer sellerId, Integer companyId) {

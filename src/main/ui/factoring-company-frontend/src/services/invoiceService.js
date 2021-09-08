@@ -15,20 +15,11 @@ const useFetchWithTokenInvoice = (id) => {
     const [currency, setCurrency] = useState(null);
     const [isPendingCu, setIsPendingCu] = useState(true);
     const [errorCu, setErrorCu] = useState(null);
-    // const [seller, setSeller] = useState(null);
-    // const [isPendingS, setIsPendingS] = useState(true);
-    // const [errorS, setErrorS] = useState(null);
-
-    const { data: seller, errorS, isPendingS } = useFetch('http://localhost:8000/seller/' + 1);
+    const [seller, setSeller] = useState(null);
+    const [isPendingS, setIsPendingS] = useState(true);
+    const [errorS, setErrorS] = useState(null);
 
     const [invoiceAvailable, setInvoiceAvailable] = useState(false)
-
-    let payment = {
-        name: null,
-        code: null,
-        paymentType: null
-    }
-
 
     useEffect(() => {
 
@@ -129,16 +120,42 @@ const useFetchWithTokenInvoice = (id) => {
                     setErrorCu(err.message);
                 });
 
+            fetch(`${config.API_URL}/api/seller/${invoice.sellerId}`, {
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw Error("could not fetch the data for that resource");
+                    }
+                    return res.json();
+
+                })
+                .then(data => {
+                    setSeller(data);
+                    setIsPendingS(false);
+                    setErrorS(null);
+
+                })
+                .catch(err => {
+                    setIsPendingS(false);
+                    setErrorS(err.message);
+                });
+
         }
 
     }, [id, invoiceAvailable]);
 
 
-    return { invoice, isPendingI, errorI, 
-        customer, errorC, isPendingC, 
-        paymentType, errorP, isPendingP, 
+    return {
+        invoice, isPendingI, errorI,
+        customer, errorC, isPendingC,
+        paymentType, errorP, isPendingP,
         currency, errorCu, isPendingCu,
-        seller, errorS, isPendingS };
+        seller, errorS, isPendingS
+    };
 }
 
 export default useFetchWithTokenInvoice;

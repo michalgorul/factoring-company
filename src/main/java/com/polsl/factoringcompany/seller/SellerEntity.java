@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.seller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
@@ -55,9 +56,11 @@ public class SellerEntity {
     @Column(name = "regon", nullable = false, length = 14)
     private String regon;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sellerBySellerId")
     private Collection<BankAccountEntity> bankAccountsById;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sellerBySellerId")
     private Collection<InvoiceEntity> invoicesById;
 

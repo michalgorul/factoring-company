@@ -3,6 +3,7 @@ package com.polsl.factoringcompany.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
+import com.polsl.factoringcompany.files.FileEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -68,6 +69,10 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByUserId")
     private Collection<CustomerEntity> customersById;
 
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<FileEntity> filesById;
+
+
 
     @ManyToOne
     @JsonIgnore
@@ -112,24 +117,11 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return id == that.id &&
-                companyId == that.companyId &&
-                Objects.equals(username, that.username) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(country, that.country) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) &&
-                Objects.equals(postalCode, that.postalCode) &&
-                Objects.equals(phone, that.phone);
+        return companyId == that.companyId && Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(country, that.country) && Objects.equals(city, that.city) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(phone, that.phone) && Objects.equals(ordersById, that.ordersById) && Objects.equals(customersById, that.customersById) && Objects.equals(filesById, that.filesById) && Objects.equals(companyByCompanyId, that.companyByCompanyId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName,
-                country, city, street, postalCode, phone, companyId);
+        return Objects.hash(id, username, password, email, firstName, lastName, country, city, street, postalCode, phone, companyId, ordersById, customersById, filesById, companyByCompanyId);
     }
-
 }

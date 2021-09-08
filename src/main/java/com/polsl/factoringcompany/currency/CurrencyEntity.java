@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.currency;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.Getter;
@@ -34,9 +35,11 @@ public class CurrencyEntity {
     @Column(name = "code", nullable = false, length = 5, unique = true)
     private String code;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "currencyByCurrencyId")
     private Collection<InvoiceEntity> invoicesById;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "currencyByCurrencyId")
     private Collection<TransactionEntity> transactionsById;
 

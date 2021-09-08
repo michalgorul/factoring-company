@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.paymenttype;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class PaymentTypeEntity {
     @Column(name = "name", nullable = false, length = 25, unique = true)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "paymentTypeByPaymentTypeId")
     private Collection<InvoiceEntity> invoicesById;
 

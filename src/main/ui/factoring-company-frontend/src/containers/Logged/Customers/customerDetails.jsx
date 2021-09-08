@@ -31,9 +31,7 @@ const CustomerDetails = () => {
                 history.push('/user/customers');
             })
             .then(() => {
-
                 infoToast('Customer was deleted')
-
             })
     }
 

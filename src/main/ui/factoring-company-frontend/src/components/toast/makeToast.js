@@ -26,6 +26,8 @@ const errorToast = (message) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        transition: Zoom,
+
         });
 }
 

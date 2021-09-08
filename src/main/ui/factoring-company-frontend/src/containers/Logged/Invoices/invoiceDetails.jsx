@@ -1,12 +1,10 @@
-import useFetch from "../../../components/useFetch/useFetch";
 import { useHistory, useParams } from "react-router-dom";
 import { Spinner, Modal, Button } from 'react-bootstrap';
 import { useState } from "react";
-import useFetchWithToken from "../../../services/useFetchWithToken";
-import { config } from "@fortawesome/fontawesome-svg-core";
-import { infoToast } from "../../../components/toast/makeToast";
+import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
 import { useEffect } from "react";
+import config from "../../../services/config";
 
 const InvoiceDetails = () => {
 	const { id } = useParams();
@@ -31,17 +29,31 @@ const InvoiceDetails = () => {
 
 
 	const handleDeleteRequest = () => {
-		fetch(`${config.API_URL}/api/invoice/${id}`, {
+		fetch(`${config.API_URL}/api/invoice/${invoice.id}`, {
 			method: 'DELETE',
 			headers: {
 				"Authorization": `Bearer ${localStorage.getItem("token")}`
 			}
 		})
-			.then(() => {
-				history.push('/user/invoices');
+			.then((response) => {
+				if(response.ok){
+					history.push('/user/invoices');
+				}
+				else{
+					handleClose();
+
+				}
+				return response;
 			})
-			.then(() => {
-				infoToast('Invoice was deleted')
+			.then((response) => {
+				if(response.ok){
+					infoToast('Invoice was deleted');
+
+				}
+				else{
+					errorToast('Invoice was not deleted');
+				}
+
 			})
 	}
 

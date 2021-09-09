@@ -16,4 +16,6 @@ public class FileResponse {
     private Long size;
     private String url;
     private String contentType;
+    private Integer userId;
+    private String catalog;
 }

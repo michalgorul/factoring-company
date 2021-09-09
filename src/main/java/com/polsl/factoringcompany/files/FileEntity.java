@@ -3,6 +3,7 @@ package com.polsl.factoringcompany.files;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "file")
 public class FileEntity {
@@ -46,6 +48,14 @@ public class FileEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private UserEntity userByUserId;
 
+    public FileEntity(String name, Long size, String contentType, byte[] data, int userId, String catalog) {
+        this.name = name;
+        this.size = size;
+        this.contentType = contentType;
+        this.data = data;
+        this.userId = userId;
+        this.catalog = catalog;
+    }
 
     @Override
     public boolean equals(Object o) {

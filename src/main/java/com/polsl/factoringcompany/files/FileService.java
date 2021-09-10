@@ -44,9 +44,9 @@ public class FileService {
 
     }
 
-    public ResponseEntity<String> uploadFile(MultipartFile file) {
+    public ResponseEntity<String> uploadFile(MultipartFile file, String catalog) {
         try {
-            this.save(file, "favourite");
+            this.save(file, catalog);
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(String.format("File uploaded successfully: %s", file.getOriginalFilename()));

@@ -16,8 +16,8 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        return this.fileService.uploadFile(file);
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam String catalog) {
+        return this.fileService.uploadFile(file, catalog);
     }
 
     @GetMapping

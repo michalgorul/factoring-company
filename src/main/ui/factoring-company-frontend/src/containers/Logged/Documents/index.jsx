@@ -5,8 +5,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import config from "../../../services/config";
 import { errorToast, infoToast, warningToast } from "../../../components/toast/makeToast";
-import axios from "axios";
-const https = require('https');
 const Documents = () => {
 
   const [catalog, setCatalog] = useState('favourite');
@@ -40,10 +38,6 @@ const Documents = () => {
       selectedFile,
       selectedFile.name
     );
-  
-    // Details of the uploaded file
-    console.log(selectedFile);
-  
 
     if(selectedFile){
       e.preventDefault();
@@ -52,47 +46,34 @@ const Documents = () => {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      const agent = new https.Agent({  
-        rejectUnauthorized: false
-      });
-
-      let configAxios = {
+      fetch(`${config.API_URL}/api/file?catalog=${catalog}`, {
+        method: 'POST',
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-        httpsAgent: agent
-      }
-
-      axios.post(`${config.API_URL}/api/file?catalog=${catalog}`, formData, configAxios);
-
-    //   fetch(`${config.API_URL}/api/file?catalog=${catalog}`, {
-    //     method: 'POST',
-    //     headers: {
-    //       "Authorization": `Bearer ${localStorage.getItem("token")}`
-    //     },
-    //     body: formData
-    //   })
-    //     .then((response) => {
-    //       setIsPending(false);
-    //       if (response.ok) {
-    //         history.push('/user/documents');
-    //         return response;
-    //       }
-    //       else {
-    //         return response
-    //       }
-    //     })
-    //     .then((response) => {
-    //       if (response.ok) {
-    //         infoToast('File was uploaded')
-    //       }
-    //       else {
-    //         errorToast('File was not uploaded')
-    //       }
-    //     })
-    // }
-    // else{
-    //   warningToast('Please select file')
+        body: formData
+      })
+        .then((response) => {
+          setIsPending(false);
+          if (response.ok) {
+            handleClose();
+            return response;
+          }
+          else {
+            return response
+          }
+        })
+        .then((response) => {
+          if (response.ok) {
+            infoToast('File was uploaded')
+          }
+          else {
+            errorToast('File was not uploaded')
+          }
+        })
+    }
+    else{
+      warningToast('Please select file')
     }
 
   }
@@ -139,7 +120,7 @@ const Documents = () => {
             <option value="fc">Factoring Company documents</option>
           </Form.Select>
           <br />
-          <Form.Group id="formFile" controlId="formFile" className="mb-3">
+          <Form.Group id="formFile" className="mb-3">
             <Form.Label>Choose file to upload</Form.Label>
             <Form.Control id="formFile" type="file" onChange={handleChange} />
           </Form.Group>

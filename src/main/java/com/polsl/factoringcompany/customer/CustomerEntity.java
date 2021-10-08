@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.customer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
@@ -32,6 +33,9 @@ public class CustomerEntity {
     )
     private Long id;
 
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
@@ -62,6 +66,9 @@ public class CustomerEntity {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "company_id")
+    private Integer companyId;
+
     @OneToMany(mappedBy = "customerByCustomerId")
     private Collection<InvoiceEntity> invoicesById;
 
@@ -72,6 +79,11 @@ public class CustomerEntity {
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity userByUserId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "company_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private CompanyEntity companyByCompanyId;
 
     public CustomerEntity(String firstName, String lastName, String companyName, String country,
                           String city, String street, String postalCode, String phone,

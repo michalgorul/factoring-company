@@ -11,6 +11,7 @@ import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 const CustomerEdit = () => {
 
+    const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [companyName, setCompanyName] = useState('');
@@ -35,6 +36,7 @@ const CustomerEdit = () => {
     function getCustomer() {
         if (editCustomer) {
             const countryObject = { value: countryList().getValue(editCustomer.country), label: editCustomer.country };
+            setEmail(editCustomer.email);
             setFirstName(editCustomer.firstName);
             setLastName(editCustomer.lastName)
             setCompanyName(editCustomer.companyName);
@@ -51,7 +53,7 @@ const CustomerEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setBlacklisted(false);
-        const customer = { firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted };
+        const customer = { email, firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted };
         setIsPendingN(true);
         fetch(`${config.API_URL}/api/customer/${id}`, {
             method: "PUT",
@@ -102,6 +104,12 @@ const CustomerEdit = () => {
                                     <p class="lead fw-normal mt-2 mb-3 display-4">Edit Customer</p>
 
                                 </div>
+                                <div class="form-outline form-floating mb-3">
+                                    <input type="text" class="form-control form-control-lg"
+                                        placeholder="Enter a valid email address" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <label class="form-label">Email</label>
+                                </div>
+
                                 <div class="form-outline form-floating mb-3">
                                     <input type="text" class="form-control form-control-lg"
                                         placeholder="Enter a valid email address" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />

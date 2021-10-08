@@ -45,7 +45,7 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/documents`} exact component={Documents} />
           <ProtectedRoute path={`${match.url}/profile`} exact component={Profile} />
           <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
-          <ProtectedRoute path={`${match.url}/profile/company/edit`} exact component={CompanyEdit} />
+          <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit} />
           <ProtectedRoute path="*" render={() => (<Redirect to="/404" />)} />
         </Switch>
       </Layout>

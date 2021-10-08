@@ -51,28 +51,28 @@ public class CompanyService {
 //        }
 //    }
 
-//    public CompanyEntity updateCompany(Long id, CompanyEntity companyEntity) {
-//
-//        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
-//
-//        if (companyEntityOptional.isEmpty())
-//            throw new IdNotFoundInDatabaseException("Company", id);
-//
-//        updateValidate(id, companyEntity);
-//
-//        try {
-//            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyEntity.getCompanyName()));
-//            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyEntity.getCountry()));
-//            companyEntityOptional.get().setCity(StringUtils.capitalize(companyEntity.getCity()));
-//            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyEntity.getStreet()));
-//            companyEntityOptional.get().setPostalCode(companyEntity.getPostalCode());
-//            companyEntityOptional.get().setNip(companyEntity.getNip());
-//            companyEntityOptional.get().setRegon(companyEntity.getRegon());
-//            return this.companyRepository.save(companyEntityOptional.get());
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public CompanyEntity updateCompany(Long id, CompanyRequestDto companyRequestDto) {
+
+        Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
+
+        if (companyEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("Company", id);
+
+        updateValidate(id, companyRequestDto);
+
+        try {
+            companyEntityOptional.get().setCompanyName(StringUtils.capitalize(companyRequestDto.getCompanyName()));
+            companyEntityOptional.get().setCountry(StringUtils.capitalize(companyRequestDto.getCountry()));
+            companyEntityOptional.get().setCity(StringUtils.capitalize(companyRequestDto.getCity()));
+            companyEntityOptional.get().setStreet(StringUtils.capitalize(companyRequestDto.getStreet()));
+            companyEntityOptional.get().setPostalCode(companyRequestDto.getPostalCode());
+            companyEntityOptional.get().setNip(companyRequestDto.getNip());
+            companyEntityOptional.get().setRegon(companyRequestDto.getRegon());
+            return this.companyRepository.save(companyEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void deleteCompany(Long id) {
         try {

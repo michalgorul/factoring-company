@@ -1,19 +1,68 @@
 import useFetch from "../../../components/useFetch/useFetch";
-import {useHistory, useParams} from "react-router-dom";
-import {Button, Modal, Spinner} from 'react-bootstrap';
-import {useState} from "react";
-import {toast} from 'react-toastify';
+import { useHistory, useParams } from "react-router-dom";
+import { Button, Modal, Spinner } from 'react-bootstrap';
+import { useState } from "react";
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
-import {infoToast} from "../../../components/toast/makeToast";
+import { infoToast } from "../../../components/toast/makeToast";
+import { useEffect } from "react";
 
 toast.configure();
 
 const CustomerDetails = () => {
     const { id } = useParams();
-    const { data: customer, error, isPending } = useFetchWithToken(`${config.API_URL}/api/customer/${id}`);
-    const { data: company } = useFetch('http://localhost:8000/company/');
+
+    const [customer, setCustomer] = useState(null);
+    const [company, setCompany] = useState(null);
+    const [companyId, setCompanyId] = useState(0);
+
+    useEffect(() => {
+        fetch(`${config.API_URL}/api/customer/${id}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw Error("could not fetch the data for that resource");
+                }
+                return res.json();
+            })
+            .then(data => {
+                setCustomer(data);
+                return data;
+
+            })
+            .then(data => {
+                fetch(`${config.API_URL}/api/company/${data.companyId}`, {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        setCompany(data);
+                        setCompanyId(data.id);
+                    })
+                    .catch(err => {
+                        if (err.name === "AbortError") {
+                            console.log('fetch aborted');
+                        }
+                    })
+            })
+            .catch(err => {
+                if (err.name === "AbortError") {
+                    console.log('fetch aborted');
+                }
+            })
+    }, [])
+
     const history = useHistory();
 
     const [show, setShow] = useState(false);
@@ -39,22 +88,48 @@ const CustomerDetails = () => {
         setShow(true);
     }
 
+    const showCompanyDetails = (comapny) => {
+        if (comapny != null) {
+            return (
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item list-group-item-action">{company.companyName}</li>
+                    <li class="list-group-item list-group-item-action">{company.country}</li>
+                    <li class="list-group-item list-group-item-action">{company.city}</li>
+                    <li class="list-group-item list-group-item-action">{company.street}</li>
+                    <li class="list-group-item list-group-item-action">{company.postalCode}</li>
+                    <li class="list-group-item list-group-item-action">{company.nip}</li>
+                    <li class="list-group-item list-group-item-action">{company.regon}</li>
+                </ul>)
+        }
+        else {
+            return (
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                    <li class="list-group-item list-group-item-action"> - </li>
+                </ul>)
+        }
+
+    };
     return (
         <div className="">
-            {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
-            {error && <div>{error}</div>}
-            {customer && company && (
+            {customer && (
                 <article class="mt-5 ms-3">
                     <div class="media align-items-center py-3">
                         <div class="media-body ml-4">
                             <h4 class="display-3">{customer.firstName + ' ' + customer.lastName}</h4>
                         </div>
                     </div>
-                    <h5 class="mt-4 mb-3">Address & Phone</h5>
+                    <h5 class="mt-4 mb-3">Details</h5>
                     <div class="container">
                         <div class="row align-items-start ms-2">
                             <div class="col-3">
                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item list-group-item-action fw-bold">Email:</li>
                                     <li class="list-group-item list-group-item-action fw-bold">Country:</li>
                                     <li class="list-group-item list-group-item-action fw-bold">City:</li>
                                     <li class="list-group-item list-group-item-action fw-bold">Street:</li>
@@ -64,6 +139,7 @@ const CustomerDetails = () => {
                             </div>
                             <div class="col-3">
                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item list-group-item-action">{customer.email}</li>
                                     <li class="list-group-item list-group-item-action">{customer.country}</li>
                                     <li class="list-group-item list-group-item-action">{customer.city}</li>
                                     <li class="list-group-item list-group-item-action">{customer.street}</li>
@@ -90,15 +166,7 @@ const CustomerDetails = () => {
                                 </ul>
                             </div>
                             <div class="col-3">
-                                <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item list-group-item-action">{company.companyName}</li>
-                                    <li class="list-group-item list-group-item-action">{company.country}</li>
-                                    <li class="list-group-item list-group-item-action">{company.city}</li>
-                                    <li class="list-group-item list-group-item-action">{company.street}</li>
-                                    <li class="list-group-item list-group-item-action">{company.postalCode}</li>
-                                    <li class="list-group-item list-group-item-action">{company.nip}</li>
-                                    <li class="list-group-item list-group-item-action">{company.regon}</li>
-                                </ul>
+                                {showCompanyDetails(company)}
                             </div>
                         </div>
                     </div>
@@ -107,7 +175,7 @@ const CustomerDetails = () => {
                     <div class="alert clearfix mt-2">
                         <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
                         <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
-                        <a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
+                        <a href={`/user/profile/company/edit/${companyId}`} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
                     </div>
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>

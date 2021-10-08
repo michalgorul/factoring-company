@@ -66,6 +66,7 @@ public class CustomerService {
         nameValidator(customerRequestDto);
 
         try {
+            customerEntityOptional.get().setEmail(customerRequestDto.getEmail());
             customerEntityOptional.get().setFirstName(StringUtils.capitalize(customerRequestDto.getFirstName()));
             customerEntityOptional.get().setLastName(StringUtils.capitalize(customerRequestDto.getLastName()));
             customerEntityOptional.get().setCompanyName(StringUtils.capitalize(customerRequestDto.getCompanyName()));

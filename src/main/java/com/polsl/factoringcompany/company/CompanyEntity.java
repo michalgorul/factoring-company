@@ -1,6 +1,8 @@
 package com.polsl.factoringcompany.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
+import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,10 +51,16 @@ public class CompanyEntity {
     private String regon;
 
     @OneToMany(mappedBy = "companyByCompanyId")
+    @JsonIgnore
     private Collection<BankAccountEntity> bankAccountsById;
 
     @OneToMany(mappedBy = "companyByCompanyId")
+    @JsonIgnore
     private Collection<UserEntity> usersById;
+
+    @OneToMany(mappedBy = "companyByCompanyId")
+    @JsonIgnore
+    private Collection<CustomerEntity> customersById;
 
 
     public CompanyEntity() {

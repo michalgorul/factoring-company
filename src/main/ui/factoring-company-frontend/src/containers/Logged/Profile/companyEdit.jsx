@@ -1,4 +1,4 @@
-import {useHistory} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import {useEffect, useMemo, useState} from "react";
@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import {updateWithToken} from "../../../services/useUpdateWithToken";
-import {infoToast} from "../../../components/toast/makeToast";
+import {errorToast, infoToast} from "../../../components/toast/makeToast";
 
 const CompanyEdit = () => {
     const [companyName, setCompanyName] = useState('');
@@ -21,7 +21,10 @@ const CompanyEdit = () => {
     const [isPendingN, setIsPendingN] = useState(false);
     const options = useMemo(() => countryList().getData(), [])
 
-    const { data: company, error, isPending } = useFetchWithToken(`${config.API_URL}/api/company/current`);
+    const { id } = useParams();
+
+
+    const { data: company, error, isPending } = useFetchWithToken(`${config.API_URL}/api/company/${id}`);
     const history = useHistory();
 
     useEffect(() => {
@@ -48,13 +51,32 @@ const CompanyEdit = () => {
         const company = { companyName, country, city, street, postalCode, nip, regon };
         setIsPendingN(true);
 
-        updateWithToken(`${config.API_URL}/api/company/current`, company)
-            .then(() => {
+        fetch(`${config.API_URL}/api/company/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(company)
+        })
+            .then((response) => {
                 setIsPendingN(false);
-                history.push('/user/profile');
+                if (response.ok) {
+                    history.goBack();
+                    window.location.reload();
+                    return response;
+                }
+                else {
+                    return response
+                }
             })
-            .then(() => {
-                infoToast('Your comapny was updated');
+            .then((response) => {
+                if (response.ok) {
+                    infoToast('Customer was updated')
+                }
+                else {
+                    errorToast('Some of inputs were incorrect')
+                }
             })
             .catch(err => {
                 console.error(err);

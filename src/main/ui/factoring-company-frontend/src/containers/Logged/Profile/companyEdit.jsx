@@ -25,7 +25,7 @@ const CompanyEdit = () => {
 
 
     const { data: company, error, isPending } = useFetchWithToken(`${config.API_URL}/api/company/${id}`);
-    const history = useHistory();
+    let history = useHistory();
 
     useEffect(() => {
         getCompanyInfo();
@@ -62,7 +62,7 @@ const CompanyEdit = () => {
             .then((response) => {
                 setIsPendingN(false);
                 if (response.ok) {
-                    history.goBack();
+                    history.goBack(2);
                     window.location.reload();
                     return response;
                 }
@@ -72,7 +72,7 @@ const CompanyEdit = () => {
             })
             .then((response) => {
                 if (response.ok) {
-                    infoToast('Customer was updated')
+                    infoToast('Company was updated')
                 }
                 else {
                     errorToast('Some of inputs were incorrect')

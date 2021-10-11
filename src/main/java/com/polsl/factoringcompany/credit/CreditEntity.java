@@ -1,146 +1,74 @@
 package com.polsl.factoringcompany.credit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.polsl.factoringcompany.user.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "credit", schema = "public", catalog = "factoring_company")
 public class CreditEntity {
-    private long id;
-    private String creditNumber;
-    private BigDecimal leftToPay;
-    private BigDecimal amount;
-    private BigDecimal nextPayment;
-    private int installments;
-    private BigDecimal balance;
-    private BigDecimal rateOfInterest;
-    private Date nextPaymentDate;
-    private Date creationDate;
-    private Date lastInstallmentDate;
-    private int userId;
-    private UserEntity userByUserId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public long getId() {
-        return id;
-    }
+    @SequenceGenerator(
+            name = "credit_id_sequence",
+            sequenceName = "credit_id_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "credit_id_sequence"
+    )
+    private long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Basic
     @Column(name = "credit_number", nullable = false, length = 15)
-    public String getCreditNumber() {
-        return creditNumber;
-    }
+    private String creditNumber;
 
-    public void setCreditNumber(String creditNumber) {
-        this.creditNumber = creditNumber;
-    }
-
-    @Basic
     @Column(name = "left_to_pay", nullable = false, precision = 2)
-    public BigDecimal getLeftToPay() {
-        return leftToPay;
-    }
+    private BigDecimal leftToPay;
 
-    public void setLeftToPay(BigDecimal leftToPay) {
-        this.leftToPay = leftToPay;
-    }
-
-    @Basic
     @Column(name = "amount", nullable = false, precision = 2)
-    public BigDecimal getAmount() {
-        return amount;
-    }
+    private BigDecimal amount;
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    @Basic
     @Column(name = "next_payment", nullable = false, precision = 2)
-    public BigDecimal getNextPayment() {
-        return nextPayment;
-    }
+    private BigDecimal nextPayment;
 
-    public void setNextPayment(BigDecimal nextPayment) {
-        this.nextPayment = nextPayment;
-    }
-
-    @Basic
     @Column(name = "installments", nullable = false)
-    public int getInstallments() {
-        return installments;
-    }
+    private int installments;
 
-    public void setInstallments(int installments) {
-        this.installments = installments;
-    }
-
-    @Basic
     @Column(name = "balance", nullable = false, precision = 2)
-    public BigDecimal getBalance() {
-        return balance;
-    }
+    private BigDecimal balance;
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    @Basic
     @Column(name = "rate_of_interest", nullable = false, precision = 2)
-    public BigDecimal getRateOfInterest() {
-        return rateOfInterest;
-    }
+    private BigDecimal rateOfInterest;
 
-    public void setRateOfInterest(BigDecimal rateOfInterest) {
-        this.rateOfInterest = rateOfInterest;
-    }
-
-    @Basic
     @Column(name = "next_payment_date", nullable = false)
-    public Date getNextPaymentDate() {
-        return nextPaymentDate;
-    }
+    private Date nextPaymentDate;
 
-    public void setNextPaymentDate(Date nextPaymentDate) {
-        this.nextPaymentDate = nextPaymentDate;
-    }
-
-    @Basic
     @Column(name = "creation_date", nullable = false)
-    public Date getCreationDate() {
-        return creationDate;
-    }
+    private Date creationDate;
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    @Basic
     @Column(name = "last_installment_date", nullable = false)
-    public Date getLastInstallmentDate() {
-        return lastInstallmentDate;
-    }
+    private Date lastInstallmentDate;
 
-    public void setLastInstallmentDate(Date lastInstallmentDate) {
-        this.lastInstallmentDate = lastInstallmentDate;
-    }
+    @Column(name = "status", nullable = false, length = 50)
+    private String status;
 
-    @Basic
     @Column(name = "user_id", nullable = false)
-    public int getUserId() {
-        return userId;
-    }
+    private int userId;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private UserEntity userByUserId;
+
 
     @Override
     public boolean equals(Object o) {
@@ -155,13 +83,4 @@ public class CreditEntity {
         return Objects.hash(id, creditNumber, leftToPay, amount, nextPayment, installments, balance, rateOfInterest, nextPaymentDate, creationDate, lastInstallmentDate, userId);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    public UserEntity getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserEntity userByUserId) {
-        this.userByUserId = userByUserId;
-    }
 }

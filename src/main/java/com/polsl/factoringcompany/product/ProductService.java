@@ -88,7 +88,6 @@ public class ProductService {
             throw new NotUniqueException("Product", "name", name);
     }
 
-    // TODO: 23.05.2021 CONSIDER MEASURE UNIT - ANOTHER TABLE? CHECKING? IF YES - HOW?
 
     public boolean ifNameTaken(String name) {
         Optional<ProductEntity> foundByName = productRepository.findProductEntityByName(

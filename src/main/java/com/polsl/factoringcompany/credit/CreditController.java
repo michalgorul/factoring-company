@@ -16,6 +16,11 @@ public class CreditController {
         return this.creditService.getCredits();
     }
 
+    @GetMapping(path = "/current")
+    public List<CreditEntity> getCreditsCurrentUser(){
+        return this.creditService.getCreditsCurrentUser();
+    }
+
     @GetMapping(path = "/{id}")
     public CreditEntity getCredit(@PathVariable Long id){
         return this.creditService.getCredit(id);

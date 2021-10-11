@@ -30,4 +30,9 @@ public class CreditService {
             throw new IdNotFoundInDatabaseException("Credit", id);
         }
     }
+
+    public List<CreditEntity> getCreditsCurrentUser() {
+        Long currentUserId = userService.getCurrentUserId();
+        return this.creditRepository.findAllByUserId(Math.toIntExact(currentUserId));
+    }
 }

@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany;
 
+import com.polsl.factoringcompany.reports.GenerateInvoicePdf;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -17,15 +18,14 @@ public class FactoringCompany {
 
     public static void main(String[] args) {
         SpringApplication.run(FactoringCompany.class, args);
+        try {
+            GenerateInvoicePdf.generateDocxFileFromTemplate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-//    @Bean
-//    public Docket productApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.polsl.factoringcompany"))
-//                .build();
-//    }
+
 
 
     @Bean

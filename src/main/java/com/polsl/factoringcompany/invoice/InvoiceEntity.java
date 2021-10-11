@@ -8,6 +8,7 @@ import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.seller.SellerEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
+import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import pl.allegro.finance.tradukisto.MoneyConverters;
@@ -77,6 +78,9 @@ public class InvoiceEntity {
     @Column(name = "currency_id", nullable = false)
     private int currencyId;
 
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
@@ -96,6 +100,11 @@ public class InvoiceEntity {
     @ManyToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CurrencyEntity currencyByCurrencyId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private UserEntity userByUserId;
 
     @OneToMany(mappedBy = "invoiceByInvoiceId")
     private Collection<InvoiceItemEntity> invoiceItemsById;

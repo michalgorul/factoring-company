@@ -2,11 +2,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import React, { useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Marginer } from '../../../components/marginer';
-// import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// import { Zoom } from 'react-toastify';
 import InvoiceList from './invoiceList';
-// toast.configure();
 
 const Invoices = () => {
 

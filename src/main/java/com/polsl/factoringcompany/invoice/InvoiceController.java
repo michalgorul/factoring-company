@@ -17,6 +17,10 @@ public class InvoiceController {
         return this.invoiceService.getInvoices();
     }
 
+    @GetMapping(path = "/current")
+    public List<InvoiceEntity> getInvoicesCurrentUser() {
+        return this.invoiceService.getInvoicesCurrentUser();
+    }
 
     @GetMapping(path = "/{id}")
     public InvoiceEntity getInvoice(@PathVariable Long id) {

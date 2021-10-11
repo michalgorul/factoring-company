@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 
 const InvoiceList = ({ whatInvoices }) => {
-    const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice`)
+    const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice/current`)
 
     useEffect(() => {
         if (invoices) {

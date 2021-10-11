@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.files.FileEntity;
+import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -72,7 +73,8 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByUserId")
     private Collection<FileEntity> filesById;
 
-
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<InvoiceEntity> invoiceById;
 
     @ManyToOne
     @JsonIgnore

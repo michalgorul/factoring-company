@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.invoice;
 
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.allegro.finance.tradukisto.MoneyConverters;
@@ -15,9 +16,16 @@ import java.util.Optional;
 public class InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
+    private final UserService userService;
 
     public List<InvoiceEntity> getInvoices() {
         return this.invoiceRepository.findAll();
+    }
+
+
+    public List<InvoiceEntity> getInvoicesCurrentUser() {
+        Long currentUserId = userService.getCurrentUserId();
+        return this.invoiceRepository.findAllByUserId(Math.toIntExact(currentUserId));
     }
 
     public InvoiceEntity getInvoice(Long id) {

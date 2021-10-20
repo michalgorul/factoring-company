@@ -27,6 +27,7 @@ public class InvoiceInformation {
     private String customerCity;
     private String deliveryMethod;
     private String deliveryDescription;
+    private String paymentMethod;
     private String itemName;
     private String pkwiu;
     private String quantity;
@@ -41,7 +42,8 @@ public class InvoiceInformation {
     public static ApplicationContext ctx;
 
     public InvoiceInformation(InvoiceEntity invoiceEntity, CustomerEntity customerEntity,
-                              InvoiceItemEntity invoiceItemEntity, ProductEntity productEntity, String currencyCode) {
+                              InvoiceItemEntity invoiceItemEntity, ProductEntity productEntity,
+                              String currencyCode, String paymentMethod) {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String deliveryDateFormat = df.format(invoiceEntity.getSaleDate());
@@ -54,8 +56,11 @@ public class InvoiceInformation {
         this.customerStreet = String.format("%s", customerEntity.getStreet());
         this.customerCity = String.format("%s %s %s", customerEntity.getCity(), customerEntity.getPostalCode(),
                 customerEntity.getCountry());
+
         this.deliveryMethod = "UPS";
         this.deliveryDescription = "lorem ipsum";
+
+        this.paymentMethod = paymentMethod;
         this.itemName = productEntity.getName();
         this.pkwiu = productEntity.getPkwiu();
         this.quantity = String.valueOf(invoiceItemEntity.getQuentity());
@@ -78,6 +83,7 @@ public class InvoiceInformation {
         variables.put("customer_city", this.customerCity);
         variables.put("delivery_method", this.deliveryMethod);
         variables.put("delivery_description", this.deliveryDescription);
+        variables.put("payment_method", this.paymentMethod);
         variables.put("item_name", this.itemName);
         variables.put("pkwiu", this.pkwiu);
         variables.put("qnt", this.quantity);

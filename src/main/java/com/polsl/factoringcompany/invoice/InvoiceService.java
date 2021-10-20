@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.invoice;
 
 import com.polsl.factoringcompany.currency.CurrencyService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.paymenttype.PaymentTypeService;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final UserService userService;
     private final CurrencyService currencyService;
+    private final PaymentTypeService paymentTypeService;
 
     public List<InvoiceEntity> getInvoices() {
         return this.invoiceRepository.findAll();
@@ -110,6 +112,11 @@ public class InvoiceService {
         InvoiceEntity invoiceEntity = this.getInvoice(invoiceId);
         return currencyService.getCurrency((long) invoiceEntity.getCurrencyId()).getCode();
 
+    }
+
+    public String getPaymentMethod(Long invoiceId){
+        InvoiceEntity invoiceEntity = this.getInvoice(invoiceId);
+        return paymentTypeService.getPaymentType((long) invoiceEntity.getPaymentTypeId()).getName();
     }
 
 

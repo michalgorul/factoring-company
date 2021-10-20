@@ -6,6 +6,7 @@ import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.invoice.InvoiceService;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemService;
+import com.polsl.factoringcompany.paymenttype.PaymentTypeService;
 import com.polsl.factoringcompany.product.ProductEntity;
 import com.polsl.factoringcompany.product.ProductService;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class InvoicePdfService {
     private final CustomerService customerService;
     private final InvoiceItemService invoiceItemService;
     private final ProductService productService;
+    private final PaymentTypeService paymentTypeService;
 
     public byte[] generateDocxFileFromTemplate(Long invoiceId) throws Exception {
 
@@ -55,7 +57,8 @@ public class InvoicePdfService {
 
         InvoiceInformation invoiceInformation = new InvoiceInformation(
                 invoiceEntity, customerEntity, invoiceItemEntity, productEntity,
-                invoiceService.getInvoiceCurrencyCode(invoiceId));
+                invoiceService.getInvoiceCurrencyCode(invoiceId),
+                invoiceService.getPaymentMethod(invoiceId));
         HashMap<String, String> variables = invoiceInformation.getVariablesInHashMap();
 
         documentPart.variableReplace(variables);

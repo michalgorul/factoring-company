@@ -5,6 +5,7 @@ import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
 import { useEffect } from "react";
 import config from "../../../services/config";
+import axios from 'axios'
 
 const InvoiceDetails = () => {
 	const { id } = useParams();
@@ -59,6 +60,32 @@ const InvoiceDetails = () => {
 
 	const handleDelete = () => {
 		setShow(true);
+	}
+
+	const handleShowPdf = () => {
+		try {
+			axios
+			  .get(config.API_URL + `/api/invoice/pdf/${id}`, {
+				responseType: "blob",
+				headers: {
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				}
+			  })
+			  .then((response) => {
+				//Create a Blob from the PDF Stream
+				const file = new Blob([response.data], { type: "application/pdf" });
+				//Build a URL from the file
+				const fileURL = URL.createObjectURL(file);
+				//Open the URL on new Window
+				 const pdfWindow = window.open();
+				 pdfWindow.location.href = fileURL;            
+			  })
+			  .catch((error) => {
+				console.log(error);
+			  });
+		  } catch (error) {
+			return { error };
+		  }
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -190,11 +217,11 @@ const InvoiceDetails = () => {
 					<div class="alert clearfix mt-2">
 						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
 						<a href={"#"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit informations</a>
-						<a href={"#"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Generate PDF</a>
+						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>
 					</div>
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>
-							<Modal.Title>Customer deletion</Modal.Title>
+							<Modal.Title>Invoice deletion</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>Are you sure you want to remove {<span class="fw-bold">{invoice.invoiceNumber}</span>} from your invoice list?</Modal.Body>
 						<Modal.Footer>

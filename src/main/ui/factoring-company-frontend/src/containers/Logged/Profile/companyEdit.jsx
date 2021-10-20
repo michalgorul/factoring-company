@@ -6,7 +6,6 @@ import {Spinner} from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
-import {updateWithToken} from "../../../services/useUpdateWithToken";
 import {errorToast, infoToast} from "../../../components/toast/makeToast";
 
 const CompanyEdit = () => {
@@ -62,8 +61,7 @@ const CompanyEdit = () => {
             .then((response) => {
                 setIsPendingN(false);
                 if (response.ok) {
-                    history.goBack(2);
-                    window.location.reload();
+                    history.goBack();
                     return response;
                 }
                 else {

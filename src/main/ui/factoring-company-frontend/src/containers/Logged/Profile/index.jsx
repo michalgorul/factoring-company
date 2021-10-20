@@ -102,7 +102,7 @@ const Profile = () => {
 					</div>
 					<div class="align-items-center mt-3 ms-5">
 						<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
-						<a href={"/user/profile/company/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
+						<a href={"/user/profile/company/edit/" + company.id} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
 						<a href={"/user/bank-account/edit/" + bank.id} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
 					</div>
 

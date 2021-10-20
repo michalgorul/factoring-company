@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.invoice;
 
+import com.polsl.factoringcompany.currency.CurrencyService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
     private final UserService userService;
+    private final CurrencyService currencyService;
 
     public List<InvoiceEntity> getInvoices() {
         return this.invoiceRepository.findAll();
@@ -102,6 +104,12 @@ public class InvoiceService {
         } catch (RuntimeException ex) {
             throw new IdNotFoundInDatabaseException("Invoice", id);
         }
+    }
+
+    public String getInvoiceCurrencyCode(Long invoiceId){
+        InvoiceEntity invoiceEntity = this.getInvoice(invoiceId);
+        return currencyService.getCurrency((long) invoiceEntity.getCurrencyId()).getCode();
+
     }
 
 

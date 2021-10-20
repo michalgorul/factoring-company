@@ -23,6 +23,10 @@ public class InvoiceItemService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Invoice item", id));
     }
 
+    public InvoiceItemEntity getInvoiceItemFromInvoiceId(Long invoiceId) {
+        return this.invoiceItemRepository.findByInvoiceId(Math.toIntExact(invoiceId))
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Invoice item", invoiceId));
+    }
 
     public InvoiceItemEntity addInvoiceItem(InvoiceItemDto invoiceItemDto) {
         try {

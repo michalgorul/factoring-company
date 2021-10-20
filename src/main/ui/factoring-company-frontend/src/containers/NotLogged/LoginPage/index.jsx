@@ -55,7 +55,7 @@ const Login = () => {
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
-                    <button onClick={handleSubmit} type="button" class="btn btn-primary btn-lg rounded-pill"
+                    <button onClick={handleSubmit} type="submit" class="btn btn-primary btn-lg rounded-pill"
                     style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Login</button>
                     <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
                         class="link-primary">Register</a></p>

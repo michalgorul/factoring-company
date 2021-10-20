@@ -66,18 +66,23 @@ public class UserEntity {
     private int companyId;
 
     @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
     private Collection<OrderEntity> ordersById;
 
     @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
     private Collection<CustomerEntity> customersById;
 
     @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
     private Collection<FileEntity> filesById;
 
     @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
     private Collection<InvoiceEntity> invoiceById;
 
     @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
     private Collection<CreditEntity> creditsById;
 
     @ManyToOne

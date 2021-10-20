@@ -1,10 +1,10 @@
-import {useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {Spinner} from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Spinner } from 'react-bootstrap';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
-import {updateWithToken} from "../../../services/useUpdateWithToken";
-import {infoToast} from "../../../components/toast/makeToast";
+import { updateWithToken } from "../../../services/useUpdateWithToken";
+import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 const EditBankAccount = () => {
     const [bankName, setBankName] = useState('');
@@ -34,13 +34,32 @@ const EditBankAccount = () => {
         const account = { bankName, bankAccountNumber, bankSwift };
         setIsPendingN(true);
 
-        updateWithToken(`${config.API_URL}/api/bank-account/current`, account)
-            .then(() => {
+        fetch(`${config.API_URL}/api/bank-account/current`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(account)
+        })
+            .then((response) => {
                 setIsPendingN(false);
-                history.push('/user/profile');
+                if (response.ok) {
+                    history.push('/user/profile');
+                    window.location.reload();
+                    return response;
+                }
+                else {
+                    return response;
+                }
             })
-            .then(() => {
-                infoToast('Your comapny was updated');
+            .then((response) => {
+                if (response.ok) {
+                    infoToast('Your Bank account informations was updated')
+                }
+                else {
+                    errorToast('Some of inputs were incorrect');
+                }
             })
             .catch(err => {
                 console.error(err);

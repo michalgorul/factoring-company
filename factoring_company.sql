@@ -1632,9 +1632,9 @@ values (55, 223.57, 12296.35, 0.1, 1229.64, 13525.99, 40, 7);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (56, 5561.03, 311417.68, 0.18, 56055.18, 367472.86, 36, 4);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (12, 5468.3, 65619.6, 0.16, 10499.14, 76118.74, 21, 0);
+values (12, 5468.3, 65619.6, 0.16, 10499.14, 76118.74, 21, 8);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (55, 2888.02, 158841.1, 0.1, 15884.11, 174725.21, 42, 2);
+values (55, 2888.02, 158841.1, 0.1, 15884.11, 174725.21, 42, 9);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (75, 3410.05, 255753.75, 0.01, 2557.54, 258311.29, 45, 47);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
@@ -1648,21 +1648,21 @@ values (46, 6072.58, 279338.68, 0.12, 33520.64, 312859.32, 29, 38);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (46, 6953.6, 319865.6, 0.06, 19191.94, 339057.54, 10, 33);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (15, 568.69, 8530.35, 0.06, 511.82, 9042.17, 12, 6);
+values (15, 568.69, 8530.35, 0.06, 511.82, 9042.17, 12, 10);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (43, 7849.34, 337521.62, 0.13, 43877.81, 381399.43, 38, 32);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (36, 6219.51, 223902.36, 0.18, 40302.42, 264204.78, 23, 32);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (24, 2599.07, 62377.68, 0.05, 3118.88, 65496.56, 29, 2);
+values (24, 2599.07, 62377.68, 0.05, 3118.88, 65496.56, 29, 45);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (86, 4526.89, 389312.54, 0.18, 70076.26, 459388.8, 26, 15);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (85, 7966.29, 677134.65, 0.08, 54170.77, 731305.42, 46, 0);
+values (85, 7966.29, 677134.65, 0.08, 54170.77, 731305.42, 46, 44);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (40, 1432.4, 57296.0, 0.11, 6302.56, 63598.56, 26, 38);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (61, 9410.97, 574069.17, 0.15, 86110.38, 660179.55, 14, 2);
+values (61, 9410.97, 574069.17, 0.15, 86110.38, 660179.55, 14, 28);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (93, 3769.75, 350586.75, 0.15, 52588.01, 403174.76, 48, 33);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
@@ -1670,7 +1670,7 @@ values (28, 5243.67, 146822.76, 0.06, 8809.37, 155632.13, 40, 46);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (77, 3707.38, 285468.26, 0.05, 14273.41, 299741.67, 1, 5);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (5, 1675.09, 8375.45, 0.17, 1423.83, 9799.28, 43, 3);
+values (5, 1675.09, 8375.45, 0.17, 1423.83, 9799.28, 43, 33);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (54, 7347.14, 396745.56, 0.21, 83316.57, 480062.13, 6, 16);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
@@ -1686,7 +1686,7 @@ values (2, 8595.79, 17191.58, 0.01, 171.92, 17363.5, 23, 1);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (97, 164.12, 15919.64, 0.19, 3024.73, 18944.37, 39, 34);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
-values (2, 6893.37, 13786.74, 0.03, 413.6, 14200.34, 0, 46);
+values (2, 6893.37, 13786.74, 0.03, 413.6, 14200.34, 5, 46);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
 values (1, 5486.61, 5486.61, 0.01, 54.87, 5541.48, 15, 35);
 insert into invoice_item (quentity, net_price, net_value, vat_rate, vat_value, gross_value, product_id, invoice_id)
@@ -2081,3 +2081,104 @@ insert into credit (id, credit_number, left_to_pay, amount, next_payment, instal
 insert into credit (id, credit_number, left_to_pay, amount, next_payment, installments, balance, rate_of_interest, next_payment_date, creation_date, last_installment_date, user_id, status) values (98, '#43c7dd', 12619.21, 10213.58, 72094.43, 19, 94535.83, 2.79, '2020-10-13 00:12:05', '2021-07-27 13:28:18', '2020-11-11 11:28:51', 1, 'active');
 insert into credit (id, credit_number, left_to_pay, amount, next_payment, installments, balance, rate_of_interest, next_payment_date, creation_date, last_installment_date, user_id, status) values (99, '#9ab95e', 46562.55, 45122.54, 69118.84, 78, 21305.34, 7.21, '2021-02-28 00:49:11', '2021-02-28 18:46:47', '2021-03-09 02:02:44', 1, 'review');
 insert into credit (id, credit_number, left_to_pay, amount, next_payment, installments, balance, rate_of_interest, next_payment_date, creation_date, last_installment_date, user_id, status) values (100, '#50b874', 64654.75, 54610.28, 49297.53, 85, 94020.48, 3.01, '2021-09-16 21:17:38', '2020-12-03 20:15:12', '2021-08-11 14:44:19', 1, 'processing');
+
+insert into product (id, name, pkwiu, measure_unit) values (1, 'Calypso - Lemonade', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (2, 'Propel Sport Drink', '234.345.6', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (3, 'Melon - Watermelon, Seedless', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (4, 'Bread - White Mini Epi', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (5, 'Edible Flower - Mixed', '345.456.7', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (6, 'Ocean Spray - Ruby Red', '234.345.6', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (7, 'Anchovy Fillets', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (8, 'Chicken - Whole Roasting', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (9, 'Cilantro / Coriander - Fresh', '567.678.9', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (10, 'Wine - Marlbourough Sauv Blanc', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (11, 'Pie Filling - Pumpkin', '456.567.8', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (12, 'Soup - Knorr, Ministrone', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (13, 'Cheese - Gouda', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (14, 'Lettuce - Green Leaf', '567.678.9', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (15, 'Sauce - Marinara', '234.345.6', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (16, 'Potatoes - Yukon Gold, 80 Ct', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (17, 'Muffins - Assorted', '234.345.6', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (18, 'Bread - Hot Dog Buns', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (19, 'Wine - White, Pelee Island', '456.567.8', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (20, 'Chicken - Diced, Cooked', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (21, 'Wine - Lou Black Shiraz', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (22, 'Kaffir Lime Leaves', '567.678.9', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (23, 'Soap - Hand Soap', '567.678.9', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (24, 'Bagel - 12 Grain Preslice', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (25, 'Oats Large Flake', '456.567.8', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (26, 'Sauce - Hollandaise', '123.234.5', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (27, 'Pumpkin', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (28, 'Vinegar - Raspberry', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (29, 'Wine - Pinot Noir Mondavi Coastal', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (30, 'Dried Figs', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (31, 'Iced Tea - Lemon, 460 Ml', '123.234.5', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (32, 'Chervil - Fresh', '123.234.5', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (33, 'Lobster - Tail 6 Oz', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (34, 'Pastry - Chocolate Marble Tea', '456.567.8', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (35, 'Isomalt', '345.456.7', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (36, 'Apples - Sliced / Wedge', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (37, 'Wine - Coteaux Du Tricastin Ac', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (38, 'Pate - Liver', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (39, 'Bread - Pumpernickel', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (40, 'Danishes - Mini Raspberry', '678.789.0', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (41, 'Hand Towel', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (42, 'Wine - Cava Aria Estate Brut', '567.678.9', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (43, 'Puree - Guava', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (44, 'Chicken Breast Wing On', '345.456.7', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (45, 'Schnappes - Peach, Walkers', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (46, 'Pastry - Banana Tea Loaf', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (47, 'Tomatoes - Yellow Hot House', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (48, 'Soup - Boston Clam Chowder', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (49, 'Salt - Seasoned', '234.345.6', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (50, 'Fuji Apples', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (51, 'Mop Head - Cotton, 24 Oz', '234.345.6', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (52, 'Yoplait Drink', '234.345.6', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (53, 'Juice - Orange 1.89l', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (54, 'Veal - Inside, Choice', '234.345.6', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (55, 'Tomatoes', '678.789.0', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (56, 'Juice - Apple 284ml', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (57, 'Cloves - Ground', '567.678.9', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (58, 'Mushroom - Morel Frozen', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (59, 'Kirsch - Schloss', '678.789.0', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (60, 'Soup - Campbells', '234.345.6', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (61, 'Wine - Two Oceans Cabernet', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (62, 'Danishes - Mini Raspberry', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (63, 'Beer - Blue', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (64, 'Veal - Brisket, Provimi,bnls', '456.567.8', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (65, 'Pepper - Red, Finger Hot', '234.345.6', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (66, 'Syrup - Monin, Swiss Choclate', '567.678.9', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (67, 'Chervil - Fresh', '345.456.7', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (68, 'Chips Potato Swt Chilli Sour', '345.456.7', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (69, 'Pepper - Red Chili', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (70, 'Dc - Frozen Momji', '456.567.8', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (71, 'Soup Bowl Clear 8oz92008', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (72, 'Schnappes Peppermint - Walker', '567.678.9', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (73, 'Bread - Frozen Basket Variety', '567.678.9', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (74, 'Crab Brie In Phyllo', '123.234.5', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (75, 'Tomato - Plum With Basil', '123.234.5', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (76, 'Gelatine Leaves - Bulk', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (77, 'Wine - Pinot Noir Pond Haddock', '456.567.8', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (78, 'Ice Cream Bar - Hagen Daz', '234.345.6', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (79, 'Beer - Blue Light', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (80, 'Truffle - Peelings', '234.345.6', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (81, 'Carbonated Water - Orange', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (82, 'Beef - Tenderloin Tails', '123.234.5', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (83, 'Nantucket Pine Orangebanana', '234.345.6', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (84, 'Chinese Foods - Chicken Wing', '456.567.8', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (85, 'Lentils - Green, Dry', '123.234.5', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (86, 'Fish - Scallops, Cold Smoked', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (87, 'Chick Peas - Dried', '123.234.5', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (88, 'Artichoke - Fresh', '345.456.7', 'kg');
+insert into product (id, name, pkwiu, measure_unit) values (89, 'Wine - Riesling Dr. Pauly', '345.456.7', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (90, 'Sprouts - Peppercress', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (91, 'Cup - 6oz, Foam', '567.678.9', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (92, 'Garam Masala Powder', '678.789.0', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (93, 'Mushroom - Morels, Dry', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (94, 'Cookie Dough - Double', '234.345.6', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (95, 'Melon - Watermelon Yellow', '567.678.9', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (96, 'Wine - Red, Antinori Santa', '456.567.8', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (97, 'Table Cloth 144x90 White', '678.789.0', 'litres');
+insert into product (id, name, pkwiu, measure_unit) values (98, 'Sauce - Rosee', '456.567.8', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (99, 'Beef - Top Butt Aaa', '123.234.5', 'number');
+insert into product (id, name, pkwiu, measure_unit) values (100, 'Table Cloth 90x90 White', '678.789.0', 'litres');

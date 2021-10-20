@@ -70,15 +70,15 @@ const CustomerEdit = () => {
                     return response;
                 }
                 else {
-                    return response
+                    return response;
                 }
             })
             .then((response) => {
                 if (response.ok) {
-                    infoToast('Customer was updated')
+                    infoToast('Customer was updated');
                 }
                 else {
-                    errorToast('Some of inputs were incorrect')
+                    errorToast('Some of inputs were incorrect');
                 }
             })
             .catch(err => {

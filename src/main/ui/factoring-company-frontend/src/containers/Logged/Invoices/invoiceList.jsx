@@ -6,7 +6,17 @@ import { useEffect } from 'react';
 
 
 const InvoiceList = ({ whatInvoices }) => {
-    const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice/current`)
+    const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice/current`);
+
+    function compare( a, b ) {
+        if ( a.id < b.id ){
+          return -1;
+        }
+        if ( a.id > b.id ){
+          return 1;
+        }
+        return 0;
+      }
 
     useEffect(() => {
         if (invoices) {
@@ -37,6 +47,7 @@ const InvoiceList = ({ whatInvoices }) => {
                 {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
                 {invoices && invoices
                     .filter(invoice => invoice.status == whatInvoices)
+                    .sort(compare)
                     .map(invoice => (
                         <tr key={invoice.id} className="clickable" onclick="#">
                             <th>{invoice.id}</th>

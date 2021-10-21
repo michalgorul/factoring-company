@@ -1,12 +1,12 @@
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import {useEffect, useMemo, useState} from "react";
-import {Spinner} from 'react-bootstrap';
+import { useEffect, useMemo, useState } from "react";
+import { Spinner } from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
-import {errorToast, infoToast} from "../../../components/toast/makeToast";
+import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 
 const ProfileEdit = () => {

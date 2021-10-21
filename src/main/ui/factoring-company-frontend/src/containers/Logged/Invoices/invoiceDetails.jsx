@@ -117,6 +117,7 @@ const InvoiceDetails = () => {
 									<li class="list-group-item list-group-item-action fw-bold">Payment deadline:</li>
 									<li class="list-group-item list-group-item-action fw-bold">To pay:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Paid:</li>
+									<li class="list-group-item list-group-item-action fw-bold">Status:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Remarks:</li>
 								</ul>
 							</div>
@@ -128,6 +129,7 @@ const InvoiceDetails = () => {
 									<li class="list-group-item list-group-item-action">{invoice.paymentDeadline}</li>
 									<li class="list-group-item list-group-item-action">{invoice.toPay}</li>
 									<li class="list-group-item list-group-item-action">{invoice.paid}</li>
+									<li class="list-group-item list-group-item-action">{invoice.status}</li>
 									<li class="list-group-item list-group-item-action">{invoice.remarks}</li>
 								</ul>
 							</div>
@@ -216,7 +218,7 @@ const InvoiceDetails = () => {
 
 					<div class="alert clearfix mt-2">
 						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
-						<a href={"#"} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit informations</a>
+						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit general info</a>
 						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>
 					</div>
 					<Modal show={show} onHide={handleClose}>

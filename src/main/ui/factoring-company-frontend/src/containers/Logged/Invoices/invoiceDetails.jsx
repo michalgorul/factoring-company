@@ -1,9 +1,8 @@
-import { useHistory, useParams } from "react-router-dom";
-import { Spinner, Modal, Button } from 'react-bootstrap';
-import { useState } from "react";
-import { errorToast, infoToast } from "../../../components/toast/makeToast";
+import {useHistory, useParams} from "react-router-dom";
+import {Button, Modal, Spinner} from 'react-bootstrap';
+import {useEffect, useState} from "react";
+import {errorToast, infoToast} from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
-import { useEffect } from "react";
 import config from "../../../services/config";
 import axios from 'axios'
 
@@ -37,21 +36,21 @@ const InvoiceDetails = () => {
 			}
 		})
 			.then((response) => {
-				if(response.ok){
+				if (response.ok) {
 					history.push('/user/invoices');
 				}
-				else{
+				else {
 					handleClose();
 
 				}
 				return response;
 			})
 			.then((response) => {
-				if(response.ok){
+				if (response.ok) {
 					infoToast('Invoice was deleted');
 
 				}
-				else{
+				else {
 					errorToast('Invoice was not deleted');
 				}
 
@@ -65,27 +64,27 @@ const InvoiceDetails = () => {
 	const handleShowPdf = () => {
 		try {
 			axios
-			  .get(config.API_URL + `/api/invoice/pdf/${id}`, {
-				responseType: "blob",
-				headers: {
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-				}
-			  })
-			  .then((response) => {
-				//Create a Blob from the PDF Stream
-				const file = new Blob([response.data], { type: "application/pdf" });
-				//Build a URL from the file
-				const fileURL = URL.createObjectURL(file);
-				//Open the URL on new Window
-				 const pdfWindow = window.open();
-				 pdfWindow.location.href = fileURL;            
-			  })
-			  .catch((error) => {
-				console.log(error);
-			  });
-		  } catch (error) {
+				.get(config.API_URL + `/api/invoice/pdf/${id}`, {
+					responseType: "blob",
+					headers: {
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then((response) => {
+					//Create a Blob from the PDF Stream
+					const file = new Blob([response.data], { type: "application/pdf" });
+					//Build a URL from the file
+					const fileURL = URL.createObjectURL(file);
+					//Open the URL on new Window
+					const pdfWindow = window.open();
+					pdfWindow.location.href = fileURL;
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} catch (error) {
 			return { error };
-		  }
+		}
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -215,12 +214,20 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
-
-					<div class="alert clearfix mt-2">
-						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
-						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit general info</a>
+					<div class="mt-3 col-6 text-center">
 						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>
 					</div>
+
+					<div class="alert clearfix mt-2">
+						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit general info</a>
+						<a href={"/user/customers/edit/" + customer.id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer info</a>
+						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit payment info</a>
+					</div>
+					<div class="mt-2 col-6 text-center">
+					<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
+
+					</div>
+
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>
 							<Modal.Title>Invoice deletion</Modal.Title>

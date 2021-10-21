@@ -53,7 +53,7 @@ public class CurrencyService {
 
 
     @Transactional
-    public CurrencyEntity updateCurrency(Long id, String name, String code) {
+    public CurrencyEntity updateCurrency(Long id, CurrencyRequestDto currencyRequestDto) {
 
         Optional<CurrencyEntity> currencyEntity = currencyRepository.findById(id);
 
@@ -61,9 +61,9 @@ public class CurrencyService {
             throw new IdNotFoundInDatabaseException("Currency", id);
 
         try {
-            validating(name, code);
-            currencyEntity.get().setName(StringUtils.capitalize(name));
-            currencyEntity.get().setCode(code.toUpperCase());
+            validating(currencyRequestDto.getName(), currencyRequestDto.getCode());
+            currencyEntity.get().setName(StringUtils.capitalize(currencyRequestDto.getName()));
+            currencyEntity.get().setCode(currencyRequestDto.getCode().toUpperCase());
             return this.currencyRepository.save(currencyEntity.get());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);

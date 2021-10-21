@@ -37,9 +37,6 @@ public class CurrencyController {
     public CurrencyEntity addCurrency(@RequestParam() String name, @RequestParam() String code) {
         try {
             return this.currencyService.addCurrency(name, code);
-//        } catch (ItemExistsInDatabaseException e) {
-//            System.out.println(e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
@@ -51,18 +48,15 @@ public class CurrencyController {
 
 
     @PutMapping("/{id}")
-    public CurrencyEntity updateCurrency(@PathVariable Long id, @RequestParam String name, @RequestParam String code) {
+    public CurrencyEntity updateCurrency(@PathVariable Long id, @RequestBody CurrencyRequestDto currencyRequestDto) {
         try {
-            return this.currencyService.updateCurrency(id, name, code);
+            return this.currencyService.updateCurrency(id, currencyRequestDto);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-//        } catch (ItemExistsInDatabaseException e) {
-//            System.out.println(e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);

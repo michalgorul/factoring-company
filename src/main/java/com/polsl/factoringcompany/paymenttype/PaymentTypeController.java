@@ -26,14 +26,14 @@ public class PaymentTypeController {
 
 
     @PostMapping
-    public PaymentTypeEntity addPaymentType(@RequestParam String name) {
-        return this.paymentTypeService.addPaymentType(name);
+    public PaymentTypeEntity addPaymentType(@RequestParam String paymentTypeName) {
+        return this.paymentTypeService.addPaymentType(paymentTypeName);
     }
 
 
     @PutMapping("/{id}")
-    public PaymentTypeEntity updatePaymentType(@PathVariable Long id, @RequestParam String name) {
-        return this.paymentTypeService.updatePaymentType(id, name);
+    public PaymentTypeEntity updatePaymentType(@PathVariable Long id, @RequestParam String paymentTypeName) {
+        return this.paymentTypeService.updatePaymentType(id, paymentTypeName);
     }
 
 

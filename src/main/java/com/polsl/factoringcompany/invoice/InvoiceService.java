@@ -116,7 +116,7 @@ public class InvoiceService {
 
     public String getPaymentMethod(Long invoiceId){
         InvoiceEntity invoiceEntity = this.getInvoice(invoiceId);
-        return paymentTypeService.getPaymentType((long) invoiceEntity.getPaymentTypeId()).getName();
+        return paymentTypeService.getPaymentType((long) invoiceEntity.getPaymentTypeId()).getPaymentTypeName();
     }
 
 

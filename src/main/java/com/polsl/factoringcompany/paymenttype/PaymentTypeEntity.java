@@ -27,8 +27,8 @@ public class PaymentTypeEntity {
     )
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 25, unique = true)
-    private String name;
+    @Column(name = "payment_type_name", nullable = false, length = 25, unique = true)
+    private String paymentTypeName;
 
     @JsonIgnore
     @OneToMany(mappedBy = "paymentTypeByPaymentTypeId")
@@ -39,7 +39,7 @@ public class PaymentTypeEntity {
     }
 
     public PaymentTypeEntity(String name) {
-        this.name = name;
+        this.paymentTypeName = name;
     }
 
     @Override
@@ -47,11 +47,11 @@ public class PaymentTypeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaymentTypeEntity that = (PaymentTypeEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        return Objects.equals(id, that.id) && Objects.equals(paymentTypeName, that.paymentTypeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, paymentTypeName);
     }
 }

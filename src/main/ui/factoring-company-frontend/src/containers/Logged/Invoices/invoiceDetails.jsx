@@ -208,7 +208,7 @@ const InvoiceDetails = () => {
 								<ul class="list-group list-group-flush mb-3">
 									<li class="list-group-item list-group-item-action">{currency.name}</li>
 									<li class="list-group-item list-group-item-action">{currency.code}</li>
-									<li class="list-group-item list-group-item-action">{paymentType.name}</li>
+									<li class="list-group-item list-group-item-action">{paymentType.paymentTypeName}</li>
 								</ul>
 							</div>
 						</div>
@@ -221,7 +221,7 @@ const InvoiceDetails = () => {
 					<div class="alert clearfix mt-2">
 						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit general info</a>
 						<a href={"/user/customers/edit/" + customer.id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer info</a>
-						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit payment info</a>
+						<a href={"edit/payment-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit payment info</a>
 					</div>
 					<div class="mt-2 col-6 text-center">
 					<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>

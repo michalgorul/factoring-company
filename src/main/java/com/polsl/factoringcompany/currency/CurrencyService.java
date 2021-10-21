@@ -61,7 +61,7 @@ public class CurrencyService {
             throw new IdNotFoundInDatabaseException("Currency", id);
 
         try {
-            validating(currencyRequestDto.getName(), currencyRequestDto.getCode());
+            updateValidating(id, currencyRequestDto.getName(), currencyRequestDto.getCode());
             currencyEntity.get().setName(StringUtils.capitalize(currencyRequestDto.getName()));
             currencyEntity.get().setCode(currencyRequestDto.getCode().toUpperCase());
             return this.currencyRepository.save(currencyEntity.get());
@@ -86,6 +86,21 @@ public class CurrencyService {
             throw new NotUniqueException("Currency", "code", code);
     }
 
+    private void updateValidating(Long id, String name, String code) {
+
+        if (StringValidator.stringWithSpacesImproper(name,15))
+            throw new ValueImproperException(name);
+
+        if (StringValidator.stringWithoutSpacesImproper(code, 5))
+            throw new ValueImproperException(code, "code");
+
+        if (ifNameTakenUpdating(id, name))
+            throw new NotUniqueException("Currency", "name", name);
+
+        if (ifCodeTakenUpdating(id, code))
+            throw new NotUniqueException("Currency", "code", code);
+    }
+
 
     public boolean ifNameTaken(String name) {
         Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByName(
@@ -97,6 +112,32 @@ public class CurrencyService {
     public boolean ifCodeTaken(String code) {
         Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByCode(code.toUpperCase());
         return foundByName.isPresent();
+    }
+
+    public boolean ifNameTakenUpdating(Long id, String name) {
+        Optional<CurrencyEntity> currencyEntityByName = currencyRepository.findCurrencyEntityByName(
+                StringUtils.capitalize(name));
+        Optional<CurrencyEntity> currencyEntityById = currencyRepository.findById(id);
+
+        if(currencyEntityById.isEmpty())
+            throw new IdNotFoundInDatabaseException("Currency", id);
+        if(currencyEntityByName.isEmpty())
+            return false;
+
+        return !currencyEntityByName.get().getId().equals(currencyEntityById.get().getId());
+    }
+
+
+    public boolean ifCodeTakenUpdating(Long id, String code) {
+        Optional<CurrencyEntity> currencyEntityByCode = currencyRepository.findCurrencyEntityByCode(code.toUpperCase());
+        Optional<CurrencyEntity> currencyEntityById = currencyRepository.findById(id);
+
+        if(currencyEntityById.isEmpty())
+            throw new IdNotFoundInDatabaseException("Currency", id);
+        if(currencyEntityByCode.isEmpty())
+            return false;
+
+        return !currencyEntityByCode.get().getId().equals(currencyEntityById.get().getId());
     }
 
 }

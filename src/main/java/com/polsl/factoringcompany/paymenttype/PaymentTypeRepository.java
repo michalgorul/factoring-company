@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface PaymentTypeRepository extends JpaRepository<PaymentTypeEntity, Long> {
 
-    Optional<PaymentTypeEntity> findPaymentTypeEntityByName(String name);
+    Optional<PaymentTypeEntity> findPaymentTypeEntityByPaymentTypeName(String name);
 
 }

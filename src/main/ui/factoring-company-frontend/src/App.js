@@ -24,6 +24,7 @@ import CreditDetails from './containers/Logged/Credit/creditDetails';
 import InvoiceCreate from './containers/Logged/Invoices/invoiceCreate';
 import ProtectedRoute from './components/protectedRoute/protectedRoute';
 import GeneralInfoEdit from './containers/Logged/Invoices/generalInfoEdit';
+import PaymentInfoEdit from './containers/Logged/Invoices/paymentInfoEdit';
 
 
 const UserComponents = ({match}) => {
@@ -40,6 +41,7 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/invoices`} exact component={Invoices} />
           <ProtectedRoute path={`${match.url}/invoices/create`} exact component={InvoiceCreate} />
           <ProtectedRoute path={`${match.url}/invoices/edit/general-info/:id`} exact component={GeneralInfoEdit} />
+          <ProtectedRoute path={`${match.url}/invoices/edit/payment-info/:id`} exact component={PaymentInfoEdit} />
           <ProtectedRoute path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
           <ProtectedRoute path={`${match.url}/credit`} exact component={Credit} />
           <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails} />

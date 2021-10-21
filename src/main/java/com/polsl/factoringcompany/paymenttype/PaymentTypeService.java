@@ -30,12 +30,12 @@ public class PaymentTypeService {
     }
 
 
-    public PaymentTypeEntity addPaymentType(String name) {
+    public PaymentTypeEntity addPaymentType(String paymentTypeName) {
 
-        nameValidation(name);
+        nameValidation(paymentTypeName);
 
         try {
-            return this.paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(name)));
+            return this.paymentTypeRepository.save(new PaymentTypeEntity(StringUtils.capitalize(paymentTypeName)));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -52,17 +52,17 @@ public class PaymentTypeService {
 
 
     @Transactional
-    public PaymentTypeEntity updatePaymentType(Long id, String name) {
+    public PaymentTypeEntity updatePaymentType(Long id, String paymentTypeName) {
 
         Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findById(id);
 
         if (paymentTypeEntity.isEmpty())
             throw new IdNotFoundInDatabaseException("Payment type", id);
 
-        nameValidation(name);
+        nameValidation(paymentTypeName);
 
         try {
-            paymentTypeEntity.get().setName(StringUtils.capitalize(name));
+            paymentTypeEntity.get().setPaymentTypeName(StringUtils.capitalize(paymentTypeName));
             return this.paymentTypeRepository.save(paymentTypeEntity.get());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -71,19 +71,19 @@ public class PaymentTypeService {
     }
 
 
-    private void nameValidation(String name) {
-        if (StringValidator.stringWithSpacesImproper(name, 25))
-            throw new ValueImproperException(name);
+    private void nameValidation(String paymentTypeName) {
+        if (StringValidator.stringWithSpacesImproper(paymentTypeName, 25))
+            throw new ValueImproperException(paymentTypeName);
 
-        if (ifNameTaken(name)) {
-            throw new NotUniqueException("Payment type", "name", name);
+        if (ifNameTaken(paymentTypeName)) {
+            throw new NotUniqueException("Payment type", "name", paymentTypeName);
         }
     }
 
 
-    public boolean ifNameTaken(String name) {
-        Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findPaymentTypeEntityByName(
-                StringUtils.capitalize(name));
+    public boolean ifNameTaken(String paymentTypeName) {
+        Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findPaymentTypeEntityByPaymentTypeName(
+                StringUtils.capitalize(paymentTypeName));
         return paymentTypeEntity.isPresent();
     }
 }

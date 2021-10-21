@@ -8,7 +8,6 @@
     "nip": "96-437-3842",
     "regon": "1211212121212"
   },
- 
   "bank-account": [
     {
       "bankName": "ING Bank Śląski",
@@ -37,128 +36,6 @@
       "nip": "96-437-3842",
       "regon": "1346578945",
       "id": 1
-    }
-  ],
-  "product": [
-    {
-      "id": 1,
-      "measureUnit": "kg",
-      "pkwiu": 123123123123,
-      "product": "mnare0@domainmarket.com"
-    },
-    {
-      "id": 2,
-      "measureUnit": "number",
-      "pkwiu": 123123123123,
-      "product": "mfarrington1@oakley.com"
-    },
-    {
-      "id": 3,
-      "measureUnit": "number",
-      "pkwiu": 123123123123,
-      "product": "gpipworth2@answers.com"
-    },
-    {
-      "id": 4,
-      "measureUnit": "kg",
-      "pkwiu": 67867867678,
-      "product": "ebrunger3@hexun.com"
-    },
-    {
-      "id": 5,
-      "measureUnit": "grams",
-      "pkwiu": 123123123123,
-      "product": "dstringfellow4@icq.com"
-    },
-    {
-      "id": 6,
-      "measureUnit": "kg",
-      "pkwiu": 67867867678,
-      "product": "cabramovic5@cdc.gov"
-    },
-    {
-      "id": 7,
-      "measureUnit": "grams",
-      "pkwiu": 67867867678,
-      "product": "tlodovichi6@buzzfeed.com"
-    },
-    {
-      "id": 8,
-      "measureUnit": "number",
-      "pkwiu": 345453434345354,
-      "product": "kkendrew7@issuu.com"
-    },
-    {
-      "id": 9,
-      "measureUnit": "grams",
-      "pkwiu": 67867867678,
-      "product": "ltorrijos8@spotify.com"
-    },
-    {
-      "id": 10,
-      "measureUnit": "kg",
-      "pkwiu": 345453434345354,
-      "product": "kcowins9@tripod.com"
-    },
-    {
-      "id": 11,
-      "measureUnit": "number",
-      "pkwiu": 123123123123,
-      "product": "rnorcliffa@baidu.com"
-    },
-    {
-      "id": 12,
-      "measureUnit": "kg",
-      "pkwiu": 67867867678,
-      "product": "dbrunskillb@cpanel.net"
-    },
-    {
-      "id": 13,
-      "measureUnit": "grams",
-      "pkwiu": 67867867678,
-      "product": "mwinsparc@4shared.com"
-    },
-    {
-      "id": 14,
-      "measureUnit": "number",
-      "pkwiu": 345453434345354,
-      "product": "jaustind@simplemachines.org"
-    },
-    {
-      "id": 15,
-      "measureUnit": "kg",
-      "pkwiu": 67867867678,
-      "product": "jpostlethwaitee@sphinn.com"
-    },
-    {
-      "id": 16,
-      "measureUnit": "kg",
-      "pkwiu": 123123123123,
-      "product": "cswanbournef@answers.com"
-    },
-    {
-      "id": 17,
-      "measureUnit": "kg",
-      "pkwiu": 123123123123,
-      "product": "cvsanellig@pbs.org"
-    },
-    {
-      "id": 18,
-      "measureUnit": "grams",
-      "pkwiu": 67867867678,
-      "product": "falawayh@latimes.com"
-    },
-    {
-      "id": 19,
-      "measureUnit": "grams",
-      "pkwiu": 345453434345354,
-      "product": "sbeekei@washingtonpost.com"
-    },
-    {
-      "id": 20,
-      "measureUnit": "kg",
-      "pkwiu": 345453434345354,
-      "product": "kramasj@purevolume.com"
     }
   ]
 }

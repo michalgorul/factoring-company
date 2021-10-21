@@ -89,19 +89,19 @@ const Documents = () => {
 
       <ul class="list-group list-group-flush me-4 fs-3 ms-3">
         <li class="list-group-item mt-3"><StarFill className="text-primary mb-4 me-3" />
-          <Directory href="#">Favourite</Directory>
+          <Directory href="/user/documents/list/favourite">Favourite</Directory>
         </li>
         <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
-          <Directory href="#">Work</Directory>
+          <Directory href="/user/documents/list/work">Work</Directory>
         </li>
         <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
-          <Directory href="#">Bank documents</Directory>
+          <Directory href="/user/documents/list/bank">Bank documents</Directory>
         </li>
         <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
-          <Directory href="#">Tax forms</Directory>
+          <Directory href="/user/documents/list/tax">Tax forms</Directory>
         </li>
         <li class="list-group-item mt-3"><FolderPlus className="text-primary mb-4 me-3" />
-          <Directory href="#">Factoring Company documents</Directory>
+          <Directory href="/user/documents/list/factoring-company">Factoring Company documents</Directory>
         </li>
       </ul>
 

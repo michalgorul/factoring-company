@@ -10,6 +10,7 @@ import Invoices from './containers/Logged/Invoices';
 import Credit from './containers/Logged/Credit';
 import Reports from './containers/Logged/Reports';
 import Documents from './containers/Logged/Documents';
+import FileListPage from './containers/Logged/Documents/fileListPage';
 import Profile from './containers/Logged/Profile';
 import Layout from './containers/Logged/Layout';
 import CustomerDetails from './containers/Logged/Customers/customerDetails';
@@ -47,6 +48,7 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails} />
           <ProtectedRoute path={`${match.url}/reports`} exact component={Reports} />
           <ProtectedRoute path={`${match.url}/documents`} exact component={Documents} />
+          <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage} />
           <ProtectedRoute path={`${match.url}/profile`} exact component={Profile} />
           <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
           <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit} />

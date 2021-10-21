@@ -1,5 +1,4 @@
 import Table from 'react-bootstrap/Table'
-import useFetch from "../../../components/useFetch/useFetch";
 import { Spinner } from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';

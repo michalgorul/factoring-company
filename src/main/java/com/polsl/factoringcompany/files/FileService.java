@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.files;
 
+import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -102,5 +103,13 @@ public class FileService {
                 .stream()
                 .map(FileResponse::getSize)
                 .mapToLong(Long::intValue).sum();
+    }
+
+    public void deleteFile(UUID id) throws IdNotFoundInDatabaseException {
+        try {
+            this.fileRepository.deleteById(id);
+        } catch (RuntimeException ignored) {
+            throw new IdNotFoundInDatabaseException("Currency", id);
+        }
     }
 }

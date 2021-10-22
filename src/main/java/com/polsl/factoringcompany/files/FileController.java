@@ -35,4 +35,10 @@ public class FileController {
     public Long getUsedSpace(){
         return this.fileService.getUsedSpace();
     }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteFile(@PathVariable UUID id){
+        this.fileService.deleteFile(id);
+    }
+
 }

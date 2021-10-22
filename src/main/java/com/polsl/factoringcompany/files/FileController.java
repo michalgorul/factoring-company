@@ -22,12 +22,17 @@ public class FileController {
 
     @GetMapping
     public List<FileResponse> getFiles() {
-        return this.fileService.getAllFiles();
+        return this.fileService.getAllFilesCurrentUser();
     }
 
 
     @GetMapping("{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable UUID id) {
         return this.fileService.getFile(id);
+    }
+
+    @GetMapping("/used")
+    public Long getUsedSpace(){
+        return this.fileService.getUsedSpace();
     }
 }

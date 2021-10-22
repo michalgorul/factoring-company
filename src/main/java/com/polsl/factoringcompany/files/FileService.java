@@ -13,10 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +53,6 @@ public class FileService {
         }
     }
 
-
     @Transactional
     public ResponseEntity<byte[]> getFile(UUID id) {
         Optional<FileEntity> fileEntityOptional = fileRepository.findById(id);
@@ -74,9 +70,10 @@ public class FileService {
     }
 
 
-    public List<FileResponse> getAllFiles() {
+    public List<FileResponse> getAllFilesCurrentUser() {
         return fileRepository.findAll()
                 .stream()
+                .filter(x->x.getUserId() == userService.getCurrentUserId())
                 .map(this::mapToFileResponse)
                 .collect(Collectors.toList());
     }
@@ -96,5 +93,14 @@ public class FileService {
         fileResponse.setUserId(fileEntity.getUserId());
 
         return fileResponse;
+    }
+
+    public Long getUsedSpace() {
+        List<FileResponse> allFilesCurrentUser = this.getAllFilesCurrentUser();
+
+        return allFilesCurrentUser
+                .stream()
+                .map(FileResponse::getSize)
+                .mapToLong(Long::intValue).sum();
     }
 }

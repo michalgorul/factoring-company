@@ -1,4 +1,4 @@
-import { Marginer } from '../../../components/marginer'
+import {Marginer} from '../../../components/marginer'
 import RegisterImage from '../../../images/register.png'
 
 const Register = () => {
@@ -18,24 +18,23 @@ const Register = () => {
                 <div class="form-outline form-floating mb-4">
                     <input type="name" class="form-control"
                     placeholder="Enter your first and last name" />
-                    <label class="form-label">First & Last Name</label>
+                    <label class="form-label">Username</label>
                 </div>
 
                 <div class="form-outline form-floating mb-4">
                     <input type="phone" class="form-control"
                     placeholder="Enter your preferred phone number" />
-                    <label class="form-label">Phone Number</label>
-                </div>
-
-                <div class="form-line form-floating mb-4">
-                    <input type="email" class="form-control"
-                    placeholder="Enter a valid email address" />
                     <label class="form-label">Email address</label>
                 </div>
 
                 <div class="form-floating form-outline mb-3">
                     <input type="password" class="form-control" placeholder="Enter password" />
                     <label class="form-label" for="form3Example4">Create Password</label>
+                </div>
+
+                <div class="form-floating form-outline mb-3">
+                    <input type="password" class="form-control" placeholder="Enter password" />
+                    <label class="form-label" for="form3Example4">Confirm Password</label>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">

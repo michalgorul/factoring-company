@@ -288,4 +288,7 @@ public class UserService {
         }
     }
 
+    public void enableAppUser(Long id) {
+        userRepository.enableAppUser(id);
+    }
 }

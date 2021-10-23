@@ -7,6 +7,7 @@ import com.polsl.factoringcompany.user.UserEntity;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -38,5 +39,25 @@ public class RegistrationService {
 
         return token;
 
+    }
+
+    @Transactional
+    public String confirmToken(String token) {
+        ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenService.getToken(token);
+
+
+        if (confirmationTokenEntity.getConfirmedAt() != null) {
+            throw new IllegalStateException("email already confirmed");
+        }
+
+        LocalDateTime expiredAt = confirmationTokenEntity.getExpiresAt().toLocalDateTime();
+
+        if (expiredAt.isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("token expired");
+        }
+
+        confirmationTokenService.setConfirmedAt(token);
+        userService.enableAppUser(Long.valueOf(confirmationTokenEntity.getUserId()));
+        return "confirmed";
     }
 }

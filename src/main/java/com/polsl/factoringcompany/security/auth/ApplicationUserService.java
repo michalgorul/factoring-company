@@ -21,15 +21,15 @@ public class ApplicationUserService implements UserDetailsService {
         UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
 
-        ApplicationUser applicationUser = new ApplicationUser(
+        // TODO: 23.10.2021 make more authorities | now all users are admins
+        return new ApplicationUser(
                 ADMIN.getGrantedAuthorities(),
                 userEntity.getUsername(),
                 userEntity.getPassword(),
                 true,
+                !userEntity.isLocked(),
                 true,
-                true,
-                true
+                userEntity.isEnabled()
         );
-        return applicationUser;
     }
 }

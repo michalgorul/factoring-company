@@ -7,6 +7,7 @@ import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.files.FileEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
+import com.polsl.factoringcompany.registration.RegistrationRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,13 +23,13 @@ public class UserEntity {
 
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "user_id_seq",
+            sequenceName = "user_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "user_id_seq"
     )
     private Long id;
 
@@ -62,8 +63,14 @@ public class UserEntity {
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
 
-    @Column(name = "company_id", nullable = false)
-    private int companyId;
+    @Column(name = "company_id")
+    private Integer companyId;
+
+    @Column(name = "locked", nullable = false)
+    private boolean locked;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @OneToMany(mappedBy = "userByUserId")
     @JsonIgnore
@@ -121,6 +128,22 @@ public class UserEntity {
         this.postalCode = userEntity.getPostalCode();
         this.phone = userEntity.getPhone();
         this.companyId = userEntity.getCompanyId();
+    }
+
+    public UserEntity(RegistrationRequest registrationRequest, boolean locked, boolean enabled) {
+        this.username = registrationRequest.getUsername();
+        this.password = registrationRequest.getPassword();
+        this.email = registrationRequest.getEmail();
+        this.firstName = registrationRequest.getFirstName();
+        this.lastName = registrationRequest.getLastName();
+        this.country = registrationRequest.getCountry();
+        this.city = registrationRequest.getCity();
+        this.street = registrationRequest.getStreet();
+        this.postalCode = registrationRequest.getPostalCode();
+        this.phone = registrationRequest.getPhone();
+        this.companyId = null;
+        this.locked = locked;
+        this.enabled = enabled;
     }
 
     @Override

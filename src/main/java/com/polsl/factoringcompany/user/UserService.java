@@ -4,9 +4,11 @@ package com.polsl.factoringcompany.user;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
+import com.polsl.factoringcompany.registration.RegistrationRequest;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<UserEntity> getUsers() {
         return this.userRepository.findAll();
@@ -28,17 +31,17 @@ public class UserService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("User", id));
     }
 
-    public Long getCurrentUserId(){
+    public Long getCurrentUserId() {
         Long id = 0L;
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(userRepository.findByUsername(currentUserName).isPresent()){
+        if (userRepository.findByUsername(currentUserName).isPresent()) {
             id = userRepository.findByUsername(currentUserName).get().getId();
             return id;
         }
         return null;
     }
 
-    public UserEntity getCurrentUser(){
+    public UserEntity getCurrentUser() {
         return getUser(getCurrentUserId());
     }
 
@@ -95,6 +98,23 @@ public class UserService {
         }
     }
 
+    public UserEntity registerNewUser(RegistrationRequest registrationRequest) {
+        addValidate(registrationRequest);
+
+        registrationRequest.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
+
+        try {
+            return this.userRepository.save(new UserEntity(
+                    registrationRequest,
+                    false,
+                    false));
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public UserEntity updateUser(Long id, UserEntity userEntity) {
 
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
@@ -142,6 +162,7 @@ public class UserService {
 
         nameValidator(userEntity);
     }
+
     private void updateValidate(Long id, UserRequestDto userRequestDto) {
 
         if (ifEmailTakenUpdating(id, userRequestDto.getEmail()))
@@ -152,6 +173,12 @@ public class UserService {
 
     private void addValidate(UserEntity userEntity) {
 
+        boolean emailValid = StringValidator.isEmailValid(userEntity.getEmail());
+
+        if (!emailValid) {
+            throw new IllegalArgumentException("email not valid");
+        }
+
         if (ifEmailTakenAdding(userEntity.getEmail()))
             throw new NotUniqueException("User", "email", userEntity.getEmail());
 
@@ -161,9 +188,19 @@ public class UserService {
         nameValidator(userEntity);
     }
 
+    private void addValidate(RegistrationRequest registrationRequest) {
+
+        if (ifEmailTakenAdding(registrationRequest.getEmail()))
+            throw new NotUniqueException("User", "email", registrationRequest.getEmail());
+
+        if (ifUsernameTakenAdding(registrationRequest.getUsername()))
+            throw new NotUniqueException("User", "username", registrationRequest.getUsername());
+
+        nameValidator(registrationRequest);
+    }
+
     private boolean ifEmailTakenAdding(String email) {
-        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
-        return userEntityOptional.isPresent();
+        return userRepository.findByEmail(email).isPresent();
     }
 
     private boolean ifEmailTakenUpdating(Long id, String email) {
@@ -179,8 +216,7 @@ public class UserService {
     }
 
     private boolean ifUsernameTakenAdding(String username) {
-        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(username);
-        return userEntityOptional.isPresent();
+        return userRepository.findByUsername(username).isPresent();
     }
 
     private boolean ifUsernameTakenUpdating(Long id, String username) {
@@ -198,67 +234,58 @@ public class UserService {
     private void nameValidator(UserEntity userEntity) {
         if (StringValidator.stringWithDigitsImproper(userEntity.getUsername(), 50)) {
             throw new ValueImproperException(userEntity.getUsername());
-        }
-
-        // TODO: 17.06.2021 PASSWORD VALIDATOR
-
-        else if(!StringValidator.isEmailValid(userEntity.getEmail())){
+        } else if (!StringValidator.isEmailValid(userEntity.getEmail())) {
             throw new ValueImproperException(userEntity.getEmail());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userEntity.getCountry(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userEntity.getCountry(), 50)) {
             throw new ValueImproperException(userEntity.getCountry());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userEntity.getCity(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userEntity.getCity(), 50)) {
             throw new ValueImproperException(userEntity.getCity());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userEntity.getStreet(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userEntity.getStreet(), 50)) {
             throw new ValueImproperException(userEntity.getStreet());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(userEntity.getPostalCode(), 15)) {
+        } else if (StringValidator.stringWithDigitsImproper(userEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(userEntity.getPostalCode());
-        }
-
-        else if (!StringValidator.isPhoneNumberValid(userEntity.getPhone())) {
+        } else if (!StringValidator.isPhoneNumberValid(userEntity.getPhone())) {
             throw new ValueImproperException(userEntity.getPhone());
 
+        }
+    }
+
+    private void nameValidator(RegistrationRequest registrationRequest) {
+        if (StringValidator.stringWithDigitsImproper(registrationRequest.getUsername(), 50)) {
+            throw new ValueImproperException(registrationRequest.getUsername());
+        } else if (!StringValidator.isEmailValid(registrationRequest.getEmail())) {
+            throw new ValueImproperException(registrationRequest.getEmail());
+        } else if (StringValidator.stringWithSpacesImproper(registrationRequest.getCountry(), 50)) {
+            throw new ValueImproperException(registrationRequest.getCountry());
+        } else if (StringValidator.stringWithSpacesImproper(registrationRequest.getCity(), 50)) {
+            throw new ValueImproperException(registrationRequest.getCity());
+        } else if (StringValidator.stringWithSpacesImproper(registrationRequest.getStreet(), 50)) {
+            throw new ValueImproperException(registrationRequest.getStreet());
+        } else if (StringValidator.stringWithDigitsImproper(registrationRequest.getPostalCode(), 15)) {
+            throw new ValueImproperException(registrationRequest.getPostalCode());
+        } else if (!StringValidator.isPhoneNumberValid(registrationRequest.getPhone())) {
+            throw new ValueImproperException(registrationRequest.getPhone());
+        } else if (!StringValidator.isPasswordValid(registrationRequest.getPassword())) {
+            throw new ValueImproperException(registrationRequest.getPhone());
         }
 
     }
 
     private void nameValidator(UserRequestDto userRequestDto) {
 
-        // TODO: 17.06.2021 PASSWORD VALIDATOR
-
-        if(!StringValidator.isEmailValid(userRequestDto.getEmail())){
+        if (!StringValidator.isEmailValid(userRequestDto.getEmail())) {
             throw new ValueImproperException(userRequestDto.getEmail());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCountry(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCountry(), 50)) {
             throw new ValueImproperException(userRequestDto.getCountry());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCity(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userRequestDto.getCity(), 50)) {
             throw new ValueImproperException(userRequestDto.getCity());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(userRequestDto.getStreet(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(userRequestDto.getStreet(), 50)) {
             throw new ValueImproperException(userRequestDto.getStreet());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(userRequestDto.getPostalCode(), 15)) {
+        } else if (StringValidator.stringWithDigitsImproper(userRequestDto.getPostalCode(), 15)) {
             throw new ValueImproperException(userRequestDto.getPostalCode());
-        }
-
-        else if (!StringValidator.isPhoneNumberValid(userRequestDto.getPhone())) {
+        } else if (!StringValidator.isPhoneNumberValid(userRequestDto.getPhone())) {
             throw new ValueImproperException(userRequestDto.getPhone());
-
         }
-
     }
-
 
 }

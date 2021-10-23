@@ -57,20 +57,20 @@ public class StringValidator {
         return string == null || string.length() <= 0 || string.length() > length || !string.chars().allMatch(Character::isLetter);
     }
 
-    public static boolean isBankAccountNumberValid(String candidate){
-        boolean valid = Modulo97.verifyCheckDigits( candidate );
+    public static boolean isBankAccountNumberValid(String candidate) {
+        boolean valid = Modulo97.verifyCheckDigits(candidate);
 
         IBAN iban = IBAN.valueOf(candidate);
 
-        Optional<String> bankId = IBANFields.getBankIdentifier( iban );
-        Optional<String> branchId = IBANFields.getBranchIdentifier( iban );
+        Optional<String> bankId = IBANFields.getBankIdentifier(iban);
+        Optional<String> branchId = IBANFields.getBranchIdentifier(iban);
 
         boolean isRegistered = IBAN.parse(candidate).isInSwiftRegistry(); // true
 
         return valid;
     }
 
-    public static boolean isEmailValid(String email){
+    public static boolean isEmailValid(String email) {
         // create the EmailValidator instance
         EmailValidator validator = EmailValidator.getInstance();
 
@@ -78,7 +78,7 @@ public class StringValidator {
         return validator.isValid(email) && email.length() < 50;
     }
 
-    public static boolean isPhoneNumberValid(String phoneNumber){
+    public static boolean isPhoneNumberValid(String phoneNumber) {
         String patterns
                 = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
                 + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
@@ -86,7 +86,14 @@ public class StringValidator {
 
         Pattern pattern = Pattern.compile(patterns);
 
-        return  pattern.matcher(phoneNumber).matches();
+        return pattern.matcher(phoneNumber).matches();
     }
+
+    public static boolean isPasswordValid(String password) {
+        String patterns = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
+        Pattern pattern = Pattern.compile(patterns);
+        return pattern.matcher(password).matches();
+    }
+
 
 }

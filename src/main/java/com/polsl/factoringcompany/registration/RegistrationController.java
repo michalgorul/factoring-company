@@ -1,6 +1,5 @@
 package com.polsl.factoringcompany.registration;
 
-import com.polsl.factoringcompany.user.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping
-    public UserEntity register(@RequestBody RegistrationRequest registrationRequest){
+    public String register(@RequestBody RegistrationRequest registrationRequest){
         return this.registrationService.register(registrationRequest);
     }
 }

@@ -8,6 +8,7 @@ import com.polsl.factoringcompany.files.FileEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.registration.RegistrationRequest;
+import com.polsl.factoringcompany.registration.token.ConfirmationTokenEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -91,6 +92,10 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByUserId")
     @JsonIgnore
     private Collection<CreditEntity> creditsById;
+
+    @OneToMany(mappedBy = "userByUserId")
+    @JsonIgnore
+    private Collection<ConfirmationTokenEntity> confirmationTokensByIdEntity;
 
     @ManyToOne
     @JsonIgnore

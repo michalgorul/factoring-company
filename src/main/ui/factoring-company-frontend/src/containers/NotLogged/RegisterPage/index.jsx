@@ -1,63 +1,212 @@
-import {Marginer} from '../../../components/marginer'
+import { useState } from 'react';
+import { Marginer } from '../../../components/marginer'
+import { infoToast, successToast, warningToast, errorToast } from '../../../components/toast/makeToast';
 import RegisterImage from '../../../images/register.png'
+import PhoneInput from 'react-phone-number-input/input'
+import { formatPhoneNumber, isPossiblePhoneNumber } from 'react-phone-number-input'
+import { useHistory } from 'react-router';
+import config from '../../../services/config'
 
 const Register = () => {
-    return ( 
-        <div class="container-fluid h-custom">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src={RegisterImage} class="img-fluid mt-5" alt="Sample"/>
-            </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form>
-                <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                    <p class="lead fw-normal mt-5 mb-5 me-3 display-3">Register</p>
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [password2, setPassword2] = useState('');
+	const [email, setEmail] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [country, setCountry] = useState('');
+	const [city, setCity] = useState('');
+	const [street, setStreet] = useState('');
+	const [postalCode, setPostalCode] = useState('');
+	const [phone, setPhone] = useState('');
+	const history = useHistory();
 
-                </div>
 
-                <div class="form-outline form-floating mb-4">
-                    <input type="name" class="form-control"
-                    placeholder="Enter your first and last name" />
-                    <label class="form-label">Username</label>
-                </div>
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		let matchingPasswords = checkPasswordsMatch();
+		let isPhonePossible = phone && isPossiblePhoneNumber(phone) ? 'true' : 'false';
+		let isPasswordProper = checkPassword();
+		setPhone(formatPhoneNumber(phone).replaceAll(' ', ''));
 
-                <div class="form-outline form-floating mb-4">
-                    <input type="phone" class="form-control"
-                    placeholder="Enter your preferred phone number" />
-                    <label class="form-label">Email address</label>
-                </div>
+		if (matchingPasswords && isPhonePossible && isPasswordProper) {
 
-                <div class="form-floating form-outline mb-3">
-                    <input type="password" class="form-control" placeholder="Enter password" />
-                    <label class="form-label" for="form3Example4">Create Password</label>
-                </div>
+			// const phone = formatPhoneNumber(phone).replaceAll(' ', '');
 
-                <div class="form-floating form-outline mb-3">
-                    <input type="password" class="form-control" placeholder="Enter password" />
-                    <label class="form-label" for="form3Example4">Confirm Password</label>
-                </div>
+			const registration = { username, password, email, firstName, lastName, country, city, street, postalCode, phone };
+			console.log(registration);
+			fetch(`${config.API_URL}/registration`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(registration)
+			})
+				.then((response) => {
+					if (response.ok) {
+						successToast('Registration completed!');
+						infoToast('Confirm your email to be able to login!');
+					}
+					else {
+						errorToast('Something went wrong :(')
+					}
+					return response;
+				})
+				.then((response) => {
+					if (response.ok) {
+						setTimeout(() => {
+							history.push('/login');
+							window.location.reload();
+						}, 5000)
+					}
+				})
+				.catch(err => {
+					console.error(err);
+				});
+		}
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="form-check mb-0">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                    <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="/terms-of-use" class="text-decoration-none">Terms of use</a>
-                    </label>
-                    </div>
-                </div>
+	}
 
-                <div class="text-center text-lg-start mt-4 pt-2">
-                    <button type="button" class="btn btn-primary btn-lg rounded-pill"
-                    style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Register</button>
-                    <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
-                        class="link-primary text-decoration-none">Sign In</a></p>
-                </div>
-                    <Marginer direction="vertical" margin={20} />
-                </form>
-            </div>
-            </div>
-        </div>
-     );
+	const checkPasswordsMatch = () => {
+		if (password != password2) {
+			warningToast('Passwords are not the same!');
+			return false
+		}
+		return true;
+	}
+
+	const checkPassword = () => {
+		let passwordValidator = require('password-validator');
+
+		// Create a schema
+		let schema = new passwordValidator();
+
+		// Add properties to it
+		schema
+			.is().min(8)                                    // Minimum length 8
+			.is().max(30)                                  // Maximum length 100
+			.has().uppercase()                              // Must have uppercase letters
+			.has().lowercase()                              // Must have lowercase letters
+			.has().digits()                                // Must have digits
+			.has().not().spaces()                           // Should not have spaces
+			.has().symbols()																// Must have symbols
+
+		if (!schema.validate(password)) {
+			warningToast('Password is improper');
+			return false;
+		}
+
+		return true;
+	}
+
+	return (
+		<div class="container-fluid h-custom">
+			<div class="row d-flex justify-content-center align-items-center h-100 w-100">
+				<div class="col-md-12 col-lg-5">
+					<img src={RegisterImage} class="img-fluid mt-5" alt="Sample" />
+				</div>
+				<div class="col-md-12 col-lg-7">
+					<div class="col-md-12">
+						<form onSubmit={handleSubmit}>
+							<div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+								<p class="lead fw-normal mt-5 mb-5 me-3 display-3">Register</p>
+							</div>
+							<div class="form-row">
+								<div class="col-md-4 mb-3 ">
+									<label for="validationServer01">First name</label>
+									<input type="text" class="form-control" id="validationServer01" placeholder="First name"
+										value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationServer02">Last name</label>
+									<input type="text" class="form-control" id="validationServer02" placeholder="Last name"
+										value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationServerUsername">Username</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupPrepend3">@</span>
+										</div>
+										<input type="text" class="form-control" id="validationServerUsername" placeholder="Username" aria-describedby="inputGroupPrepend3"
+											value={username} onChange={(e) => setUsername(e.target.value)} required />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3 ">
+									<label for="validationServer01">Address</label>
+									<input type="text" class="form-control" id="validationServer01" placeholder="Address"
+										value={street} onChange={(e) => setStreet(e.target.value)} required />
+								</div>
+								<div class="col-md-3 mb-3">
+									<label for="validationServer02">City</label>
+									<input type="text" class="form-control" id="validationServer02" placeholder="City"
+										value={city} onChange={(e) => setCity(e.target.value)} required />
+								</div>
+								<div class="col-md-2 mb-3 ">
+									<label for="validationServer01">Postal code</label>
+									<input type="text" class="form-control" id="validationServer01" placeholder="Postal code"
+										value={postalCode} onChange={(e) => setPostalCode(e.target.value)} required />
+								</div>
+								<div class="col-md-3 mb-3 ">
+									<label for="validationServer01">Country</label>
+									<input type="text" class="form-control" id="validationServer01" placeholder="Country"
+										value={country} onChange={(e) => setCountry(e.target.value)} required />
+								</div>
+							</div>
+
+							<div class="form-row justify-content-md-center">
+								<div class="col-md-7 mb-3 ">
+									<label for="validationServer01">Email</label>
+									<input type="email" class="form-control" id="validationServer01" placeholder="Address"
+										value={email} onChange={(e) => setEmail(e.target.value)} required />
+								</div>
+								<div class="col-md-5 mb-3">
+									<label for="validationServer02">Phone number</label>
+									<PhoneInput type="tel" class="form-control" id="phone" placeholder="123-456-789"
+										country="PL" defaultCountry="PL" maxLength={11}
+										value={phone} onChange={setPhone} rules={{ required: true }} required />
+								</div>
+
+							</div>
+
+							<div class="form-row justify-content-md-center">
+								<div class="col-md-6 mb-3 ">
+									<label for="validationServer01">Password</label>
+									<input type="password" class="form-control" id="validationServer01" placeholder="Password"
+										value={password} onChange={(e) => setPassword(e.target.value)} required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="validationServer02">Confirm password</label>
+									<input type="password" class="form-control" id="validationServer02" placeholder="Password"
+										value={password2} onChange={(e) => setPassword2(e.target.value)} required />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="custom-control custom-checkbox mb-3 mt-2 was-validated">
+									<input type="checkbox" class="custom-control-input" id="customControlValidation1" required />
+									<label class="custom-control-label" for="customControlValidation1">
+										I agree all statements in <a href="/terms-of-use" class="text-decoration-none">Terms of use</a>
+									</label>
+									<div class="invalid-feedback">You must agree before submitting.</div>
+								</div>
+							</div>
+							<div class="text-center text-lg-start mt-4 pt-2 justify-content-md-center">
+								<button type="submit" class="btn btn-primary btn-lg rounded-pill"
+									style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>Register</button>
+								<p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+									class="link-primary text-decoration-none">Sign In</a></p>
+							</div>
+							<Marginer direction="vertical" margin={20} />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
- 
+
 export default Register;

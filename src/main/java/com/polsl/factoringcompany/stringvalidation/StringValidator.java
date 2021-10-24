@@ -30,6 +30,7 @@ public class StringValidator {
         return s.charAt(s.length() - 1) == ' ';
     }
 
+
     public static boolean onlyLettersDigits(String s) {
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
@@ -49,12 +50,31 @@ public class StringValidator {
         return string == null || string.length() <= 0 || string.length() > length || onlyLettersSpaces(string);
     }
 
+    public static boolean stringWithSpacesAndDigitsImproper(String string, int length) {
+        return string == null || string.length() <= 0 || string.length() > length;
+    }
+
     public static boolean stringWithDigitsImproper(String string, int length) {
         return string == null || string.length() <= 0 || string.length() > length || onlyLettersDigits(string);
     }
 
     public static boolean stringWithoutSpacesImproper(String string, int length) {
         return string == null || string.length() <= 0 || string.length() > length || !string.chars().allMatch(Character::isLetter);
+    }
+
+    public static boolean postalCodeImproper(String string, int length) {
+        return string == null || string.length() <= 0 || string.length() > length || isPostalCodeValid(string);
+    }
+
+    public static boolean isPostalCodeValid(String s){
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (Character.isLetter(ch) || Character.isDigit(ch) || ch == '-') {
+                continue;
+            }
+            return true;
+        }
+        return false;
     }
 
     public static boolean isBankAccountNumberValid(String candidate) {
@@ -90,7 +110,7 @@ public class StringValidator {
     }
 
     public static boolean isPasswordValid(String password) {
-        String patterns = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
+        String patterns = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[`!@#$%^&*()+=-_?/\\\\|~]).{8,30}$";
         Pattern pattern = Pattern.compile(patterns);
         return pattern.matcher(password).matches();
     }

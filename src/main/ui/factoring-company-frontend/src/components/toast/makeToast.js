@@ -31,6 +31,20 @@ const errorToast = (message) => {
         });
 }
 
+const successToast = (message) => {
+    toast.success(message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Zoom,
+
+        });
+}
+
 const warningToast = (message) => {
     toast.warn(message, {
         position: "bottom-right",
@@ -46,4 +60,4 @@ const warningToast = (message) => {
 }
 
 
-export {infoToast, errorToast, warningToast}
+export {infoToast, errorToast, warningToast, successToast}

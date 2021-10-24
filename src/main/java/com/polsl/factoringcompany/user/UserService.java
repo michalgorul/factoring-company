@@ -259,14 +259,14 @@ public class UserService {
             throw new ValueImproperException(registrationRequest.getCountry());
         } else if (StringValidator.stringWithSpacesImproper(registrationRequest.getCity(), 50)) {
             throw new ValueImproperException(registrationRequest.getCity());
-        } else if (StringValidator.stringWithSpacesImproper(registrationRequest.getStreet(), 50)) {
+        } else if (StringValidator.stringWithSpacesAndDigitsImproper(registrationRequest.getStreet(), 50)) {
             throw new ValueImproperException(registrationRequest.getStreet());
-        } else if (StringValidator.stringWithDigitsImproper(registrationRequest.getPostalCode(), 15)) {
+        } else if (StringValidator.postalCodeImproper(registrationRequest.getPostalCode(), 15)) {
             throw new ValueImproperException(registrationRequest.getPostalCode());
         } else if (!StringValidator.isPhoneNumberValid(registrationRequest.getPhone())) {
             throw new ValueImproperException(registrationRequest.getPhone());
         } else if (!StringValidator.isPasswordValid(registrationRequest.getPassword())) {
-            throw new ValueImproperException(registrationRequest.getPhone());
+            throw new ValueImproperException(registrationRequest.getPassword());
         }
 
     }

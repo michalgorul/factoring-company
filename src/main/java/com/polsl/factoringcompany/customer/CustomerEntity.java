@@ -87,7 +87,7 @@ public class CustomerEntity {
 
     public CustomerEntity(String firstName, String lastName, String companyName, String country,
                           String city, String street, String postalCode, String phone,
-                          boolean blacklisted, Integer userId) {
+                          boolean blacklisted, Integer userId, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.companyName = companyName;
@@ -98,6 +98,7 @@ public class CustomerEntity {
         this.phone = phone;
         this.blacklisted = blacklisted;
         this.userId = userId;
+        this.email = email;
     }
 
     @Override

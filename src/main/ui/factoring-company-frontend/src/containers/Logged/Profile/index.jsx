@@ -1,4 +1,5 @@
-import {Spinner} from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import config from "../../../services/config";
 import useFetchWithToken from "../../../services/useFetchWithToken";
 
@@ -6,17 +7,151 @@ import useFetchWithToken from "../../../services/useFetchWithToken";
 const Profile = () => {
 
 	const { data: user, error: errorU, isPending: isPendingU } = useFetchWithToken(`${config.API_URL}/api/user/current`);
-	const { data: company, error: errorC, isPending: isPendingC } = useFetchWithToken(`${config.API_URL}/api/company/current`);
-	const { data: bank, error: errorB, isPending: isPendingB } = useFetchWithToken(`${config.API_URL}/api/bank-account/current`);
+	const [bank, setBank] = useState(null);
+	const [company, setCompany] = useState(null);
+
+	useEffect(() => {
+		fetch(`${config.API_URL}/api/company/current`, {
+			method: 'GET',
+			headers: {
+				"Authorization": `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+			.then(res => {
+				if (!res.ok) {
+					throw Error("could not fetch the data for that resource");
+				}
+				return res.json();
+			})
+			.then(data => {
+				setCompany(data);
+				return data;
+
+			})
+			.then(() => {
+				fetch(`${config.API_URL}/api/bank-account/current`, {
+					method: 'GET',
+					headers: {
+						"Authorization": `Bearer ${localStorage.getItem('token')}`
+					}
+				})
+					.then(res => {
+						return res.json();
+					})
+					.then(data => {
+						setBank(data);
+					})
+					.catch(err => {
+						if (err.name === "AbortError") {
+							console.log('fetch aborted');
+						}
+					})
+			})
+			.catch(err => {
+				if (err.name === "AbortError") {
+					console.log('fetch aborted');
+				}
+			})
+	}, [bank, company])
+
+	const showBankAccountDetails = (bank) => {
+		if (bank != null) {
+			return (
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item list-group-item-action">{bank.bankName}</li>
+					<li class="list-group-item list-group-item-action">{bank.bankAccountNumber}</li>
+					<li class="list-group-item list-group-item-action">{bank.bankSwift}</li>
+				</ul>
+			);
+		}
+		else {
+			return (
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+				</ul>
+			)
+		}
+	}
+
+	const showCompanyDetails = (company) => {
+		if (company != null) {
+			return (
+				<ul class="list-group list-group-flush mb-3">
+					<li class="list-group-item list-group-item-action">{company.companyName}</li>
+					<li class="list-group-item list-group-item-action">{company.country}</li>
+					<li class="list-group-item list-group-item-action">{company.city}</li>
+					<li class="list-group-item list-group-item-action">{company.street}</li>
+					<li class="list-group-item list-group-item-action">{company.postalCode}</li>
+					<li class="list-group-item list-group-item-action">{company.nip}</li>
+					<li class="list-group-item list-group-item-action">{company.regon}</li>
+				</ul>
+			);
+		}
+		else {
+			return (
+				<ul class="list-group list-group-flush mb-3">
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+					<li class="list-group-item list-group-item-action"> - </li>
+				</ul>
+			)
+		}
+	}
+
+	const showEditButtons = (bank, company) => {
+		if (bank != null && company != null) {
+			return (
+				<div class="align-items-center mt-3 ms-5">
+					<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
+					<a href={"/user/profile/company/edit/" + company.id} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
+					<a href={"/user/bank-account/edit/" + bank.id} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
+				</div>
+			)
+		}
+		else if (bank != null && company == null){
+			return (
+				<div class="align-items-center mt-3 ms-5">
+					<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
+					<a href={"/user/profile/"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4 disabled">Edit your company</a>
+					<a href={"/user/bank-account/edit/" + bank.id} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
+				</div>
+			)
+		}
+		else if (bank == null && company != null){
+			return (
+				<div class="align-items-center mt-3 ms-5">
+					<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
+					<a href={"/user/profile/company/edit/" + company.id} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
+					<a href={"/user/profile"} class="btn btn-lg mb-3 btn-primary rounded-pill disabled">Edit your bank account</a>
+				</div>
+			)
+		}
+		else{
+			return (
+				<div class="align-items-center mt-3 ms-5">
+					<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
+					<a href={"/user/profile/"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4 disabled">Edit your company</a>
+					<a href={"/user/profile"} class="btn btn-lg mb-3 btn-primary rounded-pill disabled">Edit your bank account</a>
+				</div>
+			)
+		}
+
+	}
+
 
 	return (
 		<>
 
-			{isPendingU && isPendingC && isPendingB && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+			{isPendingU && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 			{errorU && <div>{errorU}</div>}
-			{errorC && <div>{errorC}</div>}
-			{errorB && <div>{errorB}</div>}
-			{user && company && bank && (
+
+			{user && (
 				<div class="container flex-grow-1 container-p-y">
 
 					<div class="media align-items-center py-3">
@@ -63,11 +198,7 @@ const Profile = () => {
 								</ul>
 							</div>
 							<div class="col-5">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action">{bank.bankName}</li>
-									<li class="list-group-item list-group-item-action">{bank.bankAccountNumber}</li>
-									<li class="list-group-item list-group-item-action">{bank.bankSwift}</li>
-								</ul>
+								{showBankAccountDetails(bank)}
 							</div>
 						</div>
 					</div>
@@ -88,23 +219,11 @@ const Profile = () => {
 								</ul>
 							</div>
 							<div class="col-5">
-								<ul class="list-group list-group-flush mb-3">
-									<li class="list-group-item list-group-item-action">{company.companyName}</li>
-									<li class="list-group-item list-group-item-action">{company.country}</li>
-									<li class="list-group-item list-group-item-action">{company.city}</li>
-									<li class="list-group-item list-group-item-action">{company.street}</li>
-									<li class="list-group-item list-group-item-action">{company.postalCode}</li>
-									<li class="list-group-item list-group-item-action">{company.nip}</li>
-									<li class="list-group-item list-group-item-action">{company.regon}</li>
-								</ul>
+								{showCompanyDetails(company)}
 							</div>
 						</div>
 					</div>
-					<div class="align-items-center mt-3 ms-5">
-						<a href={"/user/profile/edit"} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your profile</a>
-						<a href={"/user/profile/company/edit/" + company.id} class="btn btn-lg mb-3 btn-primary rounded-pill me-4">Edit your company</a>
-						<a href={"/user/bank-account/edit/" + bank.id} class="btn btn-lg mb-3 btn-primary rounded-pill ">Edit your bank account</a>
-					</div>
+					{showEditButtons(bank, company)}
 
 				</div>)}
 		</>

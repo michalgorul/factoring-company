@@ -177,7 +177,10 @@ public class CompanyService {
         if (userEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("User", id);
 
-        return getCompany((long) userEntityOptional.get().getCompanyId());
+        if(userEntityOptional.get().getCompanyId() != null){
+            return getCompany((long) userEntityOptional.get().getCompanyId());
+        }
+        else return null;
 
     }
 

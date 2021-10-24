@@ -42,7 +42,8 @@ public class CustomerService {
                     customerRequestDto.getPostalCode(),
                     customerRequestDto.getPhone(),
                     customerRequestDto.isBlacklisted(),
-                    Math.toIntExact(userService.getCurrentUserId())));
+                    Math.toIntExact(userService.getCurrentUserId()),
+                    customerRequestDto.getEmail()));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

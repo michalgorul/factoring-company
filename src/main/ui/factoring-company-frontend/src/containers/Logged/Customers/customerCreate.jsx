@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { toast } from 'react-toastify';
@@ -23,6 +23,7 @@ const CustomerCreate = () => {
     const [postalCode, setPostalCode] = useState('');
     const [phone, setPhone] = useState('');
     const [blacklisted, setBlacklisted] = useState(false);
+    const [email, setEmail] = useState('');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
     const options = useMemo(() => countryList().getData(), [])
@@ -31,7 +32,7 @@ const CustomerCreate = () => {
         e.preventDefault();
         setBlacklisted(false);
 
-        const customer = { firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted };
+        const customer = { firstName, lastName, companyName, country, city, street, postalCode, phone, blacklisted, email };
         setIsPending(true);
 
         fetch(`${config.API_URL}/api/customer`, {
@@ -118,10 +119,19 @@ const CustomerCreate = () => {
                                 <label class="form-label">Postal code</label>
                             </div>
 
-                            <div class="form-floating form-outline form-control form-control-lg mb-3">
-                                <PhoneInput class="form-control form-control-lg"
-                                    placeholder="Phone number" value={phone} onChange={setPhone} />
+                            <div class="mb-3">
+                            <label for="validationServer02">Phone number</label>
+                            <PhoneInput type="tel" class="form-control" id="phone" placeholder="123-456-789"
+										country="PL" defaultCountry="PL" maxLength={11}
+										value={phone} onChange={setPhone} rules={{ required: true }} required />
                             </div>
+
+                            <div class="form-outline form-floating mb-3">
+                                <input type="email" class="form-control form-control-lg"
+                                    placeholder="Enter a valid email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                <label class="form-label">Email</label>
+                            </div>
+
                             <div class="mb-3">
                                 {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Add Customer</button>}
                                 {isPending && <button class="btn btn-primary rounded-pill btn-lg" disabled>Adding blog...</button>}

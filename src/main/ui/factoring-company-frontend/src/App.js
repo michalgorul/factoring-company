@@ -26,6 +26,8 @@ import InvoiceCreate from './containers/Logged/Invoices/invoiceCreate';
 import ProtectedRoute from './components/protectedRoute/protectedRoute';
 import GeneralInfoEdit from './containers/Logged/Invoices/generalInfoEdit';
 import PaymentInfoEdit from './containers/Logged/Invoices/paymentInfoEdit';
+import CreateBankAccount from './containers/Logged/Profile/bankCreate';
+import CompanyCreate from './containers/Logged/Profile/companyCreate';
 
 
 const UserComponents = ({match}) => {
@@ -51,6 +53,8 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage} />
           <ProtectedRoute path={`${match.url}/profile`} exact component={Profile} />
           <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
+          <ProtectedRoute path={`${match.url}/profile/company/create`} exact component={CompanyCreate} />
+          <ProtectedRoute path={`${match.url}/profile/bank/create`} exact component={CreateBankAccount} />
           <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit} />
           <ProtectedRoute path="*" render={() => (<Redirect to="/404" />)} />
         </Switch>

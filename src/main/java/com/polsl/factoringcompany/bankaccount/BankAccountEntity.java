@@ -18,13 +18,13 @@ import java.util.Objects;
 public class BankAccountEntity {
     @Id
     @SequenceGenerator(
-            name = "bank_account_sequence",
-            sequenceName = "bank_account_sequence",
+            name = "bank_account_id_seq",
+            sequenceName = "bank_account_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "bank_account_sequence"
+            generator = "bank_account_id_seq"
     )
     private Long id;
 

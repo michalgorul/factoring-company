@@ -206,4 +206,24 @@ public class CompanyService {
             throw new RuntimeException(e);
         }
     }
+
+    public CompanyEntity createCurrentUserCompany(CompanyRequestDto companyRequestDto) {
+        addValidate(companyRequestDto);
+        UserEntity currentUser = userService.getCurrentUser();
+        try {
+            CompanyEntity companyEntity = this.companyRepository.save(new CompanyEntity(
+                    StringUtils.capitalize(companyRequestDto.getCompanyName()),
+                    StringUtils.capitalize(companyRequestDto.getCountry()),
+                    StringUtils.capitalize(companyRequestDto.getCity()),
+                    StringUtils.capitalize(companyRequestDto.getStreet()),
+                    companyRequestDto.getPostalCode(),
+                    companyRequestDto.getNip(),
+                    companyRequestDto.getRegon()));
+            userService.updateCurrentUserCompanyId(Math.toIntExact(companyEntity.getId()));
+            return companyEntity;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

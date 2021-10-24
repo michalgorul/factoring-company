@@ -75,6 +75,22 @@ public class UserService {
         }
     }
 
+    public void updateCurrentUserCompanyId(Integer companyId) {
+
+        Long currentUserId = getCurrentUserId();
+        Optional<UserEntity> userEntityOptional = userRepository.findById(currentUserId);
+
+        if (userEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("User", currentUserId);
+
+        try {
+            userEntityOptional.get().setCompanyId(companyId);
+            this.userRepository.save(userEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public UserEntity addUser(UserEntity userEntity) {
 
         addValidate(userEntity);
@@ -113,7 +129,6 @@ public class UserService {
             throw new RuntimeException(e);
         }
     }
-
 
     public UserEntity updateUser(Long id, UserEntity userEntity) {
 

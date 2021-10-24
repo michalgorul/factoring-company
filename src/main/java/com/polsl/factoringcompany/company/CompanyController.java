@@ -33,6 +33,11 @@ public class CompanyController {
         return this.companyService.updateCurrentUserCompany(companyRequestDto);
     }
 
+    @PostMapping("/current")
+    public CompanyEntity createCurrentUserCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+        return this.companyService.createCurrentUserCompany(companyRequestDto);
+    }
+
 //    @PostMapping
 //    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
 //        return this.companyService.addCompany(companyEntity);

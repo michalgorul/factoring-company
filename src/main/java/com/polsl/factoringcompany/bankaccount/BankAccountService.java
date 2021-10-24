@@ -84,12 +84,12 @@ public class BankAccountService {
         nameValidator(bankAccountEntity);
     }
 
-//    private void addValidate(BankAccountEntity bankAccountEntity) {
-//        if (ifBankAccountNumberTakenAdding(bankAccountEntity.getBankAccountNumber()))
-//            throw new NotUniqueException("Bank Account", "number", bankAccountEntity.getBankAccountNumber());
-//
-//        nameValidator(bankAccountEntity);
-//    }
+    private void addValidate(BankAccountRequestDto bankAccountRequestDto) {
+        if (ifBankAccountNumberTakenAdding(bankAccountRequestDto.getBankAccountNumber()))
+            throw new NotUniqueException("Bank Account", "number", bankAccountRequestDto.getBankAccountNumber());
+
+        nameValidator(bankAccountRequestDto);
+    }
 
     private boolean ifBankAccountNumberTakenAdding(String bankAccountNumber) {
         Optional<BankAccountEntity> bankAccountEntityOptional = bankAccountRepository
@@ -131,7 +131,8 @@ public class BankAccountService {
 
     public BankAccountEntity getCurrentUserBankAccount() {
         UserEntity currentUser = userService.getCurrentUser();
-        return this.getBankAccount((long) currentUser.getCompanyId());
+        return this.bankAccountRepository.findByCompanyId(currentUser.getCompanyId())
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Bank account", 0L));
     }
 
     public BankAccountEntity updateCurrentUserBankAccount(BankAccountRequestDto bankAccountRequestDto) {
@@ -158,5 +159,23 @@ public class BankAccountService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public BankAccountEntity createCurrentUserBankAccount(BankAccountRequestDto bankAccountRequestDto) {
+        UserEntity currentUser = userService.getCurrentUser();
+
+        addValidate(bankAccountRequestDto);
+
+        try {
+            return this.bankAccountRepository.save(new BankAccountEntity(
+                    bankAccountRequestDto.getBankSwift().toUpperCase(),
+                    bankAccountRequestDto.getBankAccountNumber(),
+                    StringUtils.capitalize(bankAccountRequestDto.getBankName()),
+                    null,
+                    currentUser.getCompanyId()));
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

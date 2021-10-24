@@ -29,6 +29,7 @@ import PaymentInfoEdit from './containers/Logged/Invoices/paymentInfoEdit';
 import CreateBankAccount from './containers/Logged/Profile/bankCreate';
 import CompanyCreate from './containers/Logged/Profile/companyCreate';
 import CustomerCompanyCreate from './containers/Logged/Customers/companyCreate';
+import PasswordReset from './containers/NotLogged/LoginPage/resetPassword';
 
 
 const UserComponents = ({match}) => {
@@ -73,6 +74,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route path="/login" exact component={Login} />
+              <Route path="/login/password/reset" exact component={PasswordReset} />
               <Route path="/register" exact component={Register} />
               <Route path="/terms-of-use" exact component={TermsOfUse} />
               <Route path="/user" component={UserComponents} />

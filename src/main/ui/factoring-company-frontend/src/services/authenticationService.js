@@ -1,4 +1,5 @@
 import axios from "axios";
+import { errorToast } from "../components/toast/makeToast";
 import config from "./config";
 
 const register = async (registration) => {
@@ -22,7 +23,15 @@ const login = async (username, password) => {
   const response = await axios
     .post(`${config.API_URL}/login`, data);
 
-  if (response.headers) {
+    if(!response.ok){
+      errorToast('Your username or password were incorrect!')
+    }
+
+  if (response) {
+    console.log(response);
+    if(!response.ok){
+      errorToast('Your username or password were incorrect!')
+    }
     let myHeaders = new Headers(response.headers);
     let token = myHeaders.get('Authorization').replace("Bearer ", "");
 

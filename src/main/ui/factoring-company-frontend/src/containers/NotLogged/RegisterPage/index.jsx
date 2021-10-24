@@ -31,8 +31,6 @@ const Register = () => {
 
 		if (matchingPasswords && isPhonePossible && isPasswordProper) {
 
-			// const phone = formatPhoneNumber(phone).replaceAll(' ', '');
-
 			const registration = { username, password, email, firstName, lastName, country, city, street, postalCode, phone };
 			console.log(registration);
 			fetch(`${config.API_URL}/registration`, {
@@ -47,7 +45,14 @@ const Register = () => {
 						successToast('Registration completed!');
 						infoToast('Confirm your email to be able to login!');
 					}
+					else if(response.status == 409){
+						errorToast('Email or username already in use');
+					}
+					else if(response.status == 406){
+						errorToast('Some of inputs were incorrect');
+					}
 					else {
+						console.log(response);
 						errorToast('Something went wrong :(')
 					}
 					return response;

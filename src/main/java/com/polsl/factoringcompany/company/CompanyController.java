@@ -38,6 +38,11 @@ public class CompanyController {
         return this.companyService.createCurrentUserCompany(companyRequestDto);
     }
 
+    @PostMapping("/customer/{id}")
+    public CompanyEntity createCustomerCompany(@PathVariable Long id, @RequestBody CompanyRequestDto companyRequestDto) {
+        return this.companyService.createCustomerCompany(Math.toIntExact(id), companyRequestDto);
+    }
+
 //    @PostMapping
 //    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
 //        return this.companyService.addCompany(companyEntity);

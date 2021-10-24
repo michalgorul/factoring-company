@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.company;
 
 
+import com.polsl.factoringcompany.customer.CustomerService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
@@ -23,6 +24,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private UserRepository userRepository;
     private UserService userService;
+    private CustomerService customerService;
 
     public List<CompanyEntity> getCompanies() {
         return this.companyRepository.findAll();
@@ -225,5 +227,24 @@ public class CompanyService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public CompanyEntity createCustomerCompany(int customerId, CompanyRequestDto companyRequestDto) {
+        addValidate(companyRequestDto);
+        UserEntity currentUser = userService.getCurrentUser();
+        try {
+            CompanyEntity companyEntity = this.companyRepository.save(new CompanyEntity(
+                    StringUtils.capitalize(companyRequestDto.getCompanyName()),
+                    StringUtils.capitalize(companyRequestDto.getCountry()),
+                    StringUtils.capitalize(companyRequestDto.getCity()),
+                    StringUtils.capitalize(companyRequestDto.getStreet()),
+                    companyRequestDto.getPostalCode(),
+                    companyRequestDto.getNip(),
+                    companyRequestDto.getRegon()));
+            customerService.updateCustomerCompanyId(customerId, Math.toIntExact(companyEntity.getId()));
+            return companyEntity;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

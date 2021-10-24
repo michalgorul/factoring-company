@@ -3,6 +3,7 @@ package com.polsl.factoringcompany.customer;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
+import com.polsl.factoringcompany.user.UserEntity;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -125,5 +126,20 @@ public class CustomerService {
         Long currentUserId = userService.getCurrentUserId();
         return this.customerRepository.findAllByUserId(Math.toIntExact(currentUserId));
 
+    }
+
+    public void updateCustomerCompanyId(int customerId, int companyId) {
+
+        Optional<CustomerEntity> customerEntity = customerRepository.findById((long) customerId);
+
+        if (customerEntity.isEmpty())
+            throw new IdNotFoundInDatabaseException("Customer", (long) customerId);
+
+        try {
+            customerEntity.get().setCompanyId(companyId);
+            this.customerRepository.save(customerEntity.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

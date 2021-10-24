@@ -84,6 +84,27 @@ const CustomerDetails = () => {
             })
     }
 
+    const showEditButtons = (company) => {
+        if (company != null) {
+            return (
+                <div class="alert clearfix mt-2">
+                    <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
+                    <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
+                    <a href={`/user/profile/company/edit/${companyId}`} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
+                </div>
+            )
+        }
+        else if (company == null) {
+            return (
+                <div class="alert clearfix mt-2">
+                <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
+                <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
+                <a href={"/user/customers/company/create/" + customer.id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Add company</a>
+            </div>
+            )
+        }
+    }
+
     const handleDelete = () => {
         setShow(true);
     }
@@ -172,11 +193,7 @@ const CustomerDetails = () => {
                     </div>
 
 
-                    <div class="alert clearfix mt-2">
-                        <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                        <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
-                        <a href={`/user/profile/company/edit/${companyId}`} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
-                    </div>
+                    {showEditButtons(company)}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Customer deletion</Modal.Title>

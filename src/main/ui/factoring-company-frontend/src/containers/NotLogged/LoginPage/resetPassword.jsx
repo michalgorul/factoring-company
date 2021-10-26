@@ -23,7 +23,7 @@ const PasswordReset = () => {
                         </div>
                         <div class="col-md-auto">
                             <Card className="text-center">
-                            <Card.Header className="bg-primary"><BrandLogo logoSize={160} className="d-none d-md-block"/></Card.Header>
+                            <Card.Header className="bg-primary"><BrandLogo logoSize={120} textSize={35} className="d-none d-md-block"/></Card.Header>
                                 <Card.Body>
                                     <Card.Title><span className="h2">Forgot your password?</span></Card.Title>
                                     <Card.Text>

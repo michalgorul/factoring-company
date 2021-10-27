@@ -1,9 +1,6 @@
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Spinner } from 'react-bootstrap';
-import useFetchWithToken from "../../../services/useFetchWithToken";
+import { useState } from "react";
 import config from "../../../services/config";
-import { updateWithToken } from "../../../services/useUpdateWithToken";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 const CreateBankAccount = () => {

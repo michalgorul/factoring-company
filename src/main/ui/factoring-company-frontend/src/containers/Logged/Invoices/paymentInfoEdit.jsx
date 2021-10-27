@@ -11,7 +11,7 @@ const PaymentInfoEdit = () => {
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [paymentTypeName, setPaymentTypeName] = useState('');
-    const [isPendingN, setIsPendingN] = useState('')
+    const [, setIsPendingN] = useState('')
 
     const { id } = useParams();
     const { invoice, errorI, isPendingI,

@@ -1,5 +1,4 @@
 import Card from 'react-bootstrap/Card'
-import { useState } from 'react'
 import { BrandLogo } from "../../../components/brandLogo";
 import { Marginer } from '../../../components/marginer'
 const PasswordResetConfirmation = () => {

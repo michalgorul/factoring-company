@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import { useState } from 'react'
 import { BrandLogo } from "../../../components/brandLogo";
 import { Marginer } from '../../../components/marginer'
-import { errorToast, warningToast } from '../../../components/toast/makeToast'
+import { errorToast } from '../../../components/toast/makeToast'
 import config from '../../../services/config'
 import { useHistory } from 'react-router'
 import { checkPassword, checkPasswordsMatch } from '../../../services/passwordService'

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Marginer } from '../../../components/marginer'
-import { infoToast, successToast, warningToast, errorToast } from '../../../components/toast/makeToast';
+import { infoToast, successToast, errorToast } from '../../../components/toast/makeToast';
 import RegisterImage from '../../../images/register.png'
 import PhoneInput from 'react-phone-number-input/input'
 import { formatPhoneNumber, isPossiblePhoneNumber } from 'react-phone-number-input'

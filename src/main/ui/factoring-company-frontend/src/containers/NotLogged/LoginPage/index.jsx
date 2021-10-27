@@ -1,7 +1,6 @@
 import { Marginer } from '../../../components/marginer'
 import LoginImage from '../../../images/login.png'
 import { useState } from "react";
-import { login } from '../../../services/authenticationService'
 import { useHistory } from "react-router-dom"
 import { errorToast } from '../../../components/toast/makeToast';
 import config from '../../../services/config'

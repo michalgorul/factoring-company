@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Spinner } from 'react-bootstrap';
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
-import { updateWithToken } from "../../../services/useUpdateWithToken";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 const EditBankAccount = () => {

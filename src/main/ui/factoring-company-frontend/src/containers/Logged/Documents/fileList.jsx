@@ -1,5 +1,5 @@
 import Table from 'react-bootstrap/Table'
-import { Button, Modal, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';
 import { Download, Trash } from 'react-bootstrap-icons';

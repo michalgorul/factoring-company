@@ -30,6 +30,7 @@ import CreateBankAccount from './containers/Logged/Profile/bankCreate';
 import CompanyCreate from './containers/Logged/Profile/companyCreate';
 import CustomerCompanyCreate from './containers/Logged/Customers/companyCreate';
 import PasswordReset from './containers/NotLogged/LoginPage/resetPassword';
+import PasswordResetConfirmation from './containers/NotLogged/LoginPage/confirmation';
 
 
 const UserComponents = ({match}) => {
@@ -75,6 +76,7 @@ function App() {
               <Route exact path="/" component={HomePage} />
               <Route path="/login" exact component={Login} />
               <Route path="/login/password/reset" exact component={PasswordReset} />
+              <Route path="/login/password/reset/confirmation" exact component={PasswordResetConfirmation} />
               <Route path="/register" exact component={Register} />
               <Route path="/terms-of-use" exact component={TermsOfUse} />
               <Route path="/user" component={UserComponents} />

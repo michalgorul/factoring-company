@@ -4,7 +4,8 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react'
 import { BrandLogo } from "../../../components/brandLogo";
-const PasswordReset = () => {
+import { Marginer } from '../../../components/marginer'
+const PasswordResetConfirmation = () => {
 
     const [email, setEmail] = useState('');
 
@@ -23,27 +24,18 @@ const PasswordReset = () => {
                             <Card className="text-center">
                             <Card.Header className="bg-primary"><BrandLogo logoSize={120} textSize={35} className="d-none d-md-block"/></Card.Header>
                                 <Card.Body>
-                                    <Card.Title><span className="h2">Forgot your password?</span></Card.Title>
+                                    <Card.Title><span className="h2">Email was sent!</span></Card.Title>
                                     <Card.Text>
-                                        <span className="h5">
-                                            We will send you a link to change your password.
+                                        <span className="h4">
+                                            Please check your mailbox
                                         </span>
                                         <br />
-                                        <span className="h5">
-                                            If you still need support, please visit our help center.
+                                        <span className="h5"><Marginer direction="vertical" margin={10} />
+                                        If an account with this email address exists on our site
+                                        <br />
+                                         you will receive an email with a link to reset your password
                                         </span>
-                                    </Card.Text>
-                                    <form onSubmit={handleSubmit}>
-                                    <Form.Label>Your profile email address</Form.Label>
-                                    <FloatingLabel
-                                        controlId="floatingInput"
-                                        label="Email address"
-                                        className="mb-3">
-                                        <Form.Control type="email" placeholder="name@example.com"
-                                        value={email} onChange={(e) => setEmail(e.target.value)} />
-                                    </FloatingLabel>
-                                    <Button type="submit" className="btn-lg rounded-pill">Reset password</Button>
-                                    </form>
+                                    </Card.Text>                          
                                 </Card.Body>
                             </Card>
                         </div>
@@ -56,4 +48,4 @@ const PasswordReset = () => {
     );
 }
 
-export default PasswordReset;
+export default PasswordResetConfirmation;

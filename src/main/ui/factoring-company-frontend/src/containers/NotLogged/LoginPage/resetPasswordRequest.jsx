@@ -4,12 +4,36 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react'
 import { BrandLogo } from "../../../components/brandLogo";
+import config from '../../../services/config'
+import { useHistory } from 'react-router'
+import { errorToast } from '../../../components/toast/makeToast';
+
+
 const PasswordReset = () => {
 
     const [email, setEmail] = useState('');
+    const history = useHistory();
 
     const handleSubmit = () => {
-       
+
+        fetch(`${config.API_URL}/password?email=${email}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => {
+                if (response.ok) {
+                    history.push('/login/password/reset/confirmation');
+                }		
+                else {
+                    errorToast('Something went wrong :(')
+                }
+                return response;
+            })
+            .catch(err => {
+                console.error(err);
+            });    
     }
 
     return (
@@ -42,7 +66,7 @@ const PasswordReset = () => {
                                         <Form.Control type="email" placeholder="name@example.com"
                                         value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </FloatingLabel>
-                                    <Button type="submit" className="btn-lg rounded-pill">Reset password</Button>
+                                    <Button type="button" className="btn-lg rounded-pill" onClick={handleSubmit}>Reset password</Button>
                                     </form>
                                 </Card.Body>
                             </Card>

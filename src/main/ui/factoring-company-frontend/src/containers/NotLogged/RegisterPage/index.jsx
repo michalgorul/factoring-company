@@ -32,7 +32,6 @@ const Register = () => {
 		if (matchingPasswords && isPhonePossible && isPasswordProper) {
 
 			const registration = { username, password, email, firstName, lastName, country, city, street, postalCode, phone };
-			console.log(registration);
 			fetch(`${config.API_URL}/registration`, {
 				method: "POST",
 				headers: {

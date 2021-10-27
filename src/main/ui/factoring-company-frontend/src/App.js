@@ -29,8 +29,10 @@ import PaymentInfoEdit from './containers/Logged/Invoices/paymentInfoEdit';
 import CreateBankAccount from './containers/Logged/Profile/bankCreate';
 import CompanyCreate from './containers/Logged/Profile/companyCreate';
 import CustomerCompanyCreate from './containers/Logged/Customers/companyCreate';
-import PasswordReset from './containers/NotLogged/LoginPage/resetPassword';
+import PasswordReset from './containers/NotLogged/LoginPage/resetPasswordRequest';
 import PasswordResetConfirmation from './containers/NotLogged/LoginPage/confirmation';
+import PasswordResetChange from './containers/NotLogged/LoginPage/resetPasswordChange';
+import PasswordResetSuccess from './containers/NotLogged/LoginPage/success';
 
 
 const UserComponents = ({match}) => {
@@ -77,6 +79,8 @@ function App() {
               <Route path="/login" exact component={Login} />
               <Route path="/login/password/reset" exact component={PasswordReset} />
               <Route path="/login/password/reset/confirmation" exact component={PasswordResetConfirmation} />
+              <Route path="/password/reset/change/success" exact component={PasswordResetSuccess} />
+              <Route path="/password/reset/change" component={PasswordResetChange} />
               <Route path="/register" exact component={Register} />
               <Route path="/terms-of-use" exact component={TermsOfUse} />
               <Route path="/user" component={UserComponents} />

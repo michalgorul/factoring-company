@@ -286,6 +286,12 @@ public class UserService {
 
     }
 
+    private void passwordUpdateValidator(String password){
+         if (!StringValidator.isPasswordValid(password)) {
+            throw new ValueImproperException(password);
+        }
+    }
+
     private void nameValidator(UserRequestDto userRequestDto) {
 
         if (!StringValidator.isEmailValid(userRequestDto.getEmail())) {
@@ -305,5 +311,28 @@ public class UserService {
 
     public void enableAppUser(Long id) {
         userRepository.enableAppUser(id);
+    }
+
+    public UserEntity getUSerByEmail(String email){
+        return this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("User", 0L));
+    }
+
+    public void updateUsersPassword(Long id, String password){
+
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+
+        if (userEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("User", id);
+
+        passwordUpdateValidator(password);
+
+        try {
+            userEntityOptional.get().setPassword(bCryptPasswordEncoder.encode(password));
+            this.userRepository.save(userEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

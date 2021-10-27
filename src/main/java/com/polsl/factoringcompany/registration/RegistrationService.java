@@ -37,8 +37,6 @@ public class RegistrationService {
 
         confirmationTokenService.saveConfirmationToken(confirmationTokenEntity);
 
-        // TODO: 23.10.2021 SEND EMAIL
-
         String apiUrl = link + token;
         emailSender.send(
                 registrationRequest.getEmail(),

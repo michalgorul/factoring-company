@@ -8,6 +8,7 @@ import { Marginer } from '../../../components/marginer'
 import { errorToast, warningToast } from '../../../components/toast/makeToast'
 import config from '../../../services/config'
 import { useHistory } from 'react-router'
+import { checkPassword, checkPasswordsMatch } from '../../../services/passwordService'
 
 const PasswordResetChange = ({location}) => {
 
@@ -19,42 +20,11 @@ const PasswordResetChange = ({location}) => {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
 
-    const checkPasswordsMatch = () => {
-		if (password != password2) {
-			warningToast('Passwords are not the same!');
-			return false
-		}
-		return true;
-	}
-
-	const checkPassword = () => {
-		let passwordValidator = require('password-validator');
-
-		// Create a schema
-		let schema = new passwordValidator();
-
-		// Add properties to it
-		schema
-			.is().min(8)                                    // Minimum length 8
-			.is().max(30)                                  // Maximum length 100
-			.has().uppercase()                              // Must have uppercase letters
-			.has().lowercase()                              // Must have lowercase letters
-			.has().digits()                                // Must have digits
-			.has().not().spaces()                           // Should not have spaces
-			.has().symbols()																// Must have symbols
-
-		if (!schema.validate(password)) {
-			warningToast('Password is improper');
-			return false;
-		}
-
-		return true;
-	}
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let matchingPasswords = checkPasswordsMatch();
-		let isPasswordProper = checkPassword();
+        let matchingPasswords = checkPasswordsMatch(password, password2);
+		let isPasswordProper = checkPassword(password);
 
         if (matchingPasswords && isPasswordProper) {
 

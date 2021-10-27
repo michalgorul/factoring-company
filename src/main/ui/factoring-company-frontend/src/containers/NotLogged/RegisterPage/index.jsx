@@ -6,6 +6,7 @@ import PhoneInput from 'react-phone-number-input/input'
 import { formatPhoneNumber, isPossiblePhoneNumber } from 'react-phone-number-input'
 import { useHistory } from 'react-router';
 import config from '../../../services/config'
+import { checkPassword, checkPasswordsMatch } from '../../../services/passwordService';
 
 const Register = () => {
 	const [username, setUsername] = useState('');
@@ -24,9 +25,9 @@ const Register = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		let matchingPasswords = checkPasswordsMatch();
+		let matchingPasswords = checkPasswordsMatch(password, password2);
 		let isPhonePossible = phone && isPossiblePhoneNumber(phone) ? 'true' : 'false';
-		let isPasswordProper = checkPassword();
+		let isPasswordProper = checkPassword(password);
 		setPhone(formatPhoneNumber(phone).replaceAll(' ', ''));
 
 		if (matchingPasswords && isPhonePossible && isPasswordProper) {
@@ -69,38 +70,6 @@ const Register = () => {
 				});
 		}
 
-	}
-
-	const checkPasswordsMatch = () => {
-		if (password != password2) {
-			warningToast('Passwords are not the same!');
-			return false
-		}
-		return true;
-	}
-
-	const checkPassword = () => {
-		let passwordValidator = require('password-validator');
-
-		// Create a schema
-		let schema = new passwordValidator();
-
-		// Add properties to it
-		schema
-			.is().min(8)                                    // Minimum length 8
-			.is().max(30)                                  // Maximum length 100
-			.has().uppercase()                              // Must have uppercase letters
-			.has().lowercase()                              // Must have lowercase letters
-			.has().digits()                                // Must have digits
-			.has().not().spaces()                           // Should not have spaces
-			.has().symbols()																// Must have symbols
-
-		if (!schema.validate(password)) {
-			warningToast('Password is improper');
-			return false;
-		}
-
-		return true;
 	}
 
 	return (

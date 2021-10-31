@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +37,7 @@ public class ProductEntity {
     private String measureUnit;
 
     @OneToMany(mappedBy = "productByProductId")
+    @JsonIgnore
     private Collection<InvoiceItemEntity> invoiceItemsById;
 
 

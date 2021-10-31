@@ -11,6 +11,8 @@ import FloatingLabel from "react-bootstrap-floating-label";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import config from '../../../services/config';
+import useFetchWithToken from '../../../services/useFetchWithToken';
 toast.configure();
 
 
@@ -31,7 +33,7 @@ const InvoiceCreate = () => {
 	const [months, setMonths] = useState('');
 	const [isPendingN, setIsPending] = useState(false);
 	// const history = useHistory();
-	const { data: products, error, isPending } = useFetch('http://localhost:8000/product');
+	const { data: products, error, isPending } = useFetchWithToken(`${config.API_URL}/api/product`);
 
 
 	const handleSubmit = (e) => {
@@ -64,8 +66,8 @@ const InvoiceCreate = () => {
 		if (products) {
 			products.forEach((item) => {
 				let it = {
-					value: item.product.toString(),
-					label: item.product.toString(),
+					value: item.name.toString(),
+					label: item.name.toString(),
 				};
 				productArray.push(it);
 			})

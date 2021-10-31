@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import config from "../../../services/config";
 import { errorToast, infoToast, warningToast } from "../../../components/toast/makeToast";
 import { Marginer } from "../../../components/marginer";
+import { formatBytes } from "../../../services/filesService";
 const Documents = () => {
 
   const [catalog, setCatalog] = useState('favourite');
@@ -27,17 +28,6 @@ const Documents = () => {
     setPercentage(usedSpace / availableSpace * 100)
     handleButtonAvailability();
   }, [usedSpace])
-
-  const formatBytes = (bytes, decimals = 2) => {
-    if (bytes == 0) return '0 Bytes';
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-  }
 
   const getUsedSpace = () => {
     fetch(`${config.API_URL}/api/file/used`, {

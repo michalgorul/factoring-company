@@ -8,6 +8,7 @@ import axios from 'axios';
 import { errorToast, infoToast } from '../../../components/toast/makeToast';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
+import { formatBytes } from '../../../services/filesService';
 
 const FileList = ({ whatCatalog }) => {
     const { data: documents, error, isPending } = useFetchWithToken(`${config.API_URL}/api/file`)
@@ -20,7 +21,7 @@ const FileList = ({ whatCatalog }) => {
     useEffect(() => {
         if (documents) {
             documents.forEach(document => {
-                document.size = document.size / 1000 + ' KB';
+                document.size = formatBytes(document.size);
             })
         }
 

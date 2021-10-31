@@ -1,9 +1,11 @@
 package com.polsl.factoringcompany.reports.invoice;
 
+import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import com.polsl.factoringcompany.product.ProductEntity;
+import com.polsl.factoringcompany.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,12 +41,20 @@ public class InvoiceInformation {
     private String vatValue;
     private String toPay;
     private String toPayInWords;
+    private String sellerCompany;
+    private String sellerStreet;
+    private String sellerPostalCode;
+    private String sellerCity;
+    private String sellerCountry;
+    private String sellerPhone;
+    private String sellerNip;
+    private String sellerRegon;
 
     public static ApplicationContext ctx;
 
     public InvoiceInformation(InvoiceEntity invoiceEntity, CustomerEntity customerEntity,
                               InvoiceItemEntity invoiceItemEntity, ProductEntity productEntity,
-                              String currencyCode, String paymentMethod) {
+                              String currencyCode, String paymentMethod, UserEntity userEntity, CompanyEntity companyEntity) {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String deliveryDateFormat = df.format(invoiceEntity.getSaleDate());
@@ -75,6 +85,14 @@ public class InvoiceInformation {
         this.vatValue = String.valueOf(invoiceItemEntity.getVatValue());
         this.toPay = String.valueOf(invoiceEntity.getToPay()) + " " + currencyCode;
         this.toPayInWords = invoiceEntity.getToPayInWords() + " " + currencyCode;
+        this.sellerCompany = companyEntity.getCompanyName();
+        this.sellerStreet = companyEntity.getStreet();
+        this.sellerPostalCode = companyEntity.getPostalCode();
+        this.sellerCity = companyEntity.getCity();
+        this.sellerCountry = companyEntity.getCountry();
+        this.sellerPhone = userEntity.getPhone();
+        this.sellerNip = companyEntity.getNip();
+        this.sellerRegon = companyEntity.getRegon();
     }
 
     public HashMap<String, String> getVariablesInHashMap() {
@@ -98,6 +116,14 @@ public class InvoiceInformation {
         variables.put("vat_value", this.vatValue);
         variables.put("to_pay", this.toPay);
         variables.put("to_pay_in_words", this.toPayInWords);
+        variables.put("seler_company", this.sellerCompany);
+        variables.put("seler_street", this.sellerStreet);
+        variables.put("seler_postal_code", this.sellerPostalCode);
+        variables.put("seler_city", this.sellerCity);
+        variables.put("seler_country", this.sellerCountry);
+        variables.put("seler_phone", this.sellerPhone);
+        variables.put("seler_nip", this.sellerNip);
+        variables.put("seler_regon", this.sellerRegon);
 
         return variables;
     }

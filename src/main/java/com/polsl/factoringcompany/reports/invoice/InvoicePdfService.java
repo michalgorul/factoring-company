@@ -1,14 +1,15 @@
 package com.polsl.factoringcompany.reports.invoice;
 
+import com.polsl.factoringcompany.company.CompanyService;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.customer.CustomerService;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.invoice.InvoiceService;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemService;
-import com.polsl.factoringcompany.paymenttype.PaymentTypeService;
 import com.polsl.factoringcompany.product.ProductEntity;
 import com.polsl.factoringcompany.product.ProductService;
+import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.docx4j.Docx4J;
 import org.docx4j.dml.wordprocessingDrawing.Inline;
@@ -41,7 +42,9 @@ public class InvoicePdfService {
     private final CustomerService customerService;
     private final InvoiceItemService invoiceItemService;
     private final ProductService productService;
-    private final PaymentTypeService paymentTypeService;
+    private final UserService userService;
+    private final CompanyService companyService;
+
 
     public byte[] generateDocxFileFromTemplate(Long invoiceId) throws Exception {
 
@@ -58,7 +61,10 @@ public class InvoicePdfService {
         InvoiceInformation invoiceInformation = new InvoiceInformation(
                 invoiceEntity, customerEntity, invoiceItemEntity, productEntity,
                 invoiceService.getInvoiceCurrencyCode(invoiceId),
-                invoiceService.getPaymentMethod(invoiceId));
+                invoiceService.getPaymentMethod(invoiceId),
+                userService.getCurrentUser(),
+                companyService.getCurrentUserCompany()
+                );
         HashMap<String, String> variables = invoiceInformation.getVariablesInHashMap();
 
         documentPart.variableReplace(variables);

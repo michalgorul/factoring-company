@@ -44,19 +44,19 @@ public class InvoiceItemService {
         if (invoiceItemEntityOptional.isEmpty())
         throw new IdNotFoundInDatabaseException("Invoice item", id);
 
-        BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuentity() * invoiceItemDto.getNetPrice().doubleValue());
-        BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue());
+        BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getNetPrice().doubleValue());
+        BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue() / 100);
 
         try {
-            invoiceItemEntityOptional.get().setQuentity(invoiceItemDto.getQuentity());
+            invoiceItemEntityOptional.get().setQuantity(invoiceItemDto.getQuantity());
             invoiceItemEntityOptional.get().setNetPrice(invoiceItemDto.getNetPrice());
             invoiceItemEntityOptional.get().setNetValue(netValue);
             invoiceItemEntityOptional.get().setVatRate(invoiceItemDto.getVatRate());
             invoiceItemEntityOptional.get().setVatValue(vatValue);
             invoiceItemEntityOptional.get().setGrossValue(BigDecimal.valueOf(
                     netValue.doubleValue() + vatValue.doubleValue()));
-            invoiceItemEntityOptional.get().setProductId(invoiceItemDto.getProductId());
-            invoiceItemEntityOptional.get().setInvoiceId(invoiceItemDto.getInvoiceId());
+            invoiceItemEntityOptional.get().setProductId(Math.toIntExact(invoiceItemDto.getProductId()));
+            invoiceItemEntityOptional.get().setInvoiceId(Math.toIntExact(invoiceItemDto.getInvoiceId()));
 
             return this.invoiceItemRepository.save(invoiceItemEntityOptional.get());
         }

@@ -17,6 +17,7 @@ const InvoiceDetails = () => {
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
+	const [isPending, setIsPending] = useState(false);
 
 	useEffect(() => {
 		if (invoice) {
@@ -41,7 +42,6 @@ const InvoiceDetails = () => {
 				}
 				else {
 					handleClose();
-
 				}
 				return response;
 			})
@@ -62,6 +62,8 @@ const InvoiceDetails = () => {
 	}
 
 	const handleShowPdf = () => {
+        setIsPending(true);
+
 		try {
 			axios
 				.get(config.API_URL + `/api/invoice/pdf/${id}`, {
@@ -78,6 +80,7 @@ const InvoiceDetails = () => {
 					//Open the URL on new Window
 					const pdfWindow = window.open();
 					pdfWindow.location.href = fileURL;
+					setIsPending(false);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -91,7 +94,7 @@ const InvoiceDetails = () => {
 
 	return (
 		<div className="">
-			{isPendingI && isPendingC && isPendingCu && isPendingP && isPendingS &&
+			{isPendingI && isPendingC && isPendingCu && isPendingP && isPendingS && isPending &&
 				<div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 			{errorI && <div>{errorI}</div>}
 			{errorC && <div>{errorC}</div>}
@@ -215,7 +218,10 @@ const InvoiceDetails = () => {
 					</div>
 
 					<div class="mt-3 col-6 text-center">
-						<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>
+						{!isPending && <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>}
+						{isPending && <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" disabled onClick={handleShowPdf}>Generating...</button>}
+
+						
 					</div>
 
 					<div class="alert clearfix mt-2">

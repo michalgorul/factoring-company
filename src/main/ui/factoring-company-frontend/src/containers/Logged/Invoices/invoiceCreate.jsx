@@ -3,36 +3,38 @@ import TextField from '@material-ui/core/TextField';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
-import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select'
-import { Form, Row, Col } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
-import FloatingLabel from "react-bootstrap-floating-label";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Zoom } from 'react-toastify';
 import config from '../../../services/config';
 import useFetchWithToken from '../../../services/useFetchWithToken';
-toast.configure();
+import { warningToast, infoToast, errorToast } from '../../../components/toast/makeToast';
+import { useHistory } from 'react-router';
 
 
 const InvoiceCreate = () => {
 	const [performanceDate, setPerformanceDate] = useState(new Date());
 	const [issueDate, setIssueDate] = useState(new Date());
-	const [quentity, setQuentity] = useState('');
-	const [gross, setGross] = useState('');
+	const [quantity, setQuantity] = useState('');
+	const [net, setNet] = useState('');
 	const [vat, setVat] = useState('');
 	const [months, setMonths] = useState('');
-	const [isPendingN, setIsPending] = useState(false);
+	const [remarks, setRemarks] = useState('');
+	const [isPendingN, setIsPendingN] = useState(false);
 
 	const [customerPhone, setCustomerPhone] = useState('');
 	const [customer, setCustomer] = useState(null);
 	const [productName, setProductName] = useState('');
 	const [product, setProduct] = useState(null);
+	const [currencyName, setCurrencyName] = useState('');
+	const [paymentTypeName, setPaymentTypeName] = useState('');
+
+	const history = useHistory();
 
 
 	const { data: products, error, isPending } = useFetchWithToken(`${config.API_URL}/api/product`);
 	const { data: customers, errorC, isPendingC } = useFetchWithToken(`${config.API_URL}/api/customer/current`);
+	const { data: currencies, errorCu, isPendingCu } = useFetchWithToken(`${config.API_URL}/api/currency`);
+	const { data: paymentTypes, errorP, isPendingP } = useFetchWithToken(`${config.API_URL}/api/payment-type`);
 
 
 	useEffect(() => {
@@ -80,23 +82,45 @@ const InvoiceCreate = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!product || !vat || !performanceDate || !issueDate) {
-			toast.warn('Please fill all fields', {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				transition: Zoom,
-				className: "bg-warning text-dark"
-			});
+		if (!productName || !vat || !performanceDate || !issueDate || !customerPhone || !currencyName ||
+			!paymentTypeName || !quantity || !net || !months) {
+			warningToast('Please fill all fields');
 		}
 		else {
-			const buyer = { performanceDate, issueDate, product, quentity, gross, vat, months };
+			const invoice = {
+				customerPhone, productName, quantity, vat, net, currencyName, paymentTypeName,
+				performanceDate, issueDate, months, remarks
+			};
 
-			console.log(buyer);
+			fetch(`${config.API_URL}/api/invoice`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+				body: JSON.stringify(invoice)
+			})
+				.then((response) => {
+					setIsPendingN(false);
+					if (response.ok) {
+						history.goBack();
+						return response;
+					}
+					else {
+						return response
+					}
+				})
+				.then((response) => {
+					if (response.ok) {
+						infoToast('Company was updated')
+					}
+					else {
+						errorToast('Some of inputs were incorrect')
+					}
+				})
+				.catch(err => {
+					console.error(err);
+				})
 		}
 	}
 
@@ -130,9 +154,41 @@ const InvoiceCreate = () => {
 		return productArray;
 	}
 
+	const makeCurrencyOptions = (currencies) => {
+		let currercyArray = [];
+
+		if (currencies) {
+			currencies.forEach((item) => {
+				let it = {
+					value: item.code.toString(),
+					label: item.name.toString(),
+				};
+				currercyArray.push(it);
+			})
+		}
+		return currercyArray;
+	}
+
+	const makePaymentOptions = (paymentTypes) => {
+		let paymentArray = [];
+
+		if (paymentTypes) {
+			paymentTypes.forEach((item) => {
+				let it = {
+					value: item.paymentTypeName.toString(),
+					label: item.paymentTypeName.toString(),
+				};
+				paymentArray.push(it);
+			})
+		}
+		return paymentArray;
+	}
+
 
 	const optionsProduct = makeProductOptions(products);
 	const optionsCustomers = makeCustomerOptions(customers);
+	const optionsCurrencies = makeCurrencyOptions(currencies);
+	const optionsPaymentTypes = makePaymentOptions(paymentTypes);
 
 	const showCustomersDetails = (customer) => {
 		if (customer) {
@@ -196,10 +252,12 @@ const InvoiceCreate = () => {
 
 		<>
 			<div>
-				{isPending && isPendingC && isPendingN && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+				{isPending && isPendingC && isPendingN && isPendingCu && isPendingP && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 				{error && <div>{error}</div>}
 				{errorC && <div>{errorC}</div>}
-				{products && (
+				{errorCu && <div>{errorCu}</div>}
+				{errorP && <div>{errorP}</div>}
+				{products && customers && currencies && paymentTypes && (
 
 					<div class="container-fluid">
 						<div class="d-flex justify-content-start align-items-center">
@@ -229,21 +287,33 @@ const InvoiceCreate = () => {
 									<div class="row mb-5">
 
 										<div class="col-12 col-sm-3">
-											<span style={{ marginLeft: "5px" }} className="h6">Quentity</span>
+											<span style={{ marginLeft: "5px" }} className="h5">Quentity</span>
 											<input type="number" min="1" class="form-control"
-												placeholder="e.g. 3" required value={quentity} onChange={(e) => setQuentity(e.target.value)} />
+												placeholder="e.g. 3" required value={quantity} onChange={(e) => setQuantity(e.target.value)} />
 										</div>
 
 										<div class="col-12 col-sm-4">
-											<span style={{ marginLeft: "5px" }} className="h6">VAT rate %</span>
+											<span style={{ marginLeft: "5px" }} className="h5">VAT rate %</span>
 											<input type="number" min="0" max="100" step="0.1" class="form-control"
 												placeholder="e.g. 23,0" required value={vat} onChange={(e) => setVat(e.target.value)} />
 										</div>
 
 										<div class="col-12 col-sm-5">
-											<span style={{ marginLeft: "5px" }} className="h6">Gross</span>
+											<span style={{ marginLeft: "5px" }} className="h5">Unit net value</span>
 											<input type="number" min="0" step="0.01" class="form-control"
-												placeholder="e.g. 123,45" required value={gross} onChange={(e) => setGross(e.target.value)} />
+												placeholder="e.g. 123,45" required value={net} onChange={(e) => setNet(e.target.value)} />
+										</div>
+									</div>
+
+									<div class="row mb-5">
+										<div class="col-12 col-sm-5">
+											<span style={{ marginLeft: "5px" }} className="h5">Currency</span>
+											<Select onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
+										</div>
+
+										<div class="col-12 col-sm-7">
+											<span style={{ marginLeft: "5px" }} className="h5">Payment type</span>
+											<Select onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
 										</div>
 									</div>
 
@@ -267,6 +337,11 @@ const InvoiceCreate = () => {
 										<span style={{ marginLeft: "5px" }}>Payment deadline</span>
 										<input type="number" min="1" class="form-control"
 											placeholder="How many months?" required value={months} onChange={(e) => setMonths(e.target.value)} />
+									</div>
+
+									<div class="form-group mt-3" style={{ marginLeft: "5px" }}>
+										<label for="exampleFormControlTextarea1">Remarks</label>
+										<textarea class="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
 									</div>
 
 									<div class="mb-3 mt-3 ms-3">

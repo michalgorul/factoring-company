@@ -29,8 +29,8 @@ public class InvoiceController {
 
 
     @PostMapping
-    public InvoiceEntity addInvoice(@RequestBody InvoiceDto invoiceDto) {
-        return this.invoiceService.addInvoice(invoiceDto);
+    public InvoiceEntity addInvoice(@RequestBody InvoiceCreateRequest invoiceCreateRequest) {
+        return this.invoiceService.addInvoice(invoiceCreateRequest);
     }
 
 

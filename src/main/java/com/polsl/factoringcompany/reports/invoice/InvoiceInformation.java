@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
@@ -63,9 +64,12 @@ public class InvoiceInformation {
         this.paymentMethod = paymentMethod;
         this.itemName = productEntity.getName();
         this.pkwiu = productEntity.getPkwiu();
-        this.quantity = String.valueOf(invoiceItemEntity.getQuentity());
+        this.quantity = String.valueOf(invoiceItemEntity.getQuantity());
         this.unit = productEntity.getMeasureUnit();
-        this.vat = String.valueOf(invoiceItemEntity.getVatRate()) + "%";
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+        this.vat = decimalFormat.format(invoiceItemEntity.getVatRate().doubleValue() * 100) + "%";
         this.gross = String.valueOf(invoiceItemEntity.getGrossValue());
         this.net = String.valueOf(invoiceItemEntity.getNetValue());
         this.vatValue = String.valueOf(invoiceItemEntity.getVatValue());

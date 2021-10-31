@@ -3,6 +3,7 @@ package com.polsl.factoringcompany.invoiceitem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.product.ProductEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -18,18 +20,18 @@ public class InvoiceItemEntity {
 
     @Id
     @SequenceGenerator(
-            name = "invoice_item_sequence",
-            sequenceName = "invoice_item_sequence",
+            name = "invoice_item_id_seq",
+            sequenceName = "invoice_item_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "invoice_item_sequence"
+            generator = "invoice_item_id_seq"
     )
     private long id;
 
-    @Column(name = "quentity", nullable = false)
-    private int quentity;
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
 
     @Column(name = "net_price", nullable = false, precision = 2)
     private BigDecimal netPrice;
@@ -66,38 +68,17 @@ public class InvoiceItemEntity {
     }
 
     public InvoiceItemEntity(InvoiceItemDto invoiceItemDto) {
-        BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuentity() * invoiceItemDto.getNetPrice().doubleValue());
-        BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue());
+        BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getNetPrice().doubleValue());
+        BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue());
 
-        this.quentity = invoiceItemDto.getQuentity();
+        this.quantity = invoiceItemDto.getQuantity();
         this.netPrice = invoiceItemDto.getNetPrice();
         this.netValue = netValue;
         this.vatRate = invoiceItemDto.getVatRate();
         this.vatValue = vatValue;
         this.grossValue = BigDecimal.valueOf(netValue.doubleValue() + vatValue.doubleValue());
-        this.productId = invoiceItemDto.getProductId();
-        this.invoiceId = invoiceItemDto.getInvoiceId();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InvoiceItemEntity that = (InvoiceItemEntity) o;
-        return id == that.id &&
-                quentity == that.quentity &&
-                productId == that.productId &&
-                invoiceId == that.invoiceId &&
-                Objects.equals(netPrice, that.netPrice) &&
-                Objects.equals(netValue, that.netValue) &&
-                Objects.equals(vatRate, that.vatRate) &&
-                Objects.equals(vatValue, that.vatValue) &&
-                Objects.equals(grossValue, that.grossValue);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, quentity, netPrice, netValue, vatRate, vatValue, grossValue, productId, invoiceId);
+        this.productId = Math.toIntExact(invoiceItemDto.getProductId());
+        this.invoiceId = Math.toIntExact(invoiceItemDto.getInvoiceId());
     }
 
 

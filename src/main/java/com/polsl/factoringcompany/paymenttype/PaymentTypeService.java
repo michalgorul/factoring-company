@@ -86,4 +86,9 @@ public class PaymentTypeService {
                 StringUtils.capitalize(paymentTypeName));
         return paymentTypeEntity.isPresent();
     }
+
+    public PaymentTypeEntity getPaymentTypeEntityByName(String name){
+        return this.paymentTypeRepository.findPaymentTypeEntityByPaymentTypeName(name)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type", 0L));
+    }
 }

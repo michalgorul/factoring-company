@@ -140,4 +140,9 @@ public class CurrencyService {
         return !currencyEntityByCode.get().getId().equals(currencyEntityById.get().getId());
     }
 
+    public CurrencyEntity getCurrencyByCurrencyName(String name){
+        return this.currencyRepository.findCurrencyEntityByName(name)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Currency", 0L));
+    }
+
 }

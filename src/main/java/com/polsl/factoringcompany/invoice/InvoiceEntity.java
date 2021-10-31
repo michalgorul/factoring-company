@@ -9,6 +9,7 @@ import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.seller.SellerEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.allegro.finance.tradukisto.MoneyConverters;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity(name = "invoice")
@@ -26,13 +28,13 @@ import java.util.Objects;
 public class InvoiceEntity {
     @Id
     @SequenceGenerator(
-            name = "invoice_sequence",
-            sequenceName = "invoice_sequence",
+            name = "invoice_id_seq",
+            sequenceName = "invoice_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "invoice_sequence"
+            generator = "invoice_id_seq"
     )
     private long id;
 
@@ -120,16 +122,16 @@ public class InvoiceEntity {
     }
 
 
-    public InvoiceEntity(InvoiceDto invoiceDto, String invoiceNumber) {
+    public InvoiceEntity(InvoiceDto invoiceDto) {
         MoneyConverters converter = MoneyConverters.ENGLISH_BANKING_MONEY_VALUE;
         String toPayInWords = converter.asWords(invoiceDto.getToPay());
 
-        this.invoiceNumber = invoiceNumber;
+        this.invoiceNumber = invoiceDto.getInvoiceNumber();
         this.creationDate = invoiceDto.getCreationDate();
         this.saleDate = invoiceDto.getSaleDate();
         this.paymentDeadline = invoiceDto.getPaymentDeadline();
         this.toPay = invoiceDto.getToPay();
-        this.toPayInWords = toPayInWords;
+        this.toPayInWords = toPayInWords.replaceAll(" £", "");
         this.paid = invoiceDto.getPaid();
         this.leftToPay = BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() - invoiceDto.getPaid().doubleValue());
         this.remarks = invoiceDto.getRemarks();
@@ -138,38 +140,7 @@ public class InvoiceEntity {
         this.customerId = invoiceDto.getCustomerId();
         this.paymentTypeId = invoiceDto.getPaymentTypeId();
         this.currencyId = invoiceDto.getCurrencyId();
+        this.userId = invoiceDto.getUserId();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InvoiceEntity that = (InvoiceEntity) o;
-        return id == that.id &&
-                sellerId == that.sellerId &&
-                customerId == that.customerId &&
-                paymentTypeId == that.paymentTypeId &&
-                currencyId == that.currencyId &&
-                Objects.equals(invoiceNumber, that.invoiceNumber) &&
-                Objects.equals(creationDate, that.creationDate) &&
-                Objects.equals(saleDate, that.saleDate) &&
-                Objects.equals(paymentDeadline, that.paymentDeadline) &&
-                Objects.equals(toPay, that.toPay) &&
-                Objects.equals(toPayInWords, that.toPayInWords) &&
-                Objects.equals(paid, that.paid) &&
-                Objects.equals(leftToPay, that.leftToPay) &&
-                Objects.equals(remarks, that.remarks) &&
-                Objects.equals(sellerBySellerId, that.sellerBySellerId) &&
-                Objects.equals(customerByCustomerId, that.customerByCustomerId) &&
-                Objects.equals(paymentTypeByPaymentTypeId, that.paymentTypeByPaymentTypeId) &&
-                Objects.equals(currencyByCurrencyId, that.currencyByCurrencyId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, invoiceNumber, creationDate, saleDate, paymentDeadline, toPay,
-                toPayInWords, paid, leftToPay, remarks, sellerId, customerId, paymentTypeId,
-                currencyId, sellerBySellerId, customerByCustomerId,
-                paymentTypeByPaymentTypeId, currencyByCurrencyId);
-    }
 }

@@ -1,9 +1,9 @@
 import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { Spinner } from 'react-bootstrap';
-import  config  from '../../services/config';
-import { errorToast, infoToast } from "../../components/toast/makeToast";
-import useFetchWithToken from "../../services/useFetchWithToken";
+import  config  from '../../../services/config';
+import { errorToast, infoToast } from "../../../components/toast/makeToast";
+import useFetchWithToken from "../../../services/useFetchWithToken";
 
 const ProductEdit = () => {
 

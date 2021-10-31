@@ -33,8 +33,9 @@ import PasswordReset from './containers/NotLogged/LoginPage/resetPasswordRequest
 import PasswordResetConfirmation from './containers/NotLogged/LoginPage/confirmation';
 import PasswordResetChange from './containers/NotLogged/LoginPage/resetPasswordChange';
 import PasswordResetSuccess from './containers/NotLogged/LoginPage/success';
-import ProductCreate from './containers/Product/productCreate';
-import ProductEdit from './containers/Product/productEdit';
+import ProductEdit from './containers/Logged/Product/productEdit';
+import ProductCreate from './containers/Logged/Product/productCreate';
+
 
 
 const UserComponents = ({match}) => {

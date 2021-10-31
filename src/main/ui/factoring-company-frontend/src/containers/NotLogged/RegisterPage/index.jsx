@@ -45,10 +45,10 @@ const Register = () => {
 						successToast('Registration completed!');
 						infoToast('Confirm your email to be able to login!');
 					}
-					else if(response.status == 409){
+					else if (response.status == 409) {
 						errorToast('Email or username already in use');
 					}
-					else if(response.status == 406){
+					else if (response.status == 406) {
 						errorToast('Some of inputs were incorrect');
 					}
 					else {
@@ -150,6 +150,9 @@ const Register = () => {
 									<label for="validationServer01">Password</label>
 									<input type="password" class="form-control" id="validationServer01" placeholder="Password"
 										value={password} onChange={(e) => setPassword(e.target.value)} required />
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										Your password must be 8-30 characters long, contain at least one uppercase character, numeric character and symbol.
+									</small>
 								</div>
 								<div class="col-md-6 mb-3">
 									<label for="validationServer02">Confirm password</label>

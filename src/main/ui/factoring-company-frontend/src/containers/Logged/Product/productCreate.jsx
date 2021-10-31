@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import 'react-phone-number-input/style.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { infoToast, warningToast } from "../../components/toast/makeToast";
-import  config  from '../../services/config';
+import { warningToast, infoToast } from "../../../components/toast/makeToast";
+import config from "../../../services/config";
 
 toast.configure();
 

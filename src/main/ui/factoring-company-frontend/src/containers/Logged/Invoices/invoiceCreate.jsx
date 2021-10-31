@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import useFetch from '../../../components/useFetch/useFetch';
+import { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select'
 import { Form, Row, Col } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import FloatingLabel from "react-bootstrap-floating-label";
@@ -19,28 +19,68 @@ toast.configure();
 const InvoiceCreate = () => {
 	const [performanceDate, setPerformanceDate] = useState(new Date());
 	const [issueDate, setIssueDate] = useState(new Date());
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [city, setCity] = useState('');
-	const [street, setStreet] = useState('');
-	const [postalCode, setPostalCode] = useState('');
-	const [product, setProduct] = useState('');
-	const [pkwiu, setPkwiu] = useState('');
 	const [quentity, setQuentity] = useState('');
-	const [measureUnit, setMeasureUnit] = useState('');
 	const [gross, setGross] = useState('');
 	const [vat, setVat] = useState('');
 	const [months, setMonths] = useState('');
 	const [isPendingN, setIsPending] = useState(false);
-	// const history = useHistory();
-	const { data: products, error, isPending } = useFetchWithToken(`${config.API_URL}/api/product`);
 
+	const [customerPhone, setCustomerPhone] = useState('');
+	const [customer, setCustomer] = useState(null);
+	const [productName, setProductName] = useState('');
+	const [product, setProduct] = useState(null);
+
+
+	const { data: products, error, isPending } = useFetchWithToken(`${config.API_URL}/api/product`);
+	const { data: customers, errorC, isPendingC } = useFetchWithToken(`${config.API_URL}/api/customer/current`);
+
+
+	useEffect(() => {
+
+		fetch(`${config.API_URL}/api/customer/phone/${customerPhone}`, {
+			method: 'GET',
+			headers: {
+				"Authorization": `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+			.then(res => {
+				if (!res.ok) {
+					throw Error("could not fetch the data for that resource");
+				}
+				return res.json();
+			})
+			.then(data => {
+				setCustomer(data);
+			})
+			.catch(err => {
+				console.log('fetch aborted');
+			})
+
+		fetch(`${config.API_URL}/api/product/name/${productName}`, {
+			method: 'GET',
+			headers: {
+				"Authorization": `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+			.then(res => {
+				if (!res.ok) {
+					throw Error("could not fetch the data for that resource");
+				}
+				return res.json();
+			})
+			.then(data => {
+				setProduct(data);
+			})
+			.catch(err => {
+				console.log('fetch aborted');
+			})
+
+	}, [customerPhone, productName])
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!firstName || !lastName || !street || !city || !postalCode || !product || !pkwiu
-			|| !measureUnit || !vat || !performanceDate || !issueDate) {
+		if (!product || !vat || !performanceDate || !issueDate) {
 			toast.warn('Please fill all fields', {
 				position: "bottom-right",
 				autoClose: 5000,
@@ -54,10 +94,25 @@ const InvoiceCreate = () => {
 			});
 		}
 		else {
-			const buyer = { performanceDate, issueDate, firstName, lastName, city, street, postalCode, product, pkwiu, quentity, measureUnit, gross, vat, months };
+			const buyer = { performanceDate, issueDate, product, quentity, gross, vat, months };
 
 			console.log(buyer);
 		}
+	}
+
+	const makeCustomerOptions = (customers) => {
+		let customersArray = [];
+
+		if (customers) {
+			customers.forEach((item) => {
+				let it = {
+					value: item.phone.toString(),
+					label: item.firstName.toString() + ' ' + item.lastName.toString() + ', phone: ' + item.phone.toString()
+				};
+				customersArray.push(it);
+			})
+		}
+		return customersArray;
 	}
 
 	const makeProductOptions = (products) => {
@@ -75,131 +130,120 @@ const InvoiceCreate = () => {
 		return productArray;
 	}
 
-	const makePkwiuOptions = (products) => {
-		let productArray = [];
-
-		if (products) {
-			products.forEach((item) => {
-				let it = {
-					value: item.pkwiu.toString(),
-					label: item.pkwiu.toString(),
-				};
-				productArray.push(it);
-			})
-		}
-		const key = 'value';
-		const arrayUniqueByKey = [...new Map(productArray.map(item =>
-			[item[key], item])).values()];
-
-		return arrayUniqueByKey;
-		return productArray;
-	}
-
-	const makeMeasureUnitOptions = (products) => {
-		let productArray = [];
-
-		if (products) {
-			products.forEach((item) => {
-				let it = {
-					value: item.measureUnit.toString(),
-					label: item.measureUnit.toString(),
-				};
-				productArray.push(it);
-			})
-		}
-		const key = 'value';
-		const arrayUniqueByKey = [...new Map(productArray.map(item =>
-			[item[key], item])).values()];
-
-		return arrayUniqueByKey;
-	}
 
 	const optionsProduct = makeProductOptions(products);
+	const optionsCustomers = makeCustomerOptions(customers);
 
-	const optionsPkwiu = makePkwiuOptions(products);
+	const showCustomersDetails = (customer) => {
+		if (customer) {
+			return (
+				<>
+					<div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Name: <b>{customer.firstName + ' ' + customer.lastName} </b></li>
+							<li class="list-group-item">Email: <b> {customer.email} </b></li>
+							<li class="list-group-item">Country: <b>{customer.country}</b></li>
+							<li class="list-group-item">City: <b>{customer.city}</b></li>
+							<li class="list-group-item">Street: <b>{customer.street} </b></li>
+							<li class="list-group-item">Postal code: <b>{customer.postalCode}</b></li>
+							<li class="list-group-item">Phone: <b>{customer.phone}</b></li>
+						</ul>
+					</div>
+					<div class="d-flex">
+						<a href={"/user/customers/edit/" + customer.id} className="text-decoration-none ml-auto">Edit customer's details</a>
+					</div>
+					<div class="d-flex mb-5">
+						<a href="/user/customers/create" className="text-decoration-none ml-auto">Create new customer</a>
+					</div>
+				</>
+			)
+		}
+		return (
+			<div class="d-flex mb-4">
+				<a href="/user/customers/create" className="text-decoration-none ml-auto">Create new customer</a>
+			</div>
+		)
+	}
 
-	const optionsMeasureUnit = makeMeasureUnitOptions(products);
-
-	const optionsVat = [
-		{ value: '18', label: '18' },
-		{ value: '23', label: '23' }
-	];
+	const showProductDetails = (product) => {
+		if (product) {
+			return (
+				<>
+					<div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Name: <b>{product.name} </b></li>
+							<li class="list-group-item">PKWIU: <b> {product.pkwiu} </b></li>
+							<li class="list-group-item">Measure unit: <b>{product.measureUnit}</b></li>
+						</ul>
+					</div>
+					<div class="d-flex">
+						<a href={`/user/product/edit/${product.id}`} className="text-decoration-none ml-auto">Edit product's details</a>
+					</div>
+					<div class="d-flex mb-5">
+						<a href="/user/product/create" className="text-decoration-none ml-auto">Create new product</a>
+					</div>
+				</>
+			)
+		}
+		return (
+			<div class="d-flex mb-4">
+				<a href="/user/product/create" className="text-decoration-none ml-auto">Create new product</a>
+			</div>
+		)
+	}
 
 	return (
 
 		<>
 			<div>
-				{isPending && isPendingN && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+				{isPending && isPendingC && isPendingN && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 				{error && <div>{error}</div>}
+				{errorC && <div>{errorC}</div>}
 				{products && (
 
 					<div class="container-fluid">
 						<div class="d-flex justify-content-start align-items-center">
 							<div class="col-md-8 col-lg-8 col-xl-6">
 								<div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-									<p class="lead fw-normal mt-2 mb-3 display-4">New Invoice</p>
+									<p class="lead fw-normal mt-2 mb-4 display-4">New Invoice</p>
 								</div>
 								<form onSubmit={handleSubmit}>
-									<Form className="mb-4">
-										<span style={{ marginLeft: "5px" }}>Buyer:</span>
-										<Row className="align-items-center">
-											<Col sm={6} className="my-1">
-												<FloatingLabel onChange={(e) => setFirstName(e.target.value)} controlId="floatingInput" label="First Name" className="mb-1">
-													<Form.Control />
-												</FloatingLabel>
-											</Col>
-											<Col sm={6} className="my-1">
-												<FloatingLabel onChange={(e) => setLastName(e.target.value)} controlId="floatingInput" label="Last Name" className="mb-1">
-													<Form.Control id="inlineFormInputName" placeholder="Jane Doe" />
-												</FloatingLabel>
-											</Col>
-										</Row>
-										<Row className="align-items-center">
-											<Col sm={5} className="my-1">
-												<FloatingLabel onChange={(e) => setStreet(e.target.value)} controlId="floatingInput" label="Street" className="mb-3">
-													<Form.Control id="inlineFormInputName" placeholder="Jane Doe" />
-												</FloatingLabel>
-											</Col>
-											<Col sm={4} className="my-1">
-												<FloatingLabel onChange={(e) => setCity(e.target.value)} controlId="floatingInput" label="City" className="mb-3">
-													<Form.Control id="inlineFormInputName" placeholder="Jane Doe" />
-												</FloatingLabel>
-											</Col>
-											<Col sm={3} className="my-1">
-												<FloatingLabel onChange={(e) => setPostalCode(e.target.value)} controlId="floatingInput" label="Postal code" className="mb-3">
-													<Form.Control id="inlineFormInputName" placeholder="Jane Doe" />
-												</FloatingLabel>
-											</Col>
-										</Row>
-									</Form>
+									<div class="row mb-2">
+										<div class="col-12">
+											<span style={{ marginLeft: "5px" }} className="h5">Customer</span>
+											<Select onChange={(e) => setCustomerPhone(e.value)} options={optionsCustomers} />
+										</div>
+									</div>
+
+									{showCustomersDetails(customer)}
+
+									<div class="row mb-2">
+										<div class="col-12">
+											<span style={{ marginLeft: "5px" }} className="h5">Product</span>
+											<Select onChange={(e) => setProductName(e.value)} options={optionsProduct} />
+										</div>
+									</div>
+
+									{showProductDetails(product)}
 
 									<div class="row mb-5">
-										<div class="col-12 col-sm-6 mb-2">
-											<span style={{ marginLeft: "5px" }}>Product</span>
-											<CreatableSelect onChange={(e) => setProduct(e.label)} options={optionsProduct} />
-										</div>
-										<div class="col-12 col-sm-6 mb-2">
-											<span style={{ marginLeft: "5px" }}>PKWIU</span>
-											<CreatableSelect onChange={(e) => setPkwiu(e.label)} options={optionsPkwiu} />
-										</div>
-										<div class="col-12 col-sm-6">
-											<span style={{ marginLeft: "5px" }}>Quentity</span>
+
+										<div class="col-12 col-sm-3">
+											<span style={{ marginLeft: "5px" }} className="h6">Quentity</span>
 											<input type="number" min="1" class="form-control"
 												placeholder="e.g. 3" required value={quentity} onChange={(e) => setQuentity(e.target.value)} />
 										</div>
-										<div class="col-12 col-sm-6 mb-2">
-											<span style={{ marginLeft: "5px" }}>Measure unit</span>
-											<CreatableSelect onChange={(e) => setMeasureUnit(e.label)} options={optionsMeasureUnit} />
-										</div>
-										<div class="col-12 col-sm-6">
-											<span style={{ marginLeft: "5px" }}>VAT rate</span>
-											<CreatableSelect onChange={(e) => setVat(e.label)} options={optionsVat} />
+
+										<div class="col-12 col-sm-4">
+											<span style={{ marginLeft: "5px" }} className="h6">VAT rate %</span>
+											<input type="number" min="0" max="100" step="0.1" class="form-control"
+												placeholder="e.g. 23,0" required value={vat} onChange={(e) => setVat(e.target.value)} />
 										</div>
 
-										<div class="col-12 col-sm-6">
-											<span style={{ marginLeft: "5px" }}>Gross</span>
+										<div class="col-12 col-sm-5">
+											<span style={{ marginLeft: "5px" }} className="h6">Gross</span>
 											<input type="number" min="0" step="0.01" class="form-control"
-												placeholder="e.g. 123.45" required value={gross} onChange={(e) => setGross(e.target.value)} />
+												placeholder="e.g. 123,45" required value={gross} onChange={(e) => setGross(e.target.value)} />
 										</div>
 									</div>
 

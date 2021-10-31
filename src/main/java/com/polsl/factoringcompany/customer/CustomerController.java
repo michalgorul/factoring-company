@@ -27,6 +27,11 @@ public class CustomerController {
         return this.customerService.getCustomer(id);
     }
 
+    @GetMapping(path = "/phone/{phone}")
+    public CustomerEntity getCustomerByPhone(@PathVariable String phone) {
+        return this.customerService.getCustomerByPhone(phone);
+    }
+
     @PostMapping
     public CustomerEntity addCustomer(@RequestBody CustomerRequestDto customerRequestDto) {
         return this.customerService.addCustomer(customerRequestDto);

@@ -6,7 +6,6 @@ import { Spinner } from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input'
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
-import { updateWithToken } from "../../../services/useUpdateWithToken";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 
 const CustomerEdit = () => {

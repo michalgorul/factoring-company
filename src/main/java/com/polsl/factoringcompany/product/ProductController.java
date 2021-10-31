@@ -24,16 +24,20 @@ public class ProductController {
     }
 
 
+    @GetMapping(path = "/name/{name}")
+    public ProductEntity getProductByName(@PathVariable String name) {
+        return this.productService.getProductByName(name);
+    }
+
+
     @PostMapping
-    public ProductEntity addProduct(@RequestParam String name, @RequestParam String pkwiu,
-                                    @RequestParam String measureUnit) {
-        return this.productService.addProduct(name, pkwiu, measureUnit);
+    public ProductEntity addProduct(@RequestBody ProductRequest productRequest) {
+        return this.productService.addProduct(productRequest);
     }
 
     @PutMapping("/{id}")
-    public ProductEntity updateProduct(@PathVariable Long id, @RequestParam String name,
-                                       @RequestParam String pkwiu, @RequestParam String measureUnit) {
-        return this.productService.updateProduct(id, name, pkwiu, measureUnit);
+    public ProductEntity updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
+        return this.productService.updateProduct(id, productRequest);
     }
 
 

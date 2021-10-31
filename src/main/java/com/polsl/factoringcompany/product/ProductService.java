@@ -31,12 +31,15 @@ public class ProductService {
     }
 
 
-    public ProductEntity addProduct(String name, String pkwiu, String measureUnit) {
+    public ProductEntity addProduct(ProductRequest productRequest) {
 
-        validating(name, pkwiu, measureUnit);
+        validating(productRequest.getName(), productRequest.getPkwiu(), productRequest.getMeasureUnit());
 
         try {
-            return productRepository.save(new ProductEntity(StringUtils.capitalize(name), pkwiu, measureUnit));
+            return productRepository.save(new ProductEntity(
+                    StringUtils.capitalize(productRequest.getName()),
+                    productRequest.getPkwiu(),
+                    productRequest.getMeasureUnit()));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -53,19 +56,19 @@ public class ProductService {
 
 
     @Transactional
-    public ProductEntity updateProduct(Long id, String name, String pkwiu, String measureUnit) {
+    public ProductEntity updateProduct(Long id, ProductRequest productRequest) {
 
         Optional<ProductEntity> productEntity = productRepository.findById(id);
 
         if (productEntity.isEmpty())
             throw new IdNotFoundInDatabaseException("Product", id);
 
-        validating(name, pkwiu, measureUnit);
+        validatingUpdate(productRequest.getName(), productRequest.getPkwiu(), productRequest.getMeasureUnit(), id);
 
         try {
-            productEntity.get().setName(StringUtils.capitalize(name));
-            productEntity.get().setMeasureUnit(measureUnit);
-            productEntity.get().setPkwiu(pkwiu);
+            productEntity.get().setName(StringUtils.capitalize(productRequest.getName()));
+            productEntity.get().setMeasureUnit(productRequest.getMeasureUnit());
+            productEntity.get().setPkwiu(productRequest.getPkwiu());
             return this.productRepository.save(productEntity.get());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -88,6 +91,21 @@ public class ProductService {
             throw new NotUniqueException("Product", "name", name);
     }
 
+    private void validatingUpdate(String name, String pkwiu, String measureUnit, Long id) {
+
+        if (StringValidator.stringWithSpacesImproper(name, 50))
+            throw new ValueImproperException(name);
+
+        if (pkwiuImproper(pkwiu))
+            throw new ValueImproperException(pkwiu, "PKWIU");
+
+        if (StringValidator.stringWithSpacesImproper(measureUnit, 8))
+            throw new ValueImproperException(measureUnit, "measure unit");
+
+        if (ifNameTakenUpdate(id, name))
+            throw new NotUniqueException("Product", "name", name);
+    }
+
 
     public boolean ifNameTaken(String name) {
         Optional<ProductEntity> foundByName = productRepository.findProductEntityByName(
@@ -95,10 +113,28 @@ public class ProductService {
         return foundByName.isPresent();
     }
 
+    public boolean ifNameTakenUpdate(Long id, String name) {
+        Optional<ProductEntity> foundByName = productRepository.findProductEntityByName(
+                StringUtils.capitalize(name));
+        Optional<ProductEntity> foundById = productRepository.findById(id);
+
+        if (foundById.isEmpty())
+            throw new IdNotFoundInDatabaseException("Product", id);
+        if (foundByName.isEmpty())
+            return false;
+
+        return !foundByName.get().getId().equals(foundById.get().getId());
+    }
+
 
     public boolean pkwiuImproper(String pkwiu) {
         String patterns = "\\d\\d[.]\\d\\d[.]\\d\\d[.]\\d";
         Pattern pattern = Pattern.compile(patterns);
         return !pattern.matcher(pkwiu).matches();
+    }
+
+    public ProductEntity getProductByName(String name) {
+        return this.productRepository.findProductEntityByName(name)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Product", 0L));
     }
 }

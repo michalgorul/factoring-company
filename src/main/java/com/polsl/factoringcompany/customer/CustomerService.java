@@ -142,4 +142,9 @@ public class CustomerService {
             throw new RuntimeException(e);
         }
     }
+
+    public CustomerEntity getCustomerByPhone(String phone) {
+        return this.customerRepository.findByPhone(phone)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Customer", 0L));
+    }
 }

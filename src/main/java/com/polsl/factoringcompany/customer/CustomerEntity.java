@@ -70,9 +70,11 @@ public class CustomerEntity {
     private Integer companyId;
 
     @OneToMany(mappedBy = "customerByCustomerId")
+    @JsonIgnore
     private Collection<InvoiceEntity> invoicesById;
 
     @OneToMany(mappedBy = "customerByCustomerId")
+    @JsonIgnore
     private Collection<TransactionEntity> transactionsById;
 
     @ManyToOne

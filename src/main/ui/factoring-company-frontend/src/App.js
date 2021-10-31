@@ -33,6 +33,8 @@ import PasswordReset from './containers/NotLogged/LoginPage/resetPasswordRequest
 import PasswordResetConfirmation from './containers/NotLogged/LoginPage/confirmation';
 import PasswordResetChange from './containers/NotLogged/LoginPage/resetPasswordChange';
 import PasswordResetSuccess from './containers/NotLogged/LoginPage/success';
+import ProductCreate from './containers/Product/productCreate';
+import ProductEdit from './containers/Product/productEdit';
 
 
 const UserComponents = ({match}) => {
@@ -62,6 +64,8 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/profile/company/create`} exact component={CompanyCreate} />
           <ProtectedRoute path={`${match.url}/profile/bank/create`} exact component={CreateBankAccount} />
           <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit} />
+          <ProtectedRoute path={`${match.url}/product/create`} exact component={ProductCreate} />
+          <ProtectedRoute path={`${match.url}/product/edit/:id`} exact component={ProductEdit} />
           <ProtectedRoute path="*" render={() => (<Redirect to="/404" />)} />
         </Switch>
       </Layout>

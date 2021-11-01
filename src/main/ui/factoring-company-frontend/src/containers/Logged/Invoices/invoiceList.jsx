@@ -8,21 +8,23 @@ import { useEffect } from 'react';
 const InvoiceList = ({ whatInvoices }) => {
     const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice/current`);
 
-    function compare( a, b ) {
-        if ( a.id < b.id ){
-          return -1;
+    function compare(a, b) {
+        if (a.id < b.id) {
+            return -1;
         }
-        if ( a.id > b.id ){
-          return 1;
+        if (a.id > b.id) {
+            return 1;
         }
         return 0;
-      }
+    }
 
     useEffect(() => {
         if (invoices) {
-            invoices.forEach(invoice=>{
+            invoices.forEach(invoice => {
                 invoice.creationDate = new Date(invoice.creationDate).toDateString();
                 invoice.paymentDeadline = new Date(invoice.paymentDeadline).toDateString();
+                invoice.paid = invoice.paid.toFixed(2);
+                invoice.toPay = invoice.toPay.toFixed(2);
             })
         }
 

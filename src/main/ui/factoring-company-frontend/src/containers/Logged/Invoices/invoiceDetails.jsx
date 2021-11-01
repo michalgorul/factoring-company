@@ -1,7 +1,7 @@
-import {useHistory, useParams} from "react-router-dom";
-import {Button, Modal, Spinner} from 'react-bootstrap';
-import {useEffect, useState} from "react";
-import {errorToast, infoToast} from "../../../components/toast/makeToast";
+import { useHistory, useParams } from "react-router-dom";
+import { Button, Modal, Spinner } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
 import config from "../../../services/config";
 import axios from 'axios'
@@ -18,12 +18,17 @@ const InvoiceDetails = () => {
 
 	const [show, setShow] = useState(false);
 	const [isPending, setIsPending] = useState(false);
+	const [fixed, setFixed] = useState(false);
 
 	useEffect(() => {
 		if (invoice) {
 			invoice.creationDate = new Date(invoice.creationDate).toDateString();
 			invoice.paymentDeadline = new Date(invoice.paymentDeadline).toDateString();
 			invoice.saleDate = new Date(invoice.saleDate).toDateString();
+			invoice.paid = invoice.paid.toFixed(2);
+			invoice.toPay = invoice.toPay.toFixed(2);
+			console.log("fixed")
+			setFixed(true);
 		}
 
 	}, [invoice]);
@@ -62,7 +67,7 @@ const InvoiceDetails = () => {
 	}
 
 	const handleShowPdf = () => {
-        setIsPending(true);
+		setIsPending(true);
 
 		try {
 			axios
@@ -101,7 +106,7 @@ const InvoiceDetails = () => {
 			{errorCu && <div>{errorCu}</div>}
 			{errorP && <div>{errorP}</div>}
 			{errorS && <div>{errorS}</div>}
-			{invoice && customer && seller && paymentType && currency && (
+			{invoice && customer && seller && paymentType && currency && fixed && (
 				<article class="mt-2 ms-3">
 					<div class="media align-items-center py-1">
 						<div class="media-body ml-4">
@@ -136,6 +141,10 @@ const InvoiceDetails = () => {
 								</ul>
 							</div>
 						</div>
+					</div>
+
+					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+						<a href={"edit/general-info/" + id} className="text-decoration-none ml-auto h6">Edit general info</a>
 					</div>
 
 
@@ -197,6 +206,10 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
+					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+						<a href={"/user/customers/edit/" + customer.id} className="text-decoration-none ml-auto h6">Edit customer info</a>
+					</div>
+
 					<h5 class="mt-4 mb-3">Payment Information</h5>
 					<div class="container">
 						<div class="row align-items-start ms-2">
@@ -217,22 +230,23 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
-					<div class="mt-3 col-6 text-center">
-						{!isPending && <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>}
-						{isPending && <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" disabled onClick={handleShowPdf}>Generating...</button>}
-
-						
+					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+						<a href={"edit/payment-info/" + id} className="text-decoration-none ml-auto h6">Edit payment info</a>
 					</div>
 
-					<div class="alert clearfix mt-2">
-						<a href={"edit/general-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit general info</a>
-						<a href={"/user/customers/edit/" + customer.id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer info</a>
-						<a href={"edit/payment-info/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit payment info</a>
-					</div>
-					<div class="mt-2 col-6 text-center">
-					<button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
+					<div className="container mb-4">
+						<div className="row align-items-start">
+							<div class="mt-3 col-12 col-lg-3 text-center">
+								{!isPending && <button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>}
+								{isPending && <button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" disabled onClick={handleShowPdf}>Generating...</button>}
+							</div>
 
+							<div class="mt-3 col-12 col-lg-3 text-center">
+								<button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
+							</div>
+						</div>
 					</div>
+
 
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>

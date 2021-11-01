@@ -18,18 +18,6 @@ const InvoiceList = ({ whatInvoices }) => {
         return 0;
     }
 
-    useEffect(() => {
-        if (invoices) {
-            invoices.forEach(invoice => {
-                invoice.creationDate = new Date(invoice.creationDate).toDateString();
-                invoice.paymentDeadline = new Date(invoice.paymentDeadline).toDateString();
-                invoice.paid = invoice.paid.toFixed(2);
-                invoice.toPay = invoice.toPay.toFixed(2);
-            })
-        }
-
-    }, [invoices]);
-
     return (
         <Table striped borderless hover>
             <caption>List of {whatInvoices} invoices</caption>
@@ -54,10 +42,10 @@ const InvoiceList = ({ whatInvoices }) => {
                         <tr key={invoice.id} className="clickable" onclick="#">
                             <th>{invoice.id}</th>
                             <td><a href={"/user/invoices/" + invoice.id} className="text-decoration-none">{invoice.invoiceNumber}</a></td>
-                            <td>{invoice.creationDate}</td>
-                            <td>{invoice.paymentDeadline}</td>
-                            <td>{invoice.toPay}</td>
-                            <td>{invoice.paid}</td>
+                            <td>{new Date(invoice.creationDate).toDateString()}</td>
+                            <td>{new Date(invoice.paymentDeadline).toDateString()}</td>
+                            <td>{Number(invoice.toPay).toFixed(2)}</td>
+                            <td>{Number(invoice.paid).toFixed(2)}</td>
                         </tr>
                     ))}
             </tbody>

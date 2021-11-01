@@ -18,21 +18,6 @@ const InvoiceDetails = () => {
 
 	const [show, setShow] = useState(false);
 	const [isPending, setIsPending] = useState(false);
-	const [fixed, setFixed] = useState(false);
-
-	useEffect(() => {
-		if (invoice) {
-			invoice.creationDate = new Date(invoice.creationDate).toDateString();
-			invoice.paymentDeadline = new Date(invoice.paymentDeadline).toDateString();
-			invoice.saleDate = new Date(invoice.saleDate).toDateString();
-			invoice.paid = invoice.paid.toFixed(2);
-			invoice.toPay = invoice.toPay.toFixed(2);
-			console.log("fixed")
-			setFixed(true);
-		}
-
-	}, [invoice]);
-
 
 	const handleDeleteRequest = () => {
 		fetch(`${config.API_URL}/api/invoice/${invoice.id}`, {
@@ -106,7 +91,7 @@ const InvoiceDetails = () => {
 			{errorCu && <div>{errorCu}</div>}
 			{errorP && <div>{errorP}</div>}
 			{errorS && <div>{errorS}</div>}
-			{invoice && customer && seller && paymentType && currency && fixed && (
+			{invoice && customer && seller && paymentType && currency && (
 				<article class="mt-2 ms-3">
 					<div class="media align-items-center py-1">
 						<div class="media-body ml-4">
@@ -131,11 +116,11 @@ const InvoiceDetails = () => {
 							<div class="col-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action">{invoice.invoiceNumber}</li>
-									<li class="list-group-item list-group-item-action">{invoice.creationDate}</li>
-									<li class="list-group-item list-group-item-action">{invoice.saleDate}</li>
-									<li class="list-group-item list-group-item-action">{invoice.paymentDeadline}</li>
-									<li class="list-group-item list-group-item-action">{invoice.toPay}</li>
-									<li class="list-group-item list-group-item-action">{invoice.paid}</li>
+									<li class="list-group-item list-group-item-action">{new Date(invoice.creationDate).toDateString()}</li>
+									<li class="list-group-item list-group-item-action">{new Date(invoice.saleDate).toDateString()}</li>
+									<li class="list-group-item list-group-item-action">{new Date(invoice.paymentDeadline).toDateString()}</li>
+									<li class="list-group-item list-group-item-action">{Number(invoice.toPay).toFixed(2)}</li>
+									<li class="list-group-item list-group-item-action">{Number(invoice.paid).toFixed(2)}</li>
 									<li class="list-group-item list-group-item-action">{invoice.status}</li>
 									<li class="list-group-item list-group-item-action">{invoice.remarks}</li>
 								</ul>

@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class InvoicePaymentCurrencyUpdateRequest {
+public class InvoicePaymentInfoUpdateRequest {
     private String currencyName;
     private String paymentTypeName;
 }

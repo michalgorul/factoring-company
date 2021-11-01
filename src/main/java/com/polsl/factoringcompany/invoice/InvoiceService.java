@@ -113,8 +113,6 @@ public class InvoiceService {
             invoiceEntityOptional.get().setSellerId(invoiceDto.getSellerId());
             invoiceEntityOptional.get().setCurrencyId(invoiceDto.getCurrencyId());
             invoiceEntityOptional.get().setPaymentTypeId(invoiceDto.getPaymentTypeId());
-            invoiceEntityOptional.get().setCurrencyId(invoiceDto.getCurrencyId());
-
 
             return this.invoiceRepository.save(invoiceEntityOptional.get());
         } catch (RuntimeException e) {
@@ -158,4 +156,27 @@ public class InvoiceService {
         return newInvoiceNumber.toString();
     }
 
+    public InvoiceEntity updateInvoicePaymentInfo(Long id, InvoicePaymentInfoUpdateRequest invoicePaymentInfoUpdateRequest) {
+
+        Optional<InvoiceEntity> invoiceEntityOptional = invoiceRepository.findById(id);
+
+        if (invoiceEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("Invoice", id);
+
+        try {
+            CurrencyEntity currencyEntity =
+                    currencyService.getCurrencyByCurrencyName(invoicePaymentInfoUpdateRequest.getCurrencyName());
+            PaymentTypeEntity paymentTypeEntity =
+                    paymentTypeService.getPaymentTypeEntityByName(invoicePaymentInfoUpdateRequest.getPaymentTypeName());
+
+            invoiceEntityOptional.get().setCurrencyId(Math.toIntExact(currencyEntity.getId()));
+            invoiceEntityOptional.get().setPaymentTypeId(Math.toIntExact(paymentTypeEntity.getId()));
+
+
+            return this.invoiceRepository.save(invoiceEntityOptional.get());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

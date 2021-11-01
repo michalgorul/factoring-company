@@ -4,8 +4,7 @@ import config from './config';
 
 const useFetchWithTokenPayment = (id) => {
     const [invoice, setInvoice] = useState(null);
-    const [isPendingI, setIsPendingI] = useState(true);
-    const [errorI, setErrorI] = useState(null);
+
     const [paymentType, setPaymentType] = useState(null);
     const [isPendingP, setIsPendingP] = useState(true);
     const [errorP, setErrorP] = useState(null);
@@ -31,13 +30,10 @@ const useFetchWithTokenPayment = (id) => {
             })
             .then(data => {
                 setInvoice(data);
-                setIsPendingI(false);
-                setErrorI(null);
                 setInvoiceAvailable(true);
             })
             .catch(err => {
-                setIsPendingI(false);
-                setErrorI(err.message);
+                console.log(err);
             })
 
         if (invoiceAvailable) {
@@ -96,7 +92,6 @@ const useFetchWithTokenPayment = (id) => {
 
 
     return {
-        invoice, isPendingI, errorI,
         paymentType, errorP, isPendingP,
         currency, errorCu, isPendingCu,
     };

@@ -36,7 +36,6 @@ const GeneralInfoEdit = () => {
     const getInvoiceGeneralInfo = () => {
 
         if(invoice){
-            setInvoiceNumber(invoice.invoiceNumber);
             setCreationDate(invoice.creationDate);
             setSaleDate(invoice.saleDate);
             setPaymentDeadline(invoice.paymentDeadline);
@@ -54,7 +53,7 @@ const GeneralInfoEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const invoice = { invoiceNumber, creationDate, saleDate, paymentDeadline, toPay, paid, 
+        const invoice = { creationDate, saleDate, paymentDeadline, toPay, paid, 
             remarks, status, sellerId, customerId, paymentTypeId, currencyId };
 
         setIsPendingN(true);
@@ -103,12 +102,6 @@ const GeneralInfoEdit = () => {
                                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                     <p class="lead fw-normal mt-2 mb-3 display-4">Edit General Invoice Information</p>
 
-                                </div>
-
-                                <div class="form-outline form-floating mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter a valid email address" required value={invoiceNumber} onChange={(e) => setInvoiceNumber(e.target.value)} />
-                                    <label class="form-label">Invoice number</label>
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">

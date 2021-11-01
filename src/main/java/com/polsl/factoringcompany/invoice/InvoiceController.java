@@ -39,6 +39,12 @@ public class InvoiceController {
         return this.invoiceService.updateInvoice(id, invoiceDto);
     }
 
+    @PutMapping("/payment/currency/{id}")
+    public InvoiceEntity updateInvoicePaymentInfo(@PathVariable Long id,
+                                                  @RequestBody InvoicePaymentInfoUpdateRequest invoicePaymentInfoUpdateRequest) {
+        return this.invoiceService.updateInvoicePaymentInfo(id, invoicePaymentInfoUpdateRequest);
+    }
+
 
     @DeleteMapping("/{id}")
     public void deleteInvoice(@PathVariable Long id) {

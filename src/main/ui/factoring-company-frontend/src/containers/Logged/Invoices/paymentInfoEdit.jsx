@@ -5,52 +5,80 @@ import { useHistory, useParams } from "react-router";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenPayment from "../../../services/paymentService";
 import config from "../../../services/config";
+import useFetchWithToken from "../../../services/useFetchWithToken";
+import Select from 'react-select'
+
 
 const PaymentInfoEdit = () => {
 
-    const [name, setName] = useState('');
-    const [code, setCode] = useState('');
+    const [currencyName, setCurrencyName] = useState('Dollar');
     const [paymentTypeName, setPaymentTypeName] = useState('');
-    const [, setIsPendingN] = useState('')
+    const [isPendingI, setIsPendingI] = useState(false)
+    const [isPendingN, setIsPendingN] = useState(false)
 
     const { id } = useParams();
-    const { invoice, errorI, isPendingI,
-        paymentType, errorP, isPendingP,
-        currency, errorCu, isPendingCu } = useFetchWithTokenPayment(id);
     const history = useHistory();
+    const { paymentType, errorP, isPendingP,
+        currency, errorCu, isPendingCu } = useFetchWithTokenPayment(id);
 
-    useEffect(() => {
-        getInfo();
-    }, [invoice, currency, paymentType])
+    const { data: currencies, errorCu: errorCur, isPendingCu: isPendingCur} = useFetchWithToken(`${config.API_URL}/api/currency`);
+    const { data: paymentTypes, errorP: errorPt, isPendingP: isPendingPt} = useFetchWithToken(`${config.API_URL}/api/payment-type`);
 
-    const getInfo = () => {
+    const makeCurrencyOptions = (currencies) => {
+        let currercyArray = [];
 
-        if (invoice && currency && paymentType) {
-            setName(currency.name);
-            setCode(currency.code);
-            setPaymentTypeName(paymentType.paymentTypeName);
+        if (currencies) {
+            currencies.forEach((item) => {
+                let it = {
+                    value: item.code.toString(),
+                    label: item.name.toString(),
+                };
+                currercyArray.push(it);
+            })
         }
+        return currercyArray;
     }
+
+    const makePaymentOptions = (paymentTypes) => {
+        let paymentArray = [];
+
+        if (paymentTypes) {
+            paymentTypes.forEach((item) => {
+                let it = {
+                    value: item.paymentTypeName.toString(),
+                    label: item.paymentTypeName.toString(),
+                };
+                paymentArray.push(it);
+            })
+        }
+        return paymentArray;
+    }
+
+    const optionsCurrencies = makeCurrencyOptions(currencies);
+    const optionsPaymentTypes = makePaymentOptions(paymentTypes);
+
+
+   
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const currency = { name, code };
+        const payment = { currencyName, paymentTypeName };
 
         setIsPendingN(true);
 
-        fetch(`${config.API_URL}/api/currency/${invoice.currencyId}`, {
+        fetch(`${config.API_URL}/api/invoice/payment/currency/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
-            body: JSON.stringify(currency)
+            body: JSON.stringify(payment)
         })
             .then((response) => {
                 setIsPendingN(false);
                 if (response.ok) {
-                    history.goBack();
+                    history.push(`/user/invoices/${id}`);
                     return response;
                 }
                 else {
@@ -59,57 +87,53 @@ const PaymentInfoEdit = () => {
             })
             .then((response) => {
                 if (response.ok) {
-                    infoToast('Invoice general info was updated');
+                    infoToast('Invoice payment info was updated');
                 }
                 else {
-                    errorToast('Some of inputs were incorrect');
+                    errorToast('Please fill all fields');
                 }
             })
             .catch(err => {
                 console.error(err);
             })
 
-            fetch(`${config.API_URL}/api/payment-type/${invoice.paymentTypeId}?paymentTypeName=${paymentTypeName}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                }
-            });
     }
 
     return (
         <div>
-            {isPendingI && isPendingCu && isPendingP && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
-            {errorI && <div>{errorI}</div>}
+            {isPendingCu && isPendingCur && isPendingP && isPendingPt && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
             {errorCu && <div>{errorCu}</div>}
+            {errorCur && <div>{errorCur}</div>}
             {errorP && <div>{errorP}</div>}
-            {invoice && paymentTypeName && currency && (
+            {errorPt && <div>{errorPt}</div>}
+            {currency && paymentType &&(
                 <div class="container-fluid h-custom">
                     <div class="row d-flex justify-content-start align-items-center">
                         <div class="col-md-8 col-lg-8 col-xl-6">
                             <form onSubmit={handleSubmit}>
-                                <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                                <div class="d-flex mb-3 flex-row align-items-center justify-content-center justify-content-lg-start">
                                     <p class="lead fw-normal mt-2 mb-3 display-4">Edit Payment Information</p>
 
                                 </div>
 
-                                <div class="form-outline form-floating mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter a valid email address" required value={name} onChange={(e) => setName(e.target.value)} />
-                                    <label class="form-label">Currency name</label>
+                                <div>
+                                    <p className="h4">Current:</p>
+                                    <ul class="list-group list-group-flush mb-5">
+                                        <li class="list-group-item">Currency: <b>{currency.name} </b></li>
+                                        <li class="list-group-item">Payment type: <b> {paymentType.paymentTypeName} </b></li>
+                                    </ul>
                                 </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={code} onChange={(e) => setCode(e.target.value)} />
-                                    <label class="form-label">Currency code</label>
-                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-12 mb-4">
+                                        <span style={{ marginLeft: "5px" }} className="h5">Currency</span>
+                                        <Select onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
+                                    </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={paymentTypeName} onChange={(e) => setPaymentTypeName(e.target.value)} />
-                                    <label class="form-label">Payment type</label>
+                                    <div class="col-12">
+                                        <span style={{ marginLeft: "5px" }} className="h5">Payment type</span>
+                                        <Select onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
+                                    </div>
                                 </div>
 
 

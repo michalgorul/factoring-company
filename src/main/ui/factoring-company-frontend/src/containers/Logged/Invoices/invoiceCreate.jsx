@@ -318,7 +318,7 @@ const InvoiceCreate = () => {
                   </div>
 
                   <div required className="mb-3 col-12">
-                    <p style={{ marginLeft: "5px" }}>Date of delivery/performance</p>
+                    <p style={{ marginLeft: "5px" }} className="h5">Date of delivery/performance</p>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
                         value={performanceDate} onChange={(newDate) => { setPerformanceDate(newDate); }} />
@@ -326,21 +326,21 @@ const InvoiceCreate = () => {
                   </div>
 
                   <div className="mb-3 col-12">
-                    <p style={{ marginLeft: "5px" }}>Date of issue</p>
+                    <p style={{ marginLeft: "5px" }} className="h5">Date of issue</p>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
                         value={issueDate} onChange={(newValue) => { setIssueDate(newValue); }} />
                     </LocalizationProvider>
                   </div>
 
-                  <div class="col-12 col-sm-6">
-                    <span style={{ marginLeft: "5px" }}>Payment deadline</span>
+                  <div class="col-12 col-sm-6 mb-3">
+                    <span style={{ marginLeft: "5px" }} className="h5">Payment deadline</span>
                     <input type="number" min="1" class="form-control"
                       placeholder="How many months?" required value={months} onChange={(e) => setMonths(e.target.value)} />
                   </div>
 
                   <div class="form-group mt-3" style={{ marginLeft: "5px" }}>
-                    <label for="exampleFormControlTextarea1">Remarks</label>
+                    <label for="exampleFormControlTextarea1" className="h5">Remarks</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                   </div>
 

@@ -109,12 +109,15 @@ public class InvoiceEntity {
     private UserEntity userByUserId;
 
     @OneToMany(mappedBy = "invoiceByInvoiceId")
+    @JsonIgnore
     private Collection<InvoiceItemEntity> invoiceItemsById;
 
     @OneToMany(mappedBy = "invoiceByInvoiceId")
+    @JsonIgnore
     private Collection<TransactionEntity> transactionsById;
 
     @OneToMany(mappedBy = "invoiceByInvoiceId")
+    @JsonIgnore
     private Collection<OrderEntity> ordersById;
 
 

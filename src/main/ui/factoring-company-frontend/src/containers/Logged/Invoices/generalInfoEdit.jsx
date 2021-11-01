@@ -6,6 +6,10 @@ import { useEffect } from "react";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import { Spinner } from "react-bootstrap";
 import Select from 'react-select'
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import DateTimePicker from '@material-ui/lab/DateTimePicker';
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -39,6 +43,7 @@ const GeneralInfoEdit = () => {
     const getInvoiceGeneralInfo = () => {
 
         if (invoice) {
+            setInvoiceNumber(invoice.invoiceNumber);
             setCreationDate(invoice.creationDate);
             setSaleDate(invoice.saleDate);
             setPaymentDeadline(invoice.paymentDeadline);
@@ -75,13 +80,13 @@ const GeneralInfoEdit = () => {
         e.preventDefault();
 
         const invoice = {
-            creationDate, saleDate, paymentDeadline, toPay, paid,
+            invoiceNumber, creationDate, saleDate, paymentDeadline, toPay, paid,
             remarks, status, sellerId, customerId, paymentTypeId, currencyId
         };
 
         setIsPendingN(true);
 
-        fetch(`${config.API_URL}/api/user/invoice/${id}`, {
+        fetch(`${config.API_URL}/api/invoice/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -115,8 +120,9 @@ const GeneralInfoEdit = () => {
 
     return (
         <div>
-            {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+            {isPending && isPendingS && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
             {error && <div>{error}</div>}
+            {errorS && <div>{error}</div>}
             {invoice && (
                 <div class="container-fluid h-custom">
                     <div class="row d-flex justify-content-start align-items-center">
@@ -128,21 +134,27 @@ const GeneralInfoEdit = () => {
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={creationDate} onChange={(e) => setCreationDate(e.target.value)} />
-                                    <label class="form-label">Creation date</label>
+                                    <p style={{ marginLeft: "5px" }} className="h5">Date of issue</p>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
+                                            value={creationDate} onChange={(newValue) => { setCreationDate(newValue); }} />
+                                    </LocalizationProvider>
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={saleDate} onChange={(e) => setSaleDate(e.target.value)} />
-                                    <label class="form-label">Sale date</label>
+                                    <p style={{ marginLeft: "5px" }} className="h5">Date of delivery/performance</p>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
+                                            value={saleDate} onChange={(newDate) => { setSaleDate(newDate); }} />
+                                    </LocalizationProvider>
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={paymentDeadline} onChange={(e) => setPaymentDeadline(e.target.value)} />
-                                    <label class="form-label">Payment deadline</label>
+                                    <p style={{ marginLeft: "5px" }} className="h5">Date of payment deadline</p>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
+                                            value={paymentDeadline} onChange={(newValue) => { setPaymentDeadline(newValue); }} />
+                                    </LocalizationProvider>
                                 </div>
 
                                 <div class="mb-3">
@@ -153,7 +165,7 @@ const GeneralInfoEdit = () => {
                                 </div>
 
                                 <div class="mb-3">
-                                <span style={{ marginLeft: "5px" }} className="h5">Paid</span>
+                                    <span style={{ marginLeft: "5px" }} className="h5">Paid</span>
                                     <input type="number" min="0" step="0.01" class="form-control"
                                         placeholder="e.g. 123,45" required value={paid} onChange={(e) => setPaid(e.target.value)} />
                                 </div>

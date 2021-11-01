@@ -5,10 +5,12 @@ import config from "../../../services/config";
 import { useEffect } from "react";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import { Spinner } from "react-bootstrap";
+import Select from 'react-select'
+
 
 
 const GeneralInfoEdit = () => {
-    
+
     const [invoiceNumber, setInvoiceNumber] = useState('');
     const [creationDate, setCreationDate] = useState('');
     const [saleDate, setSaleDate] = useState('');
@@ -26,6 +28,7 @@ const GeneralInfoEdit = () => {
 
     const { id } = useParams();
     const { data: invoice, error, isPending } = useFetchWithToken(`${config.API_URL}/api/invoice/${id}`);
+    const { data: statuses, errorS, isPendingS } = useFetchWithToken(`${config.API_URL}/api/invoice/statuses`);
     const history = useHistory();
 
     useEffect(() => {
@@ -35,7 +38,7 @@ const GeneralInfoEdit = () => {
 
     const getInvoiceGeneralInfo = () => {
 
-        if(invoice){
+        if (invoice) {
             setCreationDate(invoice.creationDate);
             setSaleDate(invoice.saleDate);
             setPaymentDeadline(invoice.paymentDeadline);
@@ -50,11 +53,31 @@ const GeneralInfoEdit = () => {
         }
     }
 
+    const makeStatusOptions = (statuses) => {
+        let statusArray = [];
+
+        if (statuses) {
+            statuses.forEach((item) => {
+                let it = {
+                    value: item.toString(),
+                    label: item.toString(),
+                };
+                statusArray.push(it);
+            })
+        }
+        return statusArray;
+    }
+
+    const optionsStatus = makeStatusOptions(statuses);
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const invoice = { creationDate, saleDate, paymentDeadline, toPay, paid, 
-            remarks, status, sellerId, customerId, paymentTypeId, currencyId };
+        const invoice = {
+            creationDate, saleDate, paymentDeadline, toPay, paid,
+            remarks, status, sellerId, customerId, paymentTypeId, currencyId
+        };
 
         setIsPendingN(true);
 
@@ -111,7 +134,7 @@ const GeneralInfoEdit = () => {
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">
-                                    <input type="email" class="form-control form-control-lg"
+                                    <input type="text" class="form-control form-control-lg"
                                         placeholder="Enter password" required value={saleDate} onChange={(e) => setSaleDate(e.target.value)} />
                                     <label class="form-label">Sale date</label>
                                 </div>
@@ -122,29 +145,30 @@ const GeneralInfoEdit = () => {
                                     <label class="form-label">Payment deadline</label>
                                 </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={toPay} onChange={(e) => setToPay(e.target.value)} />
-                                    <label class="form-label">To pay</label>
+                                <div class="mb-3">
+                                    <span style={{ marginLeft: "5px" }} className="h5">To pay</span>
+                                    <input type="number" min="0" step="0.01" class="form-control"
+                                        placeholder="e.g. 123,45" required value={toPay} onChange={(e) => setToPay(e.target.value)} />
+
+                                </div>
+
+                                <div class="mb-3">
+                                <span style={{ marginLeft: "5px" }} className="h5">Paid</span>
+                                    <input type="number" min="0" step="0.01" class="form-control"
+                                        placeholder="e.g. 123,45" required value={paid} onChange={(e) => setPaid(e.target.value)} />
                                 </div>
 
                                 <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" value={paid} onChange={(e) => setPaid(e.target.value)} />
-                                    <label class="form-label">Paid</label>
+                                    <span style={{ marginLeft: "5px" }} className="h5">Status</span>
+                                    <Select value={{ value: status, label: status }} onChange={(e) => setStatus(e.value)} options={optionsStatus} />
                                 </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
-                                    <label class="form-label">Remarks</label>
+                                <div class="form-group mt-3" style={{ marginLeft: "5px" }}>
+                                    <label for="exampleFormControlTextarea1" className="h5">Remarks</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                                 </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" value={status} onChange={(e) => setStatus(e.target.value)} />
-                                    <label class="form-label">Status</label>
-                                </div>
+
 
                                 <div class="mb-3">
                                     {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Edit invoice info</button>}

@@ -1,6 +1,6 @@
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Modal, Spinner } from 'react-bootstrap';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
 import config from "../../../services/config";
@@ -101,7 +101,7 @@ const InvoiceDetails = () => {
 					<h5 class="mt-4 mb-3">General</h5>
 					<div class="container">
 						<div class="row align-items-start ms-2">
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action fw-bold">Invoice number:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Creation date:</li>
@@ -113,7 +113,7 @@ const InvoiceDetails = () => {
 									<li class="list-group-item list-group-item-action fw-bold">Remarks:</li>
 								</ul>
 							</div>
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action">{invoice.invoiceNumber}</li>
 									<li class="list-group-item list-group-item-action">{new Date(invoice.creationDate).toDateString()}</li>
@@ -128,7 +128,7 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"edit/general-info/" + id} className="text-decoration-none ml-auto h6">Edit general info</a>
 					</div>
 
@@ -136,7 +136,7 @@ const InvoiceDetails = () => {
 					<h5 class="mt-4 mb-3">Seller Information</h5>
 					<div class="container">
 						<div class="row align-items-start ms-2">
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action fw-bold">Seller name:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
@@ -148,7 +148,7 @@ const InvoiceDetails = () => {
 									<li class="list-group-item list-group-item-action fw-bold">REGON:</li>
 								</ul>
 							</div>
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush mb-3">
 									<li class="list-group-item list-group-item-action">{seller.firstName + ' ' + seller.lastName}</li>
 									<li class="list-group-item list-group-item-action">{seller.companyName}</li>
@@ -166,7 +166,7 @@ const InvoiceDetails = () => {
 					<h5 class="mt-4 mb-3">Customer Information</h5>
 					<div class="container">
 						<div class="row align-items-start ms-2">
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action fw-bold">Customer name:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
@@ -177,7 +177,7 @@ const InvoiceDetails = () => {
 									<li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
 								</ul>
 							</div>
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush mb-3">
 									<li class="list-group-item list-group-item-action">{customer.firstName + ' ' + customer.lastName}</li>
 									<li class="list-group-item list-group-item-action">{customer.companyName}</li>
@@ -191,21 +191,21 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"/user/customers/edit/" + customer.id} className="text-decoration-none ml-auto h6">Edit customer info</a>
 					</div>
 
 					<h5 class="mt-4 mb-3">Payment Information</h5>
 					<div class="container">
-						<div class="row align-items-start ms-2">
-							<div class="col-3">
+						<div class="row align-items-start">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item list-group-item-action fw-bold">Currency name:</li>
 									<li class="list-group-item list-group-item-action fw-bold">currency code:</li>
 									<li class="list-group-item list-group-item-action fw-bold">Payment type:</li>
 								</ul>
 							</div>
-							<div class="col-3">
+							<div class="col-6 col-lg-3">
 								<ul class="list-group list-group-flush mb-3">
 									<li class="list-group-item list-group-item-action">{currency.name}</li>
 									<li class="list-group-item list-group-item-action">{currency.code}</li>
@@ -215,7 +215,7 @@ const InvoiceDetails = () => {
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-sm-6 mt-3">
+					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"edit/payment-info/" + id} className="text-decoration-none ml-auto h6">Edit payment info</a>
 					</div>
 

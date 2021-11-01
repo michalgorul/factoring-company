@@ -50,4 +50,9 @@ public class InvoiceController {
     public void deleteInvoice(@PathVariable Long id) {
         this.invoiceService.deleteInvoice(id);
     }
+
+    @GetMapping("/statuses")
+    public List<String> getInvoiceStatuses() {
+        return this.invoiceService.getInvoiceStatuses();
+    }
 }

@@ -15,4 +15,7 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long> {
     Long getInvoiceNumber(int month, int year);
 
     List<InvoiceEntity> findAllByUserId(Integer id);
+
+    @Query(value = "select distinct status from invoice")
+    List<String> getStatuses();
 }

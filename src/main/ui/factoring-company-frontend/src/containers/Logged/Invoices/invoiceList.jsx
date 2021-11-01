@@ -2,8 +2,6 @@ import Table from 'react-bootstrap/Table'
 import { Spinner } from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';
-import { useEffect } from 'react';
-
 
 const InvoiceList = ({ whatInvoices }) => {
     const { error, isPending, data: invoices } = useFetchWithToken(`${config.API_URL}/api/invoice/current`);

@@ -11,10 +11,9 @@ import Select from 'react-select'
 
 const PaymentInfoEdit = () => {
 
-    const [currencyName, setCurrencyName] = useState('Dollar');
+    const [currencyName, setCurrencyName] = useState('');
     const [paymentTypeName, setPaymentTypeName] = useState('');
-    const [isPendingI, setIsPendingI] = useState(false)
-    const [isPendingN, setIsPendingN] = useState(false)
+    const [isPendingN, setIsPendingN] = useState(false);
 
     const { id } = useParams();
     const history = useHistory();
@@ -23,6 +22,20 @@ const PaymentInfoEdit = () => {
 
     const { data: currencies, errorCu: errorCur, isPendingCu: isPendingCur} = useFetchWithToken(`${config.API_URL}/api/currency`);
     const { data: paymentTypes, errorP: errorPt, isPendingP: isPendingPt} = useFetchWithToken(`${config.API_URL}/api/payment-type`);
+
+
+    useEffect(() => {
+        getInvoicePaymentInfo();
+    }, [currency, paymentType])
+
+
+    const getInvoicePaymentInfo = () => {
+
+        if (currency && paymentType) {
+            setCurrencyName(currency.name);
+            setPaymentTypeName(paymentType.paymentTypeName);
+        }
+    }
 
     const makeCurrencyOptions = (currencies) => {
         let currercyArray = [];
@@ -116,30 +129,22 @@ const PaymentInfoEdit = () => {
 
                                 </div>
 
-                                <div>
-                                    <p className="h4">Current:</p>
-                                    <ul class="list-group list-group-flush mb-5">
-                                        <li class="list-group-item">Currency: <b>{currency.name} </b></li>
-                                        <li class="list-group-item">Payment type: <b> {paymentType.paymentTypeName} </b></li>
-                                    </ul>
-                                </div>
-
                                 <div class="row mb-5">
                                     <div class="col-12 mb-4">
                                         <span style={{ marginLeft: "5px" }} className="h5">Currency</span>
-                                        <Select onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
+                                        <Select value={{value:currencyName, label:currencyName}} onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
                                     </div>
 
                                     <div class="col-12">
                                         <span style={{ marginLeft: "5px" }} className="h5">Payment type</span>
-                                        <Select onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
+                                        <Select value={{value:paymentTypeName, label:paymentTypeName}} onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
                                     </div>
                                 </div>
 
 
                                 <div class="mb-3">
-                                    {!isPendingI && <button class="btn btn-primary rounded-pill btn-lg">Edit payment info</button>}
-                                    {isPendingI && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing payment info...</button>}
+                                    {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Edit payment info</button>}
+                                    {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing payment info...</button>}
                                 </div>
 
                             </form>

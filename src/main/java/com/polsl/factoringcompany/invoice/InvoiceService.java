@@ -179,4 +179,9 @@ public class InvoiceService {
         }
 
     }
+
+    public List<String> getInvoiceStatuses() {
+        return this.invoiceRepository.getStatuses();
+
+    }
 }

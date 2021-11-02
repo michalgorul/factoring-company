@@ -14,6 +14,8 @@ const FileList = ({ whatCatalog }) => {
     const { data: documents, error, isPending } = useFetchWithToken(`${config.API_URL}/api/file`)
     const history = useHistory();
     const [show, setShow] = useState(false);
+    const [isPendingN, setIsPendingN] = useState(false);
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -28,6 +30,7 @@ const FileList = ({ whatCatalog }) => {
     }, [documents]);
 
     const handleShowDocument = (document) => {
+        // setIsPendingN(true);
         try {
 
             axios
@@ -42,6 +45,7 @@ const FileList = ({ whatCatalog }) => {
                     const file = new Blob([response.data], { type: document.contentType });
                     //Build a URL from the file
                     const fileURL = URL.createObjectURL(file);
+                    setIsPendingN(false);
                     //Open the URL on new Window
                     const pdfWindow = window.open();
                     pdfWindow.location.href = fileURL;
@@ -116,7 +120,7 @@ const FileList = ({ whatCatalog }) => {
                 <tbody>
                     {error && <> <div class="alert alert-warning fs-3" role="alert">{error} </div>
                         <button class="text-decoration-none ms-3 fs-3" href="#" onClick={() => { window.location.href = "/something" }}> Click to refresh </button></>}
-                    {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+                    {isPending && isPendingN && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
                     {documents && documents
                         .filter(document => document.catalog == whatCatalog)
                         .map(document => (
@@ -124,7 +128,7 @@ const FileList = ({ whatCatalog }) => {
                                 <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleShowDocument(document)}>
                                     {document.name}
                                 </button></td>
-                                <td class="">{document.size}</td>
+                                <td class="">{formatBytes(document.size)}</td>
                                 <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDownload(document)}>
                                     <Download />
                                 </button></td>

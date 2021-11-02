@@ -14,7 +14,7 @@ const Documents = () => {
   const [isPending, setIsPending] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [availableSpace, setAvailableSpace] = useState(104857600);
-  const [usedSpace, setUsedSpace] = useState(null);
+  const [usedSpace, setUsedSpace] = useState(0);
   const [usedSpaceInProperFormat, setUsedSpaceInProperFormat] = useState(false);
   const [percentage, setPercentage] = useState(usedSpace / availableSpace * 100);
   const history = useHistory();

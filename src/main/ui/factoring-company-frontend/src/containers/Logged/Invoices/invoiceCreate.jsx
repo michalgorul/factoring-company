@@ -92,6 +92,8 @@ const InvoiceCreate = () => {
         performanceDate, issueDate, months, remarks
       };
 
+      setIsPendingN(true);
+
       fetch(`${config.API_URL}/api/invoice`, {
         method: "POST",
         headers: {

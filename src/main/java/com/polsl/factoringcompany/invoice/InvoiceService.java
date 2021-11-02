@@ -184,4 +184,17 @@ public class InvoiceService {
         return this.invoiceRepository.getStatuses();
 
     }
+
+    public Double getActiveInvoicesPaidValue() {
+
+        Long currentUserId = userService.getCurrentUserId();
+
+        List<InvoiceEntity> allByUserId = this.invoiceRepository.findAllByUserId(Math.toIntExact(currentUserId));
+
+        return allByUserId
+                .stream()
+                .map(InvoiceEntity::getPaid)
+                .mapToDouble(BigDecimal::doubleValue).sum();
+
+    }
 }

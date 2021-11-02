@@ -54,10 +54,10 @@ const Documents = () => {
 
     const button = document.querySelector('button')
 
-    if(usedSpace > availableSpace){
+    if (usedSpace > availableSpace) {
       button.disabled = true;
     }
-    else{
+    else {
       button.disabled = false;
     }
 

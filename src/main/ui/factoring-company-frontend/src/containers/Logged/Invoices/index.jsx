@@ -1,16 +1,44 @@
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Marginer } from '../../../components/marginer';
 import InvoiceList from './invoiceList';
+import config from '../../../services/config';
 
 const Invoices = () => {
 
 	const [ availableCredit ] = useState(5000000); 
-	const [ usedCredit ] = useState(500000); 
-	const [ percentage ] = useState(usedCredit / availableCredit * 100); 
+	const [ usedCredit, setUsedCredit ] = useState(0.0); 
+	const [ percentage, setPercentage ] = useState(usedCredit / availableCredit * 100); 
   const [ whatInvoices, setWhatInvoices ] = useState('active');
   const handleSelect = (eventKey) => setWhatInvoices(eventKey);
+
+  useEffect(() => {
+    getPaid();
+    setPercentage(usedCredit / availableCredit * 100)
+  }, [usedCredit])
+
+  const getPaid = () => {
+    fetch(`${config.API_URL}/api/invoice/paid`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error("could not fetch the data for that resource");
+        }
+        return response.text();
+      })
+      .then(data => {
+        setUsedCredit(data);
+      })
+      .catch(err => {
+        console.log(err.message);
+      })
+  }
+
     return ( 
 			<>
 			<div className="bg-light me-3">

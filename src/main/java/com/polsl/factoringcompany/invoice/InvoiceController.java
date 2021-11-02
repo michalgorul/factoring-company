@@ -55,4 +55,9 @@ public class InvoiceController {
     public List<String> getInvoiceStatuses() {
         return this.invoiceService.getInvoiceStatuses();
     }
+
+    @GetMapping("/paid")
+    public Double getActiveInvoicesPaidValue(){
+        return this.invoiceService.getActiveInvoicesPaidValue();
+    }
 }

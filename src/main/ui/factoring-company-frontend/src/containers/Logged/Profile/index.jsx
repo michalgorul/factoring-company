@@ -22,7 +22,6 @@ const Profile = () => {
 				return res.json();
 			})
 			.then(data => {
-				ifTokenCannotBeTrusted(data);
 				setCompany(data);
 				return data;
 
@@ -38,7 +37,6 @@ const Profile = () => {
 						return res.json();
 					})
 					.then(data => {
-						ifTokenCannotBeTrusted(data);
 						setBank(data);
 					})
 					.catch(err => {
@@ -147,7 +145,6 @@ const Profile = () => {
 		<>
 			{isPendingU && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 			{errorU && <div>{errorU}</div>}
-
 			{user && (
 				<div class="container flex-grow-1 container-p-y">
 

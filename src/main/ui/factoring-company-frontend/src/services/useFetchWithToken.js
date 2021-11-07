@@ -16,16 +16,15 @@ const useFetchWithToken = (url) => {
                 }
             })
                 .then(res => {
-                    if (!res.ok) {
-                        throw Error("could not fetch the data for that resource");
-                    }
                     return res.json();
                 })
                 .then(data => {
-                    ifTokenCannotBeTrusted(data);
-                    setData(data);
-                    setIsPending(false);
-                    setError(null);
+                    if (!ifTokenCannotBeTrusted(data)) {
+                        setData(data);
+                        setIsPending(false);
+                        setError(null);
+                    }
+
                 })
                 .catch(err => {
                     if (err.name === "AbortError") {

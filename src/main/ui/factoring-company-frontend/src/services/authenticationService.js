@@ -53,14 +53,16 @@ const getCurrentUser = () => {
 };
 
 const ifTokenCannotBeTrusted = (res) => {
-  if ( res.message && res.message.length < 30 && res.message.includes('cannot be trusted')) {
+  if (res.message && res.message.includes('cannot be trusted')) {
     errorToast('Your session has ended. Please login');
     logout();
     setTimeout(() => {
       window.location.href = `/login`;
     }, 4000);
-  }
 
+    return true;
+  }
+  return false;
 }
 
 export {

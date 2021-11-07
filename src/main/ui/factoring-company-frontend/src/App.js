@@ -35,6 +35,7 @@ import PasswordResetChange from './containers/NotLogged/LoginPage/resetPasswordC
 import PasswordResetSuccess from './containers/NotLogged/LoginPage/success';
 import ProductEdit from './containers/Logged/Product/productEdit';
 import ProductCreate from './containers/Logged/Product/productCreate';
+import Transactions from './containers/Logged/Transactions';
 
 
 
@@ -60,6 +61,7 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/reports`} exact component={Reports} />
           <ProtectedRoute path={`${match.url}/documents`} exact component={Documents} />
           <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage} />
+          <ProtectedRoute path={`${match.url}/transactions`} exact component={Transactions} />
           <ProtectedRoute path={`${match.url}/profile`} exact component={Profile} />
           <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
           <ProtectedRoute path={`${match.url}/profile/company/create`} exact component={CompanyCreate} />

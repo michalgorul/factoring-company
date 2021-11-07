@@ -32,6 +32,9 @@ const Sidebar = () => {
             <NavLink exact to="/user/documents" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="file-alt">Documents</CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/user/transactions" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="wallet">Transactions</CDBSidebarMenuItem>
+            </NavLink>
             <NavLink exact to="/user/profile" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user">Your Profile</CDBSidebarMenuItem>
             </NavLink>

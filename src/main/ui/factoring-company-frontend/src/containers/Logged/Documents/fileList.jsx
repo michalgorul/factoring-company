@@ -112,9 +112,9 @@ const FileList = ({ whatCatalog }) => {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Size</th>
-                        <th>Download</th>
-                        <th>Delete</th>
+                        <th class="align-middle text-center">Size</th>
+                        <th class="align-middle text-center">Download</th>
+                        <th class="align-middle text-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,14 +125,14 @@ const FileList = ({ whatCatalog }) => {
                         .filter(document => document.catalog == whatCatalog)
                         .map(document => (
                             <tr key={document.id} className="clickable" onclick="#">
-                                <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleShowDocument(document)}>
+                                <td class="align-middle"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleShowDocument(document)}>
                                     {document.name}
                                 </button></td>
-                                <td class="">{document.size}</td>
-                                <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDownload(document)}>
+                                <td class="align-middle text-center">{document.size}</td>
+                                <td class="align-middle text-center"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDownload(document)}>
                                     <Download />
                                 </button></td>
-                                <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDeleteRequest(document)}>
+                                <td class="align-middle text-center"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDeleteRequest(document)}>
                                     <Trash />
                                 </button></td>
                             </tr>

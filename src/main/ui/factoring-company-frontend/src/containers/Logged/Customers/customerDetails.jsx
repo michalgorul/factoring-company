@@ -2,15 +2,10 @@ import useFetch from "../../../components/useFetch/useFetch";
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useState } from "react";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import { infoToast } from "../../../components/toast/makeToast";
 import { useEffect } from "react";
 import { ifTokenCannotBeTrusted } from "../../../services/authenticationService";
-
-toast.configure();
 
 const CustomerDetails = () => {
     const { id } = useParams();
@@ -86,23 +81,21 @@ const CustomerDetails = () => {
             })
     }
 
-    const showEditButtons = (company) => {
+    const showEditCompany = (company) => {
         if (company != null) {
             return (
-                <div class="alert clearfix mt-2">
-                    <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                    <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
-                    <a href={`/user/profile/company/edit/${companyId}`} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Edit company</a>
+
+                <div class="d-flex mb-4 col-12 col-lg-7 mt-3">
+                    <a href={`/user/profile/company/edit/${companyId}`} className="text-decoration-none ml-auto h6">Edit company</a>
                 </div>
             )
         }
         else if (company == null) {
             return (
-                <div class="alert clearfix mt-2">
-                <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
-                <a href={"/user/customers/edit/" + id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center me-3">Edit customer</a>
-                <a href={"/user/customers/company/create/" + customer.id} class="btn btn-lg mb-3 btn-primary rounded-pill float-center">Add company</a>
-            </div>
+
+                <div class="d-flex mb-4 col-12 col-lg-7 mt-3">
+                    <a href={"/user/customers/company/create/" + customer.id} className="text-decoration-none ml-auto h6">Add company</a>
+                </div>
             )
         }
     }
@@ -150,7 +143,7 @@ const CustomerDetails = () => {
                     <h5 class="mt-4 mb-3">Details</h5>
                     <div class="container">
                         <div class="row align-items-start ms-2">
-                            <div class="col-3">
+                            <div class="col-5 col-lg-3">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item list-group-item-action fw-bold">Email:</li>
                                     <li class="list-group-item list-group-item-action fw-bold">Country:</li>
@@ -160,7 +153,7 @@ const CustomerDetails = () => {
                                     <li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
                                 </ul>
                             </div>
-                            <div class="col-3">
+                            <div class="col-7 col-lg-4">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item list-group-item-action">{customer.email}</li>
                                     <li class="list-group-item list-group-item-action">{customer.country}</li>
@@ -173,11 +166,14 @@ const CustomerDetails = () => {
                         </div>
                     </div>
 
+                    <div class="d-flex mb-4 col-12 col-lg-7 mt-3">
+                        <a href={"/user/customers/edit/" + id} className="text-decoration-none ml-auto h6">Edit customer</a>
+                    </div>
 
                     <h5 class="mt-4 mb-3">Company</h5>
                     <div class="container">
                         <div class="row align-items-start ms-2">
-                            <div class="col-3">
+                            <div class="col-7 col-lg-4">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item list-group-item-action fw-bold">Company name:</li>
                                     <li class="list-group-item list-group-item-action fw-bold">Country:</li>
@@ -194,8 +190,13 @@ const CustomerDetails = () => {
                         </div>
                     </div>
 
+                    {showEditCompany(company)}
 
-                    {showEditButtons(company)}
+                    <div class="alert clearfix mt-2">
+                        <button type="button" class="btn btn-lg me-3 mb-3 btn-primary rounded-pill float-center" onClick={handleDelete}>Delete customer</button>
+                    </div>
+
+
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Customer deletion</Modal.Title>

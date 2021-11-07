@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface CreditRepository extends JpaRepository<CreditEntity, Long> {
 
-    List<CreditEntity> findAllByUserId(Integer id);
+    List<CreditEntity> findAllByUserId(int userId);
 }

@@ -30,4 +30,9 @@ public class CreditController {
     public void deleteCredit(@PathVariable Long id){
         this.creditService.deleteCredit(id);
     }
+
+    @GetMapping("/left")
+    public Double getLeftToPay(){
+        return this.creditService.getLeftToPay();
+    }
 }

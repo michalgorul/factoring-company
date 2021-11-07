@@ -5,6 +5,8 @@ import com.polsl.factoringcompany.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -34,5 +36,17 @@ public class CreditService {
     public List<CreditEntity> getCreditsCurrentUser() {
         Long currentUserId = userService.getCurrentUserId();
         return this.creditRepository.findAllByUserId(Math.toIntExact(currentUserId));
+    }
+
+    public Double getLeftToPay() {
+        Long currentUserId = userService.getCurrentUserId();
+
+        List<CreditEntity> allByUserId = this.creditRepository.findAllByUserId(Math.toIntExact(currentUserId));
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.valueOf(df.format(allByUserId.stream()
+                .map(CreditEntity::getLeftToPay)
+                .mapToDouble(BigDecimal::doubleValue).sum()).replace(",","."));
+
     }
 }

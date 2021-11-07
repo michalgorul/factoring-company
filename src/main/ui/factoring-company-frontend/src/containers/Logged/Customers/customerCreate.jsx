@@ -120,10 +120,10 @@ const CustomerCreate = () => {
                             </div>
 
                             <div class="mb-3">
-                            <label for="validationServer02">Phone number</label>
-                            <PhoneInput type="tel" class="form-control" id="phone" placeholder="123-456-789"
-										country="PL" defaultCountry="PL" maxLength={11}
-										value={phone} onChange={setPhone} rules={{ required: true }} required />
+                                <label for="validationServer02">Phone number</label>
+                                <PhoneInput type="tel" class="form-control" id="phone" placeholder="123-456-789"
+                                    country="PL" defaultCountry="PL" maxLength={11}
+                                    value={phone} onChange={setPhone} rules={{ required: true }} required />
                             </div>
 
                             <div class="form-outline form-floating mb-3">

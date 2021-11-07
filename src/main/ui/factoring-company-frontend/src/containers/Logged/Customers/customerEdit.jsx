@@ -3,7 +3,7 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { useState, useEffect, useMemo } from "react";
 import { Spinner } from 'react-bootstrap';
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput from 'react-phone-number-input/input'
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import { errorToast, infoToast } from "../../../components/toast/makeToast";
@@ -149,9 +149,11 @@ const CustomerEdit = () => {
                                     <label class="form-label">Postal code</label>
                                 </div>
 
-                                <div class="form-floating form-outline form-control form-control-lg mb-3">
-                                    <PhoneInput class="form-control form-control-lg"
-                                        placeholder="Phone number" required value={phone} onChange={setPhone} />
+                                <div class="mb-3">
+                                    <label for="validationServer02">Phone number</label>
+                                    <PhoneInput type="tel" class="form-control" id="phone" placeholder="123-456-789"
+                                        country="PL" defaultCountry="PL" maxLength={11}
+                                        value={phone} onChange={setPhone} rules={{ required: true }} required />
                                 </div>
                                 <div class="mb-3">
                                     {!isPending && <button class="btn btn-primary rounded-pill btn-lg">Edit Customer</button>}

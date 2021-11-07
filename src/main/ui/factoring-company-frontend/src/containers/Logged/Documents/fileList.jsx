@@ -128,7 +128,7 @@ const FileList = ({ whatCatalog }) => {
                                 <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleShowDocument(document)}>
                                     {document.name}
                                 </button></td>
-                                <td class="">{formatBytes(document.size)}</td>
+                                <td class="">{document.size}</td>
                                 <td><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDownload(document)}>
                                     <Download />
                                 </button></td>

@@ -6,6 +6,7 @@ import { Marginer } from '../../../components/marginer';
 import CreditList from './creditList';
 import { errorToast } from '../../../components/toast/makeToast';
 import config from '../../../services/config';
+import { ifTokenCannotBeTrusted } from '../../../services/authenticationService';
 
 
 const Credit = () => {
@@ -49,6 +50,7 @@ const Credit = () => {
 				return response.text();
 			})
 			.then(data => {
+				ifTokenCannotBeTrusted(data);
 				setUsedCredit(data);
 			})
 			.catch(err => {

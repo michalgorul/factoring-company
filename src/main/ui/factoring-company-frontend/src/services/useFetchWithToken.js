@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { ifTokenCannotBeTrusted } from "./authenticationService";
 
 const useFetchWithToken = (url) => {
     const [data, setData] = useState(null);
@@ -15,31 +16,32 @@ const useFetchWithToken = (url) => {
                 }
             })
                 .then(res => {
-                    if(!res.ok){
+                    if (!res.ok) {
                         throw Error("could not fetch the data for that resource");
                     }
                     return res.json();
                 })
-                .then(data =>{
+                .then(data => {
+                    ifTokenCannotBeTrusted(data);
                     setData(data);
                     setIsPending(false);
                     setError(null);
                 })
-                .catch(err =>{
-                    if(err.name === "AbortError"){
+                .catch(err => {
+                    if (err.name === "AbortError") {
                         console.log('fetch aborted');
                     }
-                    else{
+                    else {
                         setIsPending(false);
                         setError(err.message);
                     }
                 })
-            }, 0);
+        }, 0);
 
-    
+
     }, [url]);
 
-    return {data, isPending, error};
+    return { data, isPending, error };
 }
- 
+
 export default useFetchWithToken;

@@ -7,6 +7,7 @@ import config from "../../../services/config";
 import { errorToast, infoToast, warningToast } from "../../../components/toast/makeToast";
 import { Marginer } from "../../../components/marginer";
 import { formatBytes } from "../../../services/filesService";
+import { ifTokenCannotBeTrusted } from "../../../services/authenticationService";
 const Documents = () => {
 
   const [catalog, setCatalog] = useState('favourite');
@@ -43,6 +44,7 @@ const Documents = () => {
         return response.text();
       })
       .then(data => {
+        ifTokenCannotBeTrusted(data);
         setUsedSpace(data);
       })
       .catch(err => {

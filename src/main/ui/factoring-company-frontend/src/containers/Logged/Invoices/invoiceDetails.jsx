@@ -5,6 +5,7 @@ import { errorToast, infoToast } from "../../../components/toast/makeToast";
 import useFetchWithTokenInvoice from "../../../services/invoiceService";
 import config from "../../../services/config";
 import axios from 'axios'
+import { ifTokenCannotBeTrusted } from "../../../services/authenticationService";
 
 const InvoiceDetails = () => {
 	const { id } = useParams();
@@ -63,6 +64,7 @@ const InvoiceDetails = () => {
 					}
 				})
 				.then((response) => {
+					ifTokenCannotBeTrusted(response.data);
 					//Create a Blob from the PDF Stream
 					const file = new Blob([response.data], { type: "application/pdf" });
 					//Build a URL from the file

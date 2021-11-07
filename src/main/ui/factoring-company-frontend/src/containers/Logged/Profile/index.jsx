@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
+import { ifTokenCannotBeTrusted } from '../../../services/authenticationService';
 import config from "../../../services/config";
 import useFetchWithToken from "../../../services/useFetchWithToken";
 
@@ -18,12 +19,10 @@ const Profile = () => {
 			}
 		})
 			.then(res => {
-				if (!res.ok) {
-					throw Error("could not fetch the data for that resource");
-				}
 				return res.json();
 			})
 			.then(data => {
+				ifTokenCannotBeTrusted(data);
 				setCompany(data);
 				return data;
 
@@ -39,6 +38,7 @@ const Profile = () => {
 						return res.json();
 					})
 					.then(data => {
+						ifTokenCannotBeTrusted(data);
 						setBank(data);
 					})
 					.catch(err => {
@@ -128,7 +128,7 @@ const Profile = () => {
 
 	}
 
-	const showEditCompany = ( company) => {
+	const showEditCompany = (company) => {
 		if (company != null) {
 			return (
 				<a href={"/user/profile/company/edit/" + company.id} class="text-decoration-none ml-auto h6">Edit your company</a>

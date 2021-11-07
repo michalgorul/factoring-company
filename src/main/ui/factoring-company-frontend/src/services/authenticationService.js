@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router";
 import { errorToast } from "../components/toast/makeToast";
 import config from "./config";
 
@@ -23,13 +24,13 @@ const login = async (username, password) => {
   const response = await axios
     .post(`${config.API_URL}/login`, data);
 
-    if(!response.ok){
-      errorToast('Your username or password were incorrect!')
-    }
+  if (!response.ok) {
+    errorToast('Your username or password were incorrect!')
+  }
 
   if (response) {
     console.log(response);
-    if(!response.ok){
+    if (!response.ok) {
       errorToast('Your username or password were incorrect!')
     }
     let myHeaders = new Headers(response.headers);
@@ -45,16 +46,28 @@ const login = async (username, password) => {
 
 const logout = () => {
   localStorage.clear();
-
 };
 
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+const ifTokenCannotBeTrusted = (res) => {
+  if ( res.message && res.message.length < 30 && res.message.includes('cannot be trusted')) {
+    errorToast('Your session has ended. Please login');
+    logout();
+    setTimeout(() => {
+      window.location.href = `/login`;
+    }, 4000);
+  }
+
+}
+
 export {
   register,
   login,
   logout,
   getCurrentUser,
+  ifTokenCannotBeTrusted
+
 };

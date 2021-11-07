@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { ifTokenCannotBeTrusted } from "./authenticationService";
 import config from './config';
 
 const useFetchWithTokenPayment = (id) => {
@@ -29,11 +30,11 @@ const useFetchWithTokenPayment = (id) => {
                 return res.json();
             })
             .then(data => {
+                ifTokenCannotBeTrusted(data);
                 setInvoice(data);
                 setInvoiceAvailable(true);
             })
             .catch(err => {
-                console.log(err);
             })
 
         if (invoiceAvailable) {
@@ -52,6 +53,7 @@ const useFetchWithTokenPayment = (id) => {
 
                 })
                 .then(data => {
+                    ifTokenCannotBeTrusted(data);
                     setPaymentType(data);
                     setIsPendingP(false);
                     setErrorP(null);
@@ -76,6 +78,7 @@ const useFetchWithTokenPayment = (id) => {
 
                 })
                 .then(data => {
+                    ifTokenCannotBeTrusted(data);
                     setCurrency(data);
                     setIsPendingCu(false);
                     setErrorCu(null);
@@ -96,5 +99,5 @@ const useFetchWithTokenPayment = (id) => {
         currency, errorCu, isPendingCu,
     };
 }
- 
+
 export default useFetchWithTokenPayment;

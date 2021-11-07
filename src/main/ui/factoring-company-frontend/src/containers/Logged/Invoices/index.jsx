@@ -4,6 +4,7 @@ import { Nav } from 'react-bootstrap';
 import { Marginer } from '../../../components/marginer';
 import InvoiceList from './invoiceList';
 import config from '../../../services/config';
+import { ifTokenCannotBeTrusted } from '../../../services/authenticationService';
 
 const Invoices = () => {
 
@@ -32,6 +33,7 @@ const Invoices = () => {
         return response.text();
       })
       .then(data => {
+        ifTokenCannotBeTrusted(data);
         setUsedCredit(data);
       })
       .catch(err => {

@@ -8,6 +8,7 @@ import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import { infoToast } from "../../../components/toast/makeToast";
 import { useEffect } from "react";
+import { ifTokenCannotBeTrusted } from "../../../services/authenticationService";
 
 toast.configure();
 
@@ -32,6 +33,7 @@ const CustomerDetails = () => {
                 return res.json();
             })
             .then(data => {
+                ifTokenCannotBeTrusted(data);
                 setCustomer(data);
                 return data;
 

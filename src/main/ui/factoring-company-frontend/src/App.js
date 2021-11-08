@@ -4,7 +4,7 @@ import NotFound from './containers/NotFound';
 import Login from './containers/NotLogged/LoginPage';
 import Register from './containers/NotLogged/RegisterPage';
 import TermsOfUse from './containers/TermsOfUse/termsOfUse';
-import MainPageLoged from './containers/Logged/MainPage';
+import MainPageLogged from './containers/Logged/MainPage';
 import Customers from './containers/Logged/Customers';
 import Invoices from './containers/Logged/Invoices';
 import Credit from './containers/Logged/Credit';
@@ -39,66 +39,65 @@ import Transactions from './containers/Logged/Transactions';
 import CustomerReports from './containers/Logged/Reports/customerReports';
 
 
-
 const UserComponents = ({match}) => {
-  return(
-      <Layout>
-        <Switch>
-          <ProtectedRoute path={`${match.url}/main`} exact component={MainPageLoged} />
-          <ProtectedRoute path={`${match.url}/help`} exact component={Support} />
-          <ProtectedRoute path={`${match.url}/customers`} exact component={Customers} />
-          <ProtectedRoute path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
-          <ProtectedRoute path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
-          <ProtectedRoute path={`${match.url}/customers/company/create/:id`} exact component={CustomerCompanyCreate}/>
-          <ProtectedRoute path={`${match.url}/bank-account/edit/:id`} exact component={EditBankAccount}/>
-          <ProtectedRoute path={`${match.url}/customers/:id`} component={CustomerDetails}/>
-          <ProtectedRoute path={`${match.url}/invoices`} exact component={Invoices} />
-          <ProtectedRoute path={`${match.url}/invoices/create`} exact component={InvoiceCreate} />
-          <ProtectedRoute path={`${match.url}/invoices/edit/general-info/:id`} exact component={GeneralInfoEdit} />
-          <ProtectedRoute path={`${match.url}/invoices/edit/payment-info/:id`} exact component={PaymentInfoEdit} />
-          <ProtectedRoute path={`${match.url}/invoices/:id`} exact component={InvoiceDetails} />
-          <ProtectedRoute path={`${match.url}/credit`} exact component={Credit} />
-          <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails} />
-          <ProtectedRoute path={`${match.url}/reports`} exact component={Reports} />
-          <ProtectedRoute path={`${match.url}/reports/customers`} exact component={CustomerReports} />
-          <ProtectedRoute path={`${match.url}/documents`} exact component={Documents} />
-          <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage} />
-          <ProtectedRoute path={`${match.url}/transactions`} exact component={Transactions} />
-          <ProtectedRoute path={`${match.url}/profile`} exact component={Profile} />
-          <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit} />
-          <ProtectedRoute path={`${match.url}/profile/company/create`} exact component={CompanyCreate} />
-          <ProtectedRoute path={`${match.url}/profile/bank/create`} exact component={CreateBankAccount} />
-          <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit} />
-          <ProtectedRoute path={`${match.url}/product/create`} exact component={ProductCreate} />
-          <ProtectedRoute path={`${match.url}/product/edit/:id`} exact component={ProductEdit} />
-          <ProtectedRoute path="*" render={() => (<Redirect to="/404" />)} />
-        </Switch>
-      </Layout>
-  );
+    return (
+        <Layout>
+            <Switch>
+                <ProtectedRoute path={`${match.url}/main`} exact component={MainPageLogged}/>
+                <ProtectedRoute path={`${match.url}/help`} exact component={Support}/>
+                <ProtectedRoute path={`${match.url}/customers`} exact component={Customers}/>
+                <ProtectedRoute path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
+                <ProtectedRoute path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
+                <ProtectedRoute path={`${match.url}/customers/company/create/:id`} exact component={CustomerCompanyCreate}/>
+                <ProtectedRoute path={`${match.url}/bank-account/edit/:id`} exact component={EditBankAccount}/>
+                <ProtectedRoute path={`${match.url}/customers/:id`} component={CustomerDetails}/>
+                <ProtectedRoute path={`${match.url}/invoices`} exact component={Invoices}/>
+                <ProtectedRoute path={`${match.url}/invoices/create`} exact component={InvoiceCreate}/>
+                <ProtectedRoute path={`${match.url}/invoices/edit/general-info/:id`} exact component={GeneralInfoEdit}/>
+                <ProtectedRoute path={`${match.url}/invoices/edit/payment-info/:id`} exact component={PaymentInfoEdit}/>
+                <ProtectedRoute path={`${match.url}/invoices/:id`} exact component={InvoiceDetails}/>
+                <ProtectedRoute path={`${match.url}/credit`} exact component={Credit}/>
+                <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails}/>
+                <ProtectedRoute path={`${match.url}/reports`} exact component={Reports}/>
+                <ProtectedRoute path={`${match.url}/reports/customers`} exact component={CustomerReports}/>
+                <ProtectedRoute path={`${match.url}/documents`} exact component={Documents}/>
+                <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage}/>
+                <ProtectedRoute path={`${match.url}/transactions`} exact component={Transactions}/>
+                <ProtectedRoute path={`${match.url}/profile`} exact component={Profile}/>
+                <ProtectedRoute path={`${match.url}/profile/edit`} exact component={ProfileEdit}/>
+                <ProtectedRoute path={`${match.url}/profile/company/create`} exact component={CompanyCreate}/>
+                <ProtectedRoute path={`${match.url}/profile/bank/create`} exact component={CreateBankAccount}/>
+                <ProtectedRoute path={`${match.url}/profile/company/edit/:id`} exact component={CompanyEdit}/>
+                <ProtectedRoute path={`${match.url}/product/create`} exact component={ProductCreate}/>
+                <ProtectedRoute path={`${match.url}/product/edit/:id`} exact component={ProductEdit}/>
+                <ProtectedRoute path="*" render={() => (<Redirect to="/404"/>)}/>
+            </Switch>
+        </Layout>
+    );
 };
 
 
 function App() {
-  return (
-      <Router>
-        <div className="App">
-          <div className="content">
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/login/password/reset" exact component={PasswordReset} />
-              <Route path="/login/password/reset/confirmation" exact component={PasswordResetConfirmation} />
-              <Route path="/password/reset/change/success" exact component={PasswordResetSuccess} />
-              <Route path="/password/reset/change" component={PasswordResetChange} />
-              <Route path="/register" exact component={Register} />
-              <Route path="/terms-of-use" exact component={TermsOfUse} />
-              <Route path="/user" component={UserComponents} />
-              <Route path="*" component={NotFound} />
-            </Switch>
-          </div>
-        </div>
-      </Router>
-  );
+    return (
+        <Router>
+            <div className="App">
+                <div className="content">
+                    <Switch>
+                        <Route exact path="/" component={HomePage}/>
+                        <Route path="/login" exact component={Login}/>
+                        <Route path="/login/password/reset" exact component={PasswordReset}/>
+                        <Route path="/login/password/reset/confirmation" exact component={PasswordResetConfirmation}/>
+                        <Route path="/password/reset/change/success" exact component={PasswordResetSuccess}/>
+                        <Route path="/password/reset/change" component={PasswordResetChange}/>
+                        <Route path="/register" exact component={Register}/>
+                        <Route path="/terms-of-use" exact component={TermsOfUse}/>
+                        <Route path="/user" component={UserComponents}/>
+                        <Route path="*" component={NotFound}/>
+                    </Switch>
+                </div>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

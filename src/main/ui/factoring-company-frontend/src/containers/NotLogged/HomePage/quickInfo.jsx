@@ -20,10 +20,10 @@ const LogoImage = styled.div`
 export class QuickInfo extends Component {
     render() {
         return ( 
-            <div class="container-lg">
-                <div class="text-center">
+            <div className="container-lg">
+                <div className="text-center">
                     <h2>In short</h2>
-                    <p class="lead text-muted">Get peace of mind when you partner with Factoring Company</p>
+                    <p className="lead text-muted">Get peace of mind when you partner with Factoring Company</p>
                 </div>
 
                 <div class="row my-5 align-items-center justify-content-center container-fluid">

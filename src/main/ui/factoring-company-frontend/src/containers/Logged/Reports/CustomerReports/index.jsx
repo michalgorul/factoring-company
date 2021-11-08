@@ -13,7 +13,7 @@ const CustomerReports = () => {
                                 based on the National Court Register Act of August 20th, 1997.</p>
                             <p className="card-text d-block d-sm-none">The National Court Register (KRS) is one of the
                                 main public registers. </p>
-                            <a href="#" className="stretched-link"> </a>
+                            <a href={"/user/reports/customers/krs"} className="stretched-link"> </a>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@ const CustomerReports = () => {
                                 cooperative savings and credit union, of which the entity is a member.</p>
                             <p className="card-text d-block d-sm-none">List of entities registered for VAT, unregistered and
                                 removed and restored to VAT register</p>
-                            <a href="#" className="stretched-link"> </a>
+                            <a href={"/user/reports/customers/vat"} className="stretched-link"> </a>
                         </div>
                     </div>
                 </div>

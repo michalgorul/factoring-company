@@ -28,26 +28,30 @@ const Customers = () => {
 
     return (
         <>
-            <div class="text-centered display-3 d-flex justify-content-center">Customer List</div>
+            <div className="media align-items-center py-3">
+                <div className="media-body ml-4">
+                    <h4 className="font-weight-bold display-2">Customer list</h4>
+                </div>
+            </div>
 
-            <div class="container mt-5 mb-2">
-                <div class="row">
-                    <div class="form-outline form-floating mb-3 col-12 col-lg-6">
-                        <input type="text" class="form-control form-control-sm"
+            <div className="container mt-5 mb-2">
+                <div className="row">
+                    <div className="form-outline form-floating mb-3 col-12 col-lg-6">
+                        <input type="text" className="form-control form-control-sm"
                             placeholder="filter items" value={searchTerm} onChange={handleChange} />
-                        <label class="form-label">Filter</label>
+                        <label className="form-label ms-2">Filter</label>
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <a href="/user/customers/create" class="btn btn-primary btn-lg float-end rounded-pill ">
+                    <div className="col-12 col-lg-6">
+                        <a href={"/user/customers/create"} className="btn btn-primary btn-lg float-end rounded-pill ">
                             Add New
                         </a>
                     </div>
                 </div>
             </div>
 
-            <ol class="list-group list-group-numbered list-group-flush">
-                {error && <> <div class="alert alert-warning fs-3" role="alert">{error} </div>
-                    <button class="text-decoration-none ms-3 fs-3" href="" onClick={() => { window.location.href = "/something" }}> Click to refresh </button></>}
+            <ol className="list-group list-group-numbered list-group-flush">
+                {error && <> <div className="alert alert-warning fs-3" role="alert">{error} </div>
+                    <button className="text-decoration-none ms-3 fs-3" ref="" onClick={() => { window.location.href = "/something" }}> Click to refresh </button></>}
                 {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
                 {customers && <CustomerList customers={searchResults} />}
             </ol>

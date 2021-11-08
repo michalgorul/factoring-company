@@ -9,7 +9,7 @@ import { ifTokenCannotBeTrusted } from '../../../services/authenticationService'
 const Invoices = () => {
 
   const [availableCredit] = useState(5000000);
-  const [usedCredit, setUsedCredit] = useState(0.0);
+  const [usedCredit, setUsedCredit] = useState('0.0');
   const [percentage, setPercentage] = useState(usedCredit / availableCredit * 100);
   const [whatInvoices, setWhatInvoices] = useState('active');
   const handleSelect = (eventKey) => setWhatInvoices(eventKey);
@@ -49,7 +49,7 @@ const Invoices = () => {
           <div className="col-12 col-lg-6">
             <div className="mb-1 mt-3" >
               <span className="display-4 fw-bold mb-2">${usedCredit}</span> of <span className="display-5">${availableCredit}</span>
-              <p class="fs-5 ms-2">Your available credit</p>
+              <p className="fs-5 ms-2">Your available credit</p>
             </div>
             <ProgressBar now={percentage} animated style={{ height: "5px" }} />
             <Marginer direction="vertical" margin={20} />
@@ -73,7 +73,7 @@ const Invoices = () => {
             </Nav>
           </div>
           <div className="col-12 col-lg-6 align-items-end justify-content-between">
-            <a href="/user/invoices/create" className="btn btn-lg btn-primary rounded-pill float-end text-white">Add new invoice</a>
+            <a href={"/user/invoices/create"} className="btn btn-lg btn-primary rounded-pill float-end text-white">Add new invoice</a>
           </div>
         </div>
       </div>

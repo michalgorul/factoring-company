@@ -197,28 +197,28 @@ const InvoiceCreate = () => {
       return (
         <>
           <div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Name: <b>{customer.firstName + ' ' + customer.lastName} </b></li>
-              <li class="list-group-item">Email: <b> {customer.email} </b></li>
-              <li class="list-group-item">Country: <b>{customer.country}</b></li>
-              <li class="list-group-item">City: <b>{customer.city}</b></li>
-              <li class="list-group-item">Street: <b>{customer.street} </b></li>
-              <li class="list-group-item">Postal code: <b>{customer.postalCode}</b></li>
-              <li class="list-group-item">Phone: <b>{customer.phone}</b></li>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">Name: <b>{customer.firstName + ' ' + customer.lastName} </b></li>
+              <li className="list-group-item">Email: <b> {customer.email} </b></li>
+              <li className="list-group-item">Country: <b>{customer.country}</b></li>
+              <li className="list-group-item">City: <b>{customer.city}</b></li>
+              <li className="list-group-item">Street: <b>{customer.street} </b></li>
+              <li className="list-group-item">Postal code: <b>{customer.postalCode}</b></li>
+              <li className="list-group-item">Phone: <b>{customer.phone}</b></li>
             </ul>
           </div>
-          <div class="d-flex">
+          <div className="d-flex">
             <a href={"/user/customers/edit/" + customer.id} className="text-decoration-none ml-auto">Edit customer's details</a>
           </div>
-          <div class="d-flex mb-5">
-            <a href="/user/customers/create" className="text-decoration-none ml-auto">Create new customer</a>
+          <div className="d-flex mb-5">
+            <a href={"/user/customers/create"} className="text-decoration-none ml-auto">Create new customer</a>
           </div>
         </>
       )
     }
     return (
-      <div class="d-flex mb-4">
-        <a href="/user/customers/create" className="text-decoration-none ml-auto">Create new customer</a>
+      <div className="d-flex mb-4">
+        <a href={"/user/customers/create"} className="text-decoration-none ml-auto">Create new customer</a>
       </div>
     )
   }
@@ -228,24 +228,24 @@ const InvoiceCreate = () => {
       return (
         <>
           <div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Name: <b>{product.name} </b></li>
-              <li class="list-group-item">PKWIU: <b> {product.pkwiu} </b></li>
-              <li class="list-group-item">Measure unit: <b>{product.measureUnit}</b></li>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">Name: <b>{product.name} </b></li>
+              <li className="list-group-item">PKWIU: <b> {product.pkwiu} </b></li>
+              <li className="list-group-item">Measure unit: <b>{product.measureUnit}</b></li>
             </ul>
           </div>
-          <div class="d-flex">
+          <div className="d-flex">
             <a href={`/user/product/edit/${product.id}`} className="text-decoration-none ml-auto">Edit product's details</a>
           </div>
-          <div class="d-flex mb-5">
-            <a href="/user/product/create" className="text-decoration-none ml-auto">Create new product</a>
+          <div className="d-flex mb-5">
+            <a href={"/user/product/create"} className="text-decoration-none ml-auto">Create new product</a>
           </div>
         </>
       )
     }
     return (
-      <div class="d-flex mb-4">
-        <a href="/user/product/create" className="text-decoration-none ml-auto">Create new product</a>
+      <div className="d-flex mb-4">
+        <a href={"/user/product/create"} className="text-decoration-none ml-auto">Create new product</a>
       </div>
     )
   }
@@ -261,15 +261,15 @@ const InvoiceCreate = () => {
         {errorP && <div>{errorP}</div>}
         {products && customers && currencies && paymentTypes && (
 
-          <div class="container-fluid">
-            <div class="d-flex justify-content-start align-items-center">
-              <div class="col-md-8 col-lg-8 col-xl-6">
-                <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                  <p class="lead fw-normal mt-2 mb-4 display-4">New Invoice</p>
+          <div className="container-fluid">
+            <div className="d-flex justify-content-start align-items-center">
+              <div className="col-md-8 col-lg-8 col-xl-6">
+                <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                  <p className="lead fw-normal mt-2 mb-4 display-4">New Invoice</p>
                 </div>
                 <form onSubmit={handleSubmit}>
-                  <div class="row mb-2">
-                    <div class="col-12">
+                  <div className="row mb-2">
+                    <div className="col-12">
                       <span style={{ marginLeft: "5px" }} className="h5">Customer</span>
                       <Select onChange={(e) => setCustomerPhone(e.value)} options={optionsCustomers} />
                     </div>
@@ -277,8 +277,8 @@ const InvoiceCreate = () => {
 
                   {showCustomersDetails(customer)}
 
-                  <div class="row mb-2">
-                    <div class="col-12">
+                  <div className="row mb-2">
+                    <div className="col-12">
                       <span style={{ marginLeft: "5px" }} className="h5">Product</span>
                       <Select onChange={(e) => setProductName(e.value)} options={optionsProduct} />
                     </div>
@@ -286,34 +286,34 @@ const InvoiceCreate = () => {
 
                   {showProductDetails(product)}
 
-                  <div class="row mb-5">
+                  <div className="row mb-5">
 
-                    <div class="col-12 col-sm-3">
+                    <div className="col-12 col-sm-3">
                       <span style={{ marginLeft: "5px" }} className="h5">Quentity</span>
-                      <input type="number" min="1" class="form-control"
+                      <input type="number" min="1" className="form-control"
                         placeholder="e.g. 3" required value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                     </div>
 
-                    <div class="col-12 col-sm-4">
+                    <div className="col-12 col-sm-4">
                       <span style={{ marginLeft: "5px" }} className="h5">VAT rate %</span>
-                      <input type="number" min="0" max="100" step="0.1" class="form-control"
+                      <input type="number" min="0" max="100" step="0.1" className="form-control"
                         placeholder="e.g. 23,0" required value={vat} onChange={(e) => setVat(e.target.value)} />
                     </div>
 
-                    <div class="col-12 col-sm-5">
+                    <div className="col-12 col-sm-5">
                       <span style={{ marginLeft: "5px" }} className="h5">Unit net value</span>
-                      <input type="number" min="0" step="0.01" class="form-control"
+                      <input type="number" min="0" step="0.01" className="form-control"
                         placeholder="e.g. 123,45" required value={net} onChange={(e) => setNet(e.target.value)} />
                     </div>
                   </div>
 
-                  <div class="row mb-5">
-                    <div class="col-12 col-sm-5">
+                  <div className="row mb-5">
+                    <div className="col-12 col-sm-5">
                       <span style={{ marginLeft: "5px" }} className="h5">Currency</span>
                       <Select onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
                     </div>
 
-                    <div class="col-12 col-sm-7">
+                    <div className="col-12 col-sm-7">
                       <span style={{ marginLeft: "5px" }} className="h5">Payment type</span>
                       <Select onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
                     </div>
@@ -335,20 +335,20 @@ const InvoiceCreate = () => {
                     </LocalizationProvider>
                   </div>
 
-                  <div class="col-12 col-sm-6 mb-3">
+                  <div className="col-12 col-sm-6 mb-3">
                     <span style={{ marginLeft: "5px" }} className="h5">Payment deadline</span>
-                    <input type="number" min="1" class="form-control"
+                    <input type="number" min="1" className="form-control"
                       placeholder="How many months?" required value={months} onChange={(e) => setMonths(e.target.value)} />
                   </div>
 
-                  <div class="form-group mt-3" style={{ marginLeft: "5px" }}>
+                  <div className="form-group mt-3" style={{ marginLeft: "5px" }}>
                     <label for="exampleFormControlTextarea1" className="h5">Remarks</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}> </textarea>
                   </div>
 
-                  <div class="mb-3 mt-3 ms-3">
-                    {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Add Invoice</button>}
-                    {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Adding invoice...</button>}
+                  <div className="mb-3 mt-3 ms-3">
+                    {!isPendingN && <button className="btn btn-primary rounded-pill btn-lg">Add Invoice</button>}
+                    {isPendingN && <button className="btn btn-primary rounded-pill btn-lg" disabled>Adding invoice...</button>}
                   </div>
 
                 </form>

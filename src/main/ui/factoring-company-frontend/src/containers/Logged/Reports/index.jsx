@@ -25,7 +25,6 @@ const Reports = () => {
         <div class="media align-items-center py-3">
         <div class="media-body ml-4">
           <h4 class="font-weight-bold display-2 mb-3">Reports</h4>
-          {/* <a href="#" class="btn btn-primary rounded-pill fs-4 float-end me-5">Add files + </a> */}
         </div>
       </div>
 
@@ -34,7 +33,7 @@ const Reports = () => {
 					<Directory href="#">Favourite</Directory>
 				</li>
 				<li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" /> 
-					<Directory href="#">Customer reports</Directory>
+					<Directory href="/user/reports/customers">Customer reports</Directory>
 				</li>
 				<li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" /> 
 					<Directory href="#">Expense reports</Directory>

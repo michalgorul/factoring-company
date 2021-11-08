@@ -36,6 +36,7 @@ import PasswordResetSuccess from './containers/NotLogged/LoginPage/success';
 import ProductEdit from './containers/Logged/Product/productEdit';
 import ProductCreate from './containers/Logged/Product/productCreate';
 import Transactions from './containers/Logged/Transactions';
+import CustomerReports from './containers/Logged/Reports/customerReports';
 
 
 
@@ -59,6 +60,7 @@ const UserComponents = ({match}) => {
           <ProtectedRoute path={`${match.url}/credit`} exact component={Credit} />
           <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails} />
           <ProtectedRoute path={`${match.url}/reports`} exact component={Reports} />
+          <ProtectedRoute path={`${match.url}/reports/customers`} exact component={CustomerReports} />
           <ProtectedRoute path={`${match.url}/documents`} exact component={Documents} />
           <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage} />
           <ProtectedRoute path={`${match.url}/transactions`} exact component={Transactions} />

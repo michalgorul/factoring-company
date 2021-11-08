@@ -98,16 +98,16 @@ public class BankAccountService {
     }
 
     private boolean ifBankAccountNumberTakenUpdating(Long id, String bankAccountNumber) {
-        Optional<BankAccountEntity> bankAccountEntitybyBankAccountNumber = bankAccountRepository
+        Optional<BankAccountEntity> bankAccountEntityByBankAccountNumber = bankAccountRepository
                 .findByBankAccountNumber(bankAccountNumber);
         Optional<BankAccountEntity> bankAccountEntitybyId = bankAccountRepository.findById(id);
 
         if (bankAccountEntitybyId.isEmpty())
             throw new IdNotFoundInDatabaseException("Bank Account", id);
-        if (bankAccountEntitybyBankAccountNumber.isEmpty())
+        if (bankAccountEntityByBankAccountNumber.isEmpty())
             return false;
 
-        return !bankAccountEntitybyBankAccountNumber.get().getId().equals(bankAccountEntitybyId.get().getId());
+        return !bankAccountEntityByBankAccountNumber.get().getId().equals(bankAccountEntitybyId.get().getId());
     }
 
     private void nameValidator(BankAccountRequestDto bankAccountEntity) {
@@ -151,7 +151,6 @@ public class BankAccountService {
             bankAccountEntityOptional.get().setBankSwift(bankAccountRequestDto.getBankSwift().toUpperCase());
             bankAccountEntityOptional.get().setBankAccountNumber(bankAccountRequestDto.getBankAccountNumber());
             bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountRequestDto.getBankName()));
-            bankAccountEntityOptional.get().setSellerId(bankAccountEntityOptional.get().getSellerId());
             bankAccountEntityOptional.get().setCompanyId(bankAccountEntityOptional.get().getCompanyId());
 
             return this.bankAccountRepository.save(bankAccountEntityOptional.get());

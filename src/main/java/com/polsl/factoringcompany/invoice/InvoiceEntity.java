@@ -6,7 +6,6 @@ import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
 import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
-import com.polsl.factoringcompany.seller.SellerEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Objects;
 
 @EqualsAndHashCode
 @Getter
@@ -68,9 +66,6 @@ public class InvoiceEntity {
     @Column(name = "status", nullable = false, length = 50)
     private String status;
 
-    @Column(name = "seller_id", nullable = false)
-    private int sellerId;
-
     @Column(name = "customer_id", nullable = false)
     private int customerId;
 
@@ -82,11 +77,6 @@ public class InvoiceEntity {
 
     @Column(name = "user_id", nullable = false)
     private Integer userId;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private SellerEntity sellerBySellerId;
 
     @JsonIgnore
     @ManyToOne
@@ -139,7 +129,6 @@ public class InvoiceEntity {
         this.leftToPay = BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() - invoiceDto.getPaid().doubleValue());
         this.remarks = invoiceDto.getRemarks();
         this.status = invoiceDto.getStatus();
-        this.sellerId = invoiceDto.getSellerId();
         this.customerId = invoiceDto.getCustomerId();
         this.paymentTypeId = invoiceDto.getPaymentTypeId();
         this.currencyId = invoiceDto.getCurrencyId();

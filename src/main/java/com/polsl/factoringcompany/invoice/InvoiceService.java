@@ -11,8 +11,6 @@ import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeService;
 import com.polsl.factoringcompany.product.ProductEntity;
 import com.polsl.factoringcompany.product.ProductService;
-import com.polsl.factoringcompany.seller.SellerEntity;
-import com.polsl.factoringcompany.seller.SellerService;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,6 @@ public class InvoiceService {
     private final CurrencyService currencyService;
     private final PaymentTypeService paymentTypeService;
     private final CustomerService customerService;
-    private final SellerService sellerService;
     private final ProductService productService;
     private final InvoiceItemService invoiceItemService;
 
@@ -59,14 +56,12 @@ public class InvoiceService {
             CurrencyEntity currency = currencyService.getCurrencyByCurrencyName(invoiceCreateRequest.getCurrencyName());
             PaymentTypeEntity paymentType = paymentTypeService.getPaymentTypeEntityByName(invoiceCreateRequest.getPaymentTypeName());
             CustomerEntity customer = customerService.getCustomerByPhone(invoiceCreateRequest.getCustomerPhone());
-            SellerEntity seller = sellerService.getSeller(2L);
             ProductEntity product = productService.getProductByName(invoiceCreateRequest.getProductName());
             Long currentUserId = userService.getCurrentUserId();
 
             InvoiceDto invoiceDto = new InvoiceDto(
                     invoiceCreateRequest,
                     newInvoiceNumber,
-                    seller.getId(),
                     customer.getId(),
                     paymentType.getId(),
                     currency.getId(),
@@ -110,7 +105,6 @@ public class InvoiceService {
                     invoiceDto.getPaid().doubleValue()));
             invoiceEntityOptional.get().setRemarks(invoiceDto.getRemarks());
             invoiceEntityOptional.get().setStatus(invoiceDto.getStatus());
-            invoiceEntityOptional.get().setSellerId(invoiceDto.getSellerId());
             invoiceEntityOptional.get().setCurrencyId(invoiceDto.getCurrencyId());
             invoiceEntityOptional.get().setPaymentTypeId(invoiceDto.getPaymentTypeId());
 

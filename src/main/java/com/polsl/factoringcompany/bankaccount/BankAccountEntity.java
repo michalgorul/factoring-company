@@ -2,14 +2,14 @@ package com.polsl.factoringcompany.bankaccount;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
-import com.polsl.factoringcompany.seller.SellerEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -37,16 +37,8 @@ public class BankAccountEntity {
     @Column(name = "bank_name", nullable = false, length = 50)
     private String bankName;
 
-    @Column(name = "seller_id", nullable = true)
-    private Integer sellerId;
-
     @Column(name = "company_id", nullable = true)
     private Integer companyId;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "seller_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private SellerEntity sellerBySellerId;
 
     @ManyToOne
     @JsonIgnore
@@ -58,26 +50,8 @@ public class BankAccountEntity {
         this.bankSwift = bankSwift;
         this.bankAccountNumber = bankAccountNumber;
         this.bankName = bankName;
-        this.sellerId = sellerId;
         this.companyId = companyId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BankAccountEntity that = (BankAccountEntity) o;
-        return id == that.id &&
-                Objects.equals(bankSwift, that.bankSwift) &&
-                Objects.equals(bankAccountNumber, that.bankAccountNumber) &&
-                Objects.equals(bankName, that.bankName) &&
-                Objects.equals(sellerId, that.sellerId) &&
-                Objects.equals(companyId, that.companyId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, bankSwift, bankAccountNumber, bankName, sellerId, companyId);
-    }
 
 }

@@ -22,13 +22,12 @@ public class InvoiceDto {
     private BigDecimal paid;
     private String remarks;
     private String status;
-    private int sellerId;
     private int customerId;
     private int paymentTypeId;
     private int currencyId;
     private int userId;
 
-    public InvoiceDto(InvoiceCreateRequest invoiceCreateRequest, String invoiceNumber, Long sellerId, Long customerId,
+    public InvoiceDto(InvoiceCreateRequest invoiceCreateRequest, String invoiceNumber, Long customerId,
                       Long paymentTypeId, Long currencyId, Long userId) {
 
         BigDecimal netValue = BigDecimal.valueOf(invoiceCreateRequest.getQuantity() * invoiceCreateRequest.getNet());
@@ -43,7 +42,6 @@ public class InvoiceDto {
         this.paid = new BigDecimal(0);
         this.remarks = invoiceCreateRequest.getRemarks();
         this.status = "active";
-        this.sellerId = Math.toIntExact(sellerId);
         this.customerId = Math.toIntExact(customerId);
         this.paymentTypeId = Math.toIntExact(paymentTypeId);
         this.currencyId = Math.toIntExact(currencyId);

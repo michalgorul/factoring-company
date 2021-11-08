@@ -12,8 +12,7 @@ const InvoiceDetails = () => {
 	const { invoice, errorI, isPendingI,
 		customer, errorC, isPendingC,
 		paymentType, errorP, isPendingP,
-		currency, errorCu, isPendingCu,
-		seller, errorS, isPendingS } = useFetchWithTokenInvoice(id);
+		currency, errorCu, isPendingCu} = useFetchWithTokenInvoice(id);
 
 	const history = useHistory();
 
@@ -86,14 +85,13 @@ const InvoiceDetails = () => {
 
 	return (
 		<div className="">
-			{isPendingI && isPendingC && isPendingCu && isPendingP && isPendingS && isPending &&
+			{isPendingI && isPendingC && isPendingCu && isPendingP && isPending &&
 				<div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
 			{errorI && <div>{errorI}</div>}
 			{errorC && <div>{errorC}</div>}
 			{errorCu && <div>{errorCu}</div>}
 			{errorP && <div>{errorP}</div>}
-			{errorS && <div>{errorS}</div>}
-			{invoice && customer && seller && paymentType && currency && (
+			{invoice && customer && paymentType && currency && (
 				<article class="mt-2 ms-3">
 					<div class="media align-items-center py-1">
 						<div class="media-body ml-4">
@@ -132,37 +130,6 @@ const InvoiceDetails = () => {
 
 					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"edit/general-info/" + id} className="text-decoration-none ml-auto h6">Edit general info</a>
-					</div>
-
-
-					<h5 class="mt-4 mb-3">Seller Information</h5>
-					<div class="container">
-						<div class="row align-items-start ms-2">
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action fw-bold">Seller name:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Country:</li>
-									<li class="list-group-item list-group-item-action fw-bold">City:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Street:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
-									<li class="list-group-item list-group-item-action fw-bold">NIP:</li>
-									<li class="list-group-item list-group-item-action fw-bold">REGON:</li>
-								</ul>
-							</div>
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush mb-3">
-									<li class="list-group-item list-group-item-action">{seller.firstName + ' ' + seller.lastName}</li>
-									<li class="list-group-item list-group-item-action">{seller.companyName}</li>
-									<li class="list-group-item list-group-item-action">{seller.country}</li>
-									<li class="list-group-item list-group-item-action">{seller.city}</li>
-									<li class="list-group-item list-group-item-action">{seller.street}</li>
-									<li class="list-group-item list-group-item-action">{seller.postalCode}</li>
-									<li class="list-group-item list-group-item-action">{seller.nip}</li>
-									<li class="list-group-item list-group-item-action">{seller.regon}</li>
-								</ul>
-							</div>
-						</div>
 					</div>
 
 					<h5 class="mt-4 mb-3">Customer Information</h5>

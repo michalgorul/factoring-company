@@ -4,7 +4,6 @@ import config from "../../../../services/config";
 import React, {useEffect, useState} from "react";
 
 const VatReport = () => {
-
     const {data: customers, errorC, isPendingC} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
 
     const [customerPhone, setCustomerPhone] = useState('');

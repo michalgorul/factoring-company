@@ -1,4 +1,4 @@
-import { Folder, StarFill } from "react-bootstrap-icons"
+import {Folder} from "react-bootstrap-icons"
 import styled from "styled-components";
 
 
@@ -22,23 +22,20 @@ const Directory = styled.a`
 const Reports = () => {
     return ( 
         <>
-        <div class="media align-items-center py-3">
-        <div class="media-body ml-4">
-          <h4 class="font-weight-bold display-2 mb-3">Reports</h4>
+        <div className="media align-items-center py-3">
+        <div className="media-body ml-4">
+          <h4 className="font-weight-bold display-2 mb-4">Reports</h4>
         </div>
       </div>
 
-			<ul class="list-group list-group-flush me-4 fs-3 ms-3">
-			<li class="list-group-item mt-3"><StarFill className="text-primary mb-4 me-3" /> 
-					<Directory href="#">Favourite</Directory>
-				</li>
-				<li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" /> 
+			<ul className="list-group list-group-flush me-4 fs-3 ms-3">
+				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
 					<Directory href="/user/reports/customers">Customer reports</Directory>
 				</li>
-				<li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" /> 
+				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
 					<Directory href="#">Expense reports</Directory>
 				</li>
-				<li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" /> 
+				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
 					<Directory href="#">Chars</Directory>
 				</li>
 			</ul>

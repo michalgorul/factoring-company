@@ -1,10 +1,10 @@
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, { useEffect, useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import { Marginer } from '../../../components/marginer';
+import React, {useEffect, useState} from 'react';
+import {Nav} from 'react-bootstrap';
+import {Marginer} from '../../../components/marginer';
 import InvoiceList from './invoiceList';
 import config from '../../../services/config';
-import { ifTokenCannotBeTrusted } from '../../../services/authenticationService';
+import {ifTokenCannotBeTrusted} from '../../../services/authenticationService';
 
 const Invoices = () => {
 
@@ -17,7 +17,7 @@ const Invoices = () => {
   useEffect(() => {
     getPaid();
     setPercentage(usedCredit / availableCredit * 100)
-  }, [usedCredit])
+  }, [availableCredit, usedCredit])
 
   const getPaid = () => {
     fetch(`${config.API_URL}/api/invoice/paid`, {

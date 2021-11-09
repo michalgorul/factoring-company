@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import Select from 'react-select'
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 import config from '../../../services/config';
 import useFetchWithToken from '../../../services/useFetchWithToken';
-import { warningToast, infoToast, errorToast } from '../../../components/toast/makeToast';
-import { useHistory } from 'react-router';
+import {errorToast, infoToast, warningToast} from '../../../components/toast/makeToast';
+import {useHistory} from 'react-router';
 
 
 const InvoiceCreate = () => {
@@ -55,7 +55,7 @@ const InvoiceCreate = () => {
         setCustomer(data);
       })
       .catch(err => {
-        console.log('fetch aborted');
+        console.log(err);
       })
 
     fetch(`${config.API_URL}/api/product/name/${productName}`, {
@@ -74,7 +74,7 @@ const InvoiceCreate = () => {
         setProduct(data);
       })
       .catch(err => {
-        console.log('fetch aborted');
+        console.log(err);
       })
 
   }, [customerPhone, productName])
@@ -319,7 +319,7 @@ const InvoiceCreate = () => {
                     </div>
                   </div>
 
-                  <div required className="mb-3 col-12">
+                  <div className="mb-3 col-12">
                     <p style={{ marginLeft: "5px" }} className="h5">Date of delivery/performance</p>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DateTimePicker clearable ampm={false} renderInput={(params) => (<TextField {...params} helperText="" />)}
@@ -342,7 +342,7 @@ const InvoiceCreate = () => {
                   </div>
 
                   <div className="form-group mt-3" style={{ marginLeft: "5px" }}>
-                    <label for="exampleFormControlTextarea1" className="h5">Remarks</label>
+                    <label form="exampleFormControlTextarea1" className="h5">Remarks</label>
                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={remarks} onChange={(e) => setRemarks(e.target.value)}> </textarea>
                   </div>
 

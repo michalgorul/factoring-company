@@ -127,7 +127,7 @@ public class VatReportInformation {
         this.customerCompanyCountry = companyEntity.getCountry();
         this.customerCompanyCity = companyEntity.getCity();
         this.customerCompanyStreet = companyEntity.getStreet();
-        this.customerCompanyPostalCode = companyEntity.getStreet();
+        this.customerCompanyPostalCode = companyEntity.getPostalCode();
         this.customerCompanyNip = companyEntity.getNip();
         this.customerCompanyRegon = companyEntity.getRegon();
         this.customerCompanyBankAccount = bankAccountEntity.getBankAccountNumber();

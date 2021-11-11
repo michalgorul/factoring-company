@@ -81,8 +81,6 @@ const InvoiceDetails = () => {
 		}
 	}
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
 	return (
 		<div className="">
 			{isPendingI && isPendingC && isPendingCu && isPendingP && isPending &&
@@ -92,111 +90,111 @@ const InvoiceDetails = () => {
 			{errorCu && <div>{errorCu}</div>}
 			{errorP && <div>{errorP}</div>}
 			{invoice && customer && paymentType && currency && (
-				<article class="mt-2 ms-3">
-					<div class="media align-items-center py-1">
-						<div class="media-body ml-4">
-							<h4 class="display-3">Invoice details</h4>
+				<article className="mt-2 ms-3">
+					<div className="media align-items-center py-1">
+						<div className="media-body ml-4">
+							<h4 className="display-3">Invoice details</h4>
 						</div>
 					</div>
-					<h5 class="mt-4 mb-3">General</h5>
-					<div class="container">
-						<div class="row align-items-start ms-2">
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action fw-bold">Invoice number:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Creation date:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Sale date:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Payment deadline:</li>
-									<li class="list-group-item list-group-item-action fw-bold">To pay:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Paid:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Status:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Remarks:</li>
+					<h5 className="mt-4 mb-3">General</h5>
+					<div className="container">
+						<div className="row align-items-start ms-2">
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush">
+									<li className="list-group-item list-group-item-action fw-bold">Invoice number:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Creation date:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Sale date:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Payment deadline:</li>
+									<li className="list-group-item list-group-item-action fw-bold">To pay:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Paid:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Status:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Remarks:</li>
 								</ul>
 							</div>
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action">{invoice.invoiceNumber}</li>
-									<li class="list-group-item list-group-item-action">{new Date(invoice.creationDate).toDateString()}</li>
-									<li class="list-group-item list-group-item-action">{new Date(invoice.saleDate).toDateString()}</li>
-									<li class="list-group-item list-group-item-action">{new Date(invoice.paymentDeadline).toDateString()}</li>
-									<li class="list-group-item list-group-item-action">{Number(invoice.toPay).toFixed(2)}</li>
-									<li class="list-group-item list-group-item-action">{Number(invoice.paid).toFixed(2)}</li>
-									<li class="list-group-item list-group-item-action">{invoice.status}</li>
-									<li class="list-group-item list-group-item-action">{invoice.remarks}</li>
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush">
+									<li className="list-group-item list-group-item-action">{invoice.invoiceNumber}</li>
+									<li className="list-group-item list-group-item-action">{new Date(invoice.creationDate).toDateString()}</li>
+									<li className="list-group-item list-group-item-action">{new Date(invoice.saleDate).toDateString()}</li>
+									<li className="list-group-item list-group-item-action">{new Date(invoice.paymentDeadline).toDateString()}</li>
+									<li className="list-group-item list-group-item-action">{Number(invoice.toPay).toFixed(2)}</li>
+									<li className="list-group-item list-group-item-action">{Number(invoice.paid).toFixed(2)}</li>
+									<li className="list-group-item list-group-item-action">{invoice.status}</li>
+									<li className="list-group-item list-group-item-action">{invoice.remarks}</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
+					<div className="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"edit/general-info/" + id} className="text-decoration-none ml-auto h6">Edit general info</a>
 					</div>
 
-					<h5 class="mt-4 mb-3">Customer Information</h5>
-					<div class="container">
-						<div class="row align-items-start ms-2">
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action fw-bold">Customer name:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Company name:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Country:</li>
-									<li class="list-group-item list-group-item-action fw-bold">City:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Street:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Postal code:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Phone number:</li>
+					<h5 className="mt-4 mb-3">Customer Information</h5>
+					<div className="container">
+						<div className="row align-items-start ms-2">
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush">
+									<li className="list-group-item list-group-item-action fw-bold">Customer name:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Company name:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Country:</li>
+									<li className="list-group-item list-group-item-action fw-bold">City:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Street:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Postal code:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Phone number:</li>
 								</ul>
 							</div>
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush mb-3">
-									<li class="list-group-item list-group-item-action">{customer.firstName + ' ' + customer.lastName}</li>
-									<li class="list-group-item list-group-item-action">{customer.companyName}</li>
-									<li class="list-group-item list-group-item-action">{customer.country}</li>
-									<li class="list-group-item list-group-item-action">{customer.city}</li>
-									<li class="list-group-item list-group-item-action">{customer.street}</li>
-									<li class="list-group-item list-group-item-action">{customer.postalCode}</li>
-									<li class="list-group-item list-group-item-action">{customer.phone}</li>
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush mb-3">
+									<li className="list-group-item list-group-item-action">{customer.firstName + ' ' + customer.lastName}</li>
+									<li className="list-group-item list-group-item-action">{customer.companyName}</li>
+									<li className="list-group-item list-group-item-action">{customer.country}</li>
+									<li className="list-group-item list-group-item-action">{customer.city}</li>
+									<li className="list-group-item list-group-item-action">{customer.street}</li>
+									<li className="list-group-item list-group-item-action">{customer.postalCode}</li>
+									<li className="list-group-item list-group-item-action">{customer.phone}</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
+					<div className="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"/user/customers/edit/" + customer.id} className="text-decoration-none ml-auto h6">Edit customer info</a>
 					</div>
 
-					<h5 class="mt-4 mb-3">Payment Information</h5>
-					<div class="container">
-						<div class="row align-items-start">
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item list-group-item-action fw-bold">Currency name:</li>
-									<li class="list-group-item list-group-item-action fw-bold">currency code:</li>
-									<li class="list-group-item list-group-item-action fw-bold">Payment type:</li>
+					<h5 className="mt-4 mb-3">Payment Information</h5>
+					<div className="container">
+						<div className="row align-items-start">
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush">
+									<li className="list-group-item list-group-item-action fw-bold">Currency name:</li>
+									<li className="list-group-item list-group-item-action fw-bold">currency code:</li>
+									<li className="list-group-item list-group-item-action fw-bold">Payment type:</li>
 								</ul>
 							</div>
-							<div class="col-6 col-lg-3">
-								<ul class="list-group list-group-flush mb-3">
-									<li class="list-group-item list-group-item-action">{currency.name}</li>
-									<li class="list-group-item list-group-item-action">{currency.code}</li>
-									<li class="list-group-item list-group-item-action">{paymentType.paymentTypeName}</li>
+							<div className="col-6 col-lg-3">
+								<ul className="list-group list-group-flush mb-3">
+									<li className="list-group-item list-group-item-action">{currency.name}</li>
+									<li className="list-group-item list-group-item-action">{currency.code}</li>
+									<li className="list-group-item list-group-item-action">{paymentType.paymentTypeName}</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 
-					<div class="d-flex mb-4 col-12 col-lg-6 mt-3">
+					<div className="d-flex mb-4 col-12 col-lg-6 mt-3">
 						<a href={"edit/payment-info/" + id} className="text-decoration-none ml-auto h6">Edit payment info</a>
 					</div>
 
 					<div className="container mb-4">
 						<div className="row align-items-start">
-							<div class="mt-3 col-12 col-lg-3 text-center">
-								{!isPending && <button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>}
-								{isPending && <button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" disabled onClick={handleShowPdf}>Generating...</button>}
+							<div className="mt-3 col-12 col-lg-3 text-center">
+								{!isPending && <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleShowPdf}>Generate PDF</button>}
+								{isPending && <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center" disabled onClick={handleShowPdf}>Generating...</button>}
 							</div>
 
-							<div class="mt-3 col-12 col-lg-3 text-center">
-								<button type="button" class="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
+							<div className="mt-3 col-12 col-lg-3 text-center">
+								<button type="button" className="btn btn-lg  btn-primary rounded-pill float-center" onClick={handleDelete}>Delete Invoice</button>
 							</div>
 						</div>
 					</div>
@@ -206,7 +204,7 @@ const InvoiceDetails = () => {
 						<Modal.Header closeButton>
 							<Modal.Title>Invoice deletion</Modal.Title>
 						</Modal.Header>
-						<Modal.Body>Are you sure you want to remove {<span class="fw-bold">{invoice.invoiceNumber}</span>} from your invoice list?</Modal.Body>
+						<Modal.Body>Are you sure you want to remove {<span className="fw-bold">{invoice.invoiceNumber}</span>} from your invoice list?</Modal.Body>
 						<Modal.Footer>
 							<Button variant="secondary" onClick={handleClose}>
 								Cancel

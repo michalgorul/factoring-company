@@ -2,12 +2,15 @@ import Select from "react-select";
 import useFetchWithToken from "../../../../services/useFetchWithToken";
 import config from "../../../../services/config";
 import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {ifTokenCannotBeTrusted} from "../../../../services/authenticationService";
 
 const VatReport = () => {
     const {data: customers, errorC, isPendingC} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
 
     const [customerPhone, setCustomerPhone] = useState('');
     const [customer, setCustomer] = useState(null);
+    const [isPending, setIsPending] = useState(false);
 
 
     const makeCustomerOptions = (customers) => {
@@ -45,9 +48,9 @@ const VatReport = () => {
                 setCustomer(data);
             })
             .catch(err => {
-                console.log('fetch aborted');
+                console.log(err);
             })
-    })
+    },[customerPhone])
 
     const showCustomersDetails = (customer) => {
         if (customer) {
@@ -82,7 +85,33 @@ const VatReport = () => {
     }
 
     const handleGenerate = () => {
+        setIsPending(true);
 
+        try {
+            axios
+                .get(config.API_URL + `/api/report/vat/${customer.id}`, {
+                    responseType: "blob",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                .then((response) => {
+                    ifTokenCannotBeTrusted(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob([response.data], {type: "application/pdf"});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    const pdfWindow = window.open();
+                    pdfWindow.location.href = fileURL;
+                    setIsPending(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } catch (error) {
+            return {error};
+        }
     }
 
 
@@ -90,8 +119,10 @@ const VatReport = () => {
         if (customer) {
             return (
                 <div className="text-center">
-                        <button className="btn btn-lg btn-primary rounded-pill text-white" onClick={handleGenerate}>Generate
-                            report</button>
+                    {!isPending && <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center"
+                                           onClick={handleGenerate}>Generate report</button>}
+                    {isPending && <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center" disabled
+                                          onClick={handleGenerate}>Generating...</button>}
                 </div>
 
             )

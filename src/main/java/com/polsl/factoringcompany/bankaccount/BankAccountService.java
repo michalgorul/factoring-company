@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.bankaccount;
 
+import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
@@ -176,5 +177,11 @@ public class BankAccountService {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public BankAccountEntity getCustomersBankAccount(CustomerEntity customerEntity){
+        return this.bankAccountRepository.findByCompanyId(customerEntity.getCompanyId())
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", Long.valueOf(customerEntity.getCompanyId())));
+
     }
 }

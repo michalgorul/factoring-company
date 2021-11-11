@@ -1,11 +1,12 @@
 package com.polsl.factoringcompany.reports.vat;
 
+import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,9 +55,11 @@ public class VatReportInformation {
     private String customerCompanyPostalCode;
     private String customerCompanyNip;
     private String customerCompanyRegon;
+    private String customerCompanyBankAccount;
 
 
-    VatReportInformation(HashMap<String, Object> vatInformationInMap, CustomerEntity customerEntity, CompanyEntity companyEntity) {
+    VatReportInformation(HashMap<String, Object> vatInformationInMap, CustomerEntity customerEntity,
+                         CompanyEntity companyEntity, BankAccountEntity bankAccountEntity) {
 
         List<Object> tempRepresentatives = new ArrayList<>();
         List<Object> tempAuthorizedClerks = new ArrayList<>();
@@ -113,11 +116,12 @@ public class VatReportInformation {
         this.hasVirtualAccounts = (boolean) vatInformationInMap.get("hasVirtualAccounts");
 
         this.customerName = customerEntity.getFirstName() + " " + customerEntity.getLastName();
+        this.customerEmail = customerEntity.getEmail();
         this.customerCountry = customerEntity.getCountry();
-        this.customerCountry = customerEntity.getCity();
-        this.customerCountry = customerEntity.getStreet();
-        this.customerCountry = customerEntity.getPostalCode();
-        this.customerCountry = customerEntity.getPhone();
+        this.customerCity = customerEntity.getCity();
+        this.customerStreet = customerEntity.getStreet();
+        this.customerPostalCode = customerEntity.getPostalCode();
+        this.customerPhone = customerEntity.getPhone();
 
         this.customerCompanyName = companyEntity.getCompanyName();
         this.customerCompanyCountry = companyEntity.getCountry();
@@ -126,54 +130,74 @@ public class VatReportInformation {
         this.customerCompanyPostalCode = companyEntity.getStreet();
         this.customerCompanyNip = companyEntity.getNip();
         this.customerCompanyRegon = companyEntity.getRegon();
+        this.customerCompanyBankAccount = bankAccountEntity.getBankAccountNumber();
     }
 
     public HashMap<String, String> getVariablesInHashMap() {
         HashMap<String, String> variables = new HashMap<>();
 
-        Field[] declaredFields = getClass().getDeclaredFields();
+//        Field[] declaredFields = getClass().getDeclaredFields();
+//        for(Field field: declaredFields){
+//            try {
+//                variables.put(field.getName(), field.get(this).toString());
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        for(Field field: declaredFields){
-            variables.put(field.getName(), field.getName());
-        }
-
-//        variables.put("name", this.name);
-//        variables.put("nip", this.nip);
-//        variables.put("statusVat", this.statusVat);
-//        variables.put("regon", this.regon);
-//        variables.put("pesel", this.pesel);
-//        variables.put("krs", this.krs);
-//        variables.put("residenceAddress", this.deliveryMethod);
-//        variables.put("workingAddress", this.deliveryDescription);
-//        variables.put("payment_method", this.paymentMethod);
-//        variables.put("representatives", this.itemName);
-//        variables.put("authorizedClerks", this.pkwiu);
-//        variables.put("partners", this.quantity);
-//        variables.put("registrationLegalDate", this.unit);
-//        variables.put("registrationDenialBasis", this.vat);
-//        variables.put("registrationDenialDate", this.gross);
-//        variables.put("restorationBasis", this.net);
-//        variables.put("restorationDate", this.vatValue);
-//        variables.put("removalBasis", this.toPay);
-//        variables.put("removalDate", this.toPayInWords);
-//        variables.put("accountNumbers", this.sellerCompany);
-//        variables.put("hasVirtualAccounts", this.sellerStreet);
-//        variables.put("customerName", this.sellerPostalCode);
-//        variables.put("customerEmail", this.sellerCity);
-//        variables.put("customerCountry", this.sellerCountry);
-//        variables.put("customerCity", this.sellerPhone);
-//        variables.put("customerStreet", this.sellerNip);
-//        variables.put("customerPostalCode", this.sellerRegon);
-//        variables.put("customerPhone", this.sellerRegon);
-//        variables.put("customerCompanyName", this.sellerRegon);
-//        variables.put("customerCompanyCountry", this.sellerRegon);
-//        variables.put("customerCompanyCity", this.sellerRegon);
-//        variables.put("customerCompanyStreet", this.sellerRegon);
-//        variables.put("customerCompanyPostalCode", this.sellerRegon);
-//        variables.put("customerCompanyNip", this.sellerRegon);
-//        variables.put("customerCompanyRegon", this.sellerRegon);
+        variables.put("name", getNullString(this.name));
+        variables.put("nip", getNullString(this.nip));
+        variables.put("statusVat", getNullString(this.statusVat));
+        variables.put("regon", getNullString(this.regon));
+        variables.put("pesel", getNullString(this.pesel));
+        variables.put("krs", getNullString(this.krs));
+        variables.put("residenceAddress", getNullString(this.residenceAddress));
+        variables.put("workingAddress", getNullString(this.workingAddress));
+        variables.put("representatives", getListInString(this.representatives));
+        variables.put("authorizedClerks", getListInString(this.authorizedClerks));
+        variables.put("partners", getListInString(this.partners));
+        variables.put("registrationLegalDate", this.registrationLegalDate);
+        variables.put("registrationDenialBasis", this.getObjectToString(this.registrationDenialBasis));
+        variables.put("registrationDenialDate", this.getObjectToString(this.registrationDenialDate));
+        variables.put("restorationBasis", this.getObjectToString(this.restorationBasis));
+        variables.put("restorationDate", this.getObjectToString(this.restorationDate));
+        variables.put("removalBasis", this.getObjectToString(this.removalBasis));
+        variables.put("removalDate", this.getObjectToString(this.removalDate));
+        variables.put("accountNumbers", this.getListInString(this.accountNumbers));
+        variables.put("hasVirtualAccounts", this.hasVirtualAccountsToString());
+        variables.put("customerName", this.customerName);
+        variables.put("customerEmail", this.customerEmail);
+        variables.put("customerCountry", this.customerCountry);
+        variables.put("customerCity", this.customerCity);
+        variables.put("customerStreet", this.customerStreet);
+        variables.put("customerPostalCode", this.customerPostalCode);
+        variables.put("customerPhone", this.customerPhone);
+        variables.put("customerCompanyName", this.customerCompanyName);
+        variables.put("customerCompanyCountry", this.customerCompanyCountry);
+        variables.put("customerCompanyCity", this.customerCompanyCity);
+        variables.put("customerCompanyStreet", this.customerCompanyStreet);
+        variables.put("customerCompanyPostalCode", this.customerCompanyPostalCode);
+        variables.put("customerCompanyNip", this.customerCompanyNip);
+        variables.put("customerCompanyRegon", this.customerCompanyRegon);
+        variables.put("customerCompanyBankAccount", this.customerCompanyBankAccount);
 
         return variables;
+    }
+
+    private String getListInString(List<String> list) {
+        return list == null || list.isEmpty() ? " - " : StringUtils.join(list, ", ");
+    }
+
+    private String hasVirtualAccountsToString() {
+        return this.hasVirtualAccounts ? "true" : "false";
+    }
+
+    private String getObjectToString(Object o) {
+        return o != null ? o.toString() : " - ";
+    }
+
+    private String getNullString(String s) {
+        return s == null ? " - " : s;
     }
 
 

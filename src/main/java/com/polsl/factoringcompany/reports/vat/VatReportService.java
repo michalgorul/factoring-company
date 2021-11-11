@@ -2,6 +2,8 @@ package com.polsl.factoringcompany.reports.vat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
+import com.polsl.factoringcompany.bankaccount.BankAccountService;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.company.CompanyService;
 import com.polsl.factoringcompany.customer.CustomerEntity;
@@ -31,6 +33,7 @@ public class VatReportService {
     private final CustomerService customerService;
     private final CompanyService companyService;
     private RestTemplate restTemplate;
+    private final BankAccountService bankAccountService;
 
 
     public byte[] generateDocxFileFromTemplate(Long customerId) throws Exception {
@@ -42,11 +45,12 @@ public class VatReportService {
 
         CustomerEntity customerEntity = customerService.getCustomer(customerId);
 
-        VatReportInformation vatReportInformation = new VatReportInformation();
+        VatReportInformation vatReportInformation = this.getCustomerVatInformation(customerId);
 
-//        HashMap<String, String> variables = vatReportInformation.getVariablesInHashMap();
 
-//        documentPart.variableReplace(variables);
+        HashMap<String, String> variables = vatReportInformation.getVariablesInHashMap();
+
+        documentPart.variableReplace(variables);
         FileOutputStream os = new FileOutputStream("src/main/resources/static/temp.pdf");
         Docx4J.toPDF(wordMLPackage, os);
         Path pdfPath = Paths.get("src/main/resources/static/temp.pdf");
@@ -64,7 +68,7 @@ public class VatReportService {
 
         CustomerEntity customer = customerService.getCustomer(customerId);
         CompanyEntity company = companyService.getCompany(Long.valueOf(customer.getCompanyId()));
-
+        BankAccountEntity bankAccount = bankAccountService.getCustomersBankAccount(customer);
         String url = "https://wl-api.mf.gov.pl/api/search/nip/" + company.getNip() + "?date=" + formattedNow;
 
         String vat = restTemplate.getForObject(url, String.class);
@@ -73,10 +77,8 @@ public class VatReportService {
         vat = vat.replaceAll(",\"requestId\":\".*\",\"requestDateTime\":\".*\"}}", "");
 
         HashMap<String, Object> map = new Gson().fromJson(vat, new TypeToken<HashMap<String, Object>>() {}.getType());
-        VatReportInformation vatReportInformation = new VatReportInformation(map, customer, company);
-        HashMap<String, String> variablesInHashMap = vatReportInformation.getVariablesInHashMap();
-        System.out.println(variablesInHashMap);
-        return vatReportInformation;
+
+        return new VatReportInformation(map, customer, company,bankAccount);
     }
 
 }

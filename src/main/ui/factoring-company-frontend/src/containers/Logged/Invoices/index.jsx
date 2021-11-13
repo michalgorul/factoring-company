@@ -81,10 +81,6 @@ const Invoices = () => {
       <InvoiceList className="pe-4 me-5 mt-5" whatInvoices={whatInvoices} />
 
 
-
-
-
-
     </>
   );
 }

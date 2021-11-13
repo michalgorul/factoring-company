@@ -1,5 +1,5 @@
 import {HomePage} from './containers/NotLogged/HomePage'
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import NotFound from './containers/NotFound';
 import Login from './containers/NotLogged/LoginPage';
 import Register from './containers/NotLogged/RegisterPage';
@@ -39,6 +39,7 @@ import Transactions from './containers/Logged/Transactions';
 import CustomerReports from './containers/Logged/Reports/CustomerReports/index';
 import KrsReport from './containers/Logged/Reports/CustomerReports/krsReport';
 import VatReport from './containers/Logged/Reports/CustomerReports/vatReport';
+import CreditCreate from "./containers/Logged/Credit/creditCreate";
 
 
 const UserComponents = ({match}) => {
@@ -59,6 +60,7 @@ const UserComponents = ({match}) => {
                 <ProtectedRoute path={`${match.url}/invoices/edit/payment-info/:id`} exact component={PaymentInfoEdit}/>
                 <ProtectedRoute path={`${match.url}/invoices/:id`} exact component={InvoiceDetails}/>
                 <ProtectedRoute path={`${match.url}/credit`} exact component={Credit}/>
+                <ProtectedRoute path={`${match.url}/credit/create`} exact component={CreditCreate}/>
                 <ProtectedRoute path={`${match.url}/credit/:id`} exact component={CreditDetails}/>
                 <ProtectedRoute path={`${match.url}/reports`} exact component={Reports}/>
                 <ProtectedRoute path={`${match.url}/reports/customers`} exact component={CustomerReports}/>

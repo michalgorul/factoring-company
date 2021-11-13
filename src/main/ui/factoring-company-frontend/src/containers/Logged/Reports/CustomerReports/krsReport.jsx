@@ -2,6 +2,7 @@ import useFetchWithToken from "../../../../services/useFetchWithToken";
 import config from "../../../../services/config";
 import React, {useEffect, useState} from "react";
 import Select from "react-select";
+import {api} from "./regonApi";
 
 const KrsReport = () => {
     const {data: customers, errorC, isPendingC} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
@@ -47,7 +48,7 @@ const KrsReport = () => {
             .catch(err => {
                 console.log('fetch aborted');
             })
-    })
+    },[customerPhone])
 
     const showCustomersDetails = (customer) => {
         if (customer) {
@@ -82,7 +83,7 @@ const KrsReport = () => {
     }
 
     const handleGenerate = () => {
-
+        api().then(r => console.log(r));
     }
 
 

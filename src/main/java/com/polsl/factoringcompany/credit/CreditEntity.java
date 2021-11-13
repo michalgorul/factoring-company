@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "credit")
 @Table(name = "credit", schema = "public", catalog = "factoring_company")
 public class CreditEntity {
 
@@ -63,6 +63,15 @@ public class CreditEntity {
 
     @Column(name = "user_id", nullable = false)
     private int userId;
+
+    @Column(name = "payment_day", nullable = false)
+    private int paymentDay;
+
+    @Column(name = "commission", nullable = false, length = 20)
+    private String commission;
+
+    @Column(name = "insurance", nullable = false, length = 50)
+    private String insurance;
 
     @ManyToOne
     @JsonIgnore

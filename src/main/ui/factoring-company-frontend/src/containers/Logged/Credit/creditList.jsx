@@ -1,5 +1,5 @@
 import Table from 'react-bootstrap/Table'
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';
 
@@ -17,7 +17,7 @@ const CreditList = ({ whatCredits }) => {
     }
 
     return (
-        <Table striped borderless hover>
+        <Table striped borderless hover responsive>
             <caption>List of {whatCredits} credits</caption>
             <thead>
                 <tr>

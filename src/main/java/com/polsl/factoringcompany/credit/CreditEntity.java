@@ -3,13 +3,18 @@ package com.polsl.factoringcompany.credit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Objects;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "credit")
@@ -18,13 +23,13 @@ public class CreditEntity {
 
     @Id
     @SequenceGenerator(
-            name = "credit_id_sequence",
-            sequenceName = "credit_id_sequence",
+            name = "credit_id_seq",
+            sequenceName = "credit_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "credit_id_sequence"
+            generator = "credit_id_seq"
     )
     private long id;
 
@@ -48,6 +53,9 @@ public class CreditEntity {
 
     @Column(name = "rate_of_interest", nullable = false, precision = 2)
     private BigDecimal rateOfInterest;
+
+    @Column(name = "one_time_commission", nullable = false, precision = 2)
+    private BigDecimal oneTimeCommission;
 
     @Column(name = "next_payment_date", nullable = false)
     private Date nextPaymentDate;
@@ -78,6 +86,30 @@ public class CreditEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private UserEntity userByUserId;
 
+
+    public CreditEntity(CreditRequestDto creditRequestDto, String creditNumber, Integer userId) {
+        this.creditNumber = creditNumber;
+        this.leftToPay = BigDecimal.valueOf(creditRequestDto.getAmount());
+        this.amount = BigDecimal.valueOf(creditRequestDto.getAmount());
+        this.nextPayment = BigDecimal.valueOf(creditRequestDto.getNextPayment());
+        this.installments = creditRequestDto.getInstallments();
+        this.balance = BigDecimal.valueOf(0.0);
+        this.rateOfInterest = BigDecimal.valueOf(creditRequestDto.getRateOfInterest());
+
+        LocalDateTime nextMonth = LocalDateTime.now().plusMonths(1);
+        LocalDateTime nextPaymentDate = LocalDateTime.of(nextMonth.getYear(), Month.from(nextMonth),
+                creditRequestDto.getPaymentDay(), 0, 0);
+
+        this.nextPaymentDate = Date.valueOf(nextPaymentDate.toLocalDate());
+        this.creationDate = Date.valueOf(LocalDate.now());
+        this.lastInstallmentDate = Date.valueOf(nextPaymentDate.plusMonths(installments - 1).toLocalDate());
+        this.userId = userId;
+        this.status = creditRequestDto.getStatus();
+        this.commission = creditRequestDto.getCommission();
+        this.paymentDay = creditRequestDto.getPaymentDay();
+        this.insurance = creditRequestDto.getInsurance();
+        this.oneTimeCommission = BigDecimal.valueOf(creditRequestDto.getOneTimeCommission());
+    }
 
     @Override
     public boolean equals(Object o) {

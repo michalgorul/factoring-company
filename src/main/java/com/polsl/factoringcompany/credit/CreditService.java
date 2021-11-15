@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -48,5 +50,32 @@ public class CreditService {
                 .map(CreditEntity::getLeftToPay)
                 .mapToDouble(BigDecimal::doubleValue).sum()).replace(",","."));
 
+    }
+
+    public CreditEntity createCurrentUserCredit(CreditRequestDto creditRequestDto) {
+        try{
+            String newCreditNumber = getNewCreditNumber();
+            userService.getCurrentUserId();
+            return this.creditRepository.save(new CreditEntity(
+                    creditRequestDto, newCreditNumber, Math.toIntExact(userService.getCurrentUserId())));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getNewCreditNumber() {
+        StringBuilder newCreditNumber = new StringBuilder();
+        Formatter formatter = new Formatter(newCreditNumber);
+        int month = LocalDateTime.now().getMonthValue();
+        int year = LocalDateTime.now().getYear();
+        long lastCreditIdPlusOne = 1L;
+
+        try {
+            lastCreditIdPlusOne = creditRepository.getCreditNumber(month, year) + 1;
+        } catch (NullPointerException ignored) {
+        }
+        formatter.format("%d/%d/%d", lastCreditIdPlusOne, month, year);
+
+        return newCreditNumber.toString();
     }
 }

@@ -31,6 +31,11 @@ public class CreditController {
         this.creditService.deleteCredit(id);
     }
 
+    @PostMapping
+    public CreditEntity createCurrentUserCredit(@RequestBody CreditRequestDto creditRequestDto){
+        return this.creditService.createCurrentUserCredit(creditRequestDto);
+    }
+
     @GetMapping("/left")
     public Double getLeftToPay(){
         return this.creditService.getLeftToPay();

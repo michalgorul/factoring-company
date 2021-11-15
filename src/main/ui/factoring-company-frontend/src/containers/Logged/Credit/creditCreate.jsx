@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import useGetUsedCredit from "../../../services/creditService";
 import {errorToast, infoToast} from "../../../components/toast/makeToast";
 import config from "../../../services/config";
+import {useHistory} from "react-router-dom";
 
 const CreditCreate = () => {
 
@@ -15,16 +16,34 @@ const CreditCreate = () => {
     const [maxToDraw, setMaxToDraw] = useState(0);
     const [monthlyInstallment, setMonthlyInstallment] = useState(0);
     const [monthlyInsurance, setMonthlyInsurance] = useState(0);
-    const [oneTimeCommission] = useState('0.00 USD');
+    const [oneTimeCommission, setOneTimeCommission] = useState('0.00 USD');
+    const [insurance, setInsurance] = useState('credited');
+    const [commission, setCommission] = useState('noProtection');
     const [isPendingN, setIsPendingN] = useState(false);
-
-    const {usedCredit, error, isPending} = useGetUsedCredit();
+    const history = useHistory();
+    const {usedCredit} = useGetUsedCredit();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updatePayments = () => {
-        let total = Number(drawValue) + Number(drawValue * interest);
+        let total;
+        if(commission === 'credited'){
+            total = Number(drawValue) + Number(drawValue * interest);
+            setOneTimeCommission('0.00 USD');
+        }
+        else{
+            total = Number(drawValue);
+            setOneTimeCommission(Number(drawValue * interest).toFixed(2) + ' USD');
+
+        }
         setMonthlyInstallment((total / monthsAmount).toFixed(2) + ' USD');
         setMonthlyInsurance((total * 0.005).toFixed(2) + ' USD');
+    }
+
+    const handleInsuranceChange = (changeEvent) => {
+        setInsurance(changeEvent.target.value);
+    }
+    const handleCommissionChange = (changeEvent) => {
+        setCommission(changeEvent.target.value);
     }
 
     useEffect(() => {
@@ -37,42 +56,58 @@ const CreditCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-            const invoice = {
-                customerPhone, productName, quantity, vat, net, currencyName, paymentTypeName,
-                performanceDate, issueDate, months, remarks
-            };
+        let total, currentRateOfInterest;
+        if(commission === 'credited'){
+            total = Number(drawValue) + Number(drawValue * interest);
+            currentRateOfInterest = config.RATE_OF_INTEREST;
+        }
+        else{
+            total = Number(drawValue);
+            currentRateOfInterest = 0.00;
+        }
+        const credit = {
+            amount: total.toFixed(2),
+            nextPayment: (total / monthsAmount).toFixed(2),
+            installments: monthsAmount,
+            rateOfInterest: currentRateOfInterest,
+            status: 'processing',
+            commission: commission,
+            paymentDay: monthDay,
+            insurance: insurance,
+            oneTimeCommission: Number(oneTimeCommission.replace(' USD', ''))
+        };
 
-            setIsPendingN(true);
+        console.log(credit);
 
-            fetch(`${config.API_URL}/api/invoice`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify(invoice)
+        setIsPendingN(true);
+
+        fetch(`${config.API_URL}/api/credit`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(credit)
+        })
+            .then((response) => {
+                setIsPendingN(false);
+                if (response.ok) {
+                    history.goBack();
+                    return response;
+                } else {
+                    return response
+                }
             })
-                .then((response) => {
-                    setIsPendingN(false);
-                    if (response.ok) {
-                        history.goBack();
-                        return response;
-                    }
-                    else {
-                        return response
-                    }
-                })
-                .then((response) => {
-                    if (response.ok) {
-                        infoToast('Company was updated')
-                    }
-                    else {
-                        errorToast('Some of inputs were incorrect')
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                })
+            .then((response) => {
+                if (response.ok) {
+                    infoToast('Credit created')
+                } else {
+                    errorToast('Some of inputs were incorrect')
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     return (
@@ -145,14 +180,16 @@ const CreditCreate = () => {
 
                     <p className="fs-5 ms-2 pe-3">Commission</p>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="commission" value="credited" checked/>
-                        <label className="form-check-label" htmlFor="exampleRadios1">
+                        <input className="form-check-input" type="radio" name="commission" value="credited"
+                               checked={commission === 'credited'} onChange={handleCommissionChange}/>
+                        <label className="form-check-label">
                             Added to the loan amount (credited)
                         </label>
                     </div>
                     <div className="form-check mb-3">
-                        <input className="form-check-input" type="radio" name="commission"  value="automatic"/>
-                        <label className="form-check-label" htmlFor="exampleRadios1">
+                        <input className="form-check-input" type="radio" name="commission" value="automatic"
+                               checked={commission === 'automatic'} onChange={handleCommissionChange}/>
+                        <label className="form-check-label">
                             Charged from your account automatically upon receipt of the loan
                         </label>
                     </div>
@@ -160,14 +197,16 @@ const CreditCreate = () => {
 
                     <p className="fs-5 ms-2 pe-3">Insurance</p>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="insurance" value="noProtection" checked/>
-                        <label className="form-check-label" htmlFor="exampleRadios1">
+                        <input className="form-check-input" type="radio" name="insurance" value="noProtection"
+                               checked={insurance === 'noProtection'} onChange={handleInsuranceChange}/>
+                        <label className="form-check-label">
                             No repayment protection
                         </label>
                     </div>
                     <div className="form-check mb-3">
-                        <input className="form-check-input" type="radio" name="insurance" value="protection"/>
-                        <label className="form-check-label" htmlFor="exampleRadios1">
+                        <input className="form-check-input" type="radio" name="insurance" value="protection"
+                        checked={insurance === 'protection'} onChange={handleInsuranceChange}/>
+                        <label className="form-check-label">
                             Repayment protection
                         </label>
                     </div>
@@ -193,10 +232,9 @@ const CreditCreate = () => {
                         </div>
                     </div>
                     <div className="text-center mb-3">
-                        <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Apply</button>
+                        {!isPendingN && <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Apply</button>}
+                        {isPendingN && <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Applying...</button>}
                     </div>
-
-
                 </div>
             </form>
 

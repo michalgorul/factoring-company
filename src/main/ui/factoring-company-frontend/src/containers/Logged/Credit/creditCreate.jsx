@@ -90,17 +90,16 @@ const CreditCreate = () => {
             .then((response) => {
                 setIsPendingN(false);
                 if (response.ok) {
-                    history.goBack();
-                    return response;
-                } else {
-                    return response
+                    history.push('/user/credit');
                 }
+                return response;
             })
             .then((response) => {
+                setIsPendingN(false);
                 if (response.ok) {
-                    infoToast('Credit created')
+                    infoToast('Credit created');
                 } else {
-                    errorToast('Some of inputs were incorrect')
+                    errorToast('Some of inputs were incorrect');
                 }
             })
             .catch(err => {

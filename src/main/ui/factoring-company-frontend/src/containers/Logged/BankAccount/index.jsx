@@ -18,7 +18,7 @@ const EditBankAccount = () => {
 
     useEffect(() => {
         getBankAccountInfo();
-    }, [bank]);
+    });
 
     const getBankAccountInfo = () => {
         if (bank) {

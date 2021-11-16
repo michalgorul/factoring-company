@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Formatter;
@@ -96,6 +97,14 @@ public class CreditService {
             e.printStackTrace();
         }
     }
+    private void updateFromActiveToFunded(CreditEntity creditEntity) {
+        try {
+            creditEntity.setStatus("funded");
+            this.creditRepository.save(creditEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private HashMap<String, String> ifProperFileUploadedAndReturnNameAndCreditNumber(String fileName) {
         String patterns = "\\S*[_]\\S*[_]\\d{1,2}[_]\\d{1,2}[_]\\d{4}.pdf";
@@ -133,11 +142,16 @@ public class CreditService {
     //    @Scheduled(cron = "[Seconds] [Minutes] [Hours] [Day of month] [Month] [Day of week] [Year]")
 //    Fires at 12 PM every day:
     @Scheduled(cron = "0 1 0 * * ?")
-    public void updateFromInReviewToActiveScheduled() {
-        List<CreditEntity> allByStatusEquals = this.creditRepository.findAllByStatusEquals("review");
-
-        for (CreditEntity creditEntity : allByStatusEquals) {
+    public void updateStatuses() {
+        List<CreditEntity> allByStatusEqualsReview = this.creditRepository.findAllByStatusEquals("review");
+        for (CreditEntity creditEntity : allByStatusEqualsReview) {
             updateFromInReviewToActive(creditEntity);
+        }
+
+        List<CreditEntity> allByStatusEqualsActive = this.creditRepository.findAllByStatusEquals("active");
+        for (CreditEntity creditEntity : allByStatusEqualsActive) {
+            if(creditEntity.getLastInstallmentDate().before(Date.valueOf(LocalDateTime.now().toLocalDate())))
+                updateFromActiveToFunded(creditEntity);
         }
         System.out.println("changed");
     }

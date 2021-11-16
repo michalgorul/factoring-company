@@ -97,6 +97,7 @@ public class CreditService {
             e.printStackTrace();
         }
     }
+
     private void updateFromActiveToFunded(CreditEntity creditEntity) {
         try {
             creditEntity.setStatus("funded");
@@ -154,5 +155,10 @@ public class CreditService {
                 updateFromActiveToFunded(creditEntity);
         }
         System.out.println("changed");
+    }
+
+    public List<CreditSchedule> getSchedule(Long id) {
+        Optional<CreditEntity> byId = this.creditRepository.findById(id);
+        return byId.map(CreditSchedule::getSchedule).orElse(null);
     }
 }

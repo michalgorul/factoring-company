@@ -93,7 +93,7 @@ public class CreditEntity {
         this.amount = BigDecimal.valueOf(creditRequestDto.getAmount());
         this.nextPayment = BigDecimal.valueOf(creditRequestDto.getNextPayment());
         this.installments = creditRequestDto.getInstallments();
-        this.balance = BigDecimal.valueOf(0.0);
+        this.balance = BigDecimal.valueOf(creditRequestDto.getAmount());
         this.rateOfInterest = BigDecimal.valueOf(creditRequestDto.getRateOfInterest());
 
         LocalDateTime nextMonth = LocalDateTime.now().plusMonths(1);

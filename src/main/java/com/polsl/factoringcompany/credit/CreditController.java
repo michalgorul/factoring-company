@@ -40,4 +40,9 @@ public class CreditController {
     public Double getLeftToPay(){
         return this.creditService.getLeftToPay();
     }
+
+    @GetMapping(path = "/schedule/{id}")
+    public List<CreditSchedule> getSchedule(@PathVariable Long id){
+        return this.creditService.getSchedule(id);
+    }
 }

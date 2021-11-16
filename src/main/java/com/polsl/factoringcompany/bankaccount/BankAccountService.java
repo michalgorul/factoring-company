@@ -41,7 +41,6 @@ public class BankAccountService {
     }
 
     private void updateValidate(Long id, BankAccountRequestDto bankAccountEntity) {
-
         if (ifBankAccountNumberTakenUpdating(id, bankAccountEntity.getBankAccountNumber()))
             throw new NotUniqueException("Bank Account", "number", bankAccountEntity.getBankAccountNumber());
 
@@ -164,6 +163,26 @@ public class BankAccountService {
                     null,
                     customer.getCompanyId()));
 
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public BankAccountEntity updateBankAccount(Long id, BankAccountRequestDto bankAccountRequestDto) {
+        Optional<BankAccountEntity> bankAccountEntityOptional = this.bankAccountRepository.findById(id);
+
+        if (bankAccountEntityOptional.isEmpty())
+            throw new IdNotFoundInDatabaseException("Bank Account", 0L);
+
+        updateValidate(bankAccountEntityOptional.get().getId(), bankAccountRequestDto);
+
+        try {
+            bankAccountEntityOptional.get().setBankSwift(bankAccountRequestDto.getBankSwift().toUpperCase());
+            bankAccountEntityOptional.get().setBankAccountNumber(bankAccountRequestDto.getBankAccountNumber());
+            bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountRequestDto.getBankName()));
+            bankAccountEntityOptional.get().setCompanyId(bankAccountEntityOptional.get().getCompanyId());
+
+            return this.bankAccountRepository.save(bankAccountEntityOptional.get());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

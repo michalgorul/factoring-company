@@ -38,6 +38,11 @@ public class BankAccountController {
         return this.bankAccountService.updateCurrentUserBankAccount(bankAccountRequestDto);
     }
 
+    @PutMapping(path = "/{id}")
+    public BankAccountEntity updateBankAccount(@PathVariable Long id, @RequestBody BankAccountRequestDto bankAccountRequestDto) {
+        return this.bankAccountService.updateBankAccount(id, bankAccountRequestDto);
+    }
+
     @PostMapping(path = "/current")
     public BankAccountEntity createCurrentUserBankAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto) {
         return this.bankAccountService.createCurrentUserBankAccount(bankAccountRequestDto);

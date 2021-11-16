@@ -1,4 +1,4 @@
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Spinner} from 'react-bootstrap';
 import useFetchWithToken from "../../../services/useFetchWithToken";
@@ -10,10 +10,11 @@ const EditBankAccount = () => {
     const [bankAccountNumber, setNumber] = useState('');
     const [bankSwift, setSwift] = useState('');
     const [isPendingN, setIsPendingN] = useState(false);
+    const {id} = useParams();
 
     const history = useHistory();
 
-    const { data: bank, error, isPending } = useFetchWithToken(`${config.API_URL}/api/bank-account/current`);
+    const { data: bank, error, isPending } = useFetchWithToken(`${config.API_URL}/api/bank-account/${id}`);
 
     useEffect(() => {
         getBankAccountInfo();
@@ -33,7 +34,7 @@ const EditBankAccount = () => {
         const account = { bankName, bankAccountNumber, bankSwift };
         setIsPendingN(true);
 
-        fetch(`${config.API_URL}/api/bank-account/current`, {
+        fetch(`${config.API_URL}/api/bank-account/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

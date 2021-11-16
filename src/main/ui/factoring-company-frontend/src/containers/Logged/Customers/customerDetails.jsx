@@ -16,7 +16,6 @@ const CustomerDetails = () => {
     const [companyId, setCompanyId] = useState(0);
 
     useEffect(() => {
-
         if (customer) {
             fetch(`${config.API_URL}/api/company/${customer.companyId}`, {
                 method: 'GET',

@@ -47,26 +47,41 @@ const CreditDetails = () => {
     const displayButtons = (credit) => {
         if (credit && credit.status === 'processing') {
             return (
-                <div className="container">
-                    <div className="row align-items-start">
-                        <div className="mt-3 col-12 col-lg-6 text-center">
-                            <button className="btn btn-lg btn-primary rounded-pill" onClick={handleSigning}>Sign document</button>
-                        </div>
-                    </div>
-                </div>
+                <button className="btn btn-lg btn-primary rounded-pill" onClick={handleSigning}>Sign document</button>
             )
         } else if (credit && credit.status === 'funded') {
             return (
-                <div className="container">
-                    <div className="row align-items-start">
-                        <div className="mt-3 col-12 col-lg-6 text-center">
-                            <button className="btn btn-lg btn-primary rounded-pill" onClick={handleRemoving}>Remove credit
-                            </button>
+                <button className="btn btn-lg btn-primary rounded-pill" onClick={handleRemoving}>Remove credit</button>
+            )
+        } else if (credit && credit.status === 'active') {
+            return (
+                <>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12 col-lg-4 mb-3">
+                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/history/' + credit.id}>
+                                    History
+                                </a>
+                            </div>
+                            <div className="col-12 col-lg-4 mb-3">
+                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/overpay/' + credit.id}>
+                                    Overpay
+                                </a>
+                            </div>
+                            <div className="col-12 col-lg-4 mb-3">
+                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/schedule/' + credit.id}>
+                                    Schedule
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                </>
+
+
             )
         }
+
     }
 
     return (
@@ -77,11 +92,11 @@ const CreditDetails = () => {
             {errorU && <div>{errorU}</div>}
             {credit && user && (
                 <article className="mt-2 ms-3">
-                    <div className="media align-items-center py-1">
-                        <div className="media-body ml-4">
-                            <h4 className="display-3">Credit details</h4>
+                        <div className="media align-items-center py-3">
+                            <div className="media-body ml-4">
+                                <h4 className="font-weight-bold display-2">Credit Details</h4>
+                            </div>
                         </div>
-                    </div>
                     <h5 className="mt-4 mb-3">General</h5>
                     <div className="container">
                         <div className="row align-items-start ms-2">
@@ -128,8 +143,13 @@ const CreditDetails = () => {
                             </div>
                         </div>
                     </div>
-
-                    {displayButtons(credit)}
+                    <div className="container">
+                        <div className="row align-items-start">
+                            <div className="mt-3 col-12 col-lg-6 text-center">
+                                {displayButtons(credit)}
+                            </div>
+                        </div>
+                    </div>
 
                 </article>
             )}

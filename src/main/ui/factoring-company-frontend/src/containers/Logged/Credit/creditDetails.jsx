@@ -1,14 +1,15 @@
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {Spinner} from 'react-bootstrap';
 import config from "../../../services/config";
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import axios from "axios";
+import {infoToast} from "../../../components/toast/makeToast";
 
 const CreditDetails = () => {
 	const { id } = useParams();
 	const { data: credit, errorC, isPendingC } = useFetchWithToken(`${config.API_URL}/api/credit/${id}`);
 	const { data: user, error: errorU, isPending: isPendingU } = useFetchWithToken(`${config.API_URL}/api/user/current`);
-
+	const history = useHistory();
 	const handleSigning = () => {
 		let tempCreditNumber = credit.creditNumber.replaceAll('/', ',');
 		axios
@@ -28,6 +29,21 @@ const CreditDetails = () => {
 			});
 	}
 
+	const handleRemoving = () => {
+		fetch(`${config.API_URL}/api/credit/${id}`, {
+			method: 'DELETE',
+			headers: {
+				"Authorization": `Bearer ${localStorage.getItem("token")}`
+			}
+		})
+			.then(() => {
+				history.push('/user/credit');
+			})
+			.then(() => {
+				infoToast('Credit was removed')
+			})
+	}
+
 	const displayButtons = (credit) => {
 	  if( credit && credit.status === 'processing'){
 		return(
@@ -35,26 +51,21 @@ const CreditDetails = () => {
 				<div className="row align-items-start">
 					<div className="mt-3 col-12 col-lg-6 text-center">
 						<button className="btn btn-lg btn-primary rounded-pill" onClick={handleSigning}>Sign document</button>
-
 					</div>
 				</div>
 			</div>
 		)
 	  }
-	  else if (credit && credit.status !== 'processing'){
+	  else if (credit && credit.status === 'funded'){
 		  return (
-			  <div className="container mb-4">
+			  <div className="container">
 				  <div className="row align-items-start">
-					  <div className="mt-3 col-12 col-lg-3 text-center">
-						  <button className="btn btn-lg mb-3 btn-primary rounded-pill me-3">Overpay the loan</button>
-					  </div>
-					  <div className="mt-3 col-12 col-lg-3 text-center">
-						  <button className="btn btn-lg mb-3 btn-primary rounded-pill">Document</button>
+					  <div className="mt-3 col-12 col-lg-6 text-center">
+						  <button className="btn btn-lg btn-primary rounded-pill" onClick={handleRemoving}>Remove credit</button>
 					  </div>
 				  </div>
 			  </div>
 		  )
-
 	  }
 	}
 

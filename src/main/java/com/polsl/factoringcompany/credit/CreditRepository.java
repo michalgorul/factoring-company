@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CreditRepository extends JpaRepository<CreditEntity, Long> {
@@ -15,4 +16,8 @@ public interface CreditRepository extends JpaRepository<CreditEntity, Long> {
             "WHERE FUNCTION('MONTH', c.creationDate) = ?1 AND " +
             "FUNCTION('YEAR', c.creationDate) = ?2")
     Long getCreditNumber(int month, int year);
+
+    Optional<CreditEntity> findByCreditNumber(String creditNumber);
+
+    List<CreditEntity> findAllByStatusEquals(String status);
 }

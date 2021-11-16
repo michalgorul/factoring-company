@@ -1,34 +1,39 @@
-import { Button, Modal, Form, ProgressBar } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { Folder, FolderPlus, StarFill } from "react-bootstrap-icons"
+import {Button, Form, Modal, ProgressBar} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {Folder, FolderPlus, StarFill} from "react-bootstrap-icons"
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import config from "../../../services/config";
-import { errorToast, infoToast, warningToast } from "../../../components/toast/makeToast";
-import { Marginer } from "../../../components/marginer";
-import { formatBytes } from "../../../services/filesService";
-import { ifTokenCannotBeTrusted } from "../../../services/authenticationService";
+import {errorToast, infoToast, warningToast} from "../../../components/toast/makeToast";
+import {Marginer} from "../../../components/marginer";
+import {formatBytes} from "../../../services/filesService";
+import {ifTokenCannotBeTrusted} from "../../../services/authenticationService";
+
 const Documents = () => {
 
   const [catalog, setCatalog] = useState('favourite');
   const [show, setShow] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [availableSpace, setAvailableSpace] = useState(104857600);
+  const availableSpace = useState(104857600);
   const [usedSpace, setUsedSpace] = useState(0);
-  const [usedSpaceInProperFormat, setUsedSpaceInProperFormat] = useState(false);
   const [percentage, setPercentage] = useState(usedSpace / availableSpace * 100);
-  const history = useHistory();
-
+  useHistory();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleSelect = (e) => setCatalog(e.target.value);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleButtonAvailability = () => {
+    const button = document.querySelector('button')
+    button.disabled = usedSpace < availableSpace;
+  }
+  
   useEffect(() => {
     getUsedSpace();
     setPercentage(usedSpace / availableSpace * 100)
     handleButtonAvailability();
-  }, [usedSpace])
+  }, [availableSpace, handleButtonAvailability, usedSpace])
 
   const getUsedSpace = () => {
     fetch(`${config.API_URL}/api/file/used`, {
@@ -50,19 +55,6 @@ const Documents = () => {
       .catch(err => {
         console.log(err.message);
       })
-  }
-
-  const handleButtonAvailability = () => {
-
-    const button = document.querySelector('button')
-
-    if (usedSpace > availableSpace) {
-      button.disabled = true;
-    }
-    else {
-      button.disabled = false;
-    }
-
   }
 
   // On file select (from the pop up)
@@ -124,10 +116,10 @@ const Documents = () => {
 
   return (
     <>
-      <div class="media align-items-center py-3">
-        <div class="media-body ml-4">
-          <h4 class="font-weight-bold display-2">Your documents</h4>
-          <button onClick={handleShow} class="btn btn-primary rounded-pill fs-4 float-end me-5">Add files + </button>
+      <div className="media align-items-center py-3">
+        <div className="media-body ml-4">
+          <h4 className="font-weight-bold display-2">Your documents</h4>
+          <button onClick={handleShow} className="btn btn-primary rounded-pill fs-4 float-end me-5">Add files + </button>
         </div>
       </div>
 
@@ -136,7 +128,7 @@ const Documents = () => {
           <div className="col-12 col-lg-6">
             <div className="mb-1 mt-3" >
               <span className="display-6 fw-bold mb-2">{formatBytes(usedSpace)} </span> of <span className="display-6">{100} MB</span>
-              <p class="fs-5 ms-2">Your available space for files</p>
+              <p className="fs-5 ms-2">Your available space for files</p>
             </div>
             <ProgressBar now={percentage} animated style={{ height: "5px" }} />
             <Marginer direction="vertical" margin={20} />
@@ -144,21 +136,21 @@ const Documents = () => {
         </div>
       </div>
 
-      <ul class="list-group list-group-flush me-4 fs-3 ms-3">
-        <li class="list-group-item mt-3"><StarFill className="text-primary mb-4 me-3" />
+      <ul className="list-group list-group-flush me-4 fs-3 ms-3">
+        <li className="list-group-item mt-3"><StarFill className="text-primary mb-4 me-3" />
           <Directory href="/user/documents/list/favourite">Favourite</Directory>
         </li>
-        <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
+        <li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
           <Directory href="/user/documents/list/work">Work</Directory>
         </li>
-        <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
+        <li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
           <Directory href="/user/documents/list/bank">Bank documents</Directory>
         </li>
-        <li class="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
+        <li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
           <Directory href="/user/documents/list/tax">Tax forms</Directory>
         </li>
-        <li class="list-group-item mt-3"><FolderPlus className="text-primary mb-4 me-3" />
-          <Directory href="/user/documents/list/factoring-company">Factoring Company documents</Directory>
+        <li className="list-group-item mt-3"><FolderPlus className="text-primary mb-4 me-3" />
+          <Directory href="/user/documents/list/credit">Credit documents</Directory>
         </li>
       </ul>
 
@@ -174,7 +166,7 @@ const Documents = () => {
             <option value="work">Work</option>
             <option value="bank">Bank documents</option>
             <option value="tax">Tax forms</option>
-            <option value="fc">Factoring Company documents</option>
+            <option value="credit">Credit documents</option>
           </Form.Select>
           <br />
           <Form.Group id="formFile" className="mb-3">

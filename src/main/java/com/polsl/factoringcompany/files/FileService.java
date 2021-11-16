@@ -1,5 +1,6 @@
 package com.polsl.factoringcompany.files;
 
+import com.polsl.factoringcompany.credit.CreditService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +27,7 @@ public class FileService {
 
     private final FileRepository fileRepository;
     private final UserService userService;
+    private final CreditService creditService;
 
     public void save(MultipartFile file, String catalog) throws IOException {
 
@@ -45,7 +50,9 @@ public class FileService {
     public ResponseEntity<String> uploadFile(MultipartFile file, String catalog) {
         try {
             this.save(file, catalog);
-
+            if(catalog.equals("credit")){
+                creditService.updateFromProcessingToInReview(file.getOriginalFilename());
+            }
             return ResponseEntity.status(HttpStatus.OK)
                     .body(String.format("File uploaded successfully: %s", file.getOriginalFilename()));
         } catch (Exception e) {

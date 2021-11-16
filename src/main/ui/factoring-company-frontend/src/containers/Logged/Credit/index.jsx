@@ -54,22 +54,14 @@ const Credit = () => {
 
                 <div className="container mt-3">
                     <div className="row">
-                        <div className="col-12 col-lg-6">
-                            <div className="mb-3 mt-1">
-                                <span className="fs-5 ms-2 pe-3">How much do you want to draw?</span>
-                                <RangeSlider min={0} max={availableCredit - usedCredit} size="lg" step="100" value={value}
-                                             onChange={changeEvent => setValue(changeEvent.target.value)}/>
-                            </div>
-                            <Marginer direction="vertical" margin={12}/>
-                        </div>
-                        <div className="col-12 col-lg-6 align-items-center align-middle">
+                        <div className="col-12 align-items-center align-middle">
                             <a href={"/user/credit/create"} className="btn btn-primary rounded-pill btn-lg float-end"
                                onClick={drawFunds}>Draw funds</a>
                         </div>
                     </div>
                 </div>
 
-                <div className="container mt-5">
+                <div className="container mt-3">
                     <div className="row">
                         <div className="col-12 col-lg-6 mb-3">
                             <Nav variant="tabs" defaultActiveKey="active" onSelect={handleSelect} className="fs-5">

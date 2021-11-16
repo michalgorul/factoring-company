@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.reports.vat;
+package com.polsl.factoringcompany.documents.vat;
 
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import com.polsl.factoringcompany.company.CompanyEntity;

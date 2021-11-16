@@ -1,17 +1,16 @@
 import Table from 'react-bootstrap/Table'
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';
-import { Download, Trash } from 'react-bootstrap-icons';
-import { useEffect } from 'react';
+import {Download, Trash} from 'react-bootstrap-icons';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
-import { errorToast, infoToast } from '../../../components/toast/makeToast';
-import { useHistory } from 'react-router';
-import { useState } from 'react';
-import { formatBytes } from '../../../services/filesService';
+import {errorToast, infoToast} from '../../../components/toast/makeToast';
+import {useHistory} from 'react-router';
+import {formatBytes} from '../../../services/filesService';
 
-const FileList = ({ whatCatalog }) => {
-    const { data: documents, error, isPending } = useFetchWithToken(`${config.API_URL}/api/file`)
+const FileList = ({whatCatalog}) => {
+    const {data: documents, error, isPending} = useFetchWithToken(`${config.API_URL}/api/file`)
     const history = useHistory();
     const [show, setShow] = useState(false);
     const [isPendingN, setIsPendingN] = useState(false);
@@ -42,7 +41,7 @@ const FileList = ({ whatCatalog }) => {
                 })
                 .then((response) => {
                     //Create a Blob from the PDF Stream
-                    const file = new Blob([response.data], { type: document.contentType });
+                    const file = new Blob([response.data], {type: document.contentType});
                     //Build a URL from the file
                     const fileURL = URL.createObjectURL(file);
                     setIsPendingN(false);
@@ -54,7 +53,7 @@ const FileList = ({ whatCatalog }) => {
                     console.log(error);
                 });
         } catch (error) {
-            return { error };
+            return {error};
         }
     }
 
@@ -67,7 +66,7 @@ const FileList = ({ whatCatalog }) => {
                 }
             })
             .then(response => {
-                const file = new Blob([response.data], { type: fileToDownload.contentType });
+                const file = new Blob([response.data], {type: fileToDownload.contentType});
                 const fileURL = URL.createObjectURL(file);
                 let a = document.createElement('a');
                 a.href = fileURL;
@@ -87,16 +86,14 @@ const FileList = ({ whatCatalog }) => {
                 if (response.ok) {
                     window.location.reload();
                     return response;
-                }
-                else {
+                } else {
                     return response;
                 }
             })
             .then((response) => {
                 if (response.ok) {
                     infoToast('File was deleted');
-                }
-                else {
+                } else {
                     errorToast('File was not deleted');
                 }
             })
@@ -110,33 +107,48 @@ const FileList = ({ whatCatalog }) => {
             <Table striped borderless hover>
                 <caption>List of {whatCatalog} documents</caption>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th class="align-middle text-center">Size</th>
-                        <th class="align-middle text-center">Download</th>
-                        <th class="align-middle text-center">Delete</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th className="align-middle text-center">Size</th>
+                    <th className="align-middle text-center">Download</th>
+                    <th className="align-middle text-center">Delete</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {error && <> <div class="alert alert-warning fs-3" role="alert">{error} </div>
-                        <button class="text-decoration-none ms-3 fs-3" href="#" onClick={() => { window.location.href = "/something" }}> Click to refresh </button></>}
-                    {isPending && isPendingN && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
-                    {documents && documents
-                        .filter(document => document.catalog == whatCatalog)
-                        .map(document => (
-                            <tr key={document.id} className="clickable" onclick="#">
-                                <td class="align-middle"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleShowDocument(document)}>
+                {error && <>
+                    <div className="alert alert-warning fs-3" role="alert">{error} </div>
+                    <button className="text-decoration-none ms-3 fs-3" href="#" onClick={() => {
+                        window.location.href = "/something"
+                    }}> Click to refresh
+                    </button>
+                </>}
+                {isPending && isPendingN &&
+                <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
+                {documents && documents
+                    .filter(document => document.catalog === whatCatalog)
+                    .map(document => (
+                        <tr key={document.id} className="clickable" onclick="#">
+                            <td className="align-middle">
+                                <button type="button" value={document} className="btn btn-link text-decoration-none"
+                                        onClick={() => handleShowDocument(document)}>
                                     {document.name}
-                                </button></td>
-                                <td class="align-middle text-center">{document.size}</td>
-                                <td class="align-middle text-center"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDownload(document)}>
-                                    <Download />
-                                </button></td>
-                                <td class="align-middle text-center"><button type="button" value={document} class="btn btn-link text-decoration-none" onClick={() => handleDeleteRequest(document)}>
-                                    <Trash />
-                                </button></td>
-                            </tr>
-                        ))}
+                                </button>
+                            </td>
+                            <td className="align-middle text-center">{document.size}</td>
+                            <td className="align-middle text-center">
+                                <button type="button" value={document} className="btn btn-link text-decoration-none"
+                                        onClick={() => handleDownload(document)}>
+                                    <Download/>
+                                </button>
+                            </td>
+                            <td className="align-middle text-center">
+                                <button type="button" value={document} className="btn btn-link text-decoration-none"
+                                        onClick={() => handleDeleteRequest(document)}>
+                                    <Trash/>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
         </>

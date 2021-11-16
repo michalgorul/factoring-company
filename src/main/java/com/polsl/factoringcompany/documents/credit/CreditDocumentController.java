@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.reports.vat;
+package com.polsl.factoringcompany.documents.credit;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -14,15 +14,15 @@ import java.io.ByteArrayOutputStream;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/api/report/vat")
-public class VatReportController {
+@RequestMapping(path = "/api/credit/document")
+public class CreditDocumentController {
 
-    private VatReportService vatReportService;
+    private CreditDocumentService creditDocumentService;
 
-    @GetMapping(path = "/{customerId}")
-    public ResponseEntity<byte[]> getVatReportPdf(@PathVariable Long customerId) throws Exception {
+    @GetMapping(path = "/{creditNumber}")
+    public ResponseEntity<byte[]> getCreditPdf(@PathVariable String creditNumber) throws Exception {
 
-        byte[] pdf = vatReportService.generateDocxFileFromTemplate(customerId);
+        byte[] pdf = creditDocumentService.generateDocxFileFromTemplate(creditNumber.replaceAll(",", "/"));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         HttpHeaders headers = new HttpHeaders();
@@ -33,11 +33,5 @@ public class VatReportController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
-
-    }
-
-    @GetMapping(path = "/customer/{customerId}")
-    public VatReportInformation getVatInformationFromNip(@PathVariable Long customerId){
-        return this.vatReportService.getCustomerVatInformation(customerId);
     }
 }

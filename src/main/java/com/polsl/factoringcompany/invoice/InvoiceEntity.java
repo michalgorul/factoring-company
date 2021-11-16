@@ -10,6 +10,7 @@ import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.allegro.finance.tradukisto.MoneyConverters;
 
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 
+@NoArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -109,11 +111,6 @@ public class InvoiceEntity {
     @OneToMany(mappedBy = "invoiceByInvoiceId")
     @JsonIgnore
     private Collection<OrderEntity> ordersById;
-
-
-    public InvoiceEntity() {
-    }
-
 
     public InvoiceEntity(InvoiceDto invoiceDto) {
         MoneyConverters converter = MoneyConverters.ENGLISH_BANKING_MONEY_VALUE;

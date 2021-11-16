@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.reports.vat;
+package com.polsl.factoringcompany.documents.vat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class VatReportService {
 
-    private final static String PATH = "src/main/resources/static/vat_report_template.docx";
+    private final static String PATH = "src/main/resources/templates/vat_report_template.docx";
     private final CustomerService customerService;
     private final CompanyService companyService;
     private RestTemplate restTemplate;

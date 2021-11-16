@@ -3,13 +3,17 @@ package com.polsl.factoringcompany.credit;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,11 @@ public class CreditService {
     public CreditEntity getCredit(Long id) {
         return this.creditRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Credit", id));
+    }
+
+    public CreditEntity getCreditBuNumber(String creditNumber) {
+        return this.creditRepository.findByCreditNumber(creditNumber)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Credit", 0L));
     }
 
     public void deleteCredit(Long id) {
@@ -48,12 +57,12 @@ public class CreditService {
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.valueOf(df.format(allByUserId.stream()
                 .map(CreditEntity::getLeftToPay)
-                .mapToDouble(BigDecimal::doubleValue).sum()).replace(",","."));
+                .mapToDouble(BigDecimal::doubleValue).sum()).replace(",", "."));
 
     }
 
     public CreditEntity createCurrentUserCredit(CreditRequestDto creditRequestDto) {
-        try{
+        try {
             String newCreditNumber = getNewCreditNumber();
             userService.getCurrentUserId();
             return this.creditRepository.save(new CreditEntity(
@@ -77,5 +86,59 @@ public class CreditService {
         formatter.format("%d/%d/%d", lastCreditIdPlusOne, month, year);
 
         return newCreditNumber.toString();
+    }
+
+    private void updateFromInReviewToActive(CreditEntity creditEntity) {
+        try {
+            creditEntity.setStatus("active");
+            this.creditRepository.save(creditEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private HashMap<String, String> ifProperFileUploadedAndReturnNameAndCreditNumber(String fileName) {
+        String patterns = "\\S*[_]\\S*[_]\\d{1,2}[_]\\d{1,2}[_]\\d{4}.pdf";
+        Pattern pattern = Pattern.compile(patterns);
+        if (pattern.matcher(fileName).matches()) {
+            String name = fileName.replaceAll("(\\S*)[_](\\S*)[_]\\d{1,2}[_]\\d{1,2}[_]\\d{4}.pdf", "$1 $2");
+            String creditNumber = fileName.replaceAll("(\\S*)[_](\\S*)[_](\\d{1,2}[_]\\d{1,2}[_]\\d{4}).pdf", "$3");
+            creditNumber = creditNumber.replaceAll("_", "/");
+            HashMap<String, String> returnMap = new HashMap<>();
+            returnMap.put("name", name);
+            returnMap.put("creditNumber", creditNumber);
+            return returnMap;
+        } else
+            return null;
+    }
+
+    public void updateFromProcessingToInReview(String fileName) {
+        try {
+            HashMap<String, String> mapToCheck = ifProperFileUploadedAndReturnNameAndCreditNumber(fileName);
+            if(mapToCheck != null){
+                Optional<CreditEntity> creditEntity = this.creditRepository.findByCreditNumber(mapToCheck.get("creditNumber"));
+                if(creditEntity.isPresent() &&
+                        (userService.getUser((long) creditEntity.get().getUserId()).getFirstName() + " " +
+                                userService.getUser((long) creditEntity.get().getUserId()).getLastName())
+                                .equals(mapToCheck.get("name"))){
+                    creditEntity.get().setStatus("review");
+                    this.creditRepository.save(creditEntity.get());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    @Scheduled(cron = "[Seconds] [Minutes] [Hours] [Day of month] [Month] [Day of week] [Year]")
+//    Fires at 12 PM every day:
+    @Scheduled(cron = "0 1 0 * * ?")
+    public void updateFromInReviewToActiveScheduled() {
+        List<CreditEntity> allByStatusEquals = this.creditRepository.findAllByStatusEquals("review");
+
+        for (CreditEntity creditEntity : allByStatusEquals) {
+            updateFromInReviewToActive(creditEntity);
+        }
+        System.out.println("changed");
     }
 }

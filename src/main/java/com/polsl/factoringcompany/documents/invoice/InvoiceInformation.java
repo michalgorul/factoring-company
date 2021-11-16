@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.reports.invoice;
+package com.polsl.factoringcompany.documents.invoice;
 
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;

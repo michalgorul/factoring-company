@@ -1,4 +1,4 @@
-package com.polsl.factoringcompany.reports.invoice;
+package com.polsl.factoringcompany.documents.invoice;
 
 import com.polsl.factoringcompany.company.CompanyService;
 import com.polsl.factoringcompany.customer.CustomerEntity;
@@ -37,7 +37,7 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class InvoicePdfService {
 
-    private final static String PATH = "src/main/resources/static/invoice_template.docx";
+    private final static String PATH = "src/main/resources/templates/invoice_template.docx";
     private final InvoiceService invoiceService;
     private final CustomerService customerService;
     private final InvoiceItemService invoiceItemService;

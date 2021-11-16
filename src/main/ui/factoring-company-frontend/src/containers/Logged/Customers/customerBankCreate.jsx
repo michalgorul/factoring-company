@@ -1,21 +1,22 @@
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useState} from "react";
 import config from "../../../services/config";
 import {errorToast, infoToast} from "../../../components/toast/makeToast";
 
-const CreateBankAccount = () => {
+const CreateCustomerBankAccount = () => {
     const [bankName, setBankName] = useState('');
     const [bankAccountNumber, setNumber] = useState('');
     const [bankSwift, setSwift] = useState('');
     const [isPendingN, setIsPendingN] = useState(false);
     const history = useHistory();
+    const { id } = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const account = {bankName, bankAccountNumber, bankSwift};
         setIsPendingN(true);
 
-        fetch(`${config.API_URL}/api/bank-account/current`, {
+        fetch(`${config.API_URL}/api/bank-account/customer/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +27,7 @@ const CreateBankAccount = () => {
             .then((response) => {
                 setIsPendingN(false);
                 if (response.ok) {
-                    history.push('/user/profile');
+                    history.push('/user/customers/' + id);
                     window.location.reload();
                     return response;
                 } else {
@@ -52,7 +53,7 @@ const CreateBankAccount = () => {
                     <div className="col-md-8 col-lg-8 col-xl-6">
                         <form onSubmit={handleSubmit}>
                             <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                <p className="lead fw-normal mt-2 mb-3 display-4">Add your Bank Account</p>
+                                <p className="lead fw-normal mt-2 mb-3 display-4">Add customer's Bank Account</p>
 
                             </div>
                             <div className="form-outline form-floating mb-3">
@@ -92,4 +93,4 @@ const CreateBankAccount = () => {
     );
 }
 
-export default CreateBankAccount;
+export default CreateCustomerBankAccount;

@@ -40,6 +40,7 @@ import CustomerReports from './containers/Logged/Reports/CustomerReports/index';
 import KrsReport from './containers/Logged/Reports/CustomerReports/krsReport';
 import VatReport from './containers/Logged/Reports/CustomerReports/vatReport';
 import CreditCreate from "./containers/Logged/Credit/creditCreate";
+import CreateCustomerBankAccount from "./containers/Logged/Customers/customerBankCreate";
 
 
 const UserComponents = ({match}) => {
@@ -52,6 +53,7 @@ const UserComponents = ({match}) => {
                 <ProtectedRoute path={`${match.url}/customers/create`} exact component={CustomerCreate}/>
                 <ProtectedRoute path={`${match.url}/customers/edit/:id`} exact component={CustomerEdit}/>
                 <ProtectedRoute path={`${match.url}/customers/company/create/:id`} exact component={CustomerCompanyCreate}/>
+                <ProtectedRoute path={`${match.url}/customers/bank/create/:id`} exact component={CreateCustomerBankAccount}/>
                 <ProtectedRoute path={`${match.url}/bank-account/edit/:id`} exact component={EditBankAccount}/>
                 <ProtectedRoute path={`${match.url}/customers/:id`} component={CustomerDetails}/>
                 <ProtectedRoute path={`${match.url}/invoices`} exact component={Invoices}/>

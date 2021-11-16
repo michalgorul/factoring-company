@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.bankaccount;
 
 import com.polsl.factoringcompany.customer.CustomerEntity;
+import com.polsl.factoringcompany.customer.CustomerService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.NotUniqueException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
@@ -20,6 +21,7 @@ public class BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
     private final UserService userService;
+    private final CustomerService customerService;
 
     public List<BankAccountEntity> getBankAccounts() {
         return this.bankAccountRepository.findAll();
@@ -29,45 +31,6 @@ public class BankAccountService {
         return this.bankAccountRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Bank account", id));
     }
-
-//    public BankAccountEntity addBankAccount(BankAccountEntity bankAccountEntity) {
-//
-//        addValidate(bankAccountEntity);
-//
-//        try {
-//            return this.bankAccountRepository.save(new BankAccountEntity(
-//                    bankAccountEntity.getBankSwift().toUpperCase(),
-//                    bankAccountEntity.getBankAccountNumber(),
-//                    StringUtils.capitalize(bankAccountEntity.getBankName()),
-//                    bankAccountEntity.getSellerId(),
-//                    bankAccountEntity.getCompanyId()));
-//
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    public BankAccountEntity updateBankAccount(Long id, BankAccountEntity bankAccountEntity) {
-//
-//        Optional<BankAccountEntity> bankAccountEntityOptional = bankAccountRepository.findById(id);
-//
-//        if (bankAccountEntityOptional.isEmpty())
-//            throw new IdNotFoundInDatabaseException("Bank Account", id);
-//
-//        updateValidate(id, bankAccountEntity);
-//
-//        try {
-//            bankAccountEntityOptional.get().setBankSwift(bankAccountEntity.getBankSwift().toUpperCase());
-//            bankAccountEntityOptional.get().setBankAccountNumber(bankAccountEntity.getBankAccountNumber());
-//            bankAccountEntityOptional.get().setBankName(StringUtils.capitalize(bankAccountEntity.getBankName()));
-//            bankAccountEntityOptional.get().setSellerId(bankAccountEntity.getSellerId());
-//            bankAccountEntityOptional.get().setCompanyId(bankAccountEntity.getCompanyId());
-//
-//            return this.bankAccountRepository.save(bankAccountEntityOptional.get());
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public void deleteBankAccount(Long id) {
         try {
@@ -183,5 +146,26 @@ public class BankAccountService {
         return this.bankAccountRepository.findByCompanyId(customerEntity.getCompanyId())
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", Long.valueOf(customerEntity.getCompanyId())));
 
+    }
+
+    public BankAccountEntity getCompanyBankAccount(Long companyId) {
+        return this.bankAccountRepository.findByCompanyId(Math.toIntExact(companyId)).orElse(null);
+    }
+
+    public BankAccountEntity createCustomersBankAccount(Long customerId, BankAccountRequestDto bankAccountRequestDto) {
+        CustomerEntity customer = customerService.getCustomer(customerId);
+        addValidate(bankAccountRequestDto);
+
+        try {
+            return this.bankAccountRepository.save(new BankAccountEntity(
+                    bankAccountRequestDto.getBankSwift().toUpperCase(),
+                    bankAccountRequestDto.getBankAccountNumber(),
+                    StringUtils.capitalize(bankAccountRequestDto.getBankName()),
+                    null,
+                    customer.getCompanyId()));
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

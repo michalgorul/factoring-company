@@ -28,6 +28,11 @@ public class BankAccountController {
         return this.bankAccountService.getCurrentUserBankAccount();
     }
 
+    @GetMapping(path = "/company/{companyId}")
+    public BankAccountEntity getCompanyBankAccount(@PathVariable Long companyId) {
+        return this.bankAccountService.getCompanyBankAccount(companyId);
+    }
+
     @PutMapping(path = "/current")
     public BankAccountEntity updateCurrentUserBankAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto) {
         return this.bankAccountService.updateCurrentUserBankAccount(bankAccountRequestDto);
@@ -36,6 +41,11 @@ public class BankAccountController {
     @PostMapping(path = "/current")
     public BankAccountEntity createCurrentUserBankAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto) {
         return this.bankAccountService.createCurrentUserBankAccount(bankAccountRequestDto);
+    }
+
+    @PostMapping(path = "/customer/{customerId}")
+    public BankAccountEntity createCustomersBankAccount(@PathVariable Long customerId, @RequestBody BankAccountRequestDto bankAccountRequestDto) {
+        return this.bankAccountService.createCustomersBankAccount(customerId, bankAccountRequestDto);
     }
 
 

@@ -1,6 +1,5 @@
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import React, {useEffect, useState} from 'react';
-import RangeSlider from 'react-bootstrap-range-slider';
 import {Nav, Spinner} from 'react-bootstrap';
 import {Marginer} from '../../../components/marginer';
 import CreditList from './creditList';
@@ -8,7 +7,6 @@ import useGetUsedCredit from "../../../services/creditService";
 
 const Credit = () => {
 
-    const [value, setValue] = useState(0);
     const availableCredit = 250000;
     // eslint-disable-next-line no-use-before-define
     const [percentage, setPercentage] = useState(0);

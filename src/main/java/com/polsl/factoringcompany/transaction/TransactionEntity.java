@@ -21,13 +21,13 @@ public class TransactionEntity {
 
     @Id
     @SequenceGenerator(
-            name = "transaction_sequence",
-            sequenceName = "transaction_sequence",
+            name = "transaction_id_seq",
+            sequenceName = "transaction_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "transaction_sequence"
+            generator = "transaction_id_seq"
     )private long id;
 
     @Column(name = "transaction_date", nullable = false)

@@ -6,16 +6,16 @@ import com.polsl.factoringcompany.credit.CreditEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.files.FileEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
-import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.registration.RegistrationRequest;
 import com.polsl.factoringcompany.registration.token.ConfirmationTokenEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -58,7 +58,7 @@ public class UserEntity {
     @Column(name = "street", nullable = false, length = 50)
     private String street;
 
-    @Column(name = "postal_code", nullable = true, length = 15)
+    @Column(name = "postal_code", length = 15)
     private String postalCode;
 
     @Column(name = "phone", nullable = false, length = 15)
@@ -72,10 +72,6 @@ public class UserEntity {
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-
-    @OneToMany(mappedBy = "userByUserId")
-    @JsonIgnore
-    private Collection<OrderEntity> ordersById;
 
     @OneToMany(mappedBy = "userByUserId")
     @JsonIgnore
@@ -149,18 +145,5 @@ public class UserEntity {
         this.companyId = null;
         this.locked = locked;
         this.enabled = enabled;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return companyId == that.companyId && Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(country, that.country) && Objects.equals(city, that.city) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(phone, that.phone) && Objects.equals(ordersById, that.ordersById) && Objects.equals(customersById, that.customersById) && Objects.equals(filesById, that.filesById) && Objects.equals(companyByCompanyId, that.companyByCompanyId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, country, city, street, postalCode, phone, companyId, ordersById, customersById, filesById, companyByCompanyId);
     }
 }

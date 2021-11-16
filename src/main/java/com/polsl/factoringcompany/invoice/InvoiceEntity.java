@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.currency.CurrencyEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
-import com.polsl.factoringcompany.order.OrderEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
@@ -62,7 +61,7 @@ public class InvoiceEntity {
     @Column(name = "left_to_pay", nullable = false, precision = 2)
     private BigDecimal leftToPay;
 
-    @Column(name = "remarks", nullable = true, length = 100)
+    @Column(name = "remarks", length = 100)
     private String remarks;
 
     @Column(name = "status", nullable = false, length = 50)
@@ -107,10 +106,6 @@ public class InvoiceEntity {
     @OneToMany(mappedBy = "invoiceByInvoiceId")
     @JsonIgnore
     private Collection<TransactionEntity> transactionsById;
-
-    @OneToMany(mappedBy = "invoiceByInvoiceId")
-    @JsonIgnore
-    private Collection<OrderEntity> ordersById;
 
     public InvoiceEntity(InvoiceDto invoiceDto) {
         MoneyConverters converter = MoneyConverters.ENGLISH_BANKING_MONEY_VALUE;

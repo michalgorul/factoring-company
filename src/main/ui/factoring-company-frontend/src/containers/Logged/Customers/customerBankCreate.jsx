@@ -9,7 +9,7 @@ const CreateCustomerBankAccount = () => {
     const [bankSwift, setSwift] = useState('');
     const [isPendingN, setIsPendingN] = useState(false);
     const history = useHistory();
-    const { id } = useParams();
+    const {id} = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();

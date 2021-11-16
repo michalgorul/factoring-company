@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { Spinner } from "react-bootstrap";
-import { useHistory, useParams } from "react-router";
-import { errorToast, infoToast } from "../../../components/toast/makeToast";
+import {useEffect} from "react";
+import {useState} from "react";
+import {Spinner} from "react-bootstrap";
+import {useHistory, useParams} from "react-router";
+import {errorToast, infoToast} from "../../../components/toast/makeToast";
 import useFetchWithTokenPayment from "../../../services/paymentService";
 import config from "../../../services/config";
 import useFetchWithToken from "../../../services/useFetchWithToken";
@@ -15,13 +15,19 @@ const PaymentInfoEdit = () => {
     const [paymentTypeName, setPaymentTypeName] = useState('');
     const [isPendingN, setIsPendingN] = useState(false);
 
-    const { id } = useParams();
+    const {id} = useParams();
     const history = useHistory();
-    const { paymentType, errorP, isPendingP,
-        currency, errorCu, isPendingCu } = useFetchWithTokenPayment(id);
+    const {
+        paymentType, errorP, isPendingP,
+        currency, errorCu, isPendingCu
+    } = useFetchWithTokenPayment(id);
 
-    const { data: currencies, errorCu: errorCur, isPendingCu: isPendingCur} = useFetchWithToken(`${config.API_URL}/api/currency`);
-    const { data: paymentTypes, errorP: errorPt, isPendingP: isPendingPt} = useFetchWithToken(`${config.API_URL}/api/payment-type`);
+    const {data: currencies, errorCu: errorCur, isPendingCu: isPendingCur} = useFetchWithToken(`${config.API_URL}/api/currency`);
+    const {
+        data: paymentTypes,
+        errorP: errorPt,
+        isPendingP: isPendingPt
+    } = useFetchWithToken(`${config.API_URL}/api/payment-type`);
 
 
     useEffect(() => {
@@ -71,12 +77,10 @@ const PaymentInfoEdit = () => {
     const optionsPaymentTypes = makePaymentOptions(paymentTypes);
 
 
-   
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const payment = { currencyName, paymentTypeName };
+        const payment = {currencyName, paymentTypeName};
 
         setIsPendingN(true);
 
@@ -93,16 +97,14 @@ const PaymentInfoEdit = () => {
                 if (response.ok) {
                     history.push(`/user/invoices/${id}`);
                     return response;
-                }
-                else {
+                } else {
                     return response;
                 }
             })
             .then((response) => {
                 if (response.ok) {
                     infoToast('Invoice payment info was updated');
-                }
-                else {
+                } else {
                     errorToast('Please fill all fields');
                 }
             })
@@ -114,37 +116,42 @@ const PaymentInfoEdit = () => {
 
     return (
         <div>
-            {isPendingCu && isPendingCur && isPendingP && isPendingPt && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
+            {isPendingCu && isPendingCur && isPendingP && isPendingPt &&
+            <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
             {errorCu && <div>{errorCu}</div>}
             {errorCur && <div>{errorCur}</div>}
             {errorP && <div>{errorP}</div>}
             {errorPt && <div>{errorPt}</div>}
-            {currency && paymentType &&(
-                <div class="container-fluid h-custom">
-                    <div class="row d-flex justify-content-start align-items-center">
-                        <div class="col-md-8 col-lg-8 col-xl-6">
+            {currency && paymentType && (
+                <div className="container-fluid h-custom">
+                    <div className="row d-flex justify-content-start align-items-center">
+                        <div className="col-md-8 col-lg-8 col-xl-6">
                             <form onSubmit={handleSubmit}>
-                                <div class="d-flex mb-3 flex-row align-items-center justify-content-center justify-content-lg-start">
-                                    <p class="lead fw-normal mt-2 mb-3 display-4">Edit Payment Information</p>
+                                <div
+                                    className="d-flex mb-3 flex-row align-items-center justify-content-center justify-content-lg-start">
+                                    <p className="lead fw-normal mt-2 mb-3 display-4">Edit Payment Information</p>
 
                                 </div>
 
-                                <div class="row mb-5">
-                                    <div class="col-12 mb-4">
-                                        <span style={{ marginLeft: "5px" }} className="h5">Currency</span>
-                                        <Select value={{value:currencyName, label:currencyName}} onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies} />
+                                <div className="row mb-5">
+                                    <div className="col-12 mb-4">
+                                        <span style={{marginLeft: "5px"}} className="h5">Currency</span>
+                                        <Select value={{value: currencyName, label: currencyName}}
+                                                onChange={(e) => setCurrencyName(e.label)} options={optionsCurrencies}/>
                                     </div>
 
-                                    <div class="col-12">
-                                        <span style={{ marginLeft: "5px" }} className="h5">Payment type</span>
-                                        <Select value={{value:paymentTypeName, label:paymentTypeName}} onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes} />
+                                    <div className="col-12">
+                                        <span style={{marginLeft: "5px"}} className="h5">Payment type</span>
+                                        <Select value={{value: paymentTypeName, label: paymentTypeName}}
+                                                onChange={(e) => setPaymentTypeName(e.value)} options={optionsPaymentTypes}/>
                                     </div>
                                 </div>
 
-
-                                <div class="mb-3">
-                                    {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Edit payment info</button>}
-                                    {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Editing payment info...</button>}
+                                <div className="mb-3">
+                                    {!isPendingN &&
+                                    <button className="btn btn-primary rounded-pill btn-lg">Edit payment info</button>}
+                                    {isPendingN &&
+                                    <button className="btn btn-primary rounded-pill btn-lg" disabled>Editing payment info...</button>}
                                 </div>
 
                             </form>

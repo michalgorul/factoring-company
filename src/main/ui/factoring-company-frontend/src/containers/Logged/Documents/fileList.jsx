@@ -6,18 +6,12 @@ import {Download, Trash} from 'react-bootstrap-icons';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {errorToast, infoToast} from '../../../components/toast/makeToast';
-import {useHistory} from 'react-router';
 import {formatBytes} from '../../../services/filesService';
 
 const FileList = ({whatCatalog}) => {
     const {data: documents, error, isPending} = useFetchWithToken(`${config.API_URL}/api/file`)
-    const history = useHistory();
-    const [show, setShow] = useState(false);
     const [isPendingN, setIsPendingN] = useState(false);
 
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     useEffect(() => {
         if (documents) {
@@ -117,7 +111,7 @@ const FileList = ({whatCatalog}) => {
                 <tbody>
                 {error && <>
                     <div className="alert alert-warning fs-3" role="alert">{error} </div>
-                    <button className="text-decoration-none ms-3 fs-3" href="#" onClick={() => {
+                    <button className="text-decoration-none ms-3 fs-3" onClick={() => {
                         window.location.href = "/something"
                     }}> Click to refresh
                     </button>
@@ -127,7 +121,7 @@ const FileList = ({whatCatalog}) => {
                 {documents && documents
                     .filter(document => document.catalog === whatCatalog)
                     .map(document => (
-                        <tr key={document.id} className="clickable" onclick="#">
+                        <tr key={document.id} className="clickable">
                             <td className="align-middle">
                                 <button type="button" value={document} className="btn btn-link text-decoration-none"
                                         onClick={() => handleShowDocument(document)}>

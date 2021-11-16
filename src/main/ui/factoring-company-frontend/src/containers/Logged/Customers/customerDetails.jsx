@@ -106,9 +106,10 @@ const CustomerDetails = () => {
                 <a href={"/user/bank-account/edit/" + bank.id} className="text-decoration-none ml-auto h6">Edit customer's bank
                     account</a>
             )
-        } else if ( bank == null && companyId != null) {
+        } else if (bank == null && companyId != null) {
             return (
-                <a href={"/user/customers/bank/create/" + customer.id} className="text-decoration-none ml-auto h6">Add customer's bank account</a>
+                <a href={"/user/customers/bank/create/" + customer.id} className="text-decoration-none ml-auto h6">Add customer's
+                    bank account</a>
             )
         }
     }

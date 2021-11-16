@@ -26,11 +26,10 @@ const CreditCreate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updatePayments = () => {
         let total;
-        if(commission === 'credited'){
+        if (commission === 'credited') {
             total = Number(drawValue) + Number(drawValue * interest);
             setOneTimeCommission('0.00 USD');
-        }
-        else{
+        } else {
             total = Number(drawValue);
             setOneTimeCommission(Number(drawValue * interest).toFixed(2) + ' USD');
 
@@ -57,11 +56,10 @@ const CreditCreate = () => {
         e.preventDefault();
 
         let total, currentRateOfInterest;
-        if(commission === 'credited'){
+        if (commission === 'credited') {
             total = Number(drawValue) + Number(drawValue * interest);
             currentRateOfInterest = config.RATE_OF_INTEREST;
-        }
-        else{
+        } else {
             total = Number(drawValue);
             currentRateOfInterest = 0.00;
         }
@@ -205,7 +203,7 @@ const CreditCreate = () => {
                     </div>
                     <div className="form-check mb-3">
                         <input className="form-check-input" type="radio" name="insurance" value="protection"
-                        checked={insurance === 'protection'} onChange={handleInsuranceChange}/>
+                               checked={insurance === 'protection'} onChange={handleInsuranceChange}/>
                         <label className="form-check-label">
                             Repayment protection
                         </label>
@@ -233,7 +231,8 @@ const CreditCreate = () => {
                     </div>
                     <div className="text-center mb-3">
                         {!isPendingN && <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Apply</button>}
-                        {isPendingN && <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Applying...</button>}
+                        {isPendingN &&
+                        <button type="submit" className="btn btn-lg btn-primary rounded-pill w-50">Applying...</button>}
                     </div>
                 </div>
             </form>

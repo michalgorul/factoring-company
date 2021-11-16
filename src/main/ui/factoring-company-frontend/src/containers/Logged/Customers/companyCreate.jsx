@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import {useMemo, useState} from "react";
@@ -17,14 +17,14 @@ const CustomerCompanyCreate = () => {
     const [regon, setRegon] = useState('');
     const [isPendingN, setIsPendingN] = useState(false);
     const options = useMemo(() => countryList().getData(), [])
-    const { id } = useParams();
+    const {id} = useParams();
     let history = useHistory();
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const company = { companyName, country, city, street, postalCode, nip, regon };
+        const company = {companyName, country, city, street, postalCode, nip, regon};
         setIsPendingN(true);
 
         fetch(`${config.API_URL}/api/company/customer/${id}`, {
@@ -40,16 +40,14 @@ const CustomerCompanyCreate = () => {
                 if (response.ok) {
                     history.goBack();
                     return response;
-                }
-                else {
+                } else {
                     return response
                 }
             })
             .then((response) => {
                 if (response.ok) {
                     infoToast('Company was updated')
-                }
-                else {
+                } else {
                     errorToast('Some of inputs were incorrect')
                 }
             })
@@ -57,7 +55,6 @@ const CustomerCompanyCreate = () => {
                 console.error(err);
             })
     }
-
 
 
     const changeHandler = country => {
@@ -68,64 +65,72 @@ const CustomerCompanyCreate = () => {
 
     return (
         <div>
-                <div class="container-fluid h-custom">
-                    <div class="row d-flex justify-content-start align-items-center">
-                        <div class="col-md-8 col-lg-8 col-xl-6">
-                            <form onSubmit={handleSubmit}>
-                                <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                    <p class="lead fw-normal mt-2 mb-3 display-4">Add customer company</p>
+            <div className="container-fluid h-custom">
+                <div className="row d-flex justify-content-start align-items-center">
+                    <div className="col-md-8 col-lg-8 col-xl-6">
+                        <form onSubmit={handleSubmit}>
+                            <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                                <p className="lead fw-normal mt-2 mb-3 display-4">Add customer company</p>
 
-                                </div>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                                    <label class="form-label">Company name</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" required value={companyName}
+                                       onChange={(e) => setCompanyName(e.target.value)}/>
+                                <label className="form-label">Company name</label>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <Select className="" required options={options} value={countryInList} onChange={changeHandler} />
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <Select className="" required options={options} value={countryInList} onChange={changeHandler}/>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={city} onChange={(e) => setCity(e.target.value)} />
-                                    <label class="form-label">City</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" required value={city}
+                                       onChange={(e) => setCity(e.target.value)}/>
+                                <label className="form-label">City</label>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={street} onChange={(e) => setStreet(e.target.value)} />
-                                    <label class="form-label">Street</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" required value={street}
+                                       onChange={(e) => setStreet(e.target.value)}/>
+                                <label className="form-label">Street</label>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
-                                    <label class="form-label">Postal code</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" value={postalCode}
+                                       onChange={(e) => setPostalCode(e.target.value)}/>
+                                <label className="form-label">Postal code</label>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={nip} onChange={(e) => setNip(e.target.value)} />
-                                    <label class="form-label">Nip</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" required value={nip}
+                                       onChange={(e) => setNip(e.target.value)}/>
+                                <label className="form-label">Nip</label>
+                            </div>
 
-                                <div class="form-floating form-outline mb-3">
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="Enter password" required value={regon} onChange={(e) => setRegon(e.target.value)} />
-                                    <label class="form-label">Regon</label>
-                                </div>
+                            <div className="form-floating form-outline mb-3">
+                                <input type="text" className="form-control form-control-lg"
+                                       placeholder="Enter password" required value={regon}
+                                       onChange={(e) => setRegon(e.target.value)}/>
+                                <label className="form-label">Regon</label>
+                            </div>
 
-                                <div class="mb-3">
-                                    {!isPendingN && <button class="btn btn-primary rounded-pill btn-lg">Add customer company</button>}
-                                    {isPendingN && <button class="btn btn-primary rounded-pill btn-lg" disabled>Adding company...</button>}
-                                </div>
+                            <div className="mb-3">
+                                {!isPendingN &&
+                                <button className="btn btn-primary rounded-pill btn-lg">Add customer company</button>}
+                                {isPendingN &&
+                                <button className="btn btn-primary rounded-pill btn-lg" disabled>Adding company...</button>}
+                            </div>
 
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
+            </div>
         </div>
     );
 }

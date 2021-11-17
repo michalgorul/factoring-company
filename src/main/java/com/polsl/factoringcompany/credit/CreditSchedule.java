@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class CreditSchedule {
+    private Integer id;
     private Date dateTime;
     private String description;
     private Double amount;
@@ -23,6 +24,7 @@ public class CreditSchedule {
         List<CreditSchedule> creditScheduleList = new ArrayList<>();
         double currentBalance = creditEntity.getAmount().doubleValue() - creditEntity.getNextPayment().doubleValue();
         CreditSchedule creditScheduleFirst = new CreditSchedule(
+                1,
                 creditEntity.getNextPaymentDate(),
                 "payment",
                 creditEntity.getNextPayment().doubleValue(),
@@ -32,7 +34,8 @@ public class CreditSchedule {
         for (int i = 0; i < creditEntity.getInstallments() - 1; i++) {
             currentBalance -= creditEntity.getNextPayment().doubleValue();
             CreditSchedule creditSchedule = new CreditSchedule(
-                    Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(i+1)),
+                    i + 2,
+                    Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(i + 1)),
                     "payment",
                     creditEntity.getNextPayment().doubleValue(),
                     currentBalance);

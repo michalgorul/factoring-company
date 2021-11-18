@@ -1,6 +1,7 @@
 package com.polsl.factoringcompany.credit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Collection;
 
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -83,6 +85,10 @@ public class CreditEntity {
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private UserEntity userByUserId;
+
+    @OneToMany(mappedBy = "invoiceByInvoiceId")
+    @JsonIgnore
+    private Collection<TransactionEntity> transactionsById;
 
 
     public CreditEntity(CreditRequestDto creditRequestDto, String creditNumber, Integer userId) {

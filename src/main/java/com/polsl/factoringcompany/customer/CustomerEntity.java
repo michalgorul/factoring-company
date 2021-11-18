@@ -3,16 +3,16 @@ package com.polsl.factoringcompany.customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.company.CompanyEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
-import com.polsl.factoringcompany.transaction.TransactionEntity;
 import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -73,10 +73,6 @@ public class CustomerEntity {
     @JsonIgnore
     private Collection<InvoiceEntity> invoicesById;
 
-    @OneToMany(mappedBy = "customerByCustomerId")
-    @JsonIgnore
-    private Collection<TransactionEntity> transactionsById;
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -101,29 +97,6 @@ public class CustomerEntity {
         this.blacklisted = blacklisted;
         this.userId = userId;
         this.email = email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomerEntity that = (CustomerEntity) o;
-        return id == that.id &&
-                blacklisted == that.blacklisted &&
-                Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(companyName, that.companyName) &&
-                Objects.equals(country, that.country) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) &&
-                Objects.equals(postalCode, that.postalCode) &&
-                Objects.equals(phone, that.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, companyName,
-                country, city, street, postalCode, phone, blacklisted);
     }
 
 }

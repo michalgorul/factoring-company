@@ -34,7 +34,8 @@ public class TransactionService {
 
     public TransactionEntity addTransaction(TransactionEntity transactionEntity) {
         try {
-            return this.transactionRepository.save(new TransactionEntity(transactionEntity));
+//            return this.transactionRepository.save(new TransactionEntity(transactionEntity));
+            return null;
 
         } catch (RuntimeException e) {
             throw new RuntimeException(e);

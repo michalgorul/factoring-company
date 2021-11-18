@@ -1,18 +1,21 @@
 package com.polsl.factoringcompany.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.polsl.factoringcompany.credit.CreditEntity;
 import com.polsl.factoringcompany.currency.CurrencyEntity;
-import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
-import com.polsl.factoringcompany.status.StatusEntity;
+import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Objects;
 
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -36,67 +39,39 @@ public class TransactionEntity {
     @Column(name = "value", nullable = false, precision = 2)
     private BigDecimal value;
 
-    @Column(name = "status_id", nullable = false)
-    private int statusId;
+    @Column(name = "status", nullable = false)
+    private String statusId;
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private int customerId;
 
     @Column(name = "invoice_id", nullable = false)
     private int invoiceId;
+
+    @Column(name = "credit_id", nullable = false)
+    private int creditId;
 
     @Column(name = "currency_id", nullable = false)
     private int currencyId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private StatusEntity statusByStatusId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private UserEntity userByUserId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private CustomerEntity customerByCustomerId;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "invoice_id", referencedColumnName = "id", insertable = false, updatable = false)
     private InvoiceEntity invoiceByInvoiceId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "credit_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private CreditEntity creditByCreditId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "currency_id", referencedColumnName = "id", insertable = false, updatable = false)
     private CurrencyEntity currencyByCurrencyId;
 
-    public TransactionEntity() {
-    }
-
-    public TransactionEntity(TransactionEntity transactionEntity) {
-        this.transactionDate = transactionEntity.transactionDate;
-        this.value = transactionEntity.getValue();
-        this.statusId = transactionEntity.getStatusId();
-        this.customerId = transactionEntity.getCustomerId();
-        this.invoiceId = transactionEntity.getInvoiceId();
-        this.currencyId = transactionEntity.getCurrencyId();
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransactionEntity that = (TransactionEntity) o;
-        return id == that.id &&
-                statusId == that.statusId &&
-                customerId == that.customerId &&
-                invoiceId == that.invoiceId &&
-                currencyId == that.currencyId &&
-                Objects.equals(transactionDate, that.transactionDate) &&
-                Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, transactionDate, value, statusId, customerId, invoiceId, currencyId);
-    }
 }

@@ -53,6 +53,18 @@ public class TransactionService {
         }
     }
 
+    public TransactionEntity addTransaction(TransactionRequestDto transactionRequestDto, Integer userId) {
+        try {
+            return this.transactionRepository.save(new TransactionEntity(
+                    transactionRequestDto,
+                    (long) userId,
+                    currencyService.getCurrencyByCurrencyName("Dollar").getId()
+            ));
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public TransactionEntity updateTransaction(Long id) {
         Optional<TransactionEntity> transactionEntityOptional = transactionRepository.findById(id);
 

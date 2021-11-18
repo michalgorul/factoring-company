@@ -103,7 +103,8 @@ public class CreditService {
                     true,
                     "Loan receive",
                     null,
-                    Math.toIntExact(creditEntity.getId())));
+                    Math.toIntExact(creditEntity.getId())),
+                    creditEntity.getUserId());
         } catch (Exception e) {
             e.printStackTrace();
         }

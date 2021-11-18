@@ -1,6 +1,8 @@
 package com.polsl.factoringcompany.transaction;
 
+import com.polsl.factoringcompany.currency.CurrencyService;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
+    private final UserService userService;
+    private final CurrencyService currencyService;
 
     public List<TransactionEntity> getTransactions() {
         return this.transactionRepository.findAll();
@@ -32,11 +36,13 @@ public class TransactionService {
     }
 
 
-    public TransactionEntity addTransaction(TransactionEntity transactionEntity) {
+    public TransactionEntity addTransaction(TransactionRequestDto transactionRequestDto) {
         try {
-//            return this.transactionRepository.save(new TransactionEntity(transactionEntity));
-            return null;
-
+            return this.transactionRepository.save(new TransactionEntity(
+                    transactionRequestDto,
+                    userService.getCurrentUserId(),
+                    currencyService.getCurrencyByCurrencyName("Dollar").getId()
+            ));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -51,8 +57,6 @@ public class TransactionService {
         try {
             transactionEntityOptional.get().setTransactionDate(transactionEntityOptional.get().getTransactionDate());
             transactionEntityOptional.get().setValue(transactionEntityOptional.get().getValue());
-            transactionEntityOptional.get().setStatusId(transactionEntityOptional.get().getStatusId());
-            transactionEntityOptional.get().setCustomerId(transactionEntityOptional.get().getCustomerId());
             transactionEntityOptional.get().setInvoiceId(transactionEntityOptional.get().getInvoiceId());
             transactionEntityOptional.get().setCurrencyId(transactionEntityOptional.get().getCurrencyId());
 

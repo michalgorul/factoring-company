@@ -25,7 +25,7 @@ public class TransactionController {
 
 
     @PostMapping
-    public TransactionEntity addTransaction(@RequestBody TransactionEntity transactionEntity) {
+    public TransactionEntity addTransaction(@RequestBody TransactionRequestDto transactionEntity) {
         return this.transactionService.addTransaction(transactionEntity);
     }
 

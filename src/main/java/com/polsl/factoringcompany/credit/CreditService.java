@@ -1,6 +1,8 @@
 package com.polsl.factoringcompany.credit;
 
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
+import com.polsl.factoringcompany.transaction.TransactionRequestDto;
+import com.polsl.factoringcompany.transaction.TransactionService;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +24,7 @@ public class CreditService {
 
     private final CreditRepository creditRepository;
     private final UserService userService;
+    private final TransactionService transactionService;
 
     public List<CreditEntity> getCredits() {
         return this.creditRepository.findAll();
@@ -169,6 +172,13 @@ public class CreditService {
                     creditEntity.getBalance().doubleValue() - creditEntity.getNextPayment().doubleValue()));
             creditEntity.setInstallments(creditEntity.getInstallments() - 1);
             creditEntity.setNextPaymentDate(Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(1)));
+
+            transactionService.addTransaction(new TransactionRequestDto(
+                   creditEntity.getNextPayment(),
+                    false,
+                    "Loan monthly payment",
+                    null,
+                    Math.toIntExact(id)));
             return this.creditRepository.save(creditEntity);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -190,6 +200,14 @@ public class CreditService {
                 creditEntity.setBalance(BigDecimal.valueOf(0.0));
                 creditEntity.setStatus("funded");
             }
+
+            transactionService.addTransaction(new TransactionRequestDto(
+                    BigDecimal.valueOf(amount),
+                    false,
+                    "Loan overpay",
+                    null,
+                    Math.toIntExact(id)));
+
             return this.creditRepository.save(creditEntity);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);

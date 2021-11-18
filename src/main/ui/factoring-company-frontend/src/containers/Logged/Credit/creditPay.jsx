@@ -51,9 +51,10 @@ const CreditPay = () => {
                                 Credit Number: <span className="fw-bold">{credit.creditNumber}</span>
                             </h4>
                             <div className="fs-5">
-                                <p>Payment amount: <span className="fw-bold">{credit.nextPayment}</span></p>
+                                <p>Payment amount: <span className="fw-bold">{credit.nextPayment.toFixed(2)}</span></p>
                                 <p>
-                                    Balance after payment: <span className="fw-bold">{credit.balance - credit.nextPayment}</span>
+                                    Balance after payment: <span
+                                    className="fw-bold">{(credit.balance - credit.nextPayment).toFixed(2)}</span>
                                 </p>
                                 <p>Remaining installments: <span className="fw-bold">{credit.installments}</span></p>
                                 <p>Payment deadline: <span className="fw-bold">{credit.nextPaymentDate}</span></p>

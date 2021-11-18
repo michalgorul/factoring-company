@@ -44,6 +44,15 @@ const CreditDetails = () => {
             })
     }
 
+    const nextPaymentDateStr = () => {
+      if(credit){
+          if(credit.status === 'funded'){
+              return ' - ';
+          }
+          return credit.nextPaymentDate;
+      }
+    }
+
     const displayButtons = (credit) => {
         if (credit && credit.status === 'processing') {
             return (
@@ -59,17 +68,17 @@ const CreditDetails = () => {
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/history/' + credit.id}>
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/history/' + credit.id}>
                                     History
                                 </a>
                             </div>
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/overpay/' + credit.id}>
-                                    Overpay
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/overpay/' + credit.id}>
+                                    Pay
                                 </a>
                             </div>
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary rounded-pill" href={'/user/credit/schedule/' + credit.id}>
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/schedule/' + credit.id}>
                                     Schedule
                                 </a>
                             </div>
@@ -106,16 +115,14 @@ const CreditDetails = () => {
                                     <li className="list-group-item list-group-item-action fw-bold">Loan amount:</li>
                                     <li className="list-group-item list-group-item-action fw-bold">Next payment:</li>
                                     <li className="list-group-item list-group-item-action fw-bold">Remaining installments:</li>
-                                    <li className="list-group-item list-group-item-action fw-bold">Account balance:</li>
                                 </ul>
                             </div>
                             <div className="col-6 col-lg-3">
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item list-group-item-action">{credit.leftToPay}</li>
+                                    <li className="list-group-item list-group-item-action">{credit.balance}</li>
                                     <li className="list-group-item list-group-item-action">{credit.amount}</li>
                                     <li className="list-group-item list-group-item-action">{credit.nextPayment}</li>
                                     <li className="list-group-item list-group-item-action">{credit.installments}</li>
-                                    <li className="list-group-item list-group-item-action">{credit.balance}</li>
                                 </ul>
                             </div>
                         </div>
@@ -136,7 +143,7 @@ const CreditDetails = () => {
                             <div className="col-6 col-lg-3">
                                 <ul className="list-group list-group-flush mb-3">
                                     <li className="list-group-item list-group-item-action">{credit.rateOfInterest + '%'}</li>
-                                    <li className="list-group-item list-group-item-action">{credit.nextPaymentDate}</li>
+                                    <li className="list-group-item list-group-item-action">{nextPaymentDateStr()}</li>
                                     <li className="list-group-item list-group-item-action">{credit.creationDate}</li>
                                     <li className="list-group-item list-group-item-action">{credit.lastInstallmentDate}</li>
                                 </ul>

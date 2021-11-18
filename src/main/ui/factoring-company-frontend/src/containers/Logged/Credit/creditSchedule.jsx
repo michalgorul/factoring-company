@@ -5,21 +5,12 @@ import Table from "react-bootstrap/Table";
 import useFetchWithToken from "../../../services/useFetchWithToken";
 import config from "../../../services/config";
 import {useParams} from "react-router-dom";
+import {compareId} from "../../../services/compare";
 
 const CreditSchedule = () => {
     const {id} = useParams();
 
     const {error, isPending, data: creditScheduleDates} = useFetchWithToken(`${config.API_URL}/api/credit/schedule/${id}`)
-
-    function compare(a, b) {
-        if (a.id < b.id) {
-            return -1;
-        }
-        if (a.id > b.id) {
-            return 1;
-        }
-        return 0;
-    }
 
     return (
         <>
@@ -51,7 +42,7 @@ const CreditSchedule = () => {
                 {isPending &&
                 <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
                 {creditScheduleDates && creditScheduleDates
-                    .sort(compare)
+                    .sort(compareId)
                     .map(creditScheduleDate => (
                         <tr key={creditScheduleDate.id} className="clickable" onClick="#">
                             <th>{creditScheduleDate.id}</th>

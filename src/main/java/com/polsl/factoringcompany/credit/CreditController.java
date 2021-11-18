@@ -35,6 +35,15 @@ public class CreditController {
     public CreditEntity createCurrentUserCredit(@RequestBody CreditRequestDto creditRequestDto){
         return this.creditService.createCurrentUserCredit(creditRequestDto);
     }
+    @PostMapping(path = "/standard/{id}")
+    public CreditEntity addStandardPayment(@PathVariable Long id){
+        return this.creditService.addStandardPayment(id);
+    }
+
+    @PostMapping(path = "/overpay/{id}")
+    public CreditEntity addOverpayPayment(@RequestBody Double amount ,@PathVariable Long id){
+        return this.creditService.addOverpayPayment(amount, id);
+    }
 
     @GetMapping("/left")
     public Double getLeftToPay(){

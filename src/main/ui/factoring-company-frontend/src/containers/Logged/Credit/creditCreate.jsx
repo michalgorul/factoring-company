@@ -5,6 +5,8 @@ import useGetUsedCredit from "../../../services/creditService";
 import {errorToast, infoToast} from "../../../components/toast/makeToast";
 import config from "../../../services/config";
 import {useHistory} from "react-router-dom";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {QuestionCircle} from "react-bootstrap-icons";
 
 const CreditCreate = () => {
 
@@ -107,6 +109,10 @@ const CreditCreate = () => {
             })
     }
 
+    const renderTooltip = props => (
+        <Tooltip {...props}>This is only estimation. The final amounts may vary</Tooltip>
+    );
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -133,7 +139,6 @@ const CreditCreate = () => {
                                                        onChange={(e) => setDrawValue(e.target.value)}/>
                                             </div>
                                         </div>
-
                                     </div>
                                     <Marginer direction="vertical" margin={8}/>
                                 </div>
@@ -164,8 +169,13 @@ const CreditCreate = () => {
 
                         <div className="col-4 d-none d-xl-inline">
                             <div className="card border-primary">
+                                <div className="card-header">
+                                    <span>Estimation </span>
+                                    <OverlayTrigger placement="bottom" overlay={renderTooltip} key="bottom">
+                                        <QuestionCircle className="text-muted"/>
+                                    </OverlayTrigger>
+                                </div>
                                 <div className="card-body">
-                                    <h5 className="card-title">Estimation</h5>
                                     <p>Monthly instalment:<span className="fw-bold"> {monthlyInstallment}</span></p>
                                     <p>Monthly insurance: <span className="fw-bold">{monthlyInsurance}</span></p>
                                     <p>One-time commission:<span className="fw-bold"> {oneTimeCommission}</span></p>
@@ -218,8 +228,13 @@ const CreditCreate = () => {
                         <div className="row">
                             <div className="col-12 d-xl-none">
                                 <div className="card border-primary">
+                                    <div className="card-header">
+                                        <span>Estimation </span>
+                                        <OverlayTrigger placement="bottom" overlay={renderTooltip} key="bottom">
+                                            <QuestionCircle className="text-muted"/>
+                                        </OverlayTrigger>
+                                    </div>
                                     <div className="card-body">
-                                        <h5 className="card-title">Estimation</h5>
                                         <p>Monthly instalment: <br/><span className="fw-bold">{monthlyInstallment}</span></p>
                                         <p>Monthly insurance payment: <br/><span className="fw-bold">{monthlyInsurance}</span></p>
                                         <p>One-time commission: <br/> <span className="fw-bold">{oneTimeCommission}</span></p>

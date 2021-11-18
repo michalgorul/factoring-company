@@ -2,19 +2,10 @@ import Table from 'react-bootstrap/Table'
 import {Spinner} from 'react-bootstrap';
 import useFetchWithToken from '../../../services/useFetchWithToken';
 import config from '../../../services/config';
+import {compareId} from "../../../services/compare";
 
 const CreditList = ({whatCredits}) => {
     const {error, isPending, data: credits} = useFetchWithToken(`${config.API_URL}/api/credit/current`)
-
-    function compare(a, b) {
-        if (a.id < b.id) {
-            return -1;
-        }
-        if (a.id > b.id) {
-            return 1;
-        }
-        return 0;
-    }
 
     return (
         <Table striped borderless hover responsive>
@@ -41,15 +32,15 @@ const CreditList = ({whatCredits}) => {
             <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
             {credits && credits
                 .filter(credit => credit.status === whatCredits)
-                .sort(compare)
+                .sort(compareId)
                 .map(credit => (
                     <tr key={credit.id} className="clickable" onClick="#">
                         <th>{credit.id}</th>
                         <td><a href={"/user/credit/" + credit.id} className="text-decoration-none">{credit.creditNumber}</a></td>
                         <td>{credit.creationDate}</td>
-                        <td>{credit.amount}</td>
-                        <td>{credit.nextPayment}</td>
-                        <td>{credit.balance}</td>
+                        <td>{credit.amount.toFixed(2)}</td>
+                        <td>{credit.nextPayment.toFixed(2)}</td>
+                        <td>{credit.balance.toFixed(2)}</td>
                     </tr>
                 ))}
             </tbody>

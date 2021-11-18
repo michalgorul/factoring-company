@@ -57,7 +57,7 @@ public class CreditService {
 
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.valueOf(df.format(allByUserId.stream()
-                .map(CreditEntity::getLeftToPay)
+                .map(CreditEntity::getBalance)
                 .mapToDouble(BigDecimal::doubleValue).sum()).replace(",", "."));
 
     }
@@ -125,12 +125,12 @@ public class CreditService {
     public void updateFromProcessingToInReview(String fileName) {
         try {
             HashMap<String, String> mapToCheck = ifProperFileUploadedAndReturnNameAndCreditNumber(fileName);
-            if(mapToCheck != null){
+            if (mapToCheck != null) {
                 Optional<CreditEntity> creditEntity = this.creditRepository.findByCreditNumber(mapToCheck.get("creditNumber"));
-                if(creditEntity.isPresent() &&
+                if (creditEntity.isPresent() &&
                         (userService.getUser((long) creditEntity.get().getUserId()).getFirstName() + " " +
                                 userService.getUser((long) creditEntity.get().getUserId()).getLastName())
-                                .equals(mapToCheck.get("name"))){
+                                .equals(mapToCheck.get("name"))) {
                     creditEntity.get().setStatus("review");
                     this.creditRepository.save(creditEntity.get());
                 }
@@ -151,7 +151,7 @@ public class CreditService {
 
         List<CreditEntity> allByStatusEqualsActive = this.creditRepository.findAllByStatusEquals("active");
         for (CreditEntity creditEntity : allByStatusEqualsActive) {
-            if(creditEntity.getLastInstallmentDate().before(Date.valueOf(LocalDateTime.now().toLocalDate())))
+            if (creditEntity.getLastInstallmentDate().before(Date.valueOf(LocalDateTime.now().toLocalDate())))
                 updateFromActiveToFunded(creditEntity);
         }
         System.out.println("changed");
@@ -160,5 +160,39 @@ public class CreditService {
     public List<CreditSchedule> getSchedule(Long id) {
         Optional<CreditEntity> byId = this.creditRepository.findById(id);
         return byId.map(CreditSchedule::getSchedule).orElse(null);
+    }
+
+    public CreditEntity addStandardPayment(Long id) {
+        CreditEntity creditEntity = getCredit(id);
+        try {
+            creditEntity.setBalance(BigDecimal.valueOf(
+                    creditEntity.getBalance().doubleValue() - creditEntity.getNextPayment().doubleValue()));
+            creditEntity.setInstallments(creditEntity.getInstallments() - 1);
+            creditEntity.setNextPaymentDate(Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(1)));
+            return this.creditRepository.save(creditEntity);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public CreditEntity addOverpayPayment(Double amount, Long id) {
+        CreditEntity creditEntity = getCredit(id);
+        try {
+            creditEntity.setBalance(BigDecimal.valueOf(
+                    creditEntity.getBalance().doubleValue() - amount));
+            if(creditEntity.getBalance().doubleValue() > 0.0){
+                creditEntity.setNextPaymentDate(Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(1)));
+                creditEntity.setNextPayment(BigDecimal.valueOf(creditEntity.getBalance().doubleValue() / creditEntity.getInstallments()));
+            }
+            else {
+                creditEntity.setInstallments(0);
+                creditEntity.setNextPayment(BigDecimal.valueOf(0.0));
+                creditEntity.setBalance(BigDecimal.valueOf(0.0));
+                creditEntity.setStatus("funded");
+            }
+            return this.creditRepository.save(creditEntity);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

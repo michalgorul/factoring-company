@@ -2,6 +2,7 @@ package com.polsl.factoringcompany.credit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Objects;
 
+@EqualsAndHashCode
 @NoArgsConstructor
 @Getter
 @Setter
@@ -35,9 +36,6 @@ public class CreditEntity {
 
     @Column(name = "credit_number", nullable = false, length = 15)
     private String creditNumber;
-
-    @Column(name = "left_to_pay", nullable = false, precision = 2)
-    private BigDecimal leftToPay;
 
     @Column(name = "amount", nullable = false, precision = 2)
     private BigDecimal amount;
@@ -89,7 +87,6 @@ public class CreditEntity {
 
     public CreditEntity(CreditRequestDto creditRequestDto, String creditNumber, Integer userId) {
         this.creditNumber = creditNumber;
-        this.leftToPay = BigDecimal.valueOf(creditRequestDto.getAmount());
         this.amount = BigDecimal.valueOf(creditRequestDto.getAmount());
         this.nextPayment = BigDecimal.valueOf(creditRequestDto.getNextPayment());
         this.installments = creditRequestDto.getInstallments();
@@ -109,19 +106,6 @@ public class CreditEntity {
         this.paymentDay = creditRequestDto.getPaymentDay();
         this.insurance = creditRequestDto.getInsurance();
         this.oneTimeCommission = BigDecimal.valueOf(creditRequestDto.getOneTimeCommission());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CreditEntity that = (CreditEntity) o;
-        return id == that.id && installments == that.installments && userId == that.userId && Objects.equals(creditNumber, that.creditNumber) && Objects.equals(leftToPay, that.leftToPay) && Objects.equals(amount, that.amount) && Objects.equals(nextPayment, that.nextPayment) && Objects.equals(balance, that.balance) && Objects.equals(rateOfInterest, that.rateOfInterest) && Objects.equals(nextPaymentDate, that.nextPaymentDate) && Objects.equals(creationDate, that.creationDate) && Objects.equals(lastInstallmentDate, that.lastInstallmentDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, creditNumber, leftToPay, amount, nextPayment, installments, balance, rateOfInterest, nextPaymentDate, creationDate, lastInstallmentDate, userId);
     }
 
 }

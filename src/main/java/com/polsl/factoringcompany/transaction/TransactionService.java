@@ -21,6 +21,11 @@ public class TransactionService {
         return this.transactionRepository.findAll();
     }
 
+    public List<TransactionEntity> getCreditTransactions(Integer creditId) {
+        return this.transactionRepository.findAllByCreditId(creditId);
+    }
+
+
     public TransactionEntity getTransaction(Long id) {
         return this.transactionRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Transaction", id));
@@ -48,7 +53,7 @@ public class TransactionService {
         }
     }
 
-    public TransactionEntity updateTransaction(Long id, TransactionEntity transactionEntity) {
+    public TransactionEntity updateTransaction(Long id) {
         Optional<TransactionEntity> transactionEntityOptional = transactionRepository.findById(id);
 
         if (transactionEntityOptional.isEmpty())

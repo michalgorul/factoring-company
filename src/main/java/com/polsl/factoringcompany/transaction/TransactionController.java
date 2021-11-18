@@ -17,6 +17,10 @@ public class TransactionController {
         return this.transactionService.getTransactions();
     }
 
+    @GetMapping(path = "/credit/{creditId}")
+    public List<TransactionEntity> getCreditTransactions(@PathVariable Integer creditId) {
+        return this.transactionService.getCreditTransactions(creditId);
+    }
 
     @GetMapping(path = "/{id}")
     public TransactionEntity getTransaction(@PathVariable Long id) {
@@ -31,8 +35,8 @@ public class TransactionController {
 
 
     @PutMapping("/{id}")
-    public TransactionEntity updateTransaction(@PathVariable Long id, @RequestBody TransactionEntity transactionEntity) {
-        return this.transactionService.updateTransaction(id, transactionEntity);
+    public TransactionEntity updateTransaction(@PathVariable Long id) {
+        return this.transactionService.updateTransaction(id);
     }
 
 

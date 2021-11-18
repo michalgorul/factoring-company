@@ -69,6 +69,7 @@ public class CreditService {
         try {
             String newCreditNumber = getNewCreditNumber();
             userService.getCurrentUserId();
+
             return this.creditRepository.save(new CreditEntity(
                     creditRequestDto, newCreditNumber, Math.toIntExact(userService.getCurrentUserId())));
         } catch (Exception e) {
@@ -96,6 +97,13 @@ public class CreditService {
         try {
             creditEntity.setStatus("active");
             this.creditRepository.save(creditEntity);
+
+            transactionService.addTransaction(new TransactionRequestDto(
+                    creditEntity.getAmount(),
+                    true,
+                    "Loan receive",
+                    null,
+                    Math.toIntExact(creditEntity.getId())));
         } catch (Exception e) {
             e.printStackTrace();
         }

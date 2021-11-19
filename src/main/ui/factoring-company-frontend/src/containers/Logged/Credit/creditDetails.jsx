@@ -119,8 +119,8 @@ const CreditDetails = () => {
                             </div>
                             <div className="col-6 col-lg-3">
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item list-group-item-action">{credit.balance}</li>
-                                    <li className="list-group-item list-group-item-action">{credit.amount}</li>
+                                    <li className="list-group-item list-group-item-action">{credit.balance.toFixed(2)}</li>
+                                    <li className="list-group-item list-group-item-action">{credit.amount.toFixed(2)}</li>
                                     <li className="list-group-item list-group-item-action">{credit.nextPayment}</li>
                                     <li className="list-group-item list-group-item-action">{credit.installments}</li>
                                 </ul>

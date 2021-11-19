@@ -45,12 +45,12 @@ const CreditDetails = () => {
     }
 
     const nextPaymentDateStr = () => {
-      if(credit){
-          if(credit.status === 'funded'){
-              return ' - ';
-          }
-          return credit.nextPaymentDate;
-      }
+        if (credit) {
+            if (credit.status === 'funded') {
+                return ' - ';
+            }
+            return credit.nextPaymentDate;
+        }
     }
 
     const displayButtons = (credit) => {
@@ -60,7 +60,23 @@ const CreditDetails = () => {
             )
         } else if (credit && credit.status === 'funded') {
             return (
-                <button className="btn btn-lg btn-primary rounded-pill" onClick={handleRemoving}>Remove credit</button>
+                <>
+                    <div className="container mt-3">
+                        <div className="row justify-content-between">
+                            <div className="col-12 col-lg-5 mb-3">
+                                <button className="btn btn-lg btn-primary btn-block rounded-pill" onClick={handleRemoving}>
+                                    Remove credit
+                                </button>
+                            </div>
+                            <div className="col-12 col-lg-5 mb-3">
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill"
+                                   href={'/user/credit/history/' + credit.id}>
+                                    History
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </>
             )
         } else if (credit && credit.status === 'active') {
             return (
@@ -68,17 +84,20 @@ const CreditDetails = () => {
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/history/' + credit.id}>
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill"
+                                   href={'/user/credit/history/' + credit.id}>
                                     History
                                 </a>
                             </div>
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/overpay/' + credit.id}>
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill"
+                                   href={'/user/credit/overpay/' + credit.id}>
                                     Pay
                                 </a>
                             </div>
                             <div className="col-12 col-lg-4 mb-3">
-                                <a className="btn btn-lg btn-primary btn-block rounded-pill" href={'/user/credit/schedule/' + credit.id}>
+                                <a className="btn btn-lg btn-primary btn-block rounded-pill"
+                                   href={'/user/credit/schedule/' + credit.id}>
                                     Schedule
                                 </a>
                             </div>
@@ -101,11 +120,11 @@ const CreditDetails = () => {
             {errorU && <div>{errorU}</div>}
             {credit && user && (
                 <article className="mt-2 ms-3">
-                        <div className="media align-items-center py-3">
-                            <div className="media-body ml-4">
-                                <h4 className="font-weight-bold display-2">Credit Details</h4>
-                            </div>
+                    <div className="media align-items-center py-3">
+                        <div className="media-body ml-4">
+                            <h4 className="font-weight-bold display-2">Credit Details</h4>
                         </div>
+                    </div>
                     <h5 className="mt-4 mb-3">General</h5>
                     <div className="container">
                         <div className="row align-items-start ms-2">

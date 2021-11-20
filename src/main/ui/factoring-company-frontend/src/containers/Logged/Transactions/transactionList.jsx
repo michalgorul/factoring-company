@@ -17,7 +17,7 @@ import {
 import React from "react";
 import {ArrowDownShort, ArrowUpShort} from "react-bootstrap-icons";
 
-const TransactionList = ({whatTransactions, sortOption}) => {
+const TransactionList = ({whatTransactions, sortOption, startDate, endDate}) => {
     const {error, isPending, data: transactions} = useFetchWithToken(`${config.API_URL}/api/transaction/${whatTransactions}`)
 
     const handleShowArrow = (creditTransaction) => {
@@ -28,6 +28,23 @@ const TransactionList = ({whatTransactions, sortOption}) => {
                 )
             }
             return <ArrowDownShort className="text-danger fs-5"/>
+        }
+    }
+
+    const handleFilterDates = (transaction, startDate, endDate) => {
+        let date = new Date(transaction.transactionDate);
+        if (startDate !== null && endDate !== null) {
+            return date >= startDate && date <= endDate;
+
+        } else if (startDate !== null && endDate === null) {
+            return date >= startDate;
+
+        } else if (startDate === null && endDate !== null) {
+            return date <= endDate;
+
+        } else {
+            return transaction;
+
         }
     }
 
@@ -83,6 +100,7 @@ const TransactionList = ({whatTransactions, sortOption}) => {
                 <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
                 {transactions && transactions
                     .sort(whatSorting(sortOption))
+                    .filter(transaction => handleFilterDates(transaction, startDate, endDate))
                     .map(transaction => (
                         <tr key={transaction.id} className="clickable">
                             <th>
@@ -91,7 +109,8 @@ const TransactionList = ({whatTransactions, sortOption}) => {
                                 </a>
                             </th>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id} className="text-decoration-none text-dark d-block">
+                                <a href={'/user/transactions/' + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
                                     {new Date(transaction.transactionDate).toDateString()}
                                 </a>
                             </td>
@@ -102,12 +121,14 @@ const TransactionList = ({whatTransactions, sortOption}) => {
                                 </a>
                             </td>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id} className="text-center text-decoration-none text-dark d-block">
+                                <a href={'/user/transactions/' + transaction.id}
+                                   className="text-center text-decoration-none text-dark d-block">
                                     {transaction.value.toFixed(2)}
                                 </a>
                             </td>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id} className=" text-center text-decoration-none text-dark d-block">
+                                <a href={'/user/transactions/' + transaction.id}
+                                   className=" text-center text-decoration-none text-dark d-block">
                                     {handleShowArrow(transaction)}
                                 </a>
                             </td>

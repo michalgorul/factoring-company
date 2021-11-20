@@ -17,7 +17,13 @@ const Transactions = () => {
     const [show, setShow] = useState(false)
 
     const handleWhatTransactionsChange = (changeEvent) => {
-        setWhatTransactions(changeEvent.target.value)
+        setWhatTransactions(changeEvent.target.value);
+        resetDates();
+    }
+
+    const resetDates = () => {
+      setStartDate(null);
+      setEndDate(null);
     }
 
     const displayWhatTransactions = () => {

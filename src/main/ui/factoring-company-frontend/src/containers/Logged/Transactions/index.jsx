@@ -5,7 +5,6 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DatePicker from '@material-ui/lab/DatePicker';
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import TextField from "@material-ui/core/TextField";
-import {Collapse} from 'react-collapse';
 import {Button, Modal} from "react-bootstrap";
 
 const Transactions = () => {

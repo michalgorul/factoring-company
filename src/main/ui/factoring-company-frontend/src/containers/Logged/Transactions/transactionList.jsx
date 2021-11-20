@@ -104,33 +104,19 @@ const TransactionList = ({whatTransactions, sortOption, startDate, endDate}) => 
                     .map(transaction => (
                         <tr key={transaction.id} className="clickable">
                             <th>
-                                <a href={'/user/transactions/' + transaction.id}
-                                   className="text-decoration-none text-dark d-block">{transaction.id}
-                                </a>
+                                {transaction.id}
                             </th>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id}
-                                   className="text-decoration-none text-dark d-block">
-                                    {new Date(transaction.transactionDate).toDateString()}
-                                </a>
+                                {new Date(transaction.transactionDate).toDateString()}
                             </td>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id}
-                                   className="text-decoration-none text-dark d-block">
-                                    {transaction.name}
-                                </a>
+                                {transaction.name}
                             </td>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id}
-                                   className="text-center text-decoration-none text-dark d-block">
-                                    {transaction.value.toFixed(2)}
-                                </a>
+                                {transaction.value.toFixed(2)}
                             </td>
                             <td>
-                                <a href={'/user/transactions/' + transaction.id}
-                                   className=" text-center text-decoration-none text-dark d-block">
-                                    {handleShowArrow(transaction)}
-                                </a>
+                                {handleShowArrow(transaction)}
                             </td>
                         </tr>
 

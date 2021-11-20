@@ -35,12 +35,36 @@ const CreditList = ({whatCredits}) => {
                 .sort(compareId)
                 .map(credit => (
                     <tr key={credit.id} className="clickable" onClick="#">
-                        <th>{credit.id}</th>
-                        <td><a href={"/user/credit/" + credit.id} className="text-decoration-none">{credit.creditNumber}</a></td>
-                        <td>{credit.creationDate}</td>
-                        <td>{credit.amount.toFixed(2)}</td>
-                        <td>{credit.nextPayment.toFixed(2)}</td>
-                        <td>{credit.balance.toFixed(2)}</td>
+                        <th>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.id}
+                            </a>
+                        </th>
+                        <td>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.creditNumber}
+                            </a>
+                        </td>
+                        <td>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.creationDate}
+                            </a>
+                        </td>
+                        <td>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.amount.toFixed(2)}
+                            </a>
+                        </td>
+                        <td>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.nextPayment.toFixed(2)}
+                            </a>
+                        </td>
+                        <td>
+                            <a href={"/user/credit/" + credit.id} className="text-decoration-none text-dark d-block">
+                                {credit.balance.toFixed(2)}
+                            </a>
+                        </td>
                     </tr>
                 ))}
             </tbody>

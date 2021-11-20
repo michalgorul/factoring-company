@@ -82,4 +82,12 @@ public class TransactionService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<TransactionEntity> getAllCurrentUserCreditTransactions() {
+        return this.transactionRepository.findAllByUserIdAndInvoiceIdIsNull(Math.toIntExact(userService.getCurrentUserId()));
+    }
+
+    public List<TransactionEntity> getAllCurrentUserInvoiceTransactions(){
+        return this.transactionRepository.findAllByUserIdAndCreditIdIsNull(Math.toIntExact(userService.getCurrentUserId()));
+    }
 }

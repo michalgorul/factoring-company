@@ -22,6 +22,16 @@ public class TransactionController {
         return this.transactionService.getCreditTransactions(creditId);
     }
 
+    @GetMapping(path = "/credit")
+    public List<TransactionEntity> getAllCurrentUserCreditTransactions() {
+        return this.transactionService.getAllCurrentUserCreditTransactions();
+    }
+
+    @GetMapping(path = "/invoice")
+    public List<TransactionEntity> getAllCurrentUserInvoiceTransactions() {
+        return this.transactionService.getAllCurrentUserInvoiceTransactions();
+    }
+
     @GetMapping(path = "/{id}")
     public TransactionEntity getTransaction(@PathVariable Long id) {
         return this.transactionService.getTransaction(id);

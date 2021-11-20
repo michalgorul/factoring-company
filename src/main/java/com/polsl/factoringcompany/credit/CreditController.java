@@ -26,6 +26,11 @@ public class CreditController {
         return this.creditService.getCredit(id);
     }
 
+    @GetMapping(path = "/name/{id}")
+    public String getCreditNumber(@PathVariable Long id){
+        return this.creditService.getCreditNumber(id);
+    }
+
     @DeleteMapping(path = "/{id}")
     public void deleteCredit(@PathVariable Long id){
         this.creditService.deleteCredit(id);

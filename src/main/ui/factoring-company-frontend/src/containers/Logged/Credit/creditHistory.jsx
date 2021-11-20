@@ -10,19 +10,19 @@ import {ArrowDownShort, ArrowUpShort} from "react-bootstrap-icons";
 
 const CreditHistory = () => {
     const {id} = useParams();
-
     const {error, isPending, data: creditTransactions} = useFetchWithToken(`${config.API_URL}/api/transaction/credit/${id}`)
 
     const handleShowArrow = (creditTransaction) => {
-      if(creditTransaction){
-          if(creditTransaction.benefit === true){
-              return(
-                  <ArrowUpShort className="text-success" />
-              )
-          }
-          return <ArrowDownShort className="text-danger fs-5" />
-      }
+        if (creditTransaction) {
+            if (creditTransaction.benefit === true) {
+                return (
+                    <ArrowUpShort className="text-success"/>
+                )
+            }
+            return <ArrowDownShort className="text-danger fs-5"/>
+        }
     }
+
     return (
         <>
             <div className="media align-items-center py-3">

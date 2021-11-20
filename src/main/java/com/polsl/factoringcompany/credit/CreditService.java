@@ -35,6 +35,11 @@ public class CreditService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Credit", id));
     }
 
+    public String getCreditNumber(Long id) {
+        CreditEntity creditEntity = this.creditRepository.findById(id).orElse(null);
+        return creditEntity != null ? creditEntity.getCreditNumber() : null;
+    }
+
     public CreditEntity getCreditBuNumber(String creditNumber) {
         return this.creditRepository.findByCreditNumber(creditNumber)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Credit", 0L));
@@ -222,4 +227,6 @@ public class CreditService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

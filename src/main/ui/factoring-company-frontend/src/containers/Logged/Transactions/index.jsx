@@ -1,11 +1,7 @@
 import React, {useState} from "react";
 import TransactionList from "./transactionList";
 import Select from "react-select";
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import DatePicker from '@material-ui/lab/DatePicker';
-import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
-import TextField from "@material-ui/core/TextField";
-import {Button, Modal} from "react-bootstrap";
+import {modalForDates, sortOptions} from "../../../services/historyService";
 
 const Transactions = () => {
 
@@ -36,18 +32,6 @@ const Transactions = () => {
     const handleShowDates = () => setShow(true);
     const handleClose = () => setShow(false);
 
-    const sortOptions = [
-        {value: 'idDesc', label: 'ID 🠕'},
-        {value: 'dateDesc', label: 'Date 🠕'},
-        {value: 'nameDesc', label: 'Name 🠕'},
-        {value: 'amountDesc', label: 'Amount 🠕'},
-        {value: 'benefitDesc', label: 'Benefit 🠕'},
-        {value: 'idAsc', label: 'ID 🠗'},
-        {value: 'dateAsc', label: 'Date 🠗'},
-        {value: 'nameAsc', label: 'Name 🠗'},
-        {value: 'amountAsc', label: 'Amount 🠗'},
-        {value: 'benefitAsc', label: 'Benefit 🠗'},
-    ]
 
     return (
         <>
@@ -89,39 +73,8 @@ const Transactions = () => {
 
             {displayWhatTransactions()}
 
+            {modalForDates(show, startDate, setStartDate, endDate, setEndDate, handleClose)}
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Dates Selection</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className={"text-center"}>
-                    <div className="mb-2 fs-5">Start date:</div>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker clearable ampm={false}
-                                    renderInput={(params) => (<TextField {...params} helperText=""/>)}
-                                    value={startDate} onChange={(newDate) => {
-                            setStartDate(newDate);
-                        }}/>
-                    </LocalizationProvider>
-
-                    <div className="mb-2 mt-4 fs-5">End date:</div>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker clearable ampm={false} className={"mb-4"}
-                                    renderInput={(params) => (<TextField {...params} helperText=""/>)}
-                                    value={endDate} onChange={(newDate) => {
-                            setEndDate(newDate);
-                        }}/>
-                    </LocalizationProvider>
-                    <div className="row justify-content-center">
-                        <div className="col-6 mt-4 mb-2">
-                            <Button className={"btn btn-lg rounded-pill btn-block"} onClick={handleClose}>Close</Button>
-
-                        </div>
-                    </div>
-
-
-                </Modal.Body>
-            </Modal>
         </>
 
     );

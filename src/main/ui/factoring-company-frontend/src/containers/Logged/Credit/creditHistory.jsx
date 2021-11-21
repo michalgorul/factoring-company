@@ -4,11 +4,15 @@ import config from "../../../services/config";
 import {Marginer} from "../../../components/marginer";
 import Table from "react-bootstrap/Table";
 import {Spinner} from "react-bootstrap";
-import {compareId} from "../../../services/compare";
 import React, {useState} from "react";
-import {ArrowDownShort, ArrowUpShort} from "react-bootstrap-icons";
 import Select from "react-select";
-import {handleFilterTransactionsDates, modalForDates, sortOptions, whatSorting} from "../../../services/historyService";
+import {
+    handleFilterTransactionsDates,
+    handleShowArrow,
+    modalForDates,
+    sortOptions,
+    whatSorting
+} from "../../../services/historyService";
 
 const CreditHistory = () => {
     const {id} = useParams();
@@ -21,17 +25,10 @@ const CreditHistory = () => {
     const handleShowDates = () => setShow(true);
     const handleClose = () => setShow(false);
 
-    const handleShowArrow = (creditTransaction) => {
-        if (creditTransaction) {
-            if (creditTransaction.benefit === true) {
-                return (
-                    <ArrowUpShort className="text-success"/>
-                )
-            }
-            return <ArrowDownShort className="text-danger fs-5"/>
-        }
+    const handleReset = () => {
+        setEndDate(null);
+        setStartDate(null);
     }
-
     return (
         <>
             <div className="media align-items-center py-3">
@@ -90,7 +87,7 @@ const CreditHistory = () => {
                 </tbody>
             </Table>
 
-            {modalForDates(show, startDate, setStartDate, endDate, setEndDate, handleClose)}
+            {modalForDates(show, startDate, setStartDate, endDate, setEndDate, handleClose, handleReset)}
 
         </>
 

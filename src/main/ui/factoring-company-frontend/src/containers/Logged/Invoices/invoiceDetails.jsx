@@ -81,6 +81,7 @@ const InvoiceDetails = () => {
         }
     }
     const handleClose = () => setShow(false);
+
     return (
         <div className="">
             {isPendingI && isPendingC && isPendingCu && isPendingP && isPending &&

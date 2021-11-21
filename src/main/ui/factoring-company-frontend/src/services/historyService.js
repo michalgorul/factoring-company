@@ -82,8 +82,8 @@ const sortOptions = [
     {value: 'amountAsc', label: 'Amount 🠗'},
     {value: 'benefitAsc', label: 'Benefit 🠗'},
 ]
-const modalForDates = (show, startDate, setStartDate, endDate, setEndDate, handleClose) => {
-    return(
+const modalForDates = (show, startDate, setStartDate, endDate, setEndDate, handleClose, handleReset) => {
+    return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Dates Selection</Modal.Title>
@@ -104,12 +104,14 @@ const modalForDates = (show, startDate, setStartDate, endDate, setEndDate, handl
                                 renderInput={(params) => (<TextField {...params} helperText=""/>)}
                                 value={endDate} onChange={(newDate) => {
                         setEndDate(newDate);
-                    }}/>
+                    }} />
                 </LocalizationProvider>
                 <div className="row justify-content-center">
-                    <div className="col-6 mt-4 mb-2">
+                    <div className="col-5 mt-4 mb-2">
+                        <Button className={"btn btn-lg rounded-pill btn-block"} onClick={handleReset}>Reset</Button>
+                    </div>
+                    <div className="col-5 mt-4 mb-2">
                         <Button className={"btn btn-lg rounded-pill btn-block"} onClick={handleClose}>Close</Button>
-
                     </div>
                 </div>
             </Modal.Body>

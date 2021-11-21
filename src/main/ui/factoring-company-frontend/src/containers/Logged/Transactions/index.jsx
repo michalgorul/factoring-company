@@ -31,7 +31,10 @@ const Transactions = () => {
 
     const handleShowDates = () => setShow(true);
     const handleClose = () => setShow(false);
-
+    const handleReset = () => {
+        setEndDate(null);
+        setStartDate(null);
+    }
 
     return (
         <>
@@ -73,7 +76,7 @@ const Transactions = () => {
 
             {displayWhatTransactions()}
 
-            {modalForDates(show, startDate, setStartDate, endDate, setEndDate, handleClose)}
+            {modalForDates(show, startDate, setStartDate, endDate, setEndDate, handleClose, handleReset)}
 
         </>
 

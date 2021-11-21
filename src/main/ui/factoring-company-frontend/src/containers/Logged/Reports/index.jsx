@@ -36,7 +36,7 @@ const Reports = () => {
 					<Directory href="/user/reports/expense">Expense reports</Directory>
 				</li>
 				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
-					<Directory href="#">Chars</Directory>
+					<Directory href="/user/reports/charts">Charts</Directory>
 				</li>
 			</ul>
       </>

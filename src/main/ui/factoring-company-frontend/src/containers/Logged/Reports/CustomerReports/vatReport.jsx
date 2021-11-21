@@ -4,6 +4,7 @@ import config from "../../../../services/config";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {ifTokenCannotBeTrusted} from "../../../../services/authenticationService";
+import {errorToast} from "../../../../components/toast/makeToast";
 
 const VatReport = () => {
     const {data: customers, errorC, isPendingC} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
@@ -50,7 +51,7 @@ const VatReport = () => {
             .catch(err => {
                 console.log(err);
             })
-    },[customerPhone])
+    }, [customerPhone])
 
     const showCustomersDetails = (customer) => {
         if (customer) {
@@ -96,6 +97,7 @@ const VatReport = () => {
                     }
                 })
                 .then((response) => {
+
                     ifTokenCannotBeTrusted(response.data);
                     //Create a Blob from the PDF Stream
                     const file = new Blob([response.data], {type: "application/pdf"});
@@ -105,8 +107,12 @@ const VatReport = () => {
                     const pdfWindow = window.open();
                     pdfWindow.location.href = fileURL;
                     setIsPending(false);
+
+
                 })
                 .catch((error) => {
+                    errorToast('Something went wrong')
+                    setIsPending(false);
                     console.log(error);
                 });
         } catch (error) {

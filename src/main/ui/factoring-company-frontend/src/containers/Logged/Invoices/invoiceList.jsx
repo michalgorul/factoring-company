@@ -62,7 +62,7 @@ const InvoiceList = ({whatInvoices}) => {
                         </td>
                         <td>
                             <a href={"/user/invoices/" + invoice.id} className="text-decoration-none text-dark d-block">
-                                {Number(invoice.paid).toFixed(2)}
+                                {Number(invoice.paidByUser).toFixed(2)}
                             </a>
                         </td>
                     </tr>

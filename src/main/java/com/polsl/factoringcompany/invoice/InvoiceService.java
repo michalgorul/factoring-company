@@ -100,9 +100,9 @@ public class InvoiceService {
             String toPayInWords = converter.asWords(invoiceDto.getToPay());
 
             invoiceEntityOptional.get().setToPayInWords(toPayInWords);
-            invoiceEntityOptional.get().setPaid(invoiceDto.getPaid());
-            invoiceEntityOptional.get().setLeftToPay(BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() -
-                    invoiceDto.getPaid().doubleValue()));
+            invoiceEntityOptional.get().setPaidByUser(invoiceDto.getPaidByUser());
+            invoiceEntityOptional.get().setToPayByUser(BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() -
+                    invoiceDto.getPaidByUser().doubleValue()));
             invoiceEntityOptional.get().setRemarks(invoiceDto.getRemarks());
             invoiceEntityOptional.get().setStatus(invoiceDto.getStatus());
             invoiceEntityOptional.get().setCurrencyId(invoiceDto.getCurrencyId());
@@ -187,7 +187,7 @@ public class InvoiceService {
 
         return allByUserId
                 .stream()
-                .map(InvoiceEntity::getPaid)
+                .map(InvoiceEntity::getPaidByUser)
                 .mapToDouble(BigDecimal::doubleValue).sum();
 
     }

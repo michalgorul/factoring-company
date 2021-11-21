@@ -19,13 +19,16 @@ public class InvoiceDto {
     private Timestamp saleDate;
     private Timestamp paymentDeadline;
     private BigDecimal toPay;
-    private BigDecimal paid;
+    private BigDecimal toPayByUser;
+    private BigDecimal paidByUser;
     private String remarks;
     private String status;
     private int customerId;
     private int paymentTypeId;
     private int currencyId;
     private int userId;
+
+    private final Double interest = 0.01;
 
     public InvoiceDto(InvoiceCreateRequest invoiceCreateRequest, String invoiceNumber, Long customerId,
                       Long paymentTypeId, Long currencyId, Long userId) {
@@ -39,7 +42,8 @@ public class InvoiceDto {
         this.paymentDeadline = Timestamp.valueOf(invoiceCreateRequest.getPerformanceDate()
                 .toLocalDateTime().plusMonths(invoiceCreateRequest.getMonths()));
         this.toPay = BigDecimal.valueOf(netValue.doubleValue() + vatValue.doubleValue());
-        this.paid = new BigDecimal(0);
+        this.toPayByUser = BigDecimal.valueOf(toPay.doubleValue() + (toPay.doubleValue() * interest));
+        this.paidByUser = new BigDecimal(0);
         this.remarks = invoiceCreateRequest.getRemarks();
         this.status = "active";
         this.customerId = Math.toIntExact(customerId);

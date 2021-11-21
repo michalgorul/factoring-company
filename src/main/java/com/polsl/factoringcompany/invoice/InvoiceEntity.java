@@ -55,11 +55,11 @@ public class InvoiceEntity {
     @Column(name = "to_pay_in_words", nullable = false, length = 100)
     private String toPayInWords;
 
-    @Column(name = "paid", nullable = false, precision = 2)
-    private BigDecimal paid;
+    @Column(name = "paid_by_user", nullable = false, precision = 2)
+    private BigDecimal paidByUser;
 
-    @Column(name = "left_to_pay", nullable = false, precision = 2)
-    private BigDecimal leftToPay;
+    @Column(name = "to_pay_by_user", nullable = false, precision = 2)
+    private BigDecimal toPayByUser;
 
     @Column(name = "remarks", length = 100)
     private String remarks;
@@ -117,8 +117,8 @@ public class InvoiceEntity {
         this.paymentDeadline = invoiceDto.getPaymentDeadline();
         this.toPay = invoiceDto.getToPay();
         this.toPayInWords = toPayInWords.replaceAll(" £", "");
-        this.paid = invoiceDto.getPaid();
-        this.leftToPay = BigDecimal.valueOf(invoiceDto.getToPay().doubleValue() - invoiceDto.getPaid().doubleValue());
+        this.paidByUser = invoiceDto.getPaidByUser();
+        this.toPayByUser = invoiceDto.getToPayByUser();
         this.remarks = invoiceDto.getRemarks();
         this.status = invoiceDto.getStatus();
         this.customerId = invoiceDto.getCustomerId();

@@ -47,8 +47,76 @@ const InvoiceDetails = () => {
             })
     }
 
+    const handlePayForInvoice = () => {
+
+    }
+
     const handleDelete = () => {
         setShow(true);
+    }
+
+    const showButtons = () => {
+        if (invoice && invoice.status === 'unfunded') {
+            return (
+                <>
+                    <div className="col-12 col-lg-6">
+                        <div className="container mb-4">
+                            <div className="row align-items-start justify-content-center">
+                                <div className="mt-3 col-12 col-lg-4 text-center">
+                                    {!isPending &&
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            onClick={handleShowPdf}>Generate PDF</button>}
+                                    {isPending &&
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            disabled
+                                            onClick={handleShowPdf}>Generating...</button>}
+                                </div>
+
+                                <div className="mt-3 col-12 col-lg-4 text-center">
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            onClick={handlePayForInvoice}>Pay
+                                    </button>
+                                </div>
+
+                                <div className="mt-3 col-12 col-lg-4 text-center">
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            onClick={handleDelete}>Delete Invoice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+
+            )
+        } else {
+            return (
+                <>
+                    <div className="col-12 col-lg-6">
+                        <div className="container mb-4">
+                            <div className="row align-items-start justify-content-center">
+                                <div className="mt-3 col-12 col-lg-5 text-center">
+                                    {!isPending &&
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            onClick={handleShowPdf}>Generate PDF</button>}
+                                    {isPending &&
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            disabled
+                                            onClick={handleShowPdf}>Generating...</button>}
+                                </div>
+
+                                <div className="mt-3 col-12 col-lg-5 text-center">
+                                    <button type="button" className="btn btn-lg btn-block btn-primary rounded-pill float-center"
+                                            onClick={handleDelete}>Delete Invoice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </>
+            )
+        }
     }
 
     const handleShowPdf = () => {
@@ -119,7 +187,7 @@ const InvoiceDetails = () => {
                                     <li className="list-group-item list-group-item-action">{new Date(invoice.saleDate).toDateString()}</li>
                                     <li className="list-group-item list-group-item-action">{new Date(invoice.paymentDeadline).toDateString()}</li>
                                     <li className="list-group-item list-group-item-action">{Number(invoice.toPay).toFixed(2)}</li>
-                                    <li className="list-group-item list-group-item-action">{Number(invoice.paid).toFixed(2)}</li>
+                                    <li className="list-group-item list-group-item-action">{Number(invoice.paidByUser).toFixed(2)}</li>
                                     <li className="list-group-item list-group-item-action">{invoice.status}</li>
                                     <li className="list-group-item list-group-item-action">{invoice.remarks}</li>
                                 </ul>
@@ -188,23 +256,8 @@ const InvoiceDetails = () => {
                         <a href={"edit/payment-info/" + id} className="text-decoration-none ml-auto h6">Edit payment info</a>
                     </div>
 
-                    <div className="container mb-4">
-                        <div className="row align-items-start">
-                            <div className="mt-3 col-12 col-lg-3 text-center">
-                                {!isPending && <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center"
-                                                       onClick={handleShowPdf}>Generate PDF</button>}
-                                {isPending &&
-                                <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center" disabled
-                                        onClick={handleShowPdf}>Generating...</button>}
-                            </div>
 
-                            <div className="mt-3 col-12 col-lg-3 text-center">
-                                <button type="button" className="btn btn-lg  btn-primary rounded-pill float-center"
-                                        onClick={handleDelete}>Delete Invoice
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {showButtons()}
 
 
                     <Modal show={show} onHide={handleClose}>

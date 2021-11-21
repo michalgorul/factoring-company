@@ -61,8 +61,8 @@ public class InvoiceController {
         return this.invoiceService.getActiveInvoicesPaidValue();
     }
 
-    @GetMapping(path = "/pay/{id}")
-    public InvoiceEntity payForInvoice(@PathVariable Long id) {
-        return this.invoiceService.payForInvoice(id);
+    @PostMapping(path = "/pay/{id}")
+    public void payForInvoice(@PathVariable Long id) {
+        this.invoiceService.payForInvoice(id);
     }
 }

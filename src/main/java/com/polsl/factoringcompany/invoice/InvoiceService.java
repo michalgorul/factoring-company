@@ -217,15 +217,6 @@ public class InvoiceService {
         }
     }
 
-    private void updateFromUnfundedToFunded(InvoiceEntity invoiceEntity){
-        try {
-                invoiceEntity.setStatus("funded");
-                this.invoiceRepository.save(invoiceEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     //    @Scheduled(cron = "[Seconds] [Minutes] [Hours] [Day of month] [Month] [Day of week] [Year]")
     //    Fires at 12 PM every day:
     @Scheduled(cron = "0 1 0 * * ?")
@@ -237,7 +228,24 @@ public class InvoiceService {
         System.out.println("invoice statuses updated");
     }
 
-    public InvoiceEntity payForInvoice(Long id) {
-        return null;
+    public void payForInvoice(Long id) {
+        try {
+            InvoiceEntity invoiceEntity = this.invoiceRepository.findById(id).orElse(null);
+            if(invoiceEntity != null){
+                invoiceEntity.setStatus("funded");
+                invoiceEntity.setPaidByUser(invoiceEntity.getToPayByUser());
+                invoiceEntity.setToPayByUser(BigDecimal.ZERO);
+
+                transactionService.addTransaction(new TransactionRequestDto(
+                        invoiceEntity.getPaidByUser(),
+                         false,
+                        "Invoice payment",
+                        Math.toIntExact(invoiceEntity.getId()),
+                        null));
+                this.invoiceRepository.save(invoiceEntity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

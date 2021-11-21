@@ -48,7 +48,29 @@ const InvoiceDetails = () => {
     }
 
     const handlePayForInvoice = () => {
+        fetch(`${config.API_URL}/api/invoice/pay/${invoice.id}`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    history.push('/user/invoices');
+                } else {
+                    handleClose();
+                }
+                return response;
+            })
+            .then((response) => {
+                if (response.ok) {
+                    infoToast('Invoice was paid');
 
+                } else {
+                    errorToast('Invoice was not paid');
+                }
+            })
     }
 
     const handleDelete = () => {

@@ -33,7 +33,7 @@ const Reports = () => {
 					<Directory href="/user/reports/customers">Customer reports</Directory>
 				</li>
 				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
-					<Directory href="#">Expense reports</Directory>
+					<Directory href="/user/reports/expense">Expense reports</Directory>
 				</li>
 				<li className="list-group-item mt-3"><Folder className="text-primary mb-4 me-3" />
 					<Directory href="#">Chars</Directory>

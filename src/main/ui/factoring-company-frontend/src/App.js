@@ -45,6 +45,7 @@ import CreditHistory from "./containers/Logged/Credit/creditHistory";
 import CreditPay from "./containers/Logged/Credit/creditPay";
 import CreditSchedule from "./containers/Logged/Credit/creditSchedule";
 import TransactionDetails from "./containers/Logged/Transactions/transactionDetails";
+import ExpenseReports from "./containers/Logged/Reports/ExpenseReports";
 
 
 const UserComponents = ({match}) => {
@@ -75,6 +76,7 @@ const UserComponents = ({match}) => {
                 <ProtectedRoute path={`${match.url}/reports/customers`} exact component={CustomerReports}/>
                 <ProtectedRoute path={`${match.url}/reports/customers/krs`} exact component={KrsReport}/>
                 <ProtectedRoute path={`${match.url}/reports/customers/vat`} exact component={VatReport}/>
+                <ProtectedRoute path={`${match.url}/reports/expense`} exact component={ExpenseReports}/>
                 <ProtectedRoute path={`${match.url}/documents`} exact component={Documents}/>
                 <ProtectedRoute path={`${match.url}/documents/list/:catalog`} exact component={FileListPage}/>
                 <ProtectedRoute path={`${match.url}/transactions`} exact component={Transactions}/>

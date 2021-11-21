@@ -18,4 +18,6 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long> {
 
     @Query(value = "select distinct status from invoice")
     List<String> getStatuses();
+
+    List<InvoiceEntity> findAllByStatusEquals(String status);
 }

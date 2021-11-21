@@ -158,9 +158,9 @@ public class CreditService {
     }
 
     //    @Scheduled(cron = "[Seconds] [Minutes] [Hours] [Day of month] [Month] [Day of week] [Year]")
-//    Fires at 12 PM every day:
+    //    Fires at 12 PM every day:
     @Scheduled(cron = "0 1 0 * * ?")
-    public void updateStatuses() {
+    public void updateCreditStatuses() {
         List<CreditEntity> allByStatusEqualsReview = this.creditRepository.findAllByStatusEquals("review");
         for (CreditEntity creditEntity : allByStatusEqualsReview) {
             updateFromInReviewToActive(creditEntity);
@@ -171,7 +171,7 @@ public class CreditService {
             if (creditEntity.getLastInstallmentDate().before(Date.valueOf(LocalDateTime.now().toLocalDate())))
                 updateFromActiveToFunded(creditEntity);
         }
-        System.out.println("changed");
+        System.out.println("credit statuses updated");
     }
 
     public List<CreditSchedule> getSchedule(Long id) {

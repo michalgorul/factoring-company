@@ -11,12 +11,17 @@ import com.polsl.factoringcompany.paymenttype.PaymentTypeEntity;
 import com.polsl.factoringcompany.paymenttype.PaymentTypeService;
 import com.polsl.factoringcompany.product.ProductEntity;
 import com.polsl.factoringcompany.product.ProductService;
+import com.polsl.factoringcompany.transaction.TransactionRequestDto;
+import com.polsl.factoringcompany.transaction.TransactionService;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.allegro.finance.tradukisto.MoneyConverters;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +37,7 @@ public class InvoiceService {
     private final CustomerService customerService;
     private final ProductService productService;
     private final InvoiceItemService invoiceItemService;
+    private final TransactionService transactionService;
 
     public List<InvoiceEntity> getInvoices() {
         return this.invoiceRepository.findAll();
@@ -71,8 +77,15 @@ public class InvoiceService {
             InvoiceEntity invoiceEntity = this.invoiceRepository.save(new InvoiceEntity(invoiceDto));
 
             InvoiceItemDto invoiceItemDto = new InvoiceItemDto(invoiceCreateRequest, product.getId(), invoiceEntity.getId());
+
             invoiceItemService.addInvoiceItem(invoiceItemDto);
 
+            transactionService.addTransaction(new TransactionRequestDto(
+                    invoiceEntity.getToPay(),
+                    true,
+                    "Receiving money for an invoice",
+                    Math.toIntExact(invoiceEntity.getId()),
+                    null));
             return invoiceEntity;
 
 
@@ -190,5 +203,41 @@ public class InvoiceService {
                 .map(InvoiceEntity::getPaidByUser)
                 .mapToDouble(BigDecimal::doubleValue).sum();
 
+    }
+
+    private void updateFromActiveToUnfunded(InvoiceEntity invoiceEntity){
+        try {
+            if(invoiceEntity.getPaymentDeadline().before(Timestamp.valueOf(LocalDateTime.now())) &&
+                    invoiceEntity.getStatus().equals("active")){
+                invoiceEntity.setStatus("unfunded");
+                this.invoiceRepository.save(invoiceEntity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateFromUnfundedToFunded(InvoiceEntity invoiceEntity){
+        try {
+                invoiceEntity.setStatus("funded");
+                this.invoiceRepository.save(invoiceEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    @Scheduled(cron = "[Seconds] [Minutes] [Hours] [Day of month] [Month] [Day of week] [Year]")
+    //    Fires at 12 PM every day:
+    @Scheduled(cron = "0 1 0 * * ?")
+    public void updateInvoiceStatuses() {
+        List<InvoiceEntity> allByStatusEqualsActive = this.invoiceRepository.findAllByStatusEquals("active");
+        for (InvoiceEntity invoiceEntity : allByStatusEqualsActive) {
+            updateFromActiveToUnfunded(invoiceEntity);
+        }
+        System.out.println("invoice statuses updated");
+    }
+
+    public InvoiceEntity payForInvoice(Long id) {
+        return null;
     }
 }

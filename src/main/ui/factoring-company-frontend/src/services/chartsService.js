@@ -1,6 +1,8 @@
 import Select from "react-select";
 import React from "react";
 import {Pie, Bar} from "react-chartjs-2";
+import {handleFilterTransactionsDates} from "./historyService";
+import moment from "moment";
 
 const rand = () => Math.floor(Math.random() * 255);
 const randColor = () => `${rand()}, ${rand()}, ${rand()}`;
@@ -82,7 +84,7 @@ const showChart = (whatChart, data, options) => {
     if (whatChart === 'bar') {
         return (
             <div>
-                <div className="col-8 mx-auto">
+                <div className="col-11 col-lg-8 mx-auto">
                     <Bar data={data} options={options} type={'bar'}/>
                 </div>
             </div>
@@ -90,13 +92,55 @@ const showChart = (whatChart, data, options) => {
     } else if (whatChart === 'pie') {
         return (
             <div>
-                <div className="col-5 mx-auto">
+                <div className="col-11 col-lg-6 mx-auto">
                     <Pie data={data} options={options} type={'pie'}/>
                 </div>
             </div>
         )
     }
 }
+
+const getAmountInDateScope = (startDate, endDate, transactions) => {
+    if(transactions !== null) {
+        return transactions
+            .filter(transaction => handleFilterTransactionsDates(transaction, startDate, endDate))
+            .map(transaction => {
+                return transaction.value
+            }).reduce((a, b) => a + b, 0)
+    }
+}
+
+const getValuesForLastMonth = (transactions) => {
+    let today = new Date();
+    let startOfWeek1 = moment(today).subtract(7 , 'day'),
+        startOfWeek2 = moment(today).subtract(14 , 'day'),
+        startOfWeek3 = moment(today).subtract(21 , 'day'),
+        startOfWeek4 = moment(today).subtract(28 , 'day');
+
+
+    let endOfWeek1 = today, endOfWeek2 = startOfWeek1, endOfWeek3 = startOfWeek2, endOfWeek4 = startOfWeek3;
+
+    let weeksAmount = []
+    weeksAmount.push(getAmountInDateScope(startOfWeek4, endOfWeek4, transactions));
+    weeksAmount.push(getAmountInDateScope(startOfWeek3, endOfWeek3, transactions));
+    weeksAmount.push(getAmountInDateScope(startOfWeek2, endOfWeek2, transactions));
+    weeksAmount.push(getAmountInDateScope(startOfWeek1, endOfWeek1, transactions));
+
+    return weeksAmount;
+}
+
+const getValuesForLast3Months = (transactions) => {
+
+}
+
+const getValuesForLast6Months = (transactions) => {
+
+}
+
+const getValuesForLast12Months = (transactions) => {
+
+}
+
 
 export {
     rand,
@@ -108,5 +152,10 @@ export {
     getBackgroundColors,
     getBorderColors,
     getColors,
-    showChart
+    showChart,
+    getValuesForLastMonth,
+    getValuesForLast3Months,
+    getValuesForLast6Months,
+    getValuesForLast12Months,
+
 }

@@ -130,6 +130,9 @@ const getValuesForLastMonth = (transactions) => {
 }
 
 const getValuesForLast3Months = (transactions) => {
+    let today = new Date();
+
+    console.log(new Date(today.getFullYear(), today.getMonth() - 2, 1))
 
 }
 

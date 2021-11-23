@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
     getBackgroundColors, getBorderColors, getColors,
-    getLastMonths, getValuesForLastMonth, randColor, showChart,
+    getLastMonths, getValuesForLast3Months, getValuesForLastMonth, randColor, showChart,
     showSelectDateScope
 } from "../../../../services/chartsService";
 import {Marginer} from "../../../../components/marginer";
@@ -53,7 +53,7 @@ const Charts = () => {
                 setDataset(getValuesForLastMonth(whatTransactions));
                 break;
             case 'last3Months':
-                setDataset(getValuesForLastMonth(whatTransactions));
+                setDataset(getValuesForLast3Months(whatTransactions));
                 break;
             case 'last6Months':
                 setDataset(getValuesForLastMonth(whatTransactions));
@@ -64,7 +64,6 @@ const Charts = () => {
             default:
                 setDataset(null);
         }
-        console.log(dataset)
     }
 
     const setDatasetValues = () => {
@@ -82,7 +81,7 @@ const Charts = () => {
     const handleWhatChartChange = (changeEvent) => {
         setWhatChart(changeEvent.target.value);
     }
-    const setOptionsForChartsCredit = (numOfColors) => {
+    const setOptionsForCharts = (numOfColors) => {
         let colors = [];
         for (let i = numOfColors; i > 0; i -= 1) {
             colors.push(randColor())
@@ -95,13 +94,13 @@ const Charts = () => {
     }
     useEffect(() => {
         if (datesScope === 'lastMonth') {
-            setOptionsForChartsCredit(4, getValuesForLastMonth)
+            setOptionsForCharts(4, getValuesForLastMonth)
         } else if (datesScope === 'last3Months') {
-            setOptionsForChartsCredit(3)
+            setOptionsForCharts(3)
         } else if (datesScope === 'last6Months') {
-            setOptionsForChartsCredit(6)
+            setOptionsForCharts(6)
         } else if (datesScope === 'lastYear') {
-            setOptionsForChartsCredit(12)
+            setOptionsForCharts(12)
         }
     }, [datesScope, whatTransactions, creditTransactions, whatChart]);
 

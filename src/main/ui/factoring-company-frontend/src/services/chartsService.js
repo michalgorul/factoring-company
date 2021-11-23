@@ -101,7 +101,7 @@ const showChart = (whatChart, data, options) => {
 }
 
 const getAmountInDateScope = (startDate, endDate, transactions) => {
-    if(transactions !== null) {
+    if (transactions !== null) {
         return transactions
             .filter(transaction => handleFilterTransactionsDates(transaction, startDate, endDate))
             .map(transaction => {
@@ -112,10 +112,8 @@ const getAmountInDateScope = (startDate, endDate, transactions) => {
 
 const getValuesForLastMonth = (transactions) => {
     let today = new Date();
-    let startOfWeek1 = moment(today).subtract(7 , 'day'),
-        startOfWeek2 = moment(today).subtract(14 , 'day'),
-        startOfWeek3 = moment(today).subtract(21 , 'day'),
-        startOfWeek4 = moment(today).subtract(28 , 'day');
+    let startOfWeek1 = moment(today).subtract(7, 'day'), startOfWeek2 = moment(today).subtract(14, 'day'),
+        startOfWeek3 = moment(today).subtract(21, 'day'), startOfWeek4 = moment(today).subtract(28, 'day');
 
 
     let endOfWeek1 = today, endOfWeek2 = startOfWeek1, endOfWeek3 = startOfWeek2, endOfWeek4 = startOfWeek3;

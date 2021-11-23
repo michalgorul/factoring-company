@@ -1,7 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {
-    getBackgroundColors, getBorderColors, getColors,
-    getLastMonths, getValuesForLast3Months, getValuesForLastMonth, randColor, showChart,
+    getBackgroundColors,
+    getBorderColors,
+    getColors,
+    getLastMonths,
+    getValuesForLast12Months,
+    getValuesForLast3Months,
+    getValuesForLast6Months,
+    getValuesForLastMonth,
+    randColor,
+    showChart,
     showSelectDateScope
 } from "../../../../services/chartsService";
 import {Marginer} from "../../../../components/marginer";
@@ -56,10 +64,10 @@ const Charts = () => {
                 setDataset(getValuesForLast3Months(whatTransactions));
                 break;
             case 'last6Months':
-                setDataset(getValuesForLastMonth(whatTransactions));
+                setDataset(getValuesForLast6Months(whatTransactions));
                 break;
             case 'lastYear':
-                setDataset(getValuesForLastMonth(whatTransactions));
+                setDataset(getValuesForLast12Months(whatTransactions));
                 break;
             default:
                 setDataset(null);

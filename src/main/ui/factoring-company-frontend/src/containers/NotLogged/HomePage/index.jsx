@@ -1,24 +1,24 @@
 import React from 'react';
-import { NavbarSection } from '../../../components/navbar';
-import { PageContainer } from '../../../components/pageContainer';
+import {NavbarSection} from '../../../components/navbar';
+import {PageContainer} from '../../../components/pageContainer';
 import Contact from './contact';
 import Footer from './footer';
-import { FundingSolution } from './fundingSolutions';
-import { QuickInfo } from './quickInfo';
-import  Reviews  from './rewiews';
+import {FundingSolution} from './fundingSolutions';
+import {QuickInfo} from './quickInfo';
+import Reviews from './rewiews';
 import ToTopButton from './scrollToTop';
-import { TopSection } from './topSection';
+import {TopSection} from './topSection';
 
-export function HomePage(props) {
+export function HomePage() {
     return <PageContainer>
         <TopSection>
-            <NavbarSection />
+            <NavbarSection/>
         </TopSection>
-        <FundingSolution />
-        <QuickInfo />
-        <Reviews />
-        <Contact />
-        <Footer />
-        <ToTopButton />
+        <FundingSolution/>
+        <QuickInfo/>
+        <Reviews/>
+        <Contact/>
+        <Footer/>
+        <ToTopButton/>
     </PageContainer>
 }

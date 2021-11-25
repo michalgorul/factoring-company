@@ -12,13 +12,13 @@ const PageWrapper = styled.div`
 `;
 
 export function PageContainer(props) {
-  return <PageWrapper>{props.children}</PageWrapper>;
+    return <PageWrapper>{props.children}</PageWrapper>;
 }
 
 export const InnerPageContainer = styled.div`
   flex: 1;
   width: 100%;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "auto")};
+  max-width: ${({maxWidth}) => (maxWidth ? maxWidth : "auto")};
   /*min-height Need more testing*/
   min-height: 70vh;
   //padding: 1em;

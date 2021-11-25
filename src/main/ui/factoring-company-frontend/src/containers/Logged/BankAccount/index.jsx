@@ -54,7 +54,7 @@ const EditBankAccount = () => {
             })
             .then((response) => {
                 if (response.ok) {
-                    infoToast('Your Bank account informations was updated')
+                    infoToast('Your Bank account information was updated')
                 } else {
                     errorToast('Some of inputs were incorrect');
                 }

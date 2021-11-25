@@ -37,28 +37,33 @@ const TransactionList = ({whatTransactions, sortOption, startDate, endDate}) => 
                     .map(transaction => (
                         <tr key={transaction.id} className="clickable">
                             <th>
-                                <a href={"/user/transactions/" + transaction.id} className="text-decoration-none text-dark d-block">
-                                {transaction.id}
+                                <a href={"/user/transactions/" + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
+                                    {transaction.id}
                                 </a>
                             </th>
                             <td>
-                                <a href={"/user/transactions/" + transaction.id} className="text-decoration-none text-dark d-block">
+                                <a href={"/user/transactions/" + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
                                     {new Date(transaction.transactionDate).toDateString()}
                                 </a>
                             </td>
                             <td>
-                                <a href={"/user/transactions/" + transaction.id} className="text-decoration-none text-dark d-block">
+                                <a href={"/user/transactions/" + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
                                     {transaction.name}
                                 </a>
                             </td>
                             <td className="text-center">
-                                <a href={"/user/transactions/" + transaction.id} className="text-decoration-none text-dark d-block">
-                                {transaction.value.toFixed(2)}
+                                <a href={"/user/transactions/" + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
+                                    {transaction.value.toFixed(2)}
                                 </a>
                             </td>
                             <td className="text-center">
-                                <a href={"/user/transactions/" + transaction.id} className="text-decoration-none text-dark d-block">
-                                {handleShowArrow(transaction)}
+                                <a href={"/user/transactions/" + transaction.id}
+                                   className="text-decoration-none text-dark d-block">
+                                    {handleShowArrow(transaction)}
                                 </a>
                             </td>
                         </tr>

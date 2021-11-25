@@ -1,16 +1,16 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 
-const ProtectedRoute = ({ component: Component, ...restOfProps }) => {
+const ProtectedRoute = ({component: Component, ...restOfProps}) => {
     const isAuthenticated = localStorage.getItem("isAuthenticated");
-    return ( 
+    return (
         <Route
-      {...restOfProps}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-     );
+            {...restOfProps}
+            render={(props) =>
+                isAuthenticated ? <Component {...props} /> : <Redirect to="/login"/>
+            }
+        />
+    );
 }
- 
+
 export default ProtectedRoute;

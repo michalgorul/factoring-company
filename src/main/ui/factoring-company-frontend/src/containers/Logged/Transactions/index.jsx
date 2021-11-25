@@ -17,8 +17,8 @@ const Transactions = () => {
     }
 
     const resetDates = () => {
-      setStartDate(null);
-      setEndDate(null);
+        setStartDate(null);
+        setEndDate(null);
     }
 
     const displayWhatTransactions = () => {

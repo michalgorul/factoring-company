@@ -65,24 +65,27 @@ const ExpenseReports = () => {
         if (creditTransactions && whatExpenses === 'credit') {
             getBenefit(startDate, endDate, setValueBenefit, creditTransactions);
             setNumBenefits(creditTransactions.filter(transaction => {
-                return transaction.benefit === true
+                const {benefit = {}} = transaction;
+                return benefit === true
             }).length)
             getDrawback(startDate, endDate, setValueDrawback, creditTransactions);
             setNumDrawbacks(creditTransactions.filter(transaction => {
-                return transaction.benefit === false
+                const {benefit = {}} = transaction;
+                return benefit === false
             }).length)
-        }
-        else if(creditTransactions && whatExpenses === 'invoice'){
+        } else if (creditTransactions && whatExpenses === 'invoice') {
             getBenefit(startDate, endDate, setValueBenefit, invoiceTransactions);
             setNumBenefits(invoiceTransactions.filter(transaction => {
-                return transaction.benefit === true
+                const {benefit = {}} = transaction;
+                return benefit === true
             }).length)
             getDrawback(startDate, endDate, setValueDrawback, invoiceTransactions);
             setNumDrawbacks(invoiceTransactions.filter(transaction => {
-                return transaction.benefit === false
+                const {benefit = {}} = transaction;
+                return benefit === false
             }).length)
         }
-    }, [creditTransactions, invoiceTransactions,startDate, endDate, whatExpenses]);
+    }, [creditTransactions, invoiceTransactions, startDate, endDate, whatExpenses]);
 
     const showContent = () => {
         if (whatExpenses === 'credit') {

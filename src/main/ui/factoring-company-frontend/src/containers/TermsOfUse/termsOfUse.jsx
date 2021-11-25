@@ -2,7 +2,7 @@ import ToTopButton from "../NotLogged/HomePage/scrollToTop"
 
 const TermsOfUse = () => {
     return ( 
-        <div class="ms-3 mt-3">
+        <div className="ms-3 mt-3">
             <h1>Terms and Conditions</h1>
                 <p>Last updated: August 12, 2021</p>
                 <p>Please read these terms and conditions carefully before using Our Service.</p>
@@ -34,7 +34,7 @@ const TermsOfUse = () => {
                             <p><strong>Third-party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</p>
                         </li>
                         <li>
-                            <p><strong>Website</strong> refers to Factoring Company, accessible from <a href="factoringcompany.com" rel="external nofollow noopener" target="_blank">factoringcompany.com</a></p>
+                            <p><strong>Website</strong> refers to Factoring Company, accessible from <a href={"factoringcompany.com"} rel="external nofollow noopener noreferrer" target="_blank">factoringcompany.com</a></p>
                         </li>
                         <li>
                             <p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>
@@ -85,7 +85,7 @@ const TermsOfUse = () => {
                 <ul>
                     <li>By email: office@factoringcompany.com</li>
                 </ul>
-                <h3 class="text-center text-black"><a href="/" class="text-decoration-none">Home</a></h3>
+                <h3 className="text-center text-black"><a href="/" className="text-decoration-none">Home</a></h3>
                 <ToTopButton />
         </div>
         

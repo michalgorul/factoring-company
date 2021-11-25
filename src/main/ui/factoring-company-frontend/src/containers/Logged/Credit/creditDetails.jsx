@@ -11,7 +11,8 @@ const CreditDetails = () => {
     const {data: user, error: errorU, isPending: isPendingU} = useFetchWithToken(`${config.API_URL}/api/user/current`);
     const history = useHistory();
     const handleSigning = () => {
-        let tempCreditNumber = credit.creditNumber.replaceAll('/', ',');
+        const {creditNumber = {}} = credit;
+        let tempCreditNumber = creditNumber.replaceAll('/', ',');
         axios
             .get(config.API_URL + `/api/credit/document/${tempCreditNumber}`, {
                 responseType: "blob",
@@ -24,7 +25,7 @@ const CreditDetails = () => {
                 const fileURL = URL.createObjectURL(file);
                 let a = document.createElement('a');
                 a.href = fileURL;
-                a.download = user.firstName + '_' + user.lastName + '_' + credit.creditNumber;
+                a.download = user.firstName + '_' + user.lastName + '_' + creditNumber;
                 a.click();
             });
     }
@@ -46,10 +47,11 @@ const CreditDetails = () => {
 
     const nextPaymentDateStr = () => {
         if (credit) {
-            if (credit.status === 'funded') {
+            const {nextPaymentDate = {}, status = {}} = credit;
+            if (status === 'funded') {
                 return ' - ';
             }
-            return credit.nextPaymentDate;
+            return nextPaymentDate;
         }
     }
 

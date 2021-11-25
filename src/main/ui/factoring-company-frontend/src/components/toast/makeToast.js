@@ -13,8 +13,8 @@ const infoToast = (message) => {
         draggable: true,
         progress: undefined,
         transition: Zoom,
-        className:"text-white bg-primary",
-        });
+        className: "text-white bg-primary",
+    });
 }
 
 const errorToast = (message) => {
@@ -28,7 +28,7 @@ const errorToast = (message) => {
         progress: undefined,
         transition: Zoom,
 
-        });
+    });
 }
 
 const successToast = (message) => {
@@ -42,7 +42,7 @@ const successToast = (message) => {
         progress: undefined,
         transition: Zoom,
 
-        });
+    });
 }
 
 const warningToast = (message) => {

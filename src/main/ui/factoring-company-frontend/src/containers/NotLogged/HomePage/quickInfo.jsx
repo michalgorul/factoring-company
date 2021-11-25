@@ -31,7 +31,7 @@ export class QuickInfo extends Component {
                     <div className="col-10 col-lg-4">
                         <div className="card border-0 h-10">
                             <LogoImage>
-                                <img src={Basket} className="card-img-top mt-4 mb-2" alt="basket" />
+                                <img src={Basket} className="card-img-top mt-4 mb-2" alt="basket"/>
                             </LogoImage>
                             <div className="card-body text-center py-4 mt-2">
                                 <h4 className="card-title">Easy to get started</h4>
@@ -44,7 +44,7 @@ export class QuickInfo extends Component {
                     <div className="col-10 col-lg-4">
                         <div className="card border-0">
                             <LogoImage>
-                                <img src={Bulb} className="card-img-top mt-4 mb-2" alt="bulb" />
+                                <img src={Bulb} className="card-img-top mt-4 mb-2" alt="bulb"/>
                             </LogoImage>
                             <div className="card-body text-center py-4 mt-2">
                                 <h4 className="card-title">As you wish</h4>
@@ -56,7 +56,7 @@ export class QuickInfo extends Component {
                     <div className="col-10 col-lg-4">
                         <div className="card border-0">
                             <LogoImage>
-                                <img src={Support} className="card-img-top mt-4 mb-5" alt="support" />
+                                <img src={Support} className="card-img-top mt-4 mb-5" alt="support"/>
                             </LogoImage>
                             <div className="card-body text-center py-4 mt-2">
                                 <h4 className="card-title">Dedicated support</h4>

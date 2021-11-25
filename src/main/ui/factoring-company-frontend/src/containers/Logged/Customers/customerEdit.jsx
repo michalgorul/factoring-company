@@ -98,7 +98,8 @@ const CustomerEdit = () => {
                     <div className="row d-flex justify-content-start align-items-center">
                         <div className="col-md-8 col-lg-8 col-xl-6">
                             <form onSubmit={handleSubmit}>
-                                <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                                <div
+                                    className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                     <p className="lead fw-normal mt-2 mb-3 display-4">Edit Customer</p>
 
                                 </div>

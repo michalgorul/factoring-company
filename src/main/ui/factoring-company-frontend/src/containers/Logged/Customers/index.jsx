@@ -6,7 +6,7 @@ import config from "../../../services/config";
 
 const Customers = () => {
 
-    const { data: customers, error, isPending } = useFetchWithToken(`${config.API_URL}/api/customer/current`);
+    const {data: customers, error, isPending} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -38,7 +38,7 @@ const Customers = () => {
                 <div className="row">
                     <div className="form-outline form-floating mb-3 col-12 col-lg-6">
                         <input type="text" className="form-control form-control-sm"
-                            placeholder="filter items" value={searchTerm} onChange={handleChange} />
+                               placeholder="filter items" value={searchTerm} onChange={handleChange}/>
                         <label className="form-label ms-2">Filter</label>
                     </div>
                     <div className="col-12 col-lg-6">
@@ -50,10 +50,16 @@ const Customers = () => {
             </div>
 
             <ol className="list-group list-group-numbered list-group-flush">
-                {error && <> <div className="alert alert-warning fs-3" role="alert">{error} </div>
-                    <button className="text-decoration-none ms-3 fs-3" ref="" onClick={() => { window.location.href = "/something" }}> Click to refresh </button></>}
-                {isPending && <div style={{ padding: "70px 0", textAlign: "center" }}><Spinner animation="grow" variant="primary" /></div>}
-                {customers && <CustomerList customers={searchResults} />}
+                {error && <>
+                    <div className="alert alert-warning fs-3" role="alert">{error} </div>
+                    <button className="text-decoration-none ms-3 fs-3" ref="" onClick={() => {
+                        window.location.href = "/something"
+                    }}> Click to refresh
+                    </button>
+                </>}
+                {isPending &&
+                <div style={{padding: "70px 0", textAlign: "center"}}><Spinner animation="grow" variant="primary"/></div>}
+                {customers && <CustomerList customers={searchResults}/>}
             </ol>
         </>
     );

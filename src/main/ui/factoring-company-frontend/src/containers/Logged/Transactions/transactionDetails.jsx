@@ -14,7 +14,7 @@ const TransactionDetails = () => {
     const [isPendingCu, setIsPendingCu] = useState(false);
 
     useEffect(() => {
-        if(transaction){
+        if (transaction) {
             fetch(`${config.API_URL}/api/currency/${transaction.currencyId}`, {
                 method: 'GET',
                 headers: {
@@ -51,32 +51,32 @@ const TransactionDetails = () => {
             {errorCu && <div>{errorCu}</div>}
             {errorT && <div>{errorT}</div>}
             {transaction && currency && (<>
-            <div className="media align-items-center py-3">
-                <div className="media-body ml-4">
-                    <h4 className="font-weight-bold display-2">Transaction Details</h4>
-                </div>
-            </div>
-            <h5 className="mt-4 mb-3">General</h5>
-            <div className="container">
-                <div className="row align-items-start ms-2">
-                    <div className="col-6 col-lg-3">
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item list-group-item-action fw-bold">Transaction date:</li>
-                            <li className="list-group-item list-group-item-action fw-bold">Transaction amount:</li>
-                            <li className="list-group-item list-group-item-action fw-bold">Transaction Name:</li>
-                            <li className="list-group-item list-group-item-action fw-bold">Benefit:</li>
-                        </ul>
-                    </div>
-                    <div className="col-6 col-lg-3">
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item list-group-item-action">{new Date(transaction.transactionDate).toDateString()}</li>
-                            <li className="list-group-item list-group-item-action">{Number(transaction.value).toFixed(2)}</li>
-                            <li className="list-group-item list-group-item-action">{transaction.name}</li>
-                            <li className="list-group-item list-group-item-action">{transaction.benefit.toString()}</li>
-                        </ul>
+                <div className="media align-items-center py-3">
+                    <div className="media-body ml-4">
+                        <h4 className="font-weight-bold display-2">Transaction Details</h4>
                     </div>
                 </div>
-            </div>
+                <h5 className="mt-4 mb-3">General</h5>
+                <div className="container">
+                    <div className="row align-items-start ms-2">
+                        <div className="col-6 col-lg-3">
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item list-group-item-action fw-bold">Transaction date:</li>
+                                <li className="list-group-item list-group-item-action fw-bold">Transaction amount:</li>
+                                <li className="list-group-item list-group-item-action fw-bold">Transaction Name:</li>
+                                <li className="list-group-item list-group-item-action fw-bold">Benefit:</li>
+                            </ul>
+                        </div>
+                        <div className="col-6 col-lg-3">
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item list-group-item-action">{new Date(transaction.transactionDate).toDateString()}</li>
+                                <li className="list-group-item list-group-item-action">{Number(transaction.value).toFixed(2)}</li>
+                                <li className="list-group-item list-group-item-action">{transaction.name}</li>
+                                <li className="list-group-item list-group-item-action">{transaction.benefit.toString()}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <h5 className="mt-4 mb-3">Currency Information</h5>
                 <div className="container">
                     <div className="row align-items-start ms-2">

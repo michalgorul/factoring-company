@@ -7,7 +7,7 @@ import {ifTokenCannotBeTrusted} from "../../../../services/authenticationService
 import {errorToast} from "../../../../components/toast/makeToast";
 
 const VatReport = () => {
-    const {data: customers, errorC, isPendingC} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
+    const {data: customers} = useFetchWithToken(`${config.API_URL}/api/customer/current`);
 
     const [customerPhone, setCustomerPhone] = useState('');
     const [customer, setCustomer] = useState(null);

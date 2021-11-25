@@ -6,7 +6,7 @@ import {errorToast, infoToast} from "../../../components/toast/makeToast";
 import useFetchWithTokenPayment from "../../../services/paymentService";
 import config from "../../../services/config";
 import useFetchWithToken from "../../../services/useFetchWithToken";
-import Select from 'react-select'
+import Select from 'react-select';
 
 
 const PaymentInfoEdit = () => {
@@ -151,7 +151,8 @@ const PaymentInfoEdit = () => {
                                     {!isPendingN &&
                                     <button className="btn btn-primary rounded-pill btn-lg">Edit payment info</button>}
                                     {isPendingN &&
-                                    <button className="btn btn-primary rounded-pill btn-lg" disabled>Editing payment info...</button>}
+                                    <button className="btn btn-primary rounded-pill btn-lg" disabled>Editing payment
+                                        info...</button>}
                                 </div>
 
                             </form>

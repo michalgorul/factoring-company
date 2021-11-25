@@ -17,7 +17,8 @@ const CustomerDetails = () => {
 
     useEffect(() => {
         if (customer) {
-            fetch(`${config.API_URL}/api/company/${customer.companyId}`, {
+            const {companyId = {}} = company;
+            fetch(`${config.API_URL}/api/company/${companyId}`, {
                 method: 'GET',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`

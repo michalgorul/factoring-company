@@ -118,6 +118,7 @@ const getValuesForLastMonth = (transactions) => {
 
     let endOfWeek1 = today, endOfWeek2 = startOfWeek1, endOfWeek3 = startOfWeek2, endOfWeek4 = startOfWeek3;
 
+    console.log(startOfWeek3)
     let weeksAmount = []
     weeksAmount.push(getAmountInDateScope(startOfWeek4, endOfWeek4, transactions));
     weeksAmount.push(getAmountInDateScope(startOfWeek3, endOfWeek3, transactions));
@@ -127,19 +128,16 @@ const getValuesForLastMonth = (transactions) => {
     return weeksAmount;
 }
 
-const getValuesForLast3Months = (transactions) => {
+const getValuesForLastMonths = (transactions, numOfMonths) => {
     let today = new Date();
+    let monthsAmount = [];
 
-    console.log(new Date(today.getFullYear(), today.getMonth() - 2, 1))
-
-}
-
-const getValuesForLast6Months = (transactions) => {
-
-}
-
-const getValuesForLast12Months = (transactions) => {
-
+    for (let i = numOfMonths; i > 0; i -= 1) {
+        let startDate = moment(new Date(today.getFullYear(), today.getMonth() - i, 1));
+        let endDate = moment(new Date(today.getFullYear(), today.getMonth() - i + 1, 0));
+        monthsAmount.push(getAmountInDateScope(startDate, endDate, transactions));
+    }
+    return monthsAmount;
 }
 
 
@@ -155,8 +153,6 @@ export {
     getColors,
     showChart,
     getValuesForLastMonth,
-    getValuesForLast3Months,
-    getValuesForLast6Months,
-    getValuesForLast12Months,
+    getValuesForLastMonths,
 
 }

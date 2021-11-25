@@ -4,10 +4,7 @@ import {
     getBorderColors,
     getColors,
     getLastMonths,
-    getValuesForLast12Months,
-    getValuesForLast3Months,
-    getValuesForLast6Months,
-    getValuesForLastMonth,
+    getValuesForLastMonth, getValuesForLastMonths,
     randColor,
     showChart,
     showSelectDateScope
@@ -61,16 +58,17 @@ const Charts = () => {
                 setDataset(getValuesForLastMonth(whatTransactions));
                 break;
             case 'last3Months':
-                setDataset(getValuesForLast3Months(whatTransactions));
+                setDataset(getValuesForLastMonths(whatTransactions, 3));
                 break;
             case 'last6Months':
-                setDataset(getValuesForLast6Months(whatTransactions));
+                setDataset(getValuesForLastMonths(whatTransactions, 6));
                 break;
             case 'lastYear':
-                setDataset(getValuesForLast12Months(whatTransactions));
+                setDataset(getValuesForLastMonths(whatTransactions, 12));
                 break;
             default:
                 setDataset(null);
+                break;
         }
     }
 

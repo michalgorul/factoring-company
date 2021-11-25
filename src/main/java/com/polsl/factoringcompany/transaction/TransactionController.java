@@ -36,7 +36,7 @@ public class TransactionController {
     public TransactionEntity getTransaction(@PathVariable Long id) {
         return this.transactionService.getTransaction(id);
     }
-    
+
     @PostMapping
     public TransactionEntity addTransaction(@RequestBody TransactionRequestDto transactionEntity) {
         return this.transactionService.addTransaction(transactionEntity);

@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {ifTokenCannotBeTrusted} from "./authenticationService";
 import config from './config';
 
-const useGetUsedCredit = (id) => {
+const useGetUsedCredit = () => {
     const [usedCredit, setUsedCredit] = useState(null);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);

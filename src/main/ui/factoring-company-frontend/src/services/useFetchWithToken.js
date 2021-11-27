@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ifTokenCannotBeTrusted } from "./authenticationService";
+import {useEffect, useState} from "react";
+import {ifTokenCannotBeTrusted} from "./authenticationService";
 
 const useFetchWithToken = (url) => {
     const [data, setData] = useState(null);
@@ -29,8 +29,7 @@ const useFetchWithToken = (url) => {
                 .catch(err => {
                     if (err.name === "AbortError") {
                         console.log('fetch aborted');
-                    }
-                    else {
+                    } else {
                         setIsPending(false);
                         setError(err.message);
                     }
@@ -40,7 +39,7 @@ const useFetchWithToken = (url) => {
 
     }, [url]);
 
-    return { data, isPending, error };
+    return {data, isPending, error};
 }
 
 export default useFetchWithToken;

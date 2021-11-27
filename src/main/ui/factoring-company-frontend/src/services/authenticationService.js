@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useHistory } from "react-router";
 import { errorToast } from "../components/toast/makeToast";
 import config from "./config";
 

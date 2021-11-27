@@ -5,7 +5,8 @@ const getBenefit = (startDate, endDate, setValueBenefitCredits, creditTransactio
     setValueBenefitCredits(creditTransactions
         .filter(transaction => handleFilterTransactionsDates(transaction, startDate, endDate))
         .filter(transaction => {
-            return transaction.benefit === true
+            const {benefit = {}} = transaction;
+            return benefit === true
         })
         .map(creditTransaction => {
             return creditTransaction.value
@@ -16,7 +17,8 @@ const getDrawback = (startDate, endDate, setValueDrawbackCredits, creditTransact
     setValueDrawbackCredits(creditTransactions
         .filter(transaction => handleFilterTransactionsDates(transaction, startDate, endDate))
         .filter(transaction => {
-            return transaction.benefit === false
+            const {benefit = {}} = transaction;
+            return benefit === false
         })
         .map(creditTransaction => {
             return creditTransaction.value

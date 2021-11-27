@@ -43,7 +43,9 @@ const whatSorting = (sortOption) => {
 }
 
 const handleFilterTransactionsDates = (transaction, startDate, endDate) => {
-    let date = new Date(transaction.transactionDate);
+    const {transactionDate = {}} = transaction;
+    let date = new Date(transactionDate);
+
     if (startDate !== null && endDate !== null) {
         return date >= startDate && date <= endDate;
 
@@ -61,7 +63,8 @@ const handleFilterTransactionsDates = (transaction, startDate, endDate) => {
 
 const handleShowArrow = (creditTransaction) => {
     if (creditTransaction) {
-        if (creditTransaction.benefit === true) {
+        const {benefit = {}} = creditTransaction;
+        if (benefit === true) {
             return (
                 <ArrowUpShort className="text-success fs-5"/>
             )
@@ -104,7 +107,7 @@ const modalForDates = (show, startDate, setStartDate, endDate, setEndDate, handl
                                 renderInput={(params) => (<TextField {...params} helperText=""/>)}
                                 value={endDate} onChange={(newDate) => {
                         setEndDate(newDate);
-                    }} />
+                    }}/>
                 </LocalizationProvider>
                 <div className="row justify-content-center">
                     <div className="col-5 mt-4 mb-2">

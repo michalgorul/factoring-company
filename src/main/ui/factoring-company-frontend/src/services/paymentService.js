@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { ifTokenCannotBeTrusted } from "./authenticationService";
+import {useEffect} from "react";
+import {useState} from "react";
+import {ifTokenCannotBeTrusted} from "./authenticationService";
 import config from './config';
 
 const useFetchWithTokenPayment = (id) => {
@@ -35,6 +35,7 @@ const useFetchWithTokenPayment = (id) => {
                 setInvoiceAvailable(true);
             })
             .catch(err => {
+                console.log(err)
             })
 
         if (invoiceAvailable) {

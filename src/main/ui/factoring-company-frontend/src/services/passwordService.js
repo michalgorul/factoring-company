@@ -1,4 +1,4 @@
-import { warningToast } from '../components/toast/makeToast';
+import {warningToast} from '../components/toast/makeToast';
 
 const checkPasswordsMatch = (password, password2) => {
     if (password !== password2) {
@@ -35,4 +35,4 @@ const checkPassword = (password) => {
 export {
     checkPasswordsMatch,
     checkPassword
-  };
+};

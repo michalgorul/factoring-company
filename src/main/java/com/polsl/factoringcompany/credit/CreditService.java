@@ -104,11 +104,11 @@ public class CreditService {
             this.creditRepository.save(creditEntity);
 
             transactionService.addTransaction(new TransactionRequestDto(
-                    creditEntity.getAmount(),
-                    true,
-                    "Loan receive",
-                    null,
-                    Math.toIntExact(creditEntity.getId())),
+                            creditEntity.getAmount(),
+                            true,
+                            "Loan receive",
+                            null,
+                            Math.toIntExact(creditEntity.getId())),
                     creditEntity.getUserId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,7 +188,7 @@ public class CreditService {
             creditEntity.setNextPaymentDate(Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(1)));
 
             transactionService.addTransaction(new TransactionRequestDto(
-                   creditEntity.getNextPayment(),
+                    creditEntity.getNextPayment(),
                     false,
                     "Loan monthly payment",
                     null,
@@ -204,11 +204,10 @@ public class CreditService {
         try {
             creditEntity.setBalance(BigDecimal.valueOf(
                     creditEntity.getBalance().doubleValue() - amount));
-            if(creditEntity.getBalance().doubleValue() > 0.0){
+            if (creditEntity.getBalance().doubleValue() > 0.0) {
                 creditEntity.setNextPaymentDate(Date.valueOf(creditEntity.getNextPaymentDate().toLocalDate().plusMonths(1)));
                 creditEntity.setNextPayment(BigDecimal.valueOf(creditEntity.getBalance().doubleValue() / creditEntity.getInstallments()));
-            }
-            else {
+            } else {
                 creditEntity.setInstallments(0);
                 creditEntity.setNextPayment(BigDecimal.valueOf(0.0));
                 creditEntity.setBalance(BigDecimal.valueOf(0.0));

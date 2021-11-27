@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
-public class EmailService implements EmailSender{
+public class EmailService implements EmailSender {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender mailSender;

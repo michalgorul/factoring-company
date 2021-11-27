@@ -76,17 +76,11 @@ public class BankAccountService {
     private void nameValidator(BankAccountRequestDto bankAccountEntity) {
         if (StringValidator.stringWithSpacesImproper(bankAccountEntity.getBankName(), 50)) {
             throw new ValueImproperException(bankAccountEntity.getBankName());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(bankAccountEntity.getBankSwift(), 8)) {
+        } else if (StringValidator.stringWithDigitsImproper(bankAccountEntity.getBankSwift(), 8)) {
             throw new ValueImproperException(bankAccountEntity.getBankSwift());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(bankAccountEntity.getBankAccountNumber(), 28)) {
+        } else if (StringValidator.stringWithDigitsImproper(bankAccountEntity.getBankAccountNumber(), 28)) {
             throw new ValueImproperException(bankAccountEntity.getBankAccountNumber());
-        }
-
-        else if (!StringValidator.isBankAccountNumberValid(bankAccountEntity.getBankAccountNumber())){
+        } else if (!StringValidator.isBankAccountNumberValid(bankAccountEntity.getBankAccountNumber())) {
             throw new ValueImproperException((bankAccountEntity.getBankAccountNumber()));
         }
 
@@ -141,7 +135,7 @@ public class BankAccountService {
         }
     }
 
-    public BankAccountEntity getCustomersBankAccount(CustomerEntity customerEntity){
+    public BankAccountEntity getCustomersBankAccount(CustomerEntity customerEntity) {
         return this.bankAccountRepository.findByCompanyId(customerEntity.getCompanyId())
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", Long.valueOf(customerEntity.getCompanyId())));
 

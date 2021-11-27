@@ -66,7 +66,7 @@ public class StringValidator {
         return string == null || string.length() <= 0 || string.length() > length || isPostalCodeValid(string);
     }
 
-    public static boolean isPostalCodeValid(String s){
+    public static boolean isPostalCodeValid(String s) {
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
             if (Character.isLetter(ch) || Character.isDigit(ch) || ch == '-') {

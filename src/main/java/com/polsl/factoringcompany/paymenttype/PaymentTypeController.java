@@ -21,7 +21,7 @@ public class PaymentTypeController {
 
     @GetMapping(path = "/{id}")
     public PaymentTypeEntity getPaymentType(@PathVariable Long id) {
-            return this.paymentTypeService.getPaymentType(id);
+        return this.paymentTypeService.getPaymentType(id);
     }
 
 

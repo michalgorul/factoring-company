@@ -25,19 +25,18 @@ public class FileController {
         return this.fileService.getAllFilesCurrentUser();
     }
 
-
     @GetMapping("{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable UUID id) {
         return this.fileService.getFile(id);
     }
 
     @GetMapping("/used")
-    public Long getUsedSpace(){
+    public Long getUsedSpace() {
         return this.fileService.getUsedSpace();
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteFile(@PathVariable UUID id){
+    public void deleteFile(@PathVariable UUID id) {
         this.fileService.deleteFile(id);
     }
 

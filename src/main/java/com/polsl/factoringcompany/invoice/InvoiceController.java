@@ -57,7 +57,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/paid")
-    public Double getActiveInvoicesPaidValue(){
+    public Double getActiveInvoicesPaidValue() {
         return this.invoiceService.getActiveInvoicesPaidValue();
     }
 

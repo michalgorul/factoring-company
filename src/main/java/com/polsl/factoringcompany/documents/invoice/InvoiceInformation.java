@@ -83,7 +83,7 @@ public class InvoiceInformation {
         this.gross = String.valueOf(invoiceItemEntity.getGrossValue());
         this.net = String.valueOf(invoiceItemEntity.getNetValue());
         this.vatValue = String.valueOf(invoiceItemEntity.getVatValue());
-        this.toPay = String.valueOf(invoiceEntity.getToPay()) + " " + currencyCode;
+        this.toPay = invoiceEntity.getToPay() + " " + currencyCode;
         this.toPayInWords = invoiceEntity.getToPayInWords() + " " + currencyCode;
         this.sellerCompany = companyEntity.getCompanyName();
         this.sellerStreet = companyEntity.getStreet();

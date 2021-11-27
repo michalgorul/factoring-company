@@ -34,7 +34,8 @@ public class InvoiceDto {
                       Long paymentTypeId, Long currencyId, Long userId) {
 
         BigDecimal netValue = BigDecimal.valueOf(invoiceCreateRequest.getQuantity() * invoiceCreateRequest.getNet());
-        BigDecimal vatValue = BigDecimal.valueOf(invoiceCreateRequest.getQuantity() * invoiceCreateRequest.getVat() * invoiceCreateRequest.getNet() / 100);
+        BigDecimal vatValue = BigDecimal.valueOf(invoiceCreateRequest.getQuantity() * invoiceCreateRequest.getVat()
+                * invoiceCreateRequest.getNet() / 100);
 
         this.invoiceNumber = invoiceNumber;
         this.creationDate = invoiceCreateRequest.getIssueDate();

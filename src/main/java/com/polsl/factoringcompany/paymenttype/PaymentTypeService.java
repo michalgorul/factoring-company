@@ -18,17 +18,14 @@ public class PaymentTypeService {
 
     private final PaymentTypeRepository paymentTypeRepository;
 
-
     public List<PaymentTypeEntity> getPaymentTypes() {
         return paymentTypeRepository.findAll();
     }
 
-
     public PaymentTypeEntity getPaymentType(Long id) throws IdNotFoundInDatabaseException {
         return this.paymentTypeRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type: ", id ));
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type: ", id));
     }
-
 
     public PaymentTypeEntity addPaymentType(String paymentTypeName) {
 
@@ -41,7 +38,6 @@ public class PaymentTypeService {
         }
     }
 
-
     public void deletePaymentType(Long id) throws IdNotFoundInDatabaseException {
         try {
             this.paymentTypeRepository.deleteById(id);
@@ -49,7 +45,6 @@ public class PaymentTypeService {
             throw new IdNotFoundInDatabaseException("Payment type", id);
         }
     }
-
 
     @Transactional
     public PaymentTypeEntity updatePaymentType(Long id, String paymentTypeName) {
@@ -70,7 +65,6 @@ public class PaymentTypeService {
 
     }
 
-
     private void nameValidation(String paymentTypeName) {
         if (StringValidator.stringWithSpacesImproper(paymentTypeName, 25))
             throw new ValueImproperException(paymentTypeName);
@@ -80,14 +74,13 @@ public class PaymentTypeService {
         }
     }
 
-
     public boolean ifNameTaken(String paymentTypeName) {
         Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findPaymentTypeEntityByPaymentTypeName(
                 StringUtils.capitalize(paymentTypeName));
         return paymentTypeEntity.isPresent();
     }
 
-    public PaymentTypeEntity getPaymentTypeEntityByName(String name){
+    public PaymentTypeEntity getPaymentTypeEntityByName(String name) {
         return this.paymentTypeRepository.findPaymentTypeEntityByPaymentTypeName(name)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Payment type", 0L));
     }

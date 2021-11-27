@@ -67,32 +67,21 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-//        config.addAllowedOrigin(ALL);
-//        config.addAllowedHeader(ALL);
-//        config.addAllowedMethod(ALL);
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
-@Bean
-public CorsFilter corsFilter() {
-    CorsConfiguration corsConfiguration = new CorsConfiguration();
-    corsConfiguration.setAllowCredentials(true);
-    corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
-    corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
-            "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method",
-            "Access-Control-Request-Headers"));
-    corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
-            "Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
-    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-    UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-    urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-    return new CorsFilter(urlBasedCorsConfigurationSource);
-}
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
+                "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
+                "Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsFilter(urlBasedCorsConfigurationSource);
+    }
 
 
 }

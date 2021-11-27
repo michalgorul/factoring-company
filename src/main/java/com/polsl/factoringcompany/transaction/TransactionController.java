@@ -42,12 +42,10 @@ public class TransactionController {
         return this.transactionService.addTransaction(transactionEntity);
     }
 
-
     @PutMapping("/{id}")
     public TransactionEntity updateTransaction(@PathVariable Long id) {
         return this.transactionService.updateTransaction(id);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteTransaction(@PathVariable Long id) {

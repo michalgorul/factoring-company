@@ -2,16 +2,16 @@ package com.polsl.factoringcompany.files;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.UUID;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @NoArgsConstructor
@@ -57,18 +57,4 @@ public class FileEntity {
         this.catalog = catalog;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FileEntity that = (FileEntity) o;
-        return userId == that.userId && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(size, that.size) && Objects.equals(contentType, that.contentType) && Arrays.equals(data, that.data) && Objects.equals(catalog, that.catalog) && Objects.equals(userByUserId, that.userByUserId);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(id, name, size, contentType, userId, catalog, userByUserId);
-        result = 31 * result + Arrays.hashCode(data);
-        return result;
-    }
 }

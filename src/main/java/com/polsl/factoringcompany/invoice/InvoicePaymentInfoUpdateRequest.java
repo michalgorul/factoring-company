@@ -13,3 +13,4 @@ public class InvoicePaymentInfoUpdateRequest {
     private String currencyName;
     private String paymentTypeName;
 }
+

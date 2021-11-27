@@ -7,7 +7,10 @@ import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode
@@ -61,10 +64,10 @@ public class VatReportInformation {
     VatReportInformation(HashMap<String, Object> vatInformationInMap, CustomerEntity customerEntity,
                          CompanyEntity companyEntity, BankAccountEntity bankAccountEntity) {
 
-        List<Object> tempRepresentatives = new ArrayList<>();
-        List<Object> tempAuthorizedClerks = new ArrayList<>();
-        List<Object> tempPartners = new ArrayList<>();
-        List<Object> tempAccountNumbers = new ArrayList<>();
+        List<Object> tempRepresentatives;
+        List<Object> tempAuthorizedClerks;
+        List<Object> tempPartners;
+        List<Object> tempAccountNumbers;
 
 
         this.name = (String) vatInformationInMap.get("name");
@@ -135,15 +138,6 @@ public class VatReportInformation {
 
     public HashMap<String, String> getVariablesInHashMap() {
         HashMap<String, String> variables = new HashMap<>();
-
-//        Field[] declaredFields = getClass().getDeclaredFields();
-//        for(Field field: declaredFields){
-//            try {
-//                variables.put(field.getName(), field.get(this).toString());
-//            } catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         variables.put("name", getNullString(this.name));
         variables.put("nip", getNullString(this.nip));

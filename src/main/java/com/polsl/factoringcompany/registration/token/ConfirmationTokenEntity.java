@@ -56,7 +56,6 @@ public class ConfirmationTokenEntity {
     private UserEntity userByUserId;
 
 
-
     public ConfirmationTokenEntity(String token, LocalDateTime createdAt, LocalDateTime expiresAt, UserEntity userEntity) {
         this.token = token;
         this.createdAt = Timestamp.valueOf(createdAt);

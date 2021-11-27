@@ -5,12 +5,13 @@ import com.polsl.factoringcompany.invoice.InvoiceEntity;
 import com.polsl.factoringcompany.product.ProductEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
 
+@NoArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -63,9 +64,6 @@ public class InvoiceItemEntity {
     @JsonIgnore
     @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private InvoiceEntity invoiceByInvoiceId;
-
-    public InvoiceItemEntity() {
-    }
 
     public InvoiceItemEntity(InvoiceItemDto invoiceItemDto) {
         BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getNetPrice().doubleValue());

@@ -35,24 +35,6 @@ public class CompanyService {
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Company", id));
     }
 
-//    public CompanyEntity addCompany(CompanyEntity companyEntity) {
-//
-//        addValidate(companyEntity);
-//
-//        try {
-//            return this.companyRepository.save(new CompanyEntity(
-//                    StringUtils.capitalize(companyEntity.getCompanyName()),
-//                    StringUtils.capitalize(companyEntity.getCountry()),
-//                    StringUtils.capitalize(companyEntity.getCity()),
-//                    StringUtils.capitalize(companyEntity.getStreet()),
-//                    companyEntity.getPostalCode(),
-//                    companyEntity.getNip(),
-//                    companyEntity.getRegon()));
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     public CompanyEntity updateCompany(Long id, CompanyRequestDto companyRequestDto) {
 
         Optional<CompanyEntity> companyEntityOptional = companyRepository.findById(id);
@@ -141,25 +123,15 @@ public class CompanyService {
     private void nameValidator(CompanyRequestDto companyEntity) {
         if (StringValidator.stringWithSpacesImproper(companyEntity.getCompanyName(), 50)) {
             throw new ValueImproperException(companyEntity.getCompanyName());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(companyEntity.getCountry(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(companyEntity.getCountry(), 50)) {
             throw new ValueImproperException(companyEntity.getCountry());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(companyEntity.getCity(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(companyEntity.getCity(), 50)) {
             throw new ValueImproperException(companyEntity.getCity());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(companyEntity.getStreet(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(companyEntity.getStreet(), 50)) {
             throw new ValueImproperException(companyEntity.getStreet());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(companyEntity.getPostalCode(), 15)) {
+        } else if (StringValidator.stringWithDigitsImproper(companyEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(companyEntity.getPostalCode());
-        }
-
-        else if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
+        } else if (StringValidator.ifNotDigitsOnly(companyEntity.getNip()))
             throw new ValueImproperException(companyEntity.getNip(), "NIP");
 
         else if (StringValidator.ifNotDigitsOnly(companyEntity.getRegon()))
@@ -170,7 +142,7 @@ public class CompanyService {
 
         Long id = 0L;
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(userRepository.findByUsername(currentUserName).isPresent()){
+        if (userRepository.findByUsername(currentUserName).isPresent()) {
             id = userRepository.findByUsername(currentUserName).get().getId();
         }
 
@@ -179,14 +151,13 @@ public class CompanyService {
         if (userEntityOptional.isEmpty())
             throw new IdNotFoundInDatabaseException("User", id);
 
-        if(userEntityOptional.get().getCompanyId() != null){
+        if (userEntityOptional.get().getCompanyId() != null) {
             return getCompany((long) userEntityOptional.get().getCompanyId());
-        }
-        else return null;
+        } else return null;
 
     }
 
-    public CompanyEntity updateCurrentUserCompany(CompanyRequestDto companyRequestDto){
+    public CompanyEntity updateCurrentUserCompany(CompanyRequestDto companyRequestDto) {
         UserEntity currentUser = userService.getCurrentUser();
         Optional<CompanyEntity> companyEntityOptional = companyRepository.findById((long) currentUser.getCompanyId());
 
@@ -211,7 +182,6 @@ public class CompanyService {
 
     public CompanyEntity createCurrentUserCompany(CompanyRequestDto companyRequestDto) {
         addValidate(companyRequestDto);
-        UserEntity currentUser = userService.getCurrentUser();
         try {
             CompanyEntity companyEntity = this.companyRepository.save(new CompanyEntity(
                     StringUtils.capitalize(companyRequestDto.getCompanyName()),
@@ -231,7 +201,6 @@ public class CompanyService {
 
     public CompanyEntity createCustomerCompany(int customerId, CompanyRequestDto companyRequestDto) {
         addValidate(companyRequestDto);
-        UserEntity currentUser = userService.getCurrentUser();
         try {
             CompanyEntity companyEntity = this.companyRepository.save(new CompanyEntity(
                     StringUtils.capitalize(companyRequestDto.getCompanyName()),

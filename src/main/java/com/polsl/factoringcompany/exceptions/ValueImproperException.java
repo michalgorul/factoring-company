@@ -1,6 +1,6 @@
 package com.polsl.factoringcompany.exceptions;
 
-public class ValueImproperException extends IllegalArgumentException{
+public class ValueImproperException extends IllegalArgumentException {
     public ValueImproperException(String name) {
         super("The name '" + name + "' is not appropriate");
     }

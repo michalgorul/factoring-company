@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.ByteArrayOutputStream;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api/report/vat")
@@ -23,7 +21,6 @@ public class VatReportController {
     public ResponseEntity<byte[]> getVatReportPdf(@PathVariable Long customerId) throws Exception {
 
         byte[] pdf = vatReportService.generateDocxFileFromTemplate(customerId);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
@@ -37,7 +34,7 @@ public class VatReportController {
     }
 
     @GetMapping(path = "/customer/{customerId}")
-    public VatReportInformation getVatInformationFromNip(@PathVariable Long customerId){
+    public VatReportInformation getVatInformationFromNip(@PathVariable Long customerId) {
         return this.vatReportService.getCustomerVatInformation(customerId);
     }
 }

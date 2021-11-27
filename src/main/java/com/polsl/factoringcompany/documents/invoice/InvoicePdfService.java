@@ -27,7 +27,10 @@ import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,7 +67,7 @@ public class InvoicePdfService {
                 invoiceService.getPaymentMethod(invoiceId),
                 userService.getCurrentUser(),
                 companyService.getCurrentUserCompany()
-                );
+        );
         HashMap<String, String> variables = invoiceInformation.getVariablesInHashMap();
 
         documentPart.variableReplace(variables);
@@ -119,38 +122,7 @@ public class InvoicePdfService {
         return paragraph;
     }
 
-    /**
-     * Convert the image from the file into an array of bytes.
-     *
-     * @param file the image file to be converted
-     * @return the byte array containing the bytes from the image
-     * @throws FileNotFoundException File NotFoundException
-     * @throws IOException           IOException
-     */
-    private static byte[] convertImageToByteArray(File file)
-            throws FileNotFoundException, IOException {
-        InputStream is = new FileInputStream(file);
-        long length = file.length();
-        // You cannot create an array using a long, it needs to be an int.
-        if (length > Integer.MAX_VALUE) {
-            System.out.println("File too large!!");
-        }
-        byte[] bytes = new byte[(int) length];
-        int offset = 0;
-        int numRead;
-        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-            offset += numRead;
-        }
-        // Ensure all the bytes have been read
-        if (offset < bytes.length) {
-            System.out.println("Could not completely read file "
-                    + file.getName());
-        }
-        is.close();
-        return bytes;
-    }
-
-    private static byte[] getBarcode(String barcodeText){
+    private static byte[] getBarcode(String barcodeText) {
         Code128Bean barcodeGenerator = new Code128Bean();
         BitmapCanvasProvider canvas =
                 new BitmapCanvasProvider(160, BufferedImage.TYPE_BYTE_BINARY, false, 0);

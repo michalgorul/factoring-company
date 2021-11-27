@@ -24,8 +24,6 @@ public class RegistrationService {
 
     public String register(RegistrationRequest registrationRequest) {
 
-        // TODO: 23.10.2021 make more authorities | now all users are admins
-
         UserEntity userEntity = userService.registerNewUser(registrationRequest);
 
         String token = UUID.randomUUID().toString();

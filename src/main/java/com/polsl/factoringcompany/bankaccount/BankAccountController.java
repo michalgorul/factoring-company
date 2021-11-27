@@ -17,7 +17,6 @@ public class BankAccountController {
         return this.bankAccountService.getBankAccounts();
     }
 
-
     @GetMapping(path = "/{id}")
     public BankAccountEntity getBankAccount(@PathVariable Long id) {
         return this.bankAccountService.getBankAccount(id);
@@ -52,19 +51,6 @@ public class BankAccountController {
     public BankAccountEntity createCustomersBankAccount(@PathVariable Long customerId, @RequestBody BankAccountRequestDto bankAccountRequestDto) {
         return this.bankAccountService.createCustomersBankAccount(customerId, bankAccountRequestDto);
     }
-
-
-//    @PostMapping
-//    public BankAccountEntity addBankAccount(@RequestBody BankAccountEntity bankAccountEntity) {
-//        return this.bankAccountService.addBankAccount(bankAccountEntity);
-//    }
-//
-//
-//    @PutMapping("/{id}")
-//    public BankAccountEntity updateBankAccount(@PathVariable Long id, @RequestBody BankAccountEntity bankAccountEntity) {
-//        return this.bankAccountService.updateBankAccount(id, bankAccountEntity);
-//    }
-
 
     @DeleteMapping("/{id}")
     public void deleteBankAccount(@PathVariable Long id) {

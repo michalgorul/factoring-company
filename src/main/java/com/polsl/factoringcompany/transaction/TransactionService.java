@@ -53,9 +53,9 @@ public class TransactionService {
         }
     }
 
-    public TransactionEntity addTransaction(TransactionRequestDto transactionRequestDto, Integer userId) {
+    public void addTransaction(TransactionRequestDto transactionRequestDto, Integer userId) {
         try {
-            return this.transactionRepository.save(new TransactionEntity(
+            this.transactionRepository.save(new TransactionEntity(
                     transactionRequestDto,
                     (long) userId,
                     currencyService.getCurrencyByCurrencyName("Dollar").getId()

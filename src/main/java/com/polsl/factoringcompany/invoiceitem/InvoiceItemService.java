@@ -42,7 +42,7 @@ public class InvoiceItemService {
         Optional<InvoiceItemEntity> invoiceItemEntityOptional = invoiceItemRepository.findById(id);
 
         if (invoiceItemEntityOptional.isEmpty())
-        throw new IdNotFoundInDatabaseException("Invoice item", id);
+            throw new IdNotFoundInDatabaseException("Invoice item", id);
 
         BigDecimal netValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getNetPrice().doubleValue());
         BigDecimal vatValue = BigDecimal.valueOf(invoiceItemDto.getQuantity() * invoiceItemDto.getVatRate().doubleValue() * invoiceItemDto.getNetPrice().doubleValue() / 100);
@@ -59,8 +59,7 @@ public class InvoiceItemService {
             invoiceItemEntityOptional.get().setInvoiceId(Math.toIntExact(invoiceItemDto.getInvoiceId()));
 
             return this.invoiceItemRepository.save(invoiceItemEntityOptional.get());
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }

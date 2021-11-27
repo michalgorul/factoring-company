@@ -20,5 +20,4 @@ public class RegistrationRequest {
     private final String postalCode;
     private final String phone;
 
-
 }

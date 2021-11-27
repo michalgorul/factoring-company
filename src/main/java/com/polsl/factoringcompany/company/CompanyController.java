@@ -12,7 +12,6 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-
     @GetMapping
     public List<CompanyEntity> getCompanies() {
         return this.companyService.getCompanies();
@@ -43,16 +42,10 @@ public class CompanyController {
         return this.companyService.createCustomerCompany(Math.toIntExact(id), companyRequestDto);
     }
 
-//    @PostMapping
-//    public CompanyEntity addCompany(@RequestBody CompanyEntity companyEntity) {
-//        return this.companyService.addCompany(companyEntity);
-//    }
-//
     @PutMapping("/{id}")
     public CompanyEntity updateCompany(@PathVariable Long id, @RequestBody CompanyRequestDto companyRequestDto) {
         return this.companyService.updateCompany(id, companyRequestDto);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteCompany(@PathVariable Long id) {

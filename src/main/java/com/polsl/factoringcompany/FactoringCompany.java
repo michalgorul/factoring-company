@@ -22,9 +22,6 @@ public class FactoringCompany {
         SpringApplication.run(FactoringCompany.class, args);
     }
 
-
-
-
     @Bean
     public ServletWebServerFactory servletContainer() {
         // Enable SSL Trafic

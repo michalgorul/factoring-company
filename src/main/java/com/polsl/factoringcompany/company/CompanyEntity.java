@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.bankaccount.BankAccountEntity;
 import com.polsl.factoringcompany.customer.CustomerEntity;
 import com.polsl.factoringcompany.user.UserEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -62,11 +65,6 @@ public class CompanyEntity {
     @JsonIgnore
     private Collection<CustomerEntity> customersById;
 
-
-    public CompanyEntity() {
-
-    }
-
     public CompanyEntity(String companyName, String country, String city, String street, String postalCode, String nip, String regon) {
         this.companyName = companyName;
         this.country = country;
@@ -76,27 +74,4 @@ public class CompanyEntity {
         this.nip = nip;
         this.regon = regon;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CompanyEntity that = (CompanyEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(companyName, that.companyName) &&
-                Objects.equals(country, that.country) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) &&
-                Objects.equals(postalCode, that.postalCode) &&
-                Objects.equals(nip, that.nip) &&
-                Objects.equals(regon, that.regon);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, companyName,
-                country, city, street, postalCode, nip, regon);
-    }
-
 }

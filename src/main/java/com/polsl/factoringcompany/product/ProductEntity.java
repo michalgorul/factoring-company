@@ -2,13 +2,16 @@ package com.polsl.factoringcompany.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoiceitem.InvoiceItemEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -40,27 +43,9 @@ public class ProductEntity {
     @JsonIgnore
     private Collection<InvoiceItemEntity> invoiceItemsById;
 
-
-    public ProductEntity() {
-    }
-
     public ProductEntity(String name, String pkwiu, String measureUnit) {
         this.name = name;
         this.pkwiu = pkwiu;
         this.measureUnit = measureUnit;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductEntity that = (ProductEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(pkwiu, that.pkwiu) &&
-                Objects.equals(measureUnit, that.measureUnit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, pkwiu, measureUnit);
     }
 }

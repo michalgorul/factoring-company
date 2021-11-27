@@ -50,7 +50,7 @@ public class FileService {
     public ResponseEntity<String> uploadFile(MultipartFile file, String catalog) {
         try {
             this.save(file, catalog);
-            if(catalog.equals("credit")){
+            if (catalog.equals("credit")) {
                 creditService.updateFromProcessingToInReview(file.getOriginalFilename());
             }
             return ResponseEntity.status(HttpStatus.OK)
@@ -81,7 +81,7 @@ public class FileService {
     public List<FileResponse> getAllFilesCurrentUser() {
         return fileRepository.findAll()
                 .stream()
-                .filter(x->x.getUserId() == userService.getCurrentUserId())
+                .filter(x -> x.getUserId() == userService.getCurrentUserId())
                 .map(this::mapToFileResponse)
                 .collect(Collectors.toList());
     }

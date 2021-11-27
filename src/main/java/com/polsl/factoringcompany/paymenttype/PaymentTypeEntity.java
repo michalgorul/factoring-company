@@ -2,13 +2,16 @@ package com.polsl.factoringcompany.paymenttype;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.polsl.factoringcompany.invoice.InvoiceEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -34,24 +37,8 @@ public class PaymentTypeEntity {
     @OneToMany(mappedBy = "paymentTypeByPaymentTypeId")
     private Collection<InvoiceEntity> invoicesById;
 
-
-    public PaymentTypeEntity() {
-    }
-
     public PaymentTypeEntity(String name) {
         this.paymentTypeName = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PaymentTypeEntity that = (PaymentTypeEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(paymentTypeName, that.paymentTypeName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, paymentTypeName);
-    }
 }

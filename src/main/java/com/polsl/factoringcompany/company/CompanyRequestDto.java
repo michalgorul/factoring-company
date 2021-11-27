@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CompanyRequestDto {
+
     private String companyName;
     private String country;
     private String city;

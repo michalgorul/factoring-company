@@ -37,7 +37,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         String authorizationHeader = httpServletRequest.getHeader(JwtProps.AUTH_HEADER);
 
         // If header does not contain BEARER or is null delegate to Spring impl and exit
-        if(Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(JwtProps.TOKEN_PREFIX)){
+        if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(JwtProps.TOKEN_PREFIX)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
@@ -61,11 +61,10 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                     .collect(Collectors.toSet());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                  username, null, simpleGrantedAuthorities
+                    username, null, simpleGrantedAuthorities
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        catch (JwtException e){
+        } catch (JwtException e) {
             throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
         }
 

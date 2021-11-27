@@ -9,9 +9,11 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
 
     List<TransactionEntity> findAllByCreditId(Integer creditId);
+
     List<TransactionEntity> findAllByInvoiceId(Integer invoiceId);
 
     List<TransactionEntity> findAllByUserIdAndInvoiceIdIsNull(int userId);
+
     List<TransactionEntity> findAllByUserIdAndCreditIdIsNull(int userId);
 
 

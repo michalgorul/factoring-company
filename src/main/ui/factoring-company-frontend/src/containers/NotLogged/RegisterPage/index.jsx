@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Marginer} from '../../../components/marginer'
-import {infoToast, successToast, errorToast} from '../../../components/toast/makeToast';
+import {errorToast, infoToast, successToast} from '../../../components/toast/makeToast';
 import RegisterImage from '../../../images/register.png'
 import PhoneInput from 'react-phone-number-input/input'
 import {formatPhoneNumber, isPossiblePhoneNumber} from 'react-phone-number-input'
@@ -162,13 +162,11 @@ const Register = () => {
 
                             <div className="form-group">
                                 <div className="custom-control custom-checkbox mb-3 mt-2 was-validated">
-                                    <input type="checkbox" className="custom-control-input" id="customControlValidation1"
+                                    <input type="checkbox" className="custom-control-input" id="terms"
                                            required/>
-                                    <label className="custom-control-label" form="customControlValidation1">
-                                        I agree all statements in <a href={"/terms-of-use"} className="text-decoration-none">Terms
-                                        of
-                                        use</a>
-                                    </label>
+                                    <label className="custom-control-label" htmlFor="terms">
+                                        I agree all statements in <a href={"/terms-of-use"} className="text-decoration-none">
+                                        Terms of use</a></label>
                                     <div className="invalid-feedback">You must agree before submitting.</div>
                                 </div>
                             </div>
@@ -176,9 +174,11 @@ const Register = () => {
                                 <button type="submit" className="btn btn-primary btn-lg rounded-pill"
                                         style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Register
                                 </button>
-                                <p className="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href={"/login"}
-                                                                                                        className="link-primary text-decoration-none">Sign
-                                    In</a></p>
+                                <p className="small fw-bold mt-2 pt-1 mb-0">Already have an account?
+                                    <a href={"/login"} className="link-primary text-decoration-none">
+                                        Sign In
+                                    </a>
+                                </p>
                             </div>
                             <Marginer direction="vertical" margin={20}/>
                         </form>

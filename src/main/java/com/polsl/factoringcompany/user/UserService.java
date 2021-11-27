@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public Long getCurrentUserId() {
-        Long id = 0L;
+        Long id;
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (userRepository.findByUsername(currentUserName).isPresent()) {
             id = userRepository.findByUsername(currentUserName).get().getId();
@@ -286,8 +286,8 @@ public class UserService {
 
     }
 
-    private void passwordUpdateValidator(String password){
-         if (!StringValidator.isPasswordValid(password)) {
+    private void passwordUpdateValidator(String password) {
+        if (!StringValidator.isPasswordValid(password)) {
             throw new ValueImproperException(password);
         }
     }
@@ -313,12 +313,12 @@ public class UserService {
         userRepository.enableAppUser(id);
     }
 
-    public UserEntity getUSerByEmail(String email){
+    public UserEntity getUSerByEmail(String email) {
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("User", 0L));
     }
 
-    public void updateUsersPassword(Long id, String password){
+    public void updateUsersPassword(Long id, String password) {
 
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
 

@@ -12,7 +12,7 @@ public class NameImproperAdvice {
     @ResponseBody
     @ExceptionHandler(ValueImproperException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public String idNotFoundHandler(ValueImproperException ex){
+    public String idNotFoundHandler(ValueImproperException ex) {
         return ex.getMessage();
     }
 }

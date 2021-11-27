@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.ByteArrayOutputStream;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api/invoice/pdf")
@@ -23,7 +21,6 @@ public class InvoicePdfController {
     public ResponseEntity<byte[]> getInvoicePdf(@PathVariable Long invoiceId) throws Exception {
 
         byte[] pdf = invoicePdfService.generateDocxFileFromTemplate(invoiceId);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);

@@ -17,18 +17,15 @@ public class ProductController {
         return productService.getProducts();
     }
 
-
     @GetMapping(path = "/{id}")
     public ProductEntity getProduct(@PathVariable Long id) {
         return this.productService.getProduct(id);
     }
 
-
     @GetMapping(path = "/name/{name}")
     public ProductEntity getProductByName(@PathVariable String name) {
         return this.productService.getProductByName(name);
     }
-
 
     @PostMapping
     public ProductEntity addProduct(@RequestBody ProductRequest productRequest) {
@@ -39,7 +36,6 @@ public class ProductController {
     public ProductEntity updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
         return this.productService.updateProduct(id, productRequest);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {

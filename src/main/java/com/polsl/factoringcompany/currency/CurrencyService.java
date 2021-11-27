@@ -21,17 +21,14 @@ public class CurrencyService {
 
     private final CurrencyRepository currencyRepository;
 
-
     public List<CurrencyEntity> getCurrencies() {
         return currencyRepository.findAll();
     }
-
 
     public CurrencyEntity getCurrency(Long id) throws IdNotFoundInDatabaseException {
         return this.currencyRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Currency", id));
     }
-
 
     public CurrencyEntity addCurrency(String name, String code) {
         validating(name, code);
@@ -42,7 +39,6 @@ public class CurrencyService {
         }
     }
 
-
     public void deleteCurrency(Long id) throws IdNotFoundInDatabaseException {
         try {
             this.currencyRepository.deleteById(id);
@@ -50,7 +46,6 @@ public class CurrencyService {
             throw new IdNotFoundInDatabaseException("Currency", id);
         }
     }
-
 
     @Transactional
     public CurrencyEntity updateCurrency(Long id, CurrencyRequestDto currencyRequestDto) {
@@ -70,10 +65,9 @@ public class CurrencyService {
         }
     }
 
-
     private void validating(String name, String code) {
 
-        if (StringValidator.stringWithSpacesImproper(name,15))
+        if (StringValidator.stringWithSpacesImproper(name, 15))
             throw new ValueImproperException(name);
 
         if (StringValidator.stringWithoutSpacesImproper(code, 5))
@@ -88,7 +82,7 @@ public class CurrencyService {
 
     private void updateValidating(Long id, String name, String code) {
 
-        if (StringValidator.stringWithSpacesImproper(name,15))
+        if (StringValidator.stringWithSpacesImproper(name, 15))
             throw new ValueImproperException(name);
 
         if (StringValidator.stringWithoutSpacesImproper(code, 5))
@@ -101,13 +95,11 @@ public class CurrencyService {
             throw new NotUniqueException("Currency", "code", code);
     }
 
-
     public boolean ifNameTaken(String name) {
         Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByName(
                 StringUtils.capitalize(name));
         return foundByName.isPresent();
     }
-
 
     public boolean ifCodeTaken(String code) {
         Optional<CurrencyEntity> foundByName = currencyRepository.findCurrencyEntityByCode(code.toUpperCase());
@@ -119,28 +111,27 @@ public class CurrencyService {
                 StringUtils.capitalize(name));
         Optional<CurrencyEntity> currencyEntityById = currencyRepository.findById(id);
 
-        if(currencyEntityById.isEmpty())
+        if (currencyEntityById.isEmpty())
             throw new IdNotFoundInDatabaseException("Currency", id);
-        if(currencyEntityByName.isEmpty())
+        if (currencyEntityByName.isEmpty())
             return false;
 
         return !currencyEntityByName.get().getId().equals(currencyEntityById.get().getId());
     }
 
-
     public boolean ifCodeTakenUpdating(Long id, String code) {
         Optional<CurrencyEntity> currencyEntityByCode = currencyRepository.findCurrencyEntityByCode(code.toUpperCase());
         Optional<CurrencyEntity> currencyEntityById = currencyRepository.findById(id);
 
-        if(currencyEntityById.isEmpty())
+        if (currencyEntityById.isEmpty())
             throw new IdNotFoundInDatabaseException("Currency", id);
-        if(currencyEntityByCode.isEmpty())
+        if (currencyEntityByCode.isEmpty())
             return false;
 
         return !currencyEntityByCode.get().getId().equals(currencyEntityById.get().getId());
     }
 
-    public CurrencyEntity getCurrencyByCurrencyName(String name){
+    public CurrencyEntity getCurrencyByCurrencyName(String name) {
         return this.currencyRepository.findCurrencyEntityByName(name)
                 .orElseThrow(() -> new IdNotFoundInDatabaseException("Currency", 0L));
     }

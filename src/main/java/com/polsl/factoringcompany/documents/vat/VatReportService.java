@@ -43,10 +43,7 @@ public class VatReportService {
         MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
         VariablePrepare.prepare(wordMLPackage);
 
-        CustomerEntity customerEntity = customerService.getCustomer(customerId);
-
         VatReportInformation vatReportInformation = this.getCustomerVatInformation(customerId);
-
 
         HashMap<String, String> variables = vatReportInformation.getVariablesInHashMap();
 
@@ -61,7 +58,7 @@ public class VatReportService {
         return pdf;
     }
 
-    public VatReportInformation getCustomerVatInformation(Long customerId){
+    public VatReportInformation getCustomerVatInformation(Long customerId) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedNow = now.format(dateTimeFormatter);
@@ -76,9 +73,10 @@ public class VatReportService {
         vat = vat.replace("{\"result\":{\"subject\":", "");
         vat = vat.replaceAll(",\"requestId\":\".*\",\"requestDateTime\":\".*\"}}", "");
 
-        HashMap<String, Object> map = new Gson().fromJson(vat, new TypeToken<HashMap<String, Object>>() {}.getType());
+        HashMap<String, Object> map = new Gson().fromJson(vat, new TypeToken<HashMap<String, Object>>() {
+        }.getType());
 
-        return new VatReportInformation(map, customer, company,bankAccount);
+        return new VatReportInformation(map, customer, company, bankAccount);
     }
 
 }

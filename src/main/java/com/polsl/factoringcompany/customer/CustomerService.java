@@ -3,7 +3,6 @@ package com.polsl.factoringcompany.customer;
 import com.polsl.factoringcompany.exceptions.IdNotFoundInDatabaseException;
 import com.polsl.factoringcompany.exceptions.ValueImproperException;
 import com.polsl.factoringcompany.stringvalidation.StringValidator;
-import com.polsl.factoringcompany.user.UserEntity;
 import com.polsl.factoringcompany.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -88,35 +87,19 @@ public class CustomerService {
     private void nameValidator(CustomerRequestDto customerEntity) {
         if (StringValidator.stringWithSpacesImproper(customerEntity.getFirstName(), 50)) {
             throw new ValueImproperException(customerEntity.getFirstName());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getLastName(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(customerEntity.getLastName(), 50)) {
             throw new ValueImproperException(customerEntity.getLastName());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCompanyName(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(customerEntity.getCompanyName(), 50)) {
             throw new ValueImproperException(customerEntity.getCompanyName());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCountry(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(customerEntity.getCountry(), 50)) {
             throw new ValueImproperException(customerEntity.getCountry());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getCity(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(customerEntity.getCity(), 50)) {
             throw new ValueImproperException(customerEntity.getCity());
-        }
-
-        else if (StringValidator.stringWithSpacesImproper(customerEntity.getStreet(), 50)) {
+        } else if (StringValidator.stringWithSpacesImproper(customerEntity.getStreet(), 50)) {
             throw new ValueImproperException(customerEntity.getStreet());
-        }
-
-        else if (StringValidator.stringWithDigitsImproper(customerEntity.getPostalCode(), 15)) {
+        } else if (StringValidator.stringWithDigitsImproper(customerEntity.getPostalCode(), 15)) {
             throw new ValueImproperException(customerEntity.getPostalCode());
         }
-
-//        else if (!StringValidator.isPhoneNumberValid(customerEntity.getPhone())) {
-//            throw new ValueImproperException(customerEntity.getPhone());
-//        }
 
     }
 

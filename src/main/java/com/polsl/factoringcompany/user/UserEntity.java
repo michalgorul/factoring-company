@@ -11,11 +11,13 @@ import com.polsl.factoringcompany.registration.token.ConfirmationTokenEntity;
 import com.polsl.factoringcompany.transaction.TransactionEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
 
+@NoArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -102,9 +104,6 @@ public class UserEntity {
     @JsonIgnore
     @JoinColumn(name = "company_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private CompanyEntity companyByCompanyId;
-
-    public UserEntity() {
-    }
 
     public UserEntity(String username, String password, String email, String firstName,
                       String lastName, String country, String city, String street,

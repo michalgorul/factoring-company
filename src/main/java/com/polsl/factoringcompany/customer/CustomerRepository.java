@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
     List<CustomerEntity> findAllByUserId(Integer id);
+
     Optional<CustomerEntity> findByPhone(String phone);
 }

@@ -12,7 +12,7 @@ public class IdNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(IdNotFoundInDatabaseException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String idNotFoundHandler(IdNotFoundInDatabaseException ex){
+    public String idNotFoundHandler(IdNotFoundInDatabaseException ex) {
         return ex.getMessage();
     }
 }

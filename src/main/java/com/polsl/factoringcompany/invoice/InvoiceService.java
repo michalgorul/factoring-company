@@ -205,10 +205,10 @@ public class InvoiceService {
 
     }
 
-    private void updateFromActiveToUnfunded(InvoiceEntity invoiceEntity){
+    private void updateFromActiveToUnfunded(InvoiceEntity invoiceEntity) {
         try {
-            if(invoiceEntity.getPaymentDeadline().before(Timestamp.valueOf(LocalDateTime.now())) &&
-                    invoiceEntity.getStatus().equals("active")){
+            if (invoiceEntity.getPaymentDeadline().before(Timestamp.valueOf(LocalDateTime.now())) &&
+                    invoiceEntity.getStatus().equals("active")) {
                 invoiceEntity.setStatus("unfunded");
                 this.invoiceRepository.save(invoiceEntity);
             }
@@ -231,14 +231,14 @@ public class InvoiceService {
     public void payForInvoice(Long id) {
         try {
             InvoiceEntity invoiceEntity = this.invoiceRepository.findById(id).orElse(null);
-            if(invoiceEntity != null){
+            if (invoiceEntity != null) {
                 invoiceEntity.setStatus("funded");
                 invoiceEntity.setPaidByUser(invoiceEntity.getToPayByUser());
                 invoiceEntity.setToPayByUser(BigDecimal.ZERO);
 
                 transactionService.addTransaction(new TransactionRequestDto(
                         invoiceEntity.getPaidByUser(),
-                         false,
+                        false,
                         "Invoice payment",
                         Math.toIntExact(invoiceEntity.getId()),
                         null));
